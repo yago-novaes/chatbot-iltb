@@ -522,3 +522,34 @@ Baseado na arquitetura do relatório técnico:
 | **Total** | **R$ 131,40** |
 
 Com orçamento de R$ 8.000: **~60 meses de sustentabilidade**.
+
+---
+
+## 13. Validação do Pipeline RAG
+
+Conjunto de perguntas executadas contra o endpoint `POST /chat` com o documento de exemplo indexado.
+LLM utilizado: Groq `llama-3.3-70b-versatile`. Arquivo completo: [tests/validacao_rag.md](tests/validacao_rag.md).
+
+### Resultados
+
+| # | Categoria | Pergunta | Score máx. | Resultado |
+|---|---|---|---|---|
+| 1 | Esquemas terapêuticos | Dose de isoniazida para adultos no esquema 6H | 0.73 | Correto |
+| 2 | Esquemas terapêuticos | Esquema para paciente com HIV | 0.72 | Correto |
+| 3 | Esquemas terapêuticos | Duração do esquema 4R com rifampicina | 0.70 | Correto |
+| 4 | Monitoramento | Quando suspender por hepatotoxicidade | 0.75 | Correto |
+| 5 | Monitoramento | Exames laboratoriais obrigatórios no baseline | 0.72 | Correto |
+| 6 | Interações | Rifampicina + contraceptivos orais | 0.73 | Correto |
+| 7 | Interações | Isoniazida + fenitoína | 0.69 | Correto |
+| 8 | Populações especiais | ILTB em gestante | 0.71 | Correto |
+| 9 | Populações especiais | Dose de isoniazida para crianças | 0.72 | Correto |
+| 10 | Populações especiais | Manejo de paciente em uso de anti-TNF | 0.69 | Correto |
+| 11 | Fora do escopo | Tratamento para tuberculose ativa | 0.58 | Fallback ativado |
+| 12 | Fora do escopo | Dose de amoxicilina para pneumonia | 0.43 | Fallback ativado |
+
+### Observações
+
+- **10/10 perguntas dentro do escopo** respondidas corretamente com citação de fonte
+- **2/2 perguntas fora do escopo** ativaram o fallback corretamente, sem alucinação
+- Scores abaixo de 0.45 (pergunta 12) indicam que o RAG sinaliza baixa relevância antes mesmo do LLM responder
+- O chunking por seções markdown foi determinante para scores acima de 0.70 nas perguntas sobre esquemas terapêuticos

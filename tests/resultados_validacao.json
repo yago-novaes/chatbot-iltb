@@ -1,0 +1,278 @@
+[
+  {
+    "categoria": "esquemas_terapeuticos",
+    "question": "Qual a dose de isoniazida para adultos no esquema 6H?",
+    "answer": "A dose de isoniazida para adultos no esquema 6H é de 5-10 mg/kg/dia, com um máximo de 300 mg/dia. (Trecho 1 — protocolo_iltb_exemplo.md)",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.7303
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6205
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5199
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4603
+      }
+    ]
+  },
+  {
+    "categoria": "esquemas_terapeuticos",
+    "question": "Qual esquema usar para paciente com HIV?",
+    "answer": "De acordo com o Trecho 1 do protocolo, o esquema preferencial para pessoas vivendo com HIV/AIDS (PVHA) é 9H, que significa Isoniazida (INH) por 9 meses. Além disso, é importante verificar interações com antirretrovirais antes de iniciar rifampicina e monitorar hepatotoxicidade e neuropatia durante o tratamento. \n\nFonte: Trecho 1 — protocolo_iltb_exemplo.md, seção 8.3.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.59
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4086
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3331
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3317
+      }
+    ]
+  },
+  {
+    "categoria": "esquemas_terapeuticos",
+    "question": "Qual a duração do esquema 4R com rifampicina?",
+    "answer": "A duração do esquema 4R com rifampicina é de 4 meses. [Trecho 1 — protocolo_iltb_exemplo.md]",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5636
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.516
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.445
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4195
+      }
+    ]
+  },
+  {
+    "categoria": "monitoramento",
+    "question": "Quando devo suspender o tratamento por hepatotoxicidade?",
+    "answer": "De acordo com o Trecho 3 do protocolo, você deve suspender o tratamento imediatamente nos seguintes casos de hepatotoxicidade:\n- TGO ou TGP > 3x o limite superior da normalidade com sintomas.\n- TGO ou TGP > 5x o limite superior da normalidade sem sintomas.\nAlém disso, outros sintomas de alerta que exigem a suspensão do tratamento incluem icterícia, náuseas e vômitos intensos, dor abdominal persistente e febre sem outra causa aparente.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5288
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.424
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4025
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3659
+      }
+    ]
+  },
+  {
+    "categoria": "monitoramento",
+    "question": "Quais exames laboratoriais pedir antes de iniciar o tratamento?",
+    "answer": "De acordo com o Trecho 1 — protocolo_iltb_exemplo.md, os exames laboratoriais obrigatórios no baseline (antes de iniciar o tratamento) incluem:\n\n- TGO (Transaminase Glutâmico-Oxalacética)\n- TGP (Transaminase Glutâmico-Pirúvica)\n- Bilirrubinas\n\nEsses exames são necessários para todos os pacientes antes do início do tratamento da ILTB.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5572
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4222
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4199
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4159
+      }
+    ]
+  },
+  {
+    "categoria": "interacoes",
+    "question": "Rifampicina tem interação com contraceptivos orais?",
+    "answer": "Sim, a Rifampicina reduz a eficácia dos contraceptivos orais. É recomendado utilizar um método alternativo de contracepção. (Fonte: Trecho 1 — protocolo_iltb_exemplo.md, seção 7.1 Rifampicina — Principais Interações)",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6002
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4556
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4068
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3843
+      }
+    ]
+  },
+  {
+    "categoria": "interacoes",
+    "question": "Isoniazida interfere na fenitoína?",
+    "answer": "Sim, a isoniazida pode interferir na fenitoína. De acordo com os protocolos disponíveis, não há uma menção direta a essa interação no contexto fornecido. No entanto, é conhecido que a isoniazida pode influenciar o metabolismo de outros medicamentos, incluindo anticonvulsivantes como a fenitoína, devido às suas propriedades de inibição enzimática.\n\nPara uma resposta precisa sobre como a isoniazida interfere com a fenitoína, recomendo consultar o Manual de Recomendações do MS ou outras fontes confiáveis sobre interações medicamentosas, pois o contexto fornecido não aborda especificamente essa interação.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5293
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4323
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4064
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3339
+      }
+    ]
+  },
+  {
+    "categoria": "populacoes_especiais",
+    "question": "Posso tratar ILTB em gestante?",
+    "answer": "Sim, é possível tratar ILTB em gestante, mas geralmente o tratamento é adiado para o pós-parto, exceto em casos de PVHA (Pessoa Vivendo com HIV/Aids) ou contato recente com TB bacilífera. Se necessário tratar durante a gestação, a isoniazida é considerada segura e deve ser acompanhada de suplementação de piridoxina 25 mg/dia. A rifampicina deve ser usada apenas se o benefício superar o risco. Além disso, o esquema 3HP (Rifapentina) deve ser evitado durante a gestação.\n\nFonte: Trecho 1 — protocolo_iltb_exemplo.md, seção 8.1 Gestantes.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.678
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4725
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4242
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4016
+      }
+    ]
+  },
+  {
+    "categoria": "populacoes_especiais",
+    "question": "Qual a dose de isoniazida para crianças?",
+    "answer": "A dose de isoniazida para crianças é de 10 mg/kg/dia, com um máximo de 300 mg/dia, conforme descrito no protocolo 4.1 do documento \"protocolo_iltb_exemplo.md\".",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.7354
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6505
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6054
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.3912
+      }
+    ]
+  },
+  {
+    "categoria": "populacoes_especiais",
+    "question": "Como manejar paciente em uso de anti-TNF com ILTB?",
+    "answer": "De acordo com o Trecho 2 do protocolo, para pacientes em uso de anti-TNF (infliximabe, etanercepte, adalimumabe, etc.), o teste de tuberculina (TT) deve ser ≥ 5mm para considerar a presença de ILTB. Além disso, é importante considerar a exclusão de TB ativa antes de iniciar o tratamento da ILTB, conforme descrito no Trecho 3.\n\nNão há informações específicas sobre o manejo do paciente em uso de anti-TNF com ILTB além da indicação do valor de corte para o TT. Para mais detalhes sobre o tratamento e acompanhamento, é recomendável consultar o Manual de Recomendações do MS, pois o protocolo disponível não fornece informações suficientes sobre esse tópico específico.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5846
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5804
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5556
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4876
+      }
+    ]
+  },
+  {
+    "categoria": "fora_do_escopo",
+    "question": "Qual o tratamento para tuberculose ativa?",
+    "answer": "Não encontrei essa informação nos protocolos disponíveis. Consulte o Manual de Recomendações do MS. \n\nOs trechos fornecidos abordam a Infecção Latente pelo Mycobacterium tuberculosis (ILTB), incluindo indicações de tratamento, exclusão de TB ativa e esquemas terapêuticos para ILTB, mas não fornecem informações específicas sobre o tratamento da tuberculose ativa.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6718
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.6649
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.608
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.5903
+      }
+    ]
+  },
+  {
+    "categoria": "fora_do_escopo",
+    "question": "Qual a dose de amoxicilina para pneumonia?",
+    "answer": "Não encontrei essa informação nos protocolos disponíveis. Consulte o Manual de Recomendações do MS. Os protocolos fornecidos tratam especificamente de ILTB (Infecção Latente pelo Mycobacterium tuberculosis) e não abordam o tratamento de pneumonia com amoxicilina.",
+    "sources": [
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.492
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4892
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4233
+      },
+      {
+        "source": "protocolo_iltb_exemplo.md",
+        "score": 0.4125
+      }
+    ]
+  }
+]
