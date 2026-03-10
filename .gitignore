@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 chroma_db/
 server.log
+
+# Documentos de arquitetura internos
+Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v0.md
+Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v1.md
+Relatório Técnico de Arquitetura Cloud e Viabilidade Financeira_ Sustentabilidade e Estimativa de OpEx para o Piloto de Chatbot de Saúde (ILTB).md
