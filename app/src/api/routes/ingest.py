@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
@@ -13,10 +15,10 @@ class IngestResponse(BaseModel):
 
 
 @router.post("/ingest", response_model=IngestResponse)
-def ingest():
+async def ingest():
     """Indexa (ou re-indexa) todos os documentos da pasta docs/protocolos/."""
     try:
-        total = ingest_documents()
+        total = await asyncio.to_thread(ingest_documents)
         return IngestResponse(
             status="success",
             chunks_indexed=total,

@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter
 
 from app.src.config import settings
@@ -7,11 +9,12 @@ router = APIRouter(tags=["health"])
 
 
 @router.get("/health")
-def health():
+async def health():
+    ready = await asyncio.to_thread(collection_exists)
     return {
         "status": "ok",
         "version": settings.api_version,
-        "collection_ready": collection_exists(),
+        "collection_ready": ready,
         "llm_provider": settings.llm_provider,
         "llm_model": settings.llm_model,
     }

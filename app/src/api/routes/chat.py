@@ -1,10 +1,12 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from app.src.config import settings
 from app.src.llm.client import generate
 from app.src.rag.ingestion.indexer import collection_exists
-from app.src.rag.retriever import RetrievedChunk, build_context, retrieve
+from app.src.rag.retriever import build_context, retrieve
 
 router = APIRouter(tags=["chat"])
 
@@ -29,20 +31,20 @@ class ChatResponse(BaseModel):
 
 
 @router.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest):
-    if not collection_exists():
+async def chat(request: ChatRequest):
+    ready = await asyncio.to_thread(collection_exists)
+    if not ready:
         raise HTTPException(
             status_code=409,
             detail="Base de conhecimento não indexada. Execute POST /ingest primeiro.",
         )
 
-    chunks = retrieve(request.question, top_k=request.top_k)
+    chunks = await asyncio.to_thread(retrieve, request.question, request.top_k)
     if not chunks:
         raise HTTPException(status_code=404, detail="Nenhum trecho relevante encontrado.")
 
     context = build_context(chunks)
-    # history=None até Fase 2 implementar session manager
-    answer = generate(context=context, question=request.question)
+    answer = await generate(context=context, question=request.question)
 
     return ChatResponse(
         answer=answer,

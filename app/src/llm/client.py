@@ -5,7 +5,7 @@ Histórico de conversa adicionado na Fase 2 (session manager).
 """
 from typing import List
 
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 from app.src.config import settings
 from app.src.llm.prompts import SYSTEM_PROMPT
@@ -31,20 +31,20 @@ def _mock_response(question: str, context: str) -> str:
     )
 
 
-def generate(context: str, question: str, history: List[dict] | None = None) -> str:
+async def generate(context: str, question: str, history: List[dict] | None = None) -> str:
     """
-    Gera resposta via LLM configurado.
+    Gera resposta via LLM configurado (async).
     history: lista de mensagens anteriores [{role, content}] para contexto de sessão.
     """
     if settings.llm_provider == "mock" or settings.llm_api_key in ("mock", "", None):
         return _mock_response(question, context)
 
     try:
-        client = OpenAI(
+        client = AsyncOpenAI(
             api_key=settings.llm_api_key,
             base_url=settings.llm_base_url or None,
         )
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
             model=settings.llm_model,
             messages=_build_messages(context, question, history),
             temperature=settings.llm_temperature,
