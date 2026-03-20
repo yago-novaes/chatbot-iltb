@@ -97,33 +97,6 @@
 
 ---
 
-### 1.3 O que NÃO funcionou na POC
-
-#### ❌ Extração de PDF com PyMuPDF (`fitz`)
-
-**Tentativa:** `fitz.open(pdf).get_text("text")` para extrair texto plano.
-
-**Problema:** PDFs do MS são escaneados ou têm layout complexo em múltiplas colunas. O PyMuPDF retornava texto em ordem de leitura do PDF (coluna por coluna), não em ordem lógica do documento. Tabelas de doses saíam como sequência de números sem contexto.
-
-**Exemplo de falha:**
-```
-# Output PyMuPDF (fragmento real):
-"300 mg 4 meses 900 mg 4 meses 300 mg"
-# Sem indicação de qual campo é qual coluna da tabela
-```
-
-**Decisão:** substituir por Docling (ver Fase 2).
-
-#### ❌ Chunking por overlap fixo com LangChain `RecursiveCharacterTextSplitter`
-
-**Tentativa:** `chunk_size=512, chunk_overlap=50`.
-
-**Problema:** overlap criava chunks redundantes. O retriever retornava 2–3 chunks muito similares (um era a sobreposição do outro), desperdiçando o `top_k` com conteúdo duplicado.
-
-**Decisão:** chunk sem overlap, por limite semântico (cabeçalho). Chunks distintos por definição.
-
----
-
 ## FASE 2 — Engenharia de Dados
 
 **Objetivo:** substituir extração de texto placeholder por pipeline robusto com PDFs reais do MS. Validar qualidade dos chunks antes de avançar ao backend.
@@ -151,7 +124,7 @@
 
 ### 2.2 Extração de PDF com Docling ✅
 
-**Motivação:** PyMuPDF falhou em PDFs com layout complexo (ver 1.3). Docling (IBM, open-source) converte PDF → Markdown estruturado, preservando hierarquia de títulos e tabelas.
+**Motivação:** ao trabalhar com os PDFs reais do MS, o PyMuPDF falhou em documentos com layout de múltiplas colunas (ver seção 2.3). Docling (IBM, open-source) converte PDF → Markdown estruturado, preservando hierarquia de títulos e tabelas.
 
 **Instalação:** `pip install docling` → v2.80.0 (~2 GB de modelos de ML baixados: layout detection, table recognition, OCR via RapidOCR/ONNX).
 
@@ -194,7 +167,40 @@ Query: "quais são as indicações de tratamento da ILTB?"
 
 ---
 
-### 2.3 Estrutura de Módulos da Ingestão
+### 2.3 O que NÃO funcionou ao trabalhar com os PDFs reais
+
+#### ❌ Extração de PDF com PyMuPDF (`fitz`)
+
+**Contexto:** ao receber os 6 PDFs reais do MS e tentar integrá-los ao pipeline, a primeira tentativa foi usar PyMuPDF — biblioteca mais comum para extração de texto de PDF em Python.
+
+**Tentativa:** `fitz.open(pdf).get_text("text")` para extrair texto plano.
+
+**Problema:** PDFs do MS têm layout complexo em múltiplas colunas e tabelas. O PyMuPDF retornava texto em ordem de leitura do PDF (coluna por coluna), não em ordem lógica do documento. Tabelas de doses saíam como sequência de números sem contexto.
+
+**Exemplo de falha:**
+```
+# Output PyMuPDF (fragmento real):
+"300 mg 4 meses 900 mg 4 meses 300 mg"
+# Sem indicação de qual campo é qual coluna da tabela
+```
+
+**Decisão:** substituir por Docling (ver seção 2.2).
+
+---
+
+#### ❌ Chunking por overlap fixo com LangChain `RecursiveCharacterTextSplitter`
+
+**Contexto:** ao adaptar o pipeline para os PDFs reais, foi avaliado usar LangChain como alternativa ao chunker customizado, pelo ecossistema mais amplo.
+
+**Tentativa:** `chunk_size=512, chunk_overlap=50`.
+
+**Problema:** overlap criava chunks redundantes. O retriever retornava 2–3 chunks muito similares (um era a sobreposição do outro), desperdiçando o `top_k` com conteúdo duplicado e aumentando o contexto enviado ao LLM sem ganho de informação.
+
+**Decisão:** manter o chunker semântico por cabeçalho sem overlap — chunks distintos por definição.
+
+---
+
+### 2.4 Estrutura de Módulos da Ingestão
 
 ```
 app/src/rag/ingestion/
