@@ -33,20 +33,34 @@ def _load_text(file: Path) -> str:
     return file.read_text(encoding="utf-8")
 
 
+def _resolve_files(folder: Path) -> list[Path]:
+    """
+    Lista arquivos a indexar, preferindo .md sobre .pdf de mesmo nome base.
+    Evita duplicação quando ambos existem após pré-extração com Docling.
+    """
+    md_stems = {f.stem for f in folder.glob("*.md")}
+    files: list[Path] = []
+    for pdf in folder.glob("*.pdf"):
+        if pdf.stem in md_stems:
+            logger.info("PDF ignorado (usando .md equivalente): %s", pdf.name)
+        else:
+            files.append(pdf)
+    files += list(folder.glob("*.md"))
+    files += list(folder.glob("*.txt"))
+    return files
+
+
 def ingest_documents(docs_path: str | None = None) -> int:
     """
     Lê .pdf, .md e .txt da pasta docs_path e indexa no ChromaDB.
+    Se existir .md e .pdf com mesmo nome base, usa apenas o .md.
     Retorna o número de chunks indexados.
     """
     folder = Path(docs_path or settings.docs_path)
     if not folder.exists():
         raise FileNotFoundError(f"Pasta de documentos não encontrada: {folder}")
 
-    files = (
-        list(folder.glob("*.pdf"))
-        + list(folder.glob("*.md"))
-        + list(folder.glob("*.txt"))
-    )
+    files = _resolve_files(folder)
     if not files:
         raise ValueError(f"Nenhum arquivo .pdf, .md ou .txt encontrado em {folder}")
 

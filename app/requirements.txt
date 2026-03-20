@@ -7,3 +7,7 @@ openai>=1.0
 sentence-transformers>=3.0
 chromadb>=1.0
 docling>=2.0
+# Avaliação RAGAS (eval/)
+ragas>=0.2
+datasets>=2.0
+langchain-openai>=0.1
