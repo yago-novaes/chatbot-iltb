@@ -1,9 +1,17 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+
+from app.src.config import settings
+from app.src.rag.ingestion.indexer import collection_exists
 
 router = APIRouter(tags=["health"])
 
 
 @router.get("/health")
-async def health():
-    return JSONResponse({"status": "ok"})
+def health():
+    return {
+        "status": "ok",
+        "version": settings.api_version,
+        "collection_ready": collection_exists(),
+        "llm_provider": settings.llm_provider,
+        "llm_model": settings.llm_model,
+    }
