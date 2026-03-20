@@ -214,6 +214,310 @@ app/src/rag/ingestion/
 
 ---
 
+### 2.5 Revisão de Código e Correções Técnicas ✅
+
+**Objetivo:** Corrigir anti-padrões e gaps identificados em revisão de engenharia antes de avançar para avaliação RAGAS e deploy.
+
+**Período:** 2026-03-20 (sessão de revisão técnica com assistência de IA).
+
+---
+
+#### 2.5.1 Centralização do Embedding Model ✅
+
+**Problema:** `indexer.py` e `retriever.py` instanciavam `SentenceTransformerEmbeddingFunction` separadamente, carregando o modelo de ~120 MB duas vezes na memória (~240 MB total). Na VPS CX22 com 4 GB de RAM, esse desperdício é crítico.
+
+**Solução:** criado `app/src/rag/embeddings.py` com instância única compartilhada:
+```python
+from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+from app.src.config import settings
+
+embedding_fn = SentenceTransformerEmbeddingFunction(
+    model_name=settings.embedding_model
+)
+```
+
+Ambos `indexer.py` e `retriever.py` agora importam de `app.src.rag.embeddings`. Economia estimada: ~120 MB de RAM.
+
+---
+
+#### 2.5.2 Filtro por Score Threshold no Retriever ✅
+
+**Problema:** `config.py` definia `retriever_score_threshold = 0.50`, mas nenhum código filtrava chunks abaixo desse valor. Se o retriever retornasse 4 chunks com scores de 0.30, todos iam para o LLM — que poderia gerar respostas a partir de contexto irrelevante. Em contexto clínico, isso é perigoso.
+
+**Solução em `retriever.py`:**
+```python
+return [c for c in chunks if c.score >= settings.retriever_score_threshold]
+```
+
+**Solução em `chat.py`:** quando nenhum chunk passa no filtro, retorna HTTP 200 com mensagem de fallback (em vez de HTTP 404):
+```python
+_FALLBACK_ANSWER = (
+    "Não encontrei trechos suficientemente relevantes nos protocolos para responder "
+    "com segurança. A pergunta pode estar fora do escopo do material indexado. "
+    "Consulte diretamente o Manual de Recomendações do Ministério da Saúde."
+)
+```
+
+**Decisão de design 📌:** retornar 200 com fallback em vez de 404. Motivo: a API funcionou corretamente, apenas não encontrou contexto relevante — não é um erro de recurso inexistente. O 404 anterior confundia clientes HTTP que tratam 4xx como erro.
+
+---
+
+#### 2.5.3 Remoção de `chunk_overlap` do Config de Produção ✅
+
+**Problema:** `config.py` de produção continha `chunk_overlap = 100`, herdado da POC, mas o chunker semântico (`split_by_sections`) não usa overlap. Parâmetro morto que poderia confundir quem lesse o código.
+
+**Solução:** removido de `app/src/config.py`. O parâmetro permanece apenas no código legado da POC (`poc/src/config.py`), preservando o histórico.
+
+---
+
+#### 2.5.4 Client LLM Singleton ✅
+
+**Problema:** `client.py` instanciava `AsyncOpenAI` a cada chamada a `generate()`. Embora o impacto em performance fosse pequeno (o objeto é leve), era um anti-padrão que poderia causar vazamento de conexões HTTP sob carga.
+
+**Solução:** lazy initialization com variável de módulo:
+```python
+_client: AsyncOpenAI | None = None
+
+def _get_client() -> AsyncOpenAI:
+    global _client
+    if _client is None:
+        _client = AsyncOpenAI(
+            api_key=settings.llm_api_key,
+            base_url=settings.llm_base_url or None,
+        )
+    return _client
+```
+
+---
+
+#### 2.5.5 Try/Except no Docling `pdf_extractor.py` ✅
+
+**Problema:** `extract_markdown()` não tratava exceções. Se um PDF falhasse (ex.: `std::bad_alloc`), o pipeline inteiro parava.
+
+**Solução:** `try/except` que retorna string vazia em caso de erro; `indexer.py` agora pula arquivos com texto vazio:
+```python
+def extract_markdown(pdf_path: Path) -> str:
+    try:
+        result = _get_converter().convert(str(pdf_path))
+        return result.document.export_to_markdown()
+    except Exception as e:
+        logger.error("Falha ao extrair %s: %s", pdf_path.name, e)
+        return ""
+```
+
+---
+
+#### 2.5.6 Remoção de `session_id` do `ChatRequest` ✅
+
+**Problema:** `ChatRequest` tinha campo `session_id` que não era usado em nenhum lugar — código morto que dava impressão falsa de que sessões estavam implementadas.
+
+**Solução:** removido o campo. Adicionado comentário na docstring indicando que será implementado na integração com WhatsApp (Fase 3).
+
+---
+
+### 2.6 Pré-extração de PDFs para Markdown ✅
+
+**Objetivo:** eliminar dependência do Docling no container de produção e resolver o problema de RAM na VPS CX22 (4 GB).
+
+**Período:** 2026-03-20.
+
+---
+
+#### 2.6.1 Script `extract_pdfs.py` ✅
+
+**Implementação:** criado `app/scripts/extract_pdfs.py` que:
+- Itera sobre todos os `.pdf` em `docs/protocolos/`
+- Pula se `.md` de mesmo nome já existe (idempotente)
+- Flag `--force` para sobrescrever `.md` existentes
+- Reporta gerados/pulados/erros ao final
+
+```bash
+python -m app.scripts.extract_pdfs [--force]
+```
+
+#### 2.6.2 Resultados da Extração
+
+6 PDFs processados com sucesso:
+
+| Documento | Chars | Cabeçalhos |
+|---|---|---|
+| `9789275728185_por.md` (OMS Módulo 4) | ~295k | ~133 |
+| `Manual de Recomendações para o controle da Tuberculose no Brasil.md` | ~270k | ~120 |
+| `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` | ~30k | ~35 |
+| `recomendacoes-para-o-controle-da-tuberculose.md` | ~40k | ~45 |
+| `GEDIIB_TratamentoTuberculose.md` | ~12k | ~15 |
+| `tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md` | ~4k | ~11 |
+
+**Decisão:** os `.md` são versionáveis (adicionados ao git); os `.pdf` continuam no `.gitignore` por serem documentos do MS que não devem ser redistribuídos.
+
+---
+
+#### 2.6.3 Atualização do `indexer.py` — `_resolve_files()` ✅
+
+**Problema:** se tanto o `.pdf` quanto o `.md` de mesmo nome estivessem na pasta, o indexer processaria ambos — duplicando chunks.
+
+**Solução:** criada função `_resolve_files()` que prefere `.md` sobre `.pdf` de mesmo stem:
+```python
+def _resolve_files(folder: Path) -> list[Path]:
+    md_stems = {f.stem for f in folder.glob("*.md")}
+    files: list[Path] = []
+    for pdf in folder.glob("*.pdf"):
+        if pdf.stem in md_stems:
+            logger.info("PDF ignorado (usando .md equivalente): %s", pdf.name)
+        else:
+            files.append(pdf)
+    files += list(folder.glob("*.md"))
+    files += list(folder.glob("*.txt"))
+    return files
+```
+
+**Resultado:** zero duplicação. VPS só precisa de chunking + indexação (sem Docling).
+
+---
+
+### 2.7 Pipeline de Avaliação RAGAS 🔄
+
+**Objetivo:** Implementar avaliação automatizada do pipeline RAG usando o framework RAGAS, conforme exigido pelos objetivos 1 e 2 do TCC (metodologia DSRM). Métricas-alvo: Faithfulness ≥ 0.80, Context Precision ≥ 0.75.
+
+**Período:** 2026-03-20.
+
+---
+
+#### 2.7.1 Test Set — 40 Perguntas ✅
+
+**Implementação:** `eval/test_set.json` com 40 perguntas divididas em 8 categorias:
+
+| Categoria | Qtd | Descrição |
+|---|---|---|
+| `esquemas_terapeuticos` | 7 | Doses, durações, escolha por perfil (3HP, 4R, 6H, 9H) |
+| `monitoramento` | 5 | Frequência de consultas, critérios de suspensão |
+| `interacoes_medicamentosas` | 5 | Rifampicina + ARV, contraceptivos, isoniazida + fenitoína |
+| `populacoes_especiais` | 7 | Gestantes, crianças, PVHIV, anti-TNF, hepatopatas |
+| `diagnostico` | 5 | PPD/IGRA pontos de corte, exclusão TB ativa |
+| `indicacoes_tratamento` | 5 | Elegibilidade, grupos prioritários |
+| `efeitos_adversos` | 4 | Hepatotoxicidade, neuropatia, piridoxina |
+| `fora_do_escopo` | 4 | TB ativa, pneumonia, COVID — testam fallback |
+
+**Ground truths:** extraídos literalmente dos `.md` gerados pelos PDFs reais do MS. As 4 perguntas `fora_do_escopo` têm `ground_truth: null` e são excluídas do RAGAS — servem apenas para verificar se o fallback funciona.
+
+**Decisão de design 📌:** ground truths são extração do texto dos documentos, não validação clínica independente. O test set deve ser revisado por enfermeira especialista em TB antes de ser usado como gate definitivo na monografia.
+
+---
+
+#### 2.7.2 Script `run_ragas.py` ✅
+
+**Implementação:** `eval/run_ragas.py` — pipeline completo:
+1. Carrega test set, separa in-scope (36) e fora do escopo (4)
+2. Para cada pergunta in-scope: executa `retrieve()` + `generate()` do pipeline real
+3. Salva `eval/results/ragas_detailed.json` com resposta, contextos e ground truth
+4. Calcula métricas RAGAS usando Groq como LLM juiz + embeddings locais (mesmo modelo de produção)
+5. Salva `eval/results/ragas_scores.json` com médias
+
+**Configuração do LLM avaliador:**
+- LLM juiz: Groq `llama-3.3-70b-versatile` via `ChatOpenAI` (interface OpenAI-compatible)
+- Embeddings: `HuggingFaceEmbeddings` com `paraphrase-multilingual-MiniLM-L12-v2` (evita dependência de chave OpenAI)
+- Sleep de 2s entre chamadas para respeitar rate limit
+
+**Flag `--scores-only`:** permite recalcular apenas as métricas RAGAS usando `ragas_detailed.json` já salvo, sem re-executar o pipeline RAG. Útil quando o rate limit do Groq é atingido durante a fase de avaliação.
+
+**Dependências instaladas:**
+- `ragas 0.4.3`
+- `datasets 4.8.3`
+- `langchain-openai`
+- `langchain-community` (para `HuggingFaceEmbeddings`)
+- `scikit-network` — exigiu instalação manual do Visual C++ Build Tools no Windows
+
+---
+
+#### 2.7.3 Primeira Execução — Sequência de Bugs ⚠️
+
+**Pipeline RAG:** rodou com sucesso para as 36 perguntas in-scope. `ragas_detailed.json` salvo com respostas, contextos e ground truths.
+
+**RAGAS evaluation:** rodou **152/152 steps** (100% completo), mas com muitos avisos de rate limit em chamadas individuais — o RAGAS retenta automaticamente e foi até o fim.
+
+**Crash no último passo:** após a avaliação completar, o script travou em `_print_summary()`:
+```
+AttributeError: 'EvaluationResult' object has no attribute 'get'
+```
+`ragas_scores.json` **não foi salvo** — a avaliação completou em memória mas o crash aconteceu antes da persistência.
+
+**Fix aplicado (commit `f08557b`):** substituído `result.get(metric_name)` por `result[metric_name]` (RAGAS 0.4 usa acesso por índice, não `.get()`). Adicionada flag `--scores-only` para reutilizar `ragas_detailed.json` sem re-executar o pipeline RAG.
+
+**Próximo passo:** após reset do rate limit do Groq (~24h), rodar:
+```bash
+python -m eval.run_ragas --scores-only
+```
+
+---
+
+#### 2.7.4 Bugs Encontrados na Instalação e Execução do RAGAS ❌
+
+##### `scikit-network` exige Visual C++ Build Tools no Windows
+
+**Sintoma:** `pip install ragas` falhou com `error: Microsoft Visual C++ 14.0 or greater is required`.
+
+**Causa:** `scikit-network` (dependência indireta do RAGAS) tem extensões C que precisam ser compiladas. No Windows, isso exige o Visual C++ Build Tools (~5 GB).
+
+**Solução de contorno:** instalar todas as outras dependências do RAGAS manualmente (`pip install ragas --no-deps` + cada dep individualmente). `scikit-network` não é usada pelas métricas que precisamos (faithfulness, answer_relevancy, context_precision, context_recall).
+
+**Nota para TCC:** na VPS Linux, `pip install ragas` funciona sem problemas — `scikit-network` compila normalmente com gcc. Problema exclusivo do Windows dev.
+
+---
+
+##### RAGAS tenta usar embeddings OpenAI por padrão ❌
+
+**Sintoma:**
+```
+openai.AuthenticationError: No API key provided... for metric 'answer_relevancy'
+```
+
+**Causa:** o RAGAS usa embeddings para calcular `answer_relevancy` (mede similaridade semântica entre resposta e pergunta). Por padrão, tenta `OpenAIEmbeddings` — que exige `OPENAI_API_KEY`.
+
+**Solução:** passar `embeddings=` explicitamente no `evaluate()` com o modelo local:
+```python
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from ragas.embeddings import LangchainEmbeddingsWrapper
+
+evaluator_embeddings = LangchainEmbeddingsWrapper(
+    HuggingFaceEmbeddings(model_name=settings.embedding_model)
+)
+result = evaluate(dataset=dataset, metrics=[...], llm=evaluator_llm, embeddings=evaluator_embeddings)
+```
+
+**Resultado:** RAGAS passa a usar o mesmo modelo de produção (`paraphrase-multilingual-MiniLM-L12-v2`) sem custo adicional.
+
+---
+
+##### Groq não suporta `n > 1` nas completions ⚠️ (não-fatal)
+
+**Sintoma:**
+```
+UserWarning: LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.
+```
+
+**Causa:** para a métrica `faithfulness`, o RAGAS pede `n=3` completions para estimar variabilidade. A API do Groq rejeita `n > 1` silenciosamente, retornando apenas 1.
+
+**Impacto:** o RAGAS procede com 1 generation. A métrica é calculada com menos amostras — menor robustez estatística. Para uma POC/TCC, é aceitável.
+
+**Alternativa futura:** usar `gpt-4o-mini` (OpenAI) como LLM juiz na avaliação de produção — suporta `n > 1`.
+
+---
+
+##### `EvaluationResult` não tem método `.get()` ❌
+
+**Sintoma:**
+```
+AttributeError: 'EvaluationResult' object has no attribute 'get'
+```
+
+**Contexto:** RAGAS 0.4 mudou a API do objeto de resultado. Versões anteriores retornavam um `dict` com `.get()`. RAGAS 0.4 retorna `EvaluationResult` com acesso por `result["metric_name"]`.
+
+**Impacto:** avaliação completa (152 steps), resultado em memória — mas `ragas_scores.json` não salvo por crash no `_print_summary`.
+
+**Fix:** `result.get(metric_name)` → `result[metric_name]` (com try/except para KeyError).
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -358,7 +662,7 @@ volumes:
 
 **Decisão chave 📌:** a análise financeira (v1) indicou CX22 para piloto, não CPX31. A diferença de R$105/mês é significativa para um projeto de TCC sem financiamento externo.
 
-**Limitação da CX22:** 4 GB RAM pode ser insuficiente para Docling processar PDFs grandes (ver seção 2.2). Mitigação: pré-processar PDFs localmente.
+**Limitação da CX22:** 4 GB RAM pode ser insuficiente para Docling processar PDFs grandes (ver seção 2.2). Mitigação: pré-processar PDFs localmente (implementado na seção 2.6).
 
 ---
 
@@ -366,14 +670,14 @@ volumes:
 
 ### Fase 2 (Engenharia de Dados) — quase completa
 
-- [ ] **Pré-processar PDFs → `.md` localmente e commitar**: elimina dependência de Docling no container, resolve problema de RAM na VPS
-- [ ] **Pipeline RAGAS**: gate de qualidade antes do piloto. Métricas-alvo: Faithfulness ≥ 0.80, Context Precision ≥ 0.75
+- [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6 — `app/scripts/extract_pdfs.py` + `_resolve_files()` no indexer
+- [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
+- [ ] **Pipeline RAGAS — execução final**: `ragas_detailed.json` salvo com as 36 respostas; falta rodar `--scores-only` após reset do rate limit do Groq
 
 ### Fase 3 (Backend) — parcialmente completa
 
 - [ ] **Session manager**: histórico de conversa em memória (dict por `session_id`)
 - [ ] **Webhook Meta/WhatsApp**: rota `GET /webhook` (verificação) + `POST /webhook` (recebimento de mensagens)
-- [ ] **Fallback por score baixo**: retornar mensagem padrão quando nenhum chunk supera `retriever_score_threshold` (0.50)
 
 ### Fase 4 (Piloto Hetzner) — próxima
 
@@ -406,6 +710,16 @@ volumes:
 5. **Testar com os dados reais o quanto antes.** A POC usou um `.md` de exemplo. Só ao indexar os 6 PDFs reais do MS é que descobrimos o problema de RAM com Docling e que o PyMuPDF não servia para PDFs com layout complexo.
 
 6. **Mode mock é essencial em projetos de TCC.** Permite trabalhar sem gastar créditos de API durante desenvolvimento.
+
+7. **Revisar código antes de avançar para avaliação formal.** Anti-padrões como embedding duplicado em RAM, filtro de score não implementado e client LLM reinstanciado a cada chamada são invisíveis em testes manuais, mas impactam produção. Uma revisão estruturada (seção 2.5) identificou 6 problemas que teriam complicado o deploy.
+
+8. **Pré-extrair PDFs para Markdown e versionar os `.md`.** Elimina a dependência de Docling (~2 GB de modelos ML) no container de produção, resolve o problema de RAM na VPS e torna o pipeline de ingestão determinístico — o indexer só faz chunking + indexação, sem extração.
+
+9. **Rate limits de APIs gratuitas são um bloqueio real em avaliação.** O Groq free tier (1.5K calls/24h) é suficiente para desenvolvimento e piloto, mas insuficiente para rodar RAGAS (pipeline RAG + LLM juiz = ~190 chamadas). Solução: flag `--scores-only` para separar as duas fases e minimizar chamadas desperdiçadas.
+
+10. **Ground truths devem vir dos documentos reais, não de paráfrases.** Extrair literalmente dos `.md` gerados pelos PDFs do MS garante que o RAGAS avalia contra a fonte primária, não contra interpretações. Isso será importante na defesa do TCC.
+
+11. **Testar a integração com frameworks externos antes de rodar a avaliação completa.** O RAGAS falhou em dois pontos independentes: embeddings padrão OpenAI e API `EvaluationResult.get()`. Um teste com 2–3 perguntas antes de executar 36 + 152 chamadas ao LLM teria revelado ambos os bugs sem gastar o rate limit diário do Groq.
 
 ---
 
