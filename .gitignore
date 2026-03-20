@@ -9,6 +9,9 @@ server.log
 # PDFs do MS — não versionar documentos do Ministério da Saúde
 docs/protocolos/*.pdf
 
+# Resultados de avaliação RAGAS — gerados, não versionados
+eval/results/
+
 # Documentos de arquitetura internos
 Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v0.md
 Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v1.md

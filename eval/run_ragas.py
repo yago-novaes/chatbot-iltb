@@ -114,7 +114,7 @@ def _run_ragas(records: list[dict]) -> dict:
         "ground_truth": [r["ground_truth"] for r in records],
     })
 
-    # Usa Groq como LLM avaliador (compatível com interface OpenAI)
+    # LLM avaliador: Groq via interface OpenAI-compatible
     evaluator_llm = ChatOpenAI(
         model=settings.llm_model,
         openai_api_key=settings.llm_api_key,
@@ -122,9 +122,14 @@ def _run_ragas(records: list[dict]) -> dict:
         temperature=0,
     )
 
-    # Embeddings para answer_relevancy — usa o mesmo modelo local via sentence-transformers
-    # Se Groq não suportar embeddings via API, o RAGAS usa o modelo padrão (OpenAI text-embedding)
-    # Nesse caso, context_precision e answer_relevancy podem falhar sem chave OpenAI
+    # Embeddings: usa sentence-transformers local (mesmo modelo do pipeline de produção)
+    # Evita dependência de chave OpenAI para calcular answer_relevancy
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    from ragas.embeddings import LangchainEmbeddingsWrapper
+
+    evaluator_embeddings = LangchainEmbeddingsWrapper(
+        HuggingFaceEmbeddings(model_name=settings.embedding_model)
+    )
 
     print("\nCalculando métricas RAGAS (pode levar alguns minutos)...")
     try:
@@ -132,13 +137,13 @@ def _run_ragas(records: list[dict]) -> dict:
             dataset=dataset,
             metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
             llm=evaluator_llm,
+            embeddings=evaluator_embeddings,
         )
     except Exception as e:
         print(f"\nERRO ao executar RAGAS: {e}")
         print("Possíveis causas:")
-        print("  - Rate limit do Groq durante avaliação (muitas chamadas ao LLM)")
-        print("  - Métricas que exigem embeddings precisam de chave OpenAI separada")
-        print("  - Tente rodar com um subconjunto menor de perguntas")
+        print("  - Rate limit do Groq durante avaliação (muitas chamadas simultâneas ao LLM)")
+        print("  - Incompatibilidade de versão do RAGAS com Python 3.14")
         raise
 
     return result
@@ -148,9 +153,18 @@ def _print_summary(result) -> dict:
     targets = {"faithfulness": 0.80, "context_precision": 0.75}
     scores = {}
 
+    # RAGAS 0.4: EvaluationResult suporta acesso via result[key] ou result.scores
+    # Tenta ambas as formas para compatibilidade com versões diferentes
+    def _get_score(name: str):
+        try:
+            val = result[name]
+            return val if val is not None else None
+        except (KeyError, TypeError):
+            return None
+
     print("\n=== Resultados RAGAS ===")
     for metric_name in ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]:
-        val = result.get(metric_name)
+        val = _get_score(metric_name)
         if val is None:
             continue
         score = round(float(val), 4)
@@ -183,29 +197,53 @@ def _check_fallback(out_of_scope: list[dict]):
 
 
 def main():
-    print("=== Avaliação RAGAS — Chatbot ILTB ===\n")
-    _check_prerequisites()
-
-    in_scope, out_of_scope = _load_test_set()
-
-    print("\nExecutando pipeline RAG para cada pergunta...")
-    records = asyncio.run(_collect_results(in_scope))
-
-    print("\nSalvando resultados detalhados...")
-    RESULTS_DIR.mkdir(exist_ok=True)
-    (RESULTS_DIR / "ragas_detailed.json").write_text(
-        json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8"
+    import argparse
+    parser = argparse.ArgumentParser(description="Avaliação RAGAS — Chatbot ILTB")
+    parser.add_argument(
+        "--scores-only",
+        action="store_true",
+        help="Recalcula apenas as métricas RAGAS usando ragas_detailed.json já salvo. "
+             "Útil quando o pipeline RAG já foi executado mas a avaliação falhou (ex: TPD esgotado).",
     )
+    args = parser.parse_args()
+
+    print("=== Avaliação RAGAS — Chatbot ILTB ===\n")
+
+    if args.scores_only:
+        detailed_path = RESULTS_DIR / "ragas_detailed.json"
+        if not detailed_path.exists():
+            print(f"ERRO: {detailed_path} não encontrado. Execute sem --scores-only primeiro.")
+            sys.exit(1)
+        records = json.loads(detailed_path.read_text(encoding="utf-8"))
+        print(f"Carregados {len(records)} registros de {detailed_path}")
+        # Verifica apenas o LLM (não precisa de collection para recalcular métricas)
+        if settings.llm_provider == "mock" or settings.llm_api_key in ("mock", "", None):
+            print("ERRO: LLM está em modo mock. Configure LLM_PROVIDER e LLM_API_KEY no .env.")
+            sys.exit(1)
+    else:
+        _check_prerequisites()
+        in_scope, out_of_scope = _load_test_set()
+
+        print("\nExecutando pipeline RAG para cada pergunta...")
+        records = asyncio.run(_collect_results(in_scope))
+
+        print("\nSalvando resultados detalhados...")
+        RESULTS_DIR.mkdir(exist_ok=True)
+        (RESULTS_DIR / "ragas_detailed.json").write_text(
+            json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     result = _run_ragas(records)
     scores = _print_summary(result)
 
+    RESULTS_DIR.mkdir(exist_ok=True)
     (RESULTS_DIR / "ragas_scores.json").write_text(
         json.dumps(scores, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     print(f"\nResultados salvos em {RESULTS_DIR}/")
 
-    _check_fallback(out_of_scope)
+    if not args.scores_only:
+        _check_fallback(out_of_scope)
 
 
 if __name__ == "__main__":
