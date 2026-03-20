@@ -23,7 +23,12 @@ def extract_markdown(pdf_path: Path) -> str:
     """
     Converte um PDF para Markdown estruturado.
     Preserva títulos (## / ###), tabelas e parágrafos — compatível com o chunker existente.
+    Retorna string vazia em caso de erro (ex.: std::bad_alloc em PDFs grandes).
     """
     logger.info("Extraindo PDF: %s", pdf_path.name)
-    result = _get_converter().convert(str(pdf_path))
-    return result.document.export_to_markdown()
+    try:
+        result = _get_converter().convert(str(pdf_path))
+        return result.document.export_to_markdown()
+    except Exception as e:
+        logger.error("Falha ao extrair %s: %s", pdf_path.name, e)
+        return ""

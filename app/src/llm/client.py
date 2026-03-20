@@ -10,6 +10,18 @@ from openai import AsyncOpenAI
 from app.src.config import settings
 from app.src.llm.prompts import SYSTEM_PROMPT
 
+_client: AsyncOpenAI | None = None
+
+
+def _get_client() -> AsyncOpenAI:
+    global _client
+    if _client is None:
+        _client = AsyncOpenAI(
+            api_key=settings.llm_api_key,
+            base_url=settings.llm_base_url or None,
+        )
+    return _client
+
 
 def _build_messages(context: str, question: str, history: List[dict] | None = None) -> List[dict]:
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -40,11 +52,7 @@ async def generate(context: str, question: str, history: List[dict] | None = Non
         return _mock_response(question, context)
 
     try:
-        client = AsyncOpenAI(
-            api_key=settings.llm_api_key,
-            base_url=settings.llm_base_url or None,
-        )
-        response = await client.chat.completions.create(
+        response = await _get_client().chat.completions.create(
             model=settings.llm_model,
             messages=_build_messages(context, question, history),
             temperature=settings.llm_temperature,

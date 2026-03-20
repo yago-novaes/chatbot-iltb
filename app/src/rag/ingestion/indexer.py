@@ -6,17 +6,13 @@ import logging
 from pathlib import Path
 
 import chromadb
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
 from app.src.config import settings
+from app.src.rag.embeddings import embedding_fn
 from app.src.rag.ingestion.chunker import split_by_sections
 from app.src.rag.ingestion.pdf_extractor import extract_markdown
 
 logger = logging.getLogger(__name__)
-
-_embedding_fn = SentenceTransformerEmbeddingFunction(
-    model_name=settings.embedding_model
-)
 
 
 def _get_client() -> chromadb.PersistentClient:
@@ -25,7 +21,7 @@ def _get_client() -> chromadb.PersistentClient:
 
 def collection_exists() -> bool:
     try:
-        _get_client().get_collection(settings.chroma_collection, embedding_function=_embedding_fn)
+        _get_client().get_collection(settings.chroma_collection, embedding_function=embedding_fn)
         return True
     except Exception:
         return False
@@ -62,7 +58,7 @@ def ingest_documents(docs_path: str | None = None) -> int:
 
     collection = client.create_collection(
         name=settings.chroma_collection,
-        embedding_function=_embedding_fn,
+        embedding_function=embedding_fn,
         metadata={"hnsw:space": "cosine"},
     )
 
@@ -70,6 +66,9 @@ def ingest_documents(docs_path: str | None = None) -> int:
     for file in files:
         logger.info("Processando: %s", file.name)
         text = _load_text(file)
+        if not text:
+            logger.warning("  Ignorando %s — extração retornou texto vazio", file.name)
+            continue
         chunks = split_by_sections(text, settings.chunk_size)
         for i, chunk in enumerate(chunks):
             ids.append(f"{file.stem}_{i}")
