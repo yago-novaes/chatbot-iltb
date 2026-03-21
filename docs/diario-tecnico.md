@@ -648,6 +648,70 @@ Enquanto não há um LLM juiz melhor disponível, a única forma de obter scores
 
 ---
 
+### 2.9 Tentativa — Google Gemini Flash como LLM Juiz ❌
+
+**Motivação:** o Groq free tier tem três bloqueadores para o RAGAS (n>1 não suportado, TPM 6K, 8b subestima faithfulness). O Google Gemini Flash tem free tier com 1.500 req/dia e 1M tokens/min, e é compatível com a interface OpenAI via endpoint `/v1beta/openai`.
+
+**Implementação:** adicionados campos `RAGAS_LLM_*` ao `config.py` e ao `.env`. O `run_ragas.py` detecta `settings.ragas_llm_api_key` e usa um LLM juiz dedicado, diferente do LLM de produção. Quando configurado, o `RunConfig` usa `max_workers=4` (paralelismo total).
+
+Variáveis adicionadas ao `.env`:
+```env
+RAGAS_LLM_PROVIDER=gemini
+RAGAS_LLM_API_KEY=AIzaSy...
+RAGAS_LLM_MODEL=gemini-2.0-flash-lite
+RAGAS_LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai
+```
+
+**Modelos testados (em ordem):**
+
+| Modelo | Resultado | Erro |
+|---|---|---|
+| `gemini-2.0-flash` | ❌ | `RESOURCE_EXHAUSTED: limit: 0` — free tier quota = 0 |
+| `gemini-1.5-flash` | ❌ | `404 Not Found` — modelo não disponível nesta versão do endpoint |
+| `gemini-2.0-flash-lite` | ❌ | `RESOURCE_EXHAUSTED: limit: 0` — mesmo erro |
+
+**Erro completo:**
+```
+RESOURCE_EXHAUSTED: 429 Resource has been exhausted.
+GenerateRequestsPerDayPerProjectPerModel-FreeTier
+quota_limit { limit: 0 }
+```
+
+**Diagnóstico:** o erro `limit: 0` indica que o projeto Google Cloud associado a esta chave API não tem quota free tier ativa para a API Gemini. Isso ocorre quando:
+1. A conta Google não ativou a API Gemini no projeto correto, ou
+2. O projeto está em região sem free tier (alguns países não têm acesso), ou
+3. A conta nunca concluiu o processo de ativação do Gemini API Studio
+
+**Não é um bug do código** — a configuração está correta. É uma limitação da conta/projeto Google. Para resolver: acessar Google AI Studio (aistudio.google.com), criar um novo projeto, gerar uma nova API key e testar diretamente com `curl`.
+
+**Tentativa 2 — chave do AI Studio + `gemini-flash-latest`:**
+
+A chave do AI Studio funcionou na API nativa (`gemini-flash-latest` → `gemini-3-flash-preview`). Atualizado `.env` para usar esse model name. Resultado:
+
+| Modelo | TPM | **TPD** | n>1 | Conclusão |
+|---|---|---|---|---|
+| `gemini-2.0-flash` | — | **0** | — | quota zero na conta |
+| `gemini-2.0-flash-lite` | — | **0** | — | quota zero na conta |
+| `gemini-flash-latest` (`gemini-3-flash-preview`) | 5/min | **20/dia** | ❌ | 20 req/dia → apenas ~1,5 perguntas avaliadas |
+
+**Diagnóstico final:** `gemini-3-flash` é um modelo preview com limites extremamente restritivos (20 req/dia). Para 38 perguntas × 4 métricas = 152 jobs, seriam necessários **8 dias** de quota acumulada. Inviável.
+
+Problemas adicionais identificados:
+- `faithfulness` timeout (120s) — modelo preview é mais lento que modelos estáveis
+- `n > 1` não suportado — `answer_relevancy` = N/A (igual ao Groq)
+
+**Conclusão definitiva sobre Gemini:** nenhum modelo Gemini acessível com esta chave/conta tem quota free tier suficiente para o RAGAS completo.
+
+**Próxima alternativa — OpenAI gpt-4o-mini:**
+Custo estimado: ~$0,05 para 38 perguntas × 4 métricas. Suporta `n > 1` (resolve `answer_relevancy`), sem TPM restritivo, sem TPD limitante. O `run_ragas.py` já suporta sem nenhuma alteração — basta configurar:
+```env
+RAGAS_LLM_API_KEY=sk-...
+RAGAS_LLM_MODEL=gpt-4o-mini
+RAGAS_LLM_BASE_URL=   # vazio = usa endpoint padrão OpenAI
+```
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -708,6 +772,8 @@ Enquanto não há um LLM juiz melhor disponível, a única forma de obter scores
 **Status:** não iniciado. Aguardando:
 1. Aprovação da Meta Business (conta WhatsApp Business verificada)
 2. Deploy na VPS com HTTPS (Meta exige HTTPS para webhook)
+
+**Decisão 📌 (2026-03-21):** movido para Fase 4. O webhook exige HTTPS público com certificado válido — não faz sentido desenvolver antes de ter VPS + Nginx + Certbot rodando. Testar localmente com ngrok é possível mas adiciona complexidade desnecessária para o TCC.
 
 ---
 
@@ -808,14 +874,15 @@ volumes:
 ### Fase 3 (Backend) — parcialmente completa
 
 - [ ] **Session manager**: histórico de conversa em memória (dict por `session_id`)
-- [ ] **Webhook Meta/WhatsApp**: rota `GET /webhook` (verificação) + `POST /webhook` (recebimento de mensagens)
 
 ### Fase 4 (Piloto Hetzner) — próxima
 
+- [ ] **Segurança Docker + UFW**: bind de portas em `127.0.0.1` no docker-compose.yml — Docker ignora UFW via iptables direto ✅ corrigido em `infra/docker-compose.yml`
 - [ ] **Provisionar CX22**: criar conta Hetzner, provisionar servidor Ubuntu 22.04
 - [ ] **UFW firewall**: liberar apenas 22 (SSH), 80 (HTTP→HTTPS redirect), 443 (HTTPS)
 - [ ] **Nginx + Certbot**: HTTPS obrigatório para webhook Meta
 - [ ] **Clonar repo + `docker-compose up`**: deploy inicial
+- [ ] **Webhook Meta/WhatsApp**: implementar após Nginx + Certbot estarem rodando (Meta exige HTTPS público para verificação)
 - [ ] **Testes com enfermeiras**: aprovação do CEP necessária
 
 ### Fase 5 (Produção) — futura
@@ -860,6 +927,8 @@ volumes:
 
 15. **Modelo LLM menor como juiz RAGAS pode subestimar faithfulness.** O `llama-3.1-8b-instant` retornou faithfulness 0.389, um valor que parece baixo para um pipeline que respondeu 12/12 perguntas corretamente na validação manual. O modelo 8b tem dificuldade em raciocinar sobre alinhamento entre afirmação e contexto — tarefa que exige capacidade de raciocínio mais avançada. Para o gate definitivo do TCC, usar gpt-4o-mini ou outro modelo mais capaz como juiz.
 
+16. **Gemini free tier na prática é inadequado para RAGAS.** A chave do AI Studio acessa `gemini-3-flash-preview` (20 req/dia), enquanto modelos estáveis (`gemini-2.0-flash`, `gemini-2.0-flash-lite`) têm `quota: 0` em contas sem histórico de uso. Para qualquer avaliação com mais de ~5 jobs, o free tier Gemini é bloqueador. OpenAI gpt-4o-mini (~$0,05 para o RAGAS completo) é a alternativa viável e definitiva.
+
 ---
 
-*Última atualização: 2026-03-21 (primeiros scores RAGAS válidos)*
+*Última atualização: 2026-03-21 (Gemini descartado; recomendação: OpenAI gpt-4o-mini para gate RAGAS)*

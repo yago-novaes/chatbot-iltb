@@ -119,7 +119,7 @@ def _run_ragas(records: list[dict]) -> dict:
         eval_api_key = settings.ragas_llm_api_key
         eval_model = settings.ragas_llm_model or "gemini-2.0-flash"
         eval_base_url = settings.ragas_llm_base_url or None
-        # Provider dedicado (ex: Gemini): sem restrições de TPM restritivas — pode paralelizar
+        # Provider dedicado (ex: OpenAI gpt-4o-mini): suporta n>1 e paralelismo
         run_config = RunConfig(timeout=120, max_retries=3, max_workers=4)
         print(f"LLM juiz: {eval_model} (provider dedicado — max_workers=4)")
     else:
