@@ -628,6 +628,24 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2265'
 
 **Impacto no pipeline de produção:** zero. A troca de LLM juiz afeta apenas `eval/run_ragas.py` — o chatbot continua usando Groq/llama em produção.
 
+#### Workaround atual com Groq — `--max-questions 12`
+
+Enquanto não há um LLM juiz melhor disponível, a única forma de obter scores válidos com o Groq free tier é limitar o número de perguntas avaliadas:
+
+```bash
+.venv/Scripts/python -m eval.run_ragas --scores-only --max-questions 12
+```
+
+**Por que 12 e não 38?** Com `max_workers=1` (sequencial) e ~1.200 tokens por job:
+- 12 perguntas × 4 métricas = 48 jobs × ~1.200 tokens = **~57.600 tokens total**
+- Tempo estimado: ~15 min, média ~64 tokens/s — abaixo do TPM de 100 tokens/s (6K/min)
+- 38 perguntas × 4 métricas = 152 jobs × ~1.200 tokens = **~182.400 tokens total**
+- A picos de ~4 jobs simultâneos (mesmo com `max_workers=1`, o executor pode fazer bursts curtos), o TPM de 6K é excedido com facilidade
+
+**Limitação desta abordagem:** 12 perguntas é um subconjunto não-aleatório (primeiras 12 do `ragas_detailed.json`, que são da categoria `esquemas_terapeuticos` e início de `monitoramento`). Os scores obtidos não cobrem todas as categorias do test set — `interacoes_medicamentosas`, `populacoes_especiais`, `diagnostico` etc. ficam de fora. Os resultados são orientativos, não conclusivos para o gate do TCC.
+
+**Recomendação:** usar `--max-questions 12` apenas para desenvolvimento e validação rápida. O gate definitivo (Faithfulness >= 0.80, Context Precision >= 0.75 sobre as 38 perguntas) deve ser executado com o novo LLM provider.
+
 ---
 
 ## FASE 3 — Backend FastAPI
