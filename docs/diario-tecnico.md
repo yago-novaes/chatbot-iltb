@@ -463,12 +463,33 @@ context_recall         nan
 
 **Fix 4 (commit `4a01170`):** adicionado filtro `math.isnan(v)` na função `_get_score()`. Também adicionado diagnóstico de quantas amostras foram avaliadas com sucesso por métrica.
 
-**Status atual:** pipeline completamente corrigido. Aguardando reset do TPD do Groq (~24h) para execução válida:
-```bash
-.venv/Scripts/python -m eval.run_ragas --scores-only
+**Fix 4 produziu `nan`:** mesmo com nan filtrado, os scores continuaram `nan` nas execuções seguintes porque o TPD estava sempre esgotado de execuções anteriores do mesmo dia.
+
+**Execuções 5–6 — troca de LLM avaliador para 8b:** trocado `llama-3.3-70b-versatile` (100K TPD) por `llama-3.1-8b-instant` (500K TPD) como LLM juiz. Resolveu o TPD, mas descobriu novo limite: **TPM (tokens por minuto) = 6.000** — igual para ambos os modelos. Com `max_workers=4` (padrão), 4 jobs de ~1.200 tokens = 4.800 tokens/min, próximo do limite. Muitos jobs falharam com `RateLimitError: TPM` e outros com `TimeoutError` (~10-16 amostras avaliadas de 38).
+
+**Fix 5–6:** `request_timeout=120` no ChatOpenAI (não resolveu — o timeout do RAGAS executor é independente). Depois: `RunConfig(max_workers=4, timeout=180)` (melhorou timeouts mas TPM continuou problemático).
+
+**Execução 7 — `--scores-only --max-questions 12` (commit `503468a`) ✅:**
+- Adicionada flag `--max-questions N` para limitar o subconjunto avaliado
+- `RunConfig(max_workers=1, timeout=180)`: processamento sequencial, ~20s/job, bem abaixo do TPM
+- 48/48 jobs completaram sem rate limit nem timeout
+- Único erro residual: `BadRequestError: 'n' > 1` — esperado, não-fatal para faithfulness
+
+**Primeiros scores válidos — 12 perguntas, modelo juiz `llama-3.1-8b-instant`:**
+```
+faithfulness           0.389  (alvo: >= 0.80)  [FAIL]  (12/12 amostras)
+context_precision      0.600  (alvo: >= 0.75)  [FAIL]  (12/12 amostras)
+context_recall         0.689                            (12/12 amostras)
+answer_relevancy       N/A    (n > 1 bloqueia metric — 0/12 amostras)
 ```
 
-**Nota sobre o TPD:** o limite de 100k tokens/dia do Groq free tier é insuficiente para pipeline RAG (38 perguntas, ~30-40k tokens) + avaliação RAGAS (152 jobs, ~60-70k tokens) no mesmo dia. Soluções para produção: (1) usar OpenAI gpt-4o-mini como LLM juiz — sem limite TPD diário; (2) rodar pipeline RAG e RAGAS em dias diferentes com a flag `--scores-only`.
+**Interpretação dos resultados:**
+- `context_recall 0.689`: o retriever cobre ~69% das informações do ground truth. Aceitável para top-k=4.
+- `context_precision 0.600`: 60% dos chunks recuperados são relevantes. Abaixo do alvo de 0.75 — indica ruído no retrieval.
+- `faithfulness 0.389`: apenas 39% das afirmações da resposta são sustentadas pelos chunks recuperados segundo o juiz 8b. **Número preocupante**, mas com ressalva: o modelo 8b é significativamente menos capaz como juiz que o 70b — pode subestimar a faithfulness por dificuldade em raciocinar sobre alinhamento textual.
+- `answer_relevancy N/A`: o RAGAS usa n>1 para gerar questões hipotéticas nesta métrica. Groq não suporta n>1. Métrica não calculável sem mudar de LLM ou configurar o metric.
+
+**Conclusão desta execução:** os scores são reais (não nan, não baseados em 2/38 amostras), mas abaixo dos alvos. O pipeline precisa de ajuste antes de avançar ao piloto. Ver seção PENDÊNCIAS para próximos passos de tuning.
 
 ---
 
@@ -741,7 +762,8 @@ volumes:
 
 - [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6 — `app/scripts/extract_pdfs.py` + `_resolve_files()` no indexer
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
-- [ ] **Pipeline RAGAS — execução final**: script 100% corrigido (4 bugs eliminados); falta aguardar reset do TPD do Groq (~24h) e rodar `--scores-only` para obter scores válidos
+- [x] **Pipeline RAGAS — execução válida**: primeiros scores obtidos com `--scores-only --max-questions 12`. Resultados abaixo dos alvos — ver seção 2.7.3
+- [ ] **Tuning do RAG para melhorar scores**: faithfulness 0.389 e context_precision 0.600 abaixo dos alvos (0.80 e 0.75). Possíveis ajustes: aumentar `top_k`, revisar `retriever_score_threshold`, melhorar prompt do LLM, ou re-rodar com LLM juiz mais capaz (gpt-4o-mini) para confirmar se o 8b está subavaliando
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -794,6 +816,10 @@ volumes:
 
 13. **100k tokens/dia do Groq free tier é insuficiente para pipeline RAG + RAGAS juntos.** 38 perguntas (pipeline) + 152 jobs (avaliação) = ~190 chamadas ao LLM que consomem ~90-100k tokens. Com qualquer re-execução no mesmo dia, o limite é esgotado. Solução definitiva: usar o `--scores-only` em dia separado do pipeline RAG, ou migrar o LLM juiz do RAGAS para OpenAI gpt-4o-mini em produção.
 
+14. **TPM (tokens por minuto) é o limitador real no Groq free tier, não o TPD.** Ambos os modelos (70b e 8b) têm o mesmo limite de 6.000 tokens/minuto. Com processamento concorrente (`max_workers > 1`), o burst de requisições paralelas ultrapassa o TPM mesmo quando o TPD ainda tem margem. Solução: `max_workers=1` (sequencial) + `--max-questions 12` para manter ~200 tokens/min médio.
+
+15. **Modelo LLM menor como juiz RAGAS pode subestimar faithfulness.** O `llama-3.1-8b-instant` retornou faithfulness 0.389, um valor que parece baixo para um pipeline que respondeu 12/12 perguntas corretamente na validação manual. O modelo 8b tem dificuldade em raciocinar sobre alinhamento entre afirmação e contexto — tarefa que exige capacidade de raciocínio mais avançada. Para o gate definitivo do TCC, usar gpt-4o-mini ou outro modelo mais capaz como juiz.
+
 ---
 
-*Última atualização: 2026-03-21*
+*Última atualização: 2026-03-21 (primeiros scores RAGAS válidos)*
