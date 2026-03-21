@@ -95,7 +95,7 @@ def _run_ragas(records: list[dict]) -> dict:
     try:
         from datasets import Dataset
         from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-        from ragas import evaluate
+        from ragas import RunConfig, evaluate
         from ragas.metrics import (
             answer_relevancy,
             context_precision,
@@ -114,13 +114,19 @@ def _run_ragas(records: list[dict]) -> dict:
         "ground_truth": [r["ground_truth"] for r in records],
     })
 
-    # LLM avaliador: Groq via interface OpenAI-compatible
+    # LLM avaliador: modelo menor (8b) para caber no TPD do Groq free tier (500K/dia)
+    # O pipeline RAG de produção usa llama-3.3-70b-versatile (100K/dia — insuficiente para 152 jobs)
+    # llama-3.1-8b-instant: 500K tokens/dia, 14.4K req/dia — 5x mais margem
+    EVALUATOR_MODEL = "llama-3.1-8b-instant"
     evaluator_llm = ChatOpenAI(
-        model=settings.llm_model,
+        model=EVALUATOR_MODEL,
         openai_api_key=settings.llm_api_key,
         openai_api_base=settings.llm_base_url or None,
         temperature=0,
+        request_timeout=120,  # padrão ~30s causa TimeoutError no free tier sob carga
+        max_retries=2,
     )
+    print(f"LLM avaliador: {EVALUATOR_MODEL} (TPD: 500K tokens/dia)")
 
     # Embeddings: usa sentence-transformers local (mesmo modelo do pipeline de produção)
     # Evita dependência de chave OpenAI para calcular answer_relevancy
@@ -131,6 +137,11 @@ def _run_ragas(records: list[dict]) -> dict:
         HuggingFaceEmbeddings(model_name=settings.embedding_model)
     )
 
+    # RunConfig: processamento sequencial para respeitar TPM do Groq free tier (6K tokens/min)
+    # max_workers=1: evita burst de tokens que causa RateLimitError por TPM
+    # timeout=180: 3 min por job — margem para retries e latência do free tier
+    run_config = RunConfig(timeout=180, max_retries=3, max_workers=1)
+
     print("\nCalculando métricas RAGAS (pode levar alguns minutos)...")
     try:
         result = evaluate(
@@ -138,6 +149,7 @@ def _run_ragas(records: list[dict]) -> dict:
             metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
             llm=evaluator_llm,
             embeddings=evaluator_embeddings,
+            run_config=run_config,
         )
     except Exception as e:
         print(f"\nERRO ao executar RAGAS: {e}")
@@ -239,6 +251,15 @@ def main():
         help="Recalcula apenas as métricas RAGAS usando ragas_detailed.json já salvo. "
              "Útil quando o pipeline RAG já foi executado mas a avaliação falhou (ex: TPD esgotado).",
     )
+    parser.add_argument(
+        "--max-questions",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Limita a avaliação RAGAS às primeiras N perguntas. "
+             "Útil para caber no TPM do Groq free tier (6K tokens/min). "
+             "Recomendado: --max-questions 12 (48 jobs, ~57K tokens total).",
+    )
     args = parser.parse_args()
 
     print("=== Avaliação RAGAS — Chatbot ILTB ===\n")
@@ -266,6 +287,10 @@ def main():
         (RESULTS_DIR / "ragas_detailed.json").write_text(
             json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8"
         )
+
+    if args.max_questions and args.max_questions < len(records):
+        print(f"Limitando avaliação a {args.max_questions}/{len(records)} perguntas (--max-questions).")
+        records = records[:args.max_questions]
 
     result = _run_ragas(records)
     scores = _print_summary(result)
