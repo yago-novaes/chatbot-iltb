@@ -608,6 +608,28 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2265'
 
 ---
 
+### 2.8 Decisão — Trocar LLM Provider para Avaliação RAGAS 📌
+
+**Motivação:** após 7 execuções consecutivas do RAGAS, ficou claro que o Groq free tier é inadequado como LLM juiz de avaliação:
+
+| Limitação | Impacto |
+|---|---|
+| TPD 100K tokens/dia (70b) | Esgota com pipeline RAG + RAGAS no mesmo dia |
+| TPM 6K tokens/min (ambos) | Força processamento sequencial (`max_workers=1`) |
+| Não suporta `n > 1` | Bloqueia completamente `answer_relevancy` |
+| 8b subestima faithfulness | Score 0.389 provavelmente não reflete qualidade real |
+
+**Conclusão:** o Groq é adequado para o pipeline RAG de produção (baixa latência, gratuito, suficiente para 5 enfermeiras), mas inadequado como LLM juiz do RAGAS — a avaliação exige um modelo mais capaz e com limites de API mais generosos.
+
+**Próximo passo:** buscar alternativa para o LLM juiz da avaliação. Candidatos:
+- **OpenAI gpt-4o-mini**: $0,15/1M tokens input — ~$0,05 para 38 perguntas × 4 métricas. Suporta `n > 1`, sem TPM restritivo. O `run_ragas.py` já suporta via `LLM_BASE_URL` vazio + `LLM_API_KEY` OpenAI.
+- **Google Gemini Flash**: free tier generoso (1.500 req/dia, 1M tokens/min) — compatível com interface OpenAI via `openai_api_base`.
+- **Outro modelo Groq**: `gemma2-9b-it` tem 15K TPM e suporta melhor raciocínio que o 8b instant.
+
+**Impacto no pipeline de produção:** zero. A troca de LLM juiz afeta apenas `eval/run_ragas.py` — o chatbot continua usando Groq/llama em produção.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
