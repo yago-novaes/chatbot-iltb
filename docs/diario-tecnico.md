@@ -429,24 +429,46 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 ---
 
-#### 2.7.3 Primeira Execução — Sequência de Bugs ⚠️
+#### 2.7.3 Execuções — Sequência de Bugs e Status ⚠️
 
-**Pipeline RAG:** rodou com sucesso para as 36 perguntas in-scope. `ragas_detailed.json` salvo com respostas, contextos e ground truths.
+**Execução 1 — pipeline RAG:** rodou com sucesso para as 36 perguntas in-scope. `ragas_detailed.json` salvo com respostas, contextos e ground truths. RAGAS completou **152/152 steps**, mas travou em `_print_summary()` com `AttributeError: 'EvaluationResult' object has no attribute 'get'` — `ragas_scores.json` não salvo.
 
-**RAGAS evaluation:** rodou **152/152 steps** (100% completo), mas com muitos avisos de rate limit em chamadas individuais — o RAGAS retenta automaticamente e foi até o fim.
+**Fix 1 (commit `f08557b`):** `result.get(metric_name)` → `result[metric_name]`. Adicionada flag `--scores-only` para reutilizar `ragas_detailed.json` sem re-executar pipeline RAG.
 
-**Crash no último passo:** após a avaliação completar, o script travou em `_print_summary()`:
+**Execução 2 — `--scores-only`:** RAGAS completou **152/152 steps**, mas novo crash:
 ```
-AttributeError: 'EvaluationResult' object has no attribute 'get'
+TypeError: float() argument must be a string or a real number, not 'list'
 ```
-`ragas_scores.json` **não foi salvo** — a avaliação completou em memória mas o crash aconteceu antes da persistência.
+Causa: RAGAS 0.4 retorna `result["faithfulness"]` como lista de scores por amostra, não float. A média precisa ser calculada manualmente.
 
-**Fix aplicado (commit `f08557b`):** substituído `result.get(metric_name)` por `result[metric_name]` (RAGAS 0.4 usa acesso por índice, não `.get()`). Adicionada flag `--scores-only` para reutilizar `ragas_detailed.json` sem re-executar o pipeline RAG.
+**Fix 2 (commit `4a01170` parcial):** `_get_score()` agora calcula média da lista, filtrando `None`.
 
-**Próximo passo:** após reset do rate limit do Groq (~24h), rodar:
+**Execução 3 — `--scores-only`:** RAGAS completou **152/152 steps**, mas novo crash:
+```
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2265'
+```
+Causa: caractere `≥` não suportado pelo encoding CP1252 do terminal Windows.
+
+**Fix 3:** substituído `≥` por `>=` em todas as strings de output.
+
+**Execução 4 — `--scores-only`:** RAGAS completou **152/152 steps**, script chegou ao final sem crash. Porém todos os scores retornaram `nan`:
+```
+faithfulness           nan  (alvo: >= 0.8)  [FAIL]
+answer_relevancy       nan
+context_precision      nan  (alvo: >= 0.75)  [FAIL]
+context_recall         nan
+```
+
+**Causa do `nan`:** o TPD do Groq (100k tokens/24h) estava esgotado pelas execuções anteriores do mesmo dia (`Used ~99.7k`). Quase todos os 152 jobs falharam com `RateLimitError`, e o RAGAS preenche scores falhados com `float('nan')`. A média de uma lista inteiramente `nan` retorna `nan`. O filtro `v is not None` não excluía `float('nan')`.
+
+**Fix 4 (commit `4a01170`):** adicionado filtro `math.isnan(v)` na função `_get_score()`. Também adicionado diagnóstico de quantas amostras foram avaliadas com sucesso por métrica.
+
+**Status atual:** pipeline completamente corrigido. Aguardando reset do TPD do Groq (~24h) para execução válida:
 ```bash
-python -m eval.run_ragas --scores-only
+.venv/Scripts/python -m eval.run_ragas --scores-only
 ```
+
+**Nota sobre o TPD:** o limite de 100k tokens/dia do Groq free tier é insuficiente para pipeline RAG (38 perguntas, ~30-40k tokens) + avaliação RAGAS (152 jobs, ~60-70k tokens) no mesmo dia. Soluções para produção: (1) usar OpenAI gpt-4o-mini como LLM juiz — sem limite TPD diário; (2) rodar pipeline RAG e RAGAS em dias diferentes com a flag `--scores-only`.
 
 ---
 
@@ -515,6 +537,53 @@ AttributeError: 'EvaluationResult' object has no attribute 'get'
 **Impacto:** avaliação completa (152 steps), resultado em memória — mas `ragas_scores.json` não salvo por crash no `_print_summary`.
 
 **Fix:** `result.get(metric_name)` → `result[metric_name]` (com try/except para KeyError).
+
+---
+
+#### 2.7.5 Bugs Adicionais Descobertos nas Execuções 2–4 ❌
+
+##### `result["metric"]` retorna lista, não float ❌
+
+**Sintoma:**
+```
+TypeError: float() argument must be a string or a real number, not 'list'
+```
+
+**Contexto:** RAGAS 0.4 `EvaluationResult` armazena scores por amostra como lista — `result["faithfulness"]` retorna `[0.87, 0.92, 0.76, ...]`. Não há propriedade `.mean` automática.
+
+**Fix:** função `_get_score()` reformulada para calcular média manualmente:
+```python
+if isinstance(val, list):
+    valid = [v for v in val if v is not None and not math.isnan(v)]
+    return sum(valid) / len(valid) if valid else None
+```
+
+---
+
+##### `float('nan')` em jobs falhados não é filtrado por `v is not None` ❌
+
+**Sintoma:** todos os scores exibidos como `nan` mesmo após fix da lista.
+
+**Causa:** quando um job RAGAS falha (rate limit, timeout), o score daquela amostra é preenchido com `float('nan')`, não `None`. O filtro `v is not None` era True para `nan` — `nan` passa o teste, contamina a média.
+
+**Fix:** adicionado `and not (isinstance(v, float) and math.isnan(v))` ao filtro.
+
+**Aprendizado:** em Python, `float('nan') is not None` é `True`. Qualquer agregação numérica que não filtra explicitamente `nan` propaga silenciosamente o valor indefinido.
+
+---
+
+##### `≥` causa `UnicodeEncodeError` no terminal Windows ❌
+
+**Sintoma:**
+```
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2265'
+```
+
+**Causa:** terminal Windows usa encoding CP1252 por padrão. O caractere `≥` (U+2265) não está no conjunto de caracteres CP1252.
+
+**Fix:** substituído `≥` por `>=` nas strings de output. Alternativa mais robusta (não aplicada para manter simplicidade): `PYTHONUTF8=1` na variável de ambiente ou `sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')`.
+
+**Nota para TCC:** na VPS Linux com locale UTF-8, esse problema não ocorre. Exclusivo do ambiente Windows dev.
 
 ---
 
@@ -672,7 +741,7 @@ volumes:
 
 - [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6 — `app/scripts/extract_pdfs.py` + `_resolve_files()` no indexer
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
-- [ ] **Pipeline RAGAS — execução final**: `ragas_detailed.json` salvo com as 36 respostas; falta rodar `--scores-only` após reset do rate limit do Groq
+- [ ] **Pipeline RAGAS — execução final**: script 100% corrigido (4 bugs eliminados); falta aguardar reset do TPD do Groq (~24h) e rodar `--scores-only` para obter scores válidos
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -719,8 +788,12 @@ volumes:
 
 10. **Ground truths devem vir dos documentos reais, não de paráfrases.** Extrair literalmente dos `.md` gerados pelos PDFs do MS garante que o RAGAS avalia contra a fonte primária, não contra interpretações. Isso será importante na defesa do TCC.
 
-11. **Testar a integração com frameworks externos antes de rodar a avaliação completa.** O RAGAS falhou em dois pontos independentes: embeddings padrão OpenAI e API `EvaluationResult.get()`. Um teste com 2–3 perguntas antes de executar 36 + 152 chamadas ao LLM teria revelado ambos os bugs sem gastar o rate limit diário do Groq.
+11. **Testar a integração com frameworks externos antes de rodar a avaliação completa.** O RAGAS falhou em quatro pontos independentes em execuções consecutivas: API `.get()`, retorno de lista vs float, `nan` não filtrado por `is not None`, e encoding CP1252. Um teste com 2–3 perguntas teria revelado todos sem gastar o TPD diário.
+
+12. **`float('nan')` não é `None` em Python.** Em contextos numéricos com APIs externas que retornam `nan` para jobs falhados, sempre filtrar explicitamente com `math.isnan()`. O filtro `v is not None` é insuficiente.
+
+13. **100k tokens/dia do Groq free tier é insuficiente para pipeline RAG + RAGAS juntos.** 38 perguntas (pipeline) + 152 jobs (avaliação) = ~190 chamadas ao LLM que consomem ~90-100k tokens. Com qualquer re-execução no mesmo dia, o limite é esgotado. Solução definitiva: usar o `--scores-only` em dia separado do pipeline RAG, ou migrar o LLM juiz do RAGAS para OpenAI gpt-4o-mini em produção.
 
 ---
 
-*Última atualização: 2026-03-20*
+*Última atualização: 2026-03-21*
