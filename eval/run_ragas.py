@@ -153,34 +153,68 @@ def _print_summary(result) -> dict:
     targets = {"faithfulness": 0.80, "context_precision": 0.75}
     scores = {}
 
-    # RAGAS 0.4: EvaluationResult suporta acesso via result[key] ou result.scores
-    # Tenta ambas as formas para compatibilidade com versões diferentes
+    # RAGAS 0.4: result[key] retorna lista de scores por amostra (não float agregado)
+    # É necessário calcular a média manualmente, ignorando None e nan (jobs que falharam)
+    import math
+
     def _get_score(name: str):
         try:
             val = result[name]
-            return val if val is not None else None
+            if val is None:
+                return None
+            if isinstance(val, list):
+                valid = [
+                    v for v in val
+                    if v is not None and not (isinstance(v, float) and math.isnan(v))
+                ]
+                return sum(valid) / len(valid) if valid else None
+            v = float(val)
+            return None if math.isnan(v) else v
         except (KeyError, TypeError):
             return None
 
+    # Diagnóstico: quantas amostras foram avaliadas com sucesso por métrica
+    def _valid_count(name: str) -> int:
+        try:
+            val = result[name]
+            if not isinstance(val, list):
+                return 0
+            return sum(
+                1 for v in val
+                if v is not None and not (isinstance(v, float) and math.isnan(v))
+            )
+        except (KeyError, TypeError):
+            return 0
+
+    total = len(records) if hasattr(result, '__len__') else "?"
+
     print("\n=== Resultados RAGAS ===")
+    any_score = False
     for metric_name in ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]:
         val = _get_score(metric_name)
+        n_valid = _valid_count(metric_name)
         if val is None:
+            print(f"  {metric_name:<22} N/A  (0/{total} amostras avaliadas — rate limit)")
             continue
+        any_score = True
         score = round(float(val), 4)
         scores[metric_name] = score
         target = targets.get(metric_name)
         if target:
             status = "PASS" if score >= target else "FAIL"
-            print(f"  {metric_name:<22} {score:.3f}  (alvo: ≥ {target})  [{status}]")
+            print(f"  {metric_name:<22} {score:.3f}  (alvo: >= {target})  [{status}]  ({n_valid}/{total} amostras)")
         else:
-            print(f"  {metric_name:<22} {score:.3f}")
+            print(f"  {metric_name:<22} {score:.3f}  ({n_valid}/{total} amostras)")
     print("=" * 40)
+
+    if not any_score:
+        print("\nNenhum score calculado — rate limit esgotado. Aguarde o reset do TPD (~24h) e rode --scores-only novamente.")
+        return scores
 
     passed = all(
         scores.get(k, 0) >= v for k, v in targets.items() if k in scores
     )
-    print(f"\n{'APROVADO — pipeline pronto para piloto.' if passed else 'REPROVADO — ajustes necessários antes do piloto.'}")
+    print(f"\n{'APROVADO - pipeline pronto para piloto.' if passed else 'REPROVADO - ajustes necessarios antes do piloto.'}")
     return scores
 
 
