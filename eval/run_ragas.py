@@ -114,19 +114,28 @@ def _run_ragas(records: list[dict]) -> dict:
         "ground_truth": [r["ground_truth"] for r in records],
     })
 
-    # LLM avaliador: modelo menor (8b) para caber no TPD do Groq free tier (500K/dia)
-    # O pipeline RAG de produção usa llama-3.3-70b-versatile (100K/dia — insuficiente para 152 jobs)
-    # llama-3.1-8b-instant: 500K tokens/dia, 14.4K req/dia — 5x mais margem
-    EVALUATOR_MODEL = "llama-3.1-8b-instant"
+    # LLM juiz: usa RAGAS_LLM_* do .env se configurado, senão cai no LLM de produção
+    if settings.ragas_llm_api_key:
+        eval_api_key = settings.ragas_llm_api_key
+        eval_model = settings.ragas_llm_model or "gemini-2.0-flash"
+        eval_base_url = settings.ragas_llm_base_url or None
+        # Provider dedicado (ex: Gemini): sem restrições de TPM restritivas — pode paralelizar
+        run_config = RunConfig(timeout=120, max_retries=3, max_workers=4)
+        print(f"LLM juiz: {eval_model} (provider dedicado — max_workers=4)")
+    else:
+        # Fallback: Groq free tier — TPM 6K tokens/min exige processamento sequencial
+        eval_api_key = settings.llm_api_key
+        eval_model = "llama-3.1-8b-instant"
+        eval_base_url = settings.llm_base_url or None
+        run_config = RunConfig(timeout=180, max_retries=3, max_workers=1)
+        print(f"LLM juiz: {eval_model} (Groq fallback — max_workers=1, TPM restritivo)")
+
     evaluator_llm = ChatOpenAI(
-        model=EVALUATOR_MODEL,
-        openai_api_key=settings.llm_api_key,
-        openai_api_base=settings.llm_base_url or None,
+        model=eval_model,
+        openai_api_key=eval_api_key,
+        openai_api_base=eval_base_url,
         temperature=0,
-        request_timeout=120,  # padrão ~30s causa TimeoutError no free tier sob carga
-        max_retries=2,
     )
-    print(f"LLM avaliador: {EVALUATOR_MODEL} (TPD: 500K tokens/dia)")
 
     # Embeddings: usa sentence-transformers local (mesmo modelo do pipeline de produção)
     # Evita dependência de chave OpenAI para calcular answer_relevancy
@@ -136,11 +145,6 @@ def _run_ragas(records: list[dict]) -> dict:
     evaluator_embeddings = LangchainEmbeddingsWrapper(
         HuggingFaceEmbeddings(model_name=settings.embedding_model)
     )
-
-    # RunConfig: processamento sequencial para respeitar TPM do Groq free tier (6K tokens/min)
-    # max_workers=1: evita burst de tokens que causa RateLimitError por TPM
-    # timeout=180: 3 min por job — margem para retries e latência do free tier
-    run_config = RunConfig(timeout=180, max_retries=3, max_workers=1)
 
     print("\nCalculando métricas RAGAS (pode levar alguns minutos)...")
     try:

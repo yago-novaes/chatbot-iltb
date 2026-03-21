@@ -35,5 +35,12 @@ class Settings(BaseSettings):
     whatsapp_access_token: str = ""
     whatsapp_phone_number_id: str = ""
 
+    # RAGAS evaluator — LLM juiz (pode ser diferente do LLM de produção)
+    # Se vazio, usa o LLM de produção como fallback
+    ragas_llm_provider: str = ""
+    ragas_llm_api_key: str = ""
+    ragas_llm_model: str = ""
+    ragas_llm_base_url: str = ""
+
 
 settings = Settings()
