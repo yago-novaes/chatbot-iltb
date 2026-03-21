@@ -712,6 +712,69 @@ RAGAS_LLM_BASE_URL=   # vazio = usa endpoint padrão OpenAI
 
 ---
 
+### 2.10 Avaliação Definitiva — gpt-4o-mini como LLM Juiz ✅
+
+**Data:** 2026-03-21
+
+**Objetivo:** primeira avaliação RAGAS completa com juiz capaz (gpt-4o-mini), cobrindo todas as 38 perguntas in-scope.
+
+**Pré-condições:**
+- LLM juiz: `gpt-4o-mini` via `RAGAS_LLM_*` no `.env`
+- `RAGAS_LLM_BASE_URL` vazio → endpoint padrão OpenAI
+- `RunConfig(max_workers=4, timeout=180, max_retries=3)` — sem rate limit restritivo
+- 152/152 jobs completados em ~6,5 min
+
+**Descoberta crítica — threshold 0.50 excluía 4 perguntas:**
+
+Antes de obter scores válidos, foi identificado que `retriever_score_threshold=0.50` filtrava completamente 4 perguntas legítimas:
+
+| ID | Categoria | Score máx do retriever |
+|---|---|---|
+| ET-05 | esquemas_terapeuticos | 0.482 |
+| IM-01 | interacoes_medicamentosas | 0.473 |
+| IM-03 | interacoes_medicamentosas | 0.466 |
+| DI-04 | diagnostico | 0.447 |
+
+Com `contexts=[]`, RAGAS atribuía score zero nessas 4 amostras em todas as métricas, derrubando as médias.
+
+**Decisão:** threshold reduzido de 0.50 para **0.40** em `app/src/config.py`. Justificativa: as perguntas sobre interações medicamentosas e diagnóstico usam terminologia técnica específica que o modelo de embedding multilíngue não captura tão bem quanto perguntas sobre esquemas terapêuticos numericamente específicos. O threshold de 0.40 ainda exige relevância mínima e descarta perguntas completamente fora do escopo.
+
+**Resultados — avaliação completa (38/38 amostras, juiz gpt-4o-mini):**
+
+```
+faithfulness           0.375  (alvo: >= 0.80)  [FAIL]  (38/38 amostras)
+answer_relevancy       0.310                            (38/38 amostras)
+context_precision      0.548  (alvo: >= 0.75)  [FAIL]  (38/38 amostras)
+context_recall         0.382                            (38/38 amostras)
+```
+
+**Análise dos resultados:**
+
+| Métrica | Score | Interpretação |
+|---|---|---|
+| `context_recall` 0.382 | ⚠️ baixo | Retriever cobre apenas 38% das informações do ground truth. Com top_k=4 e chunks grandes, documentos com informação distribuída em múltiplas seções têm recall baixo. |
+| `faithfulness` 0.375 | ⚠️ baixo | Só 37.5% das afirmações da resposta sustentadas pelos chunks. Correlacionado com o recall baixo — se o contexto não tem a informação, o LLM pode complementar com conhecimento interno. |
+| `context_precision` 0.548 | ⚠️ moderado | 54.8% dos chunks recuperados são relevantes. Sem filtro por relevância além do threshold, noise é inevitável para algumas categorias. |
+| `answer_relevancy` 0.310 | ❓ suspeito | Métrica projetada para inglês — gpt-4o-mini pode gerar questões sintéticas em inglês ao avaliar respostas em português, causando similaridade cossenoidal baixa no modelo multilíngue. Valor provavelmente subestimado por limitação metodológica. |
+
+**Hipóteses para scores baixos:**
+
+1. **top_k=4 é insuficiente para perguntas multi-documento.** Perguntas sobre interações medicamentosas exigem informação de múltiplas seções de múltiplos protocolos. Com 4 chunks, muita informação relevante fica de fora.
+
+2. **Ground truths muito detalhados vs. respostas focadas.** Os ground truths foram extraídos literalmente dos documentos (seções completas). O pipeline gera respostas mais concisas — context_recall penaliza respostas que não cobrem 100% do ground truth verbatim.
+
+3. **Limitação multilíngue do RAGAS.** O framework foi projetado e validado para inglês. `answer_relevancy` usa LLM para gerar perguntas hipotéticas — se o juiz gera em inglês, a similaridade cossenoidal com perguntas originais em português será artificialmente baixa.
+
+**Próximos passos para melhorar scores:**
+
+1. **Aumentar `top_k` de 4 para 6 ou 8** — recuperar mais chunks por pergunta aumenta recall
+2. **Revisar ground truths** — truncar para respostas mais focadas (não seções completas)
+3. **Melhorar prompt do LLM** — instruir o LLM a incluir mais detalhes do contexto
+
+**Arquivo de resultados:** `eval/results/ragas_scores.json` (scores definitivos) + `eval/results/ragas_detailed.json` (respostas + contextos de todas as 38 perguntas).
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -868,8 +931,9 @@ volumes:
 
 - [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6 — `app/scripts/extract_pdfs.py` + `_resolve_files()` no indexer
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
-- [x] **Pipeline RAGAS — execução válida**: primeiros scores obtidos com `--scores-only --max-questions 12`. Resultados abaixo dos alvos — ver seção 2.7.3
-- [ ] **Tuning do RAG para melhorar scores**: faithfulness 0.389 e context_precision 0.600 abaixo dos alvos (0.80 e 0.75). Possíveis ajustes: aumentar `top_k`, revisar `retriever_score_threshold`, melhorar prompt do LLM, ou re-rodar com LLM juiz mais capaz (gpt-4o-mini) para confirmar se o 8b está subavaliando
+- [x] **Pipeline RAGAS — execução válida com juiz gpt-4o-mini**: avaliação completa (38/38 amostras) concluída — ver seção 2.10
+- [x] **Threshold ajustado para 0.40**: 4 perguntas de interações medicamentosas e diagnóstico excluídas com threshold 0.50; corrigido para 0.40 — ver seção 2.10
+- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Próximos passos: (1) aumentar `top_k` de 4 para 6–8, (2) revisar ground truths do test set, (3) melhorar prompt LLM para incluir mais detalhes do contexto
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -927,8 +991,10 @@ volumes:
 
 15. **Modelo LLM menor como juiz RAGAS pode subestimar faithfulness.** O `llama-3.1-8b-instant` retornou faithfulness 0.389, um valor que parece baixo para um pipeline que respondeu 12/12 perguntas corretamente na validação manual. O modelo 8b tem dificuldade em raciocinar sobre alinhamento entre afirmação e contexto — tarefa que exige capacidade de raciocínio mais avançada. Para o gate definitivo do TCC, usar gpt-4o-mini ou outro modelo mais capaz como juiz.
 
-16. **Gemini free tier na prática é inadequado para RAGAS.** A chave do AI Studio acessa `gemini-3-flash-preview` (20 req/dia), enquanto modelos estáveis (`gemini-2.0-flash`, `gemini-2.0-flash-lite`) têm `quota: 0` em contas sem histórico de uso. Para qualquer avaliação com mais de ~5 jobs, o free tier Gemini é bloqueador. OpenAI gpt-4o-mini (~$0,05 para o RAGAS completo) é a alternativa viável e definitiva.
+16. **Score threshold muito alto exclui perguntas legítimas de terminologia técnica.** O threshold de 0.50 é adequado para perguntas sobre esquemas terapêuticos (score ~0.75), mas muito restritivo para interações medicamentosas e diagnóstico (score ~0.44–0.48). A terminologia clínica específica (nomes de fármacos, siglas de exames) tem menor similaridade vetorial que termos mais gerais. Para avaliação completa, 0.40 é mais adequado.
+
+17. **Gemini free tier na prática é inadequado para RAGAS.** A chave do AI Studio acessa `gemini-3-flash-preview` (20 req/dia), enquanto modelos estáveis (`gemini-2.0-flash`, `gemini-2.0-flash-lite`) têm `quota: 0` em contas sem histórico de uso. Para qualquer avaliação com mais de ~5 jobs, o free tier Gemini é bloqueador. OpenAI gpt-4o-mini (~$0,05 para o RAGAS completo) é a alternativa viável e definitiva.
 
 ---
 
-*Última atualização: 2026-03-21 (Gemini descartado; recomendação: OpenAI gpt-4o-mini para gate RAGAS)*
+*Última atualização: 2026-03-21 (avaliação RAGAS completa com gpt-4o-mini: faithfulness=0.375, context_precision=0.548 — tuning necessário)*

@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     docs_path: str = "./docs/protocolos"
     chunk_size: int = 800
     retriever_top_k: int = 4
-    retriever_score_threshold: float = 0.50
+    retriever_score_threshold: float = 0.40
 
     # Session (Phase 2)
     session_max_messages: int = 10
