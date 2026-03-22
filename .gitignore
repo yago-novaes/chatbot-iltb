@@ -9,8 +9,8 @@ server.log
 # PDFs do MS — não versionar documentos do Ministério da Saúde
 docs/protocolos/*.pdf
 
-# Resultados de avaliação RAGAS — gerados, não versionados
-eval/results/
+# Resultados de avaliação RAGAS — ragas_detailed.json é grande/gerado; scores são versionados
+eval/results/ragas_detailed.json
 
 # Documentos de arquitetura internos
 Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v0.md

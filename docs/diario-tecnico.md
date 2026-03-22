@@ -775,6 +775,47 @@ context_recall         0.382                            (38/38 amostras)
 
 ---
 
+### 2.11 Experimento — Contextual Chunking ❌ Descartado
+
+**Data:** 2026-03-21
+
+**Hipótese:** chunks "órfãos" — subseções sem título pai no texto — causam baixo recall porque o embedding não sabe a qual droga/protocolo pertence. Por exemplo: `### Gestantes` sem o contexto `## 3.1 Isoniazida` no texto do chunk faz a busca por "Isoniazida gestante" não encontrar esse chunk.
+
+**Abordagem testada:** prefixar cada chunk com a hierarquia de cabeçalhos pai extraída do documento. Exemplo:
+
+```
+## 3.1 Isoniazida > ### Gestantes
+
+### Gestantes
+Gestantes com ILTB devem receber isoniazida...
+```
+
+**Implementação:** nova função `split_by_sections_contextual()` em `chunker.py` que rastreia o cabeçalho pai durante o split e prefixo no início de cada chunk filho.
+
+**Configurações testadas:**
+
+| Config | top_k | threshold | faithfulness | answer_relevancy | context_precision | context_recall |
+|---|---|---|---|---|---|---|
+| Baseline (original) | 4 | 0.40 | **0.375** | **0.310** | **0.548** | **0.382** |
+| Contextual, top_k=6 | 6 | 0.50 | 0.347 | 0.214 | 0.477 | 0.265 |
+| Contextual, top_k=6 | 6 | 0.40 | 0.180 | 0.143 | 0.388 | 0.204 |
+
+**Resultado:** todas as métricas pioraram em ambas as configurações. O contextual chunking **degradou** o pipeline.
+
+**Análise do fracasso:**
+
+O modelo `paraphrase-multilingual-MiniLM-L12-v2` produz embeddings semânticos de 384 dimensões. Ao prefixar o chunk com `## 3.1 Isoniazida > ### Gestantes\n\n`, o vetor resultante é uma média ponderada da semântica do título + semântica do conteúdo real. Para chunks pequenos (< 200 tokens), o título representa 20–40% do texto total — dilui o embedding com strings de navegação estrutural, não com conteúdo clínico.
+
+Modelos como `text-embedding-3-large` (OpenAI) têm 3072 dimensões e são treinados para ignorar noise estrutural — suportam contextual chunking bem. O MiniLM-L12 com 384 dimensões é sensível a qualquer texto adicionado ao chunk.
+
+**Decisão:** revertido para o chunker original. A hipótese de chunks órfãos como causa do baixo recall está **rejeitada** — ou não é o fator dominante neste pipeline.
+
+**Causa provável do baixo recall:** ground truths contêm seções completas do documento (até 800 tokens), enquanto as respostas do LLM são concisas (~200 tokens). O RAGAS `context_recall` mede se os chunks recuperados contêm a informação do ground truth — mas se o ground truth for uma seção completa e a resposta cobrir só parte dela, o score é penalizado.
+
+**Próximo experimento a tentar:** truncar ground truths para respostas focadas (3–5 sentenças) antes de rodar RAGAS novamente.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -933,7 +974,7 @@ volumes:
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
 - [x] **Pipeline RAGAS — execução válida com juiz gpt-4o-mini**: avaliação completa (38/38 amostras) concluída — ver seção 2.10
 - [x] **Threshold ajustado para 0.40**: 4 perguntas de interações medicamentosas e diagnóstico excluídas com threshold 0.50; corrigido para 0.40 — ver seção 2.10
-- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Próximos passos: (1) aumentar `top_k` de 4 para 6–8, (2) revisar ground truths do test set, (3) melhorar prompt LLM para incluir mais detalhes do contexto
+- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking testado e descartado (seção 2.11). Próximos passos: (1) revisar ground truths para respostas focadas, (2) aumentar `top_k` de 4 para 6–8, (3) melhorar prompt LLM para incluir mais detalhes do contexto
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -994,6 +1035,10 @@ volumes:
 16. **Score threshold muito alto exclui perguntas legítimas de terminologia técnica.** O threshold de 0.50 é adequado para perguntas sobre esquemas terapêuticos (score ~0.75), mas muito restritivo para interações medicamentosas e diagnóstico (score ~0.44–0.48). A terminologia clínica específica (nomes de fármacos, siglas de exames) tem menor similaridade vetorial que termos mais gerais. Para avaliação completa, 0.40 é mais adequado.
 
 17. **Gemini free tier na prática é inadequado para RAGAS.** A chave do AI Studio acessa `gemini-3-flash-preview` (20 req/dia), enquanto modelos estáveis (`gemini-2.0-flash`, `gemini-2.0-flash-lite`) têm `quota: 0` em contas sem histórico de uso. Para qualquer avaliação com mais de ~5 jobs, o free tier Gemini é bloqueador. OpenAI gpt-4o-mini (~$0,05 para o RAGAS completo) é a alternativa viável e definitiva.
+
+18. **Contextual chunking prejudica modelos de embedding com poucas dimensões.** Prefixar chunks com hierarquia de títulos (`## Seção > ### Subseção`) dilui embeddings de modelos com 384 dimensões (MiniLM-L12). O vetor resultante mistura semântica estrutural com semântica clínica, reduzindo a precisão da busca. A técnica funciona bem com modelos de alta dimensionalidade (≥ 1536D) como `text-embedding-3-large`. Para este pipeline, o chunker semântico por cabeçalhos sem prefixo é superior.
+
+19. **Ground truths muito longos subestimam context_recall.** Se os ground truths forem seções completas do documento (até 800 tokens), o RAGAS penaliza respostas concisas mesmo que corretas — a resposta cobre 30% do ground truth verbatim, mesmo sendo clinicamente correta. Ground truths ideais para avaliação clínica são respostas focadas de 3–5 sentenças, não extratos completos de documento.
 
 ---
 
