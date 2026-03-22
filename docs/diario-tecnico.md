@@ -816,6 +816,46 @@ Modelos como `text-embedding-3-large` (OpenAI) têm 3072 dimensões e são trein
 
 ---
 
+### 2.12 Investigação dos Ground Truths + Bloqueador Groq TPM ⚠️
+
+**Data:** 2026-03-21
+
+**Contexto:** com scores RAGAS abaixo dos gates (faithfulness 0.375, context_recall 0.382), a hipótese levantada foi que os ground truths eram extratos literais de seções completas dos documentos (300-800 tokens), penalizando a concisão das respostas.
+
+**Descoberta:** hipótese **incorreta**. Os ground truths no `eval/test_set.json` já estavam concisamente formatados (13–66 palavras cada), não havia seções completas sendo usadas como referência.
+
+**Análise real por ground truth:**
+
+| ID | Situação |
+|---|---|
+| ET-07 | Ground truth descreve dose pediátrica para pergunta sobre dose adulta — **corrigido** |
+| PE-07 | Source_document errado (GEDIIB) — a info sobre 4R contraindicado em PVHIV está em `recomendacoes-para-o-controle-da-tuberculose.md` — **corrigido** |
+| IM-01, IM-03 | Interações rifampicina+contraceptivos e isoniazida+fenitoína: clinicamente corretos, mas a seção 6.3 do Manual não foi extraída na indexação — retrieval sempre retorna 0 chunks com alta similaridade |
+| Demais (34/36) | Ground truths já adequados |
+
+**Correções aplicadas em `eval/test_set.json`:**
+- ET-07: Ground truth agora descreve dose adulta corretamente ("5 a 10 mg/kg/dia, máx 300 mg/dia") e explica diferença 6H vs 9H
+- PE-07: Ground truth agora menciona a contraindicação 4R para PVHIV em PI/integrase; source_document corrigido
+
+**Tentativa de re-execução do pipeline — bloqueada por Groq TPM:**
+
+Após confirmar que Groq estava ativo (teste manual bem-sucedido), o pipeline completo foi iniciado. Apenas ET-01 e ET-02 obtiveram respostas válidas antes do 429 (Rate Limit):
+
+- Groq free tier: **6.000 tokens/minuto** para modelos 70B
+- Prompt médio por pergunta: ~1.500 tokens (contexto + instrução + pergunta)
+- Com `SLEEP_BETWEEN_CALLS = 2s`, é possível fazer no máximo 4 chamadas antes de exaurir o TPM
+- Para 38 perguntas com ~1.500 tokens cada, seria necessário sleep de **~15 segundos** entre chamadas
+
+**Status:** `ragas_scores.json` restaurado para os scores válidos da avaliação com gpt-4o-mini (0.375/0.310/0.548/0.382). O `ragas_detailed.json` atual é inválido (36/38 respostas são mensagens de erro do Groq).
+
+**Causa raiz do baixo context_recall identificada:** a hipótese de ground truths longos está **descartada**. A causa real é a limitação do retriever:
+1. IM-01 e IM-03 referenciam conteúdo não extraído na indexação (seção 6.3 do Manual)
+2. Perguntas multi-documento (interações medicamentosas) exigem informação distribuída em múltiplos chunks — top_k=4 pode ser insuficiente
+
+**Próximos experimentos:** aumentar `top_k` de 4 para 6–8, ou aumentar `SLEEP_BETWEEN_CALLS` para 15s e re-rodar pipeline com Groq livre de TPM (usar horário de baixo uso).
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -974,7 +1014,7 @@ volumes:
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
 - [x] **Pipeline RAGAS — execução válida com juiz gpt-4o-mini**: avaliação completa (38/38 amostras) concluída — ver seção 2.10
 - [x] **Threshold ajustado para 0.40**: 4 perguntas de interações medicamentosas e diagnóstico excluídas com threshold 0.50; corrigido para 0.40 — ver seção 2.10
-- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking testado e descartado (seção 2.11). Próximos passos: (1) revisar ground truths para respostas focadas, (2) aumentar `top_k` de 4 para 6–8, (3) melhorar prompt LLM para incluir mais detalhes do contexto
+- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking descartado (seção 2.11). Ground truths investigados e corrigidos em ET-07 e PE-07 (seção 2.12) — hipótese de GT longos refutada. Causa real: seção 6.3 do Manual não extraída + retriever top_k insuficiente. Próximos passos: (1) aumentar `top_k` de 4 para 6–8, (2) re-rodar pipeline com sleep 15s entre chamadas (Groq TPM ~6K tok/min)
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -1038,8 +1078,10 @@ volumes:
 
 18. **Contextual chunking prejudica modelos de embedding com poucas dimensões.** Prefixar chunks com hierarquia de títulos (`## Seção > ### Subseção`) dilui embeddings de modelos com 384 dimensões (MiniLM-L12). O vetor resultante mistura semântica estrutural com semântica clínica, reduzindo a precisão da busca. A técnica funciona bem com modelos de alta dimensionalidade (≥ 1536D) como `text-embedding-3-large`. Para este pipeline, o chunker semântico por cabeçalhos sem prefixo é superior.
 
-19. **Ground truths muito longos subestimam context_recall.** Se os ground truths forem seções completas do documento (até 800 tokens), o RAGAS penaliza respostas concisas mesmo que corretas — a resposta cobre 30% do ground truth verbatim, mesmo sendo clinicamente correta. Ground truths ideais para avaliação clínica são respostas focadas de 3–5 sentenças, não extratos completos de documento.
+19. **Verificar ground truths contra os documentos indexados antes de culpar o retriever.** A hipótese de "ground truths muito longos causando baixo context_recall" foi refutada na seção 2.12 — os ground truths já eram concisamente formatados (13-66 palavras). A causa real foi outra: alguns ground truths referenciam conteúdo não extraído na indexação (seção 6.3 do Manual de Recomendações — tabelas de interações medicamentosas), e outros tinham source_document incorreto. Verificar se o conteúdo do ground truth está nos chunks indexados é o primeiro passo de diagnóstico, antes de investir em refatoração.
+
+20. **Embedding local é decisão de segurança, não apenas de conveniência.** Apesar de limitar técnicas avançadas como contextual chunking, o modelo `MiniLM-L12-v2` local garante que queries clínicas das enfermeiras não saem da infraestrutura controlada antes da busca vetorial — requisito de conformidade com LGPD em contexto hospitalar. Modelos via API (OpenAI, Cohere) exigiriam anonimização prévia das queries, adicionando complexidade e ponto de falha. Migração para modelo local de maior dimensionalidade (`multilingual-e5-base`, 768D) mapeada para Fase 5.
 
 ---
 
-*Última atualização: 2026-03-21 (avaliação RAGAS completa com gpt-4o-mini: faithfulness=0.375, context_precision=0.548 — tuning necessário)*
+*Última atualização: 2026-03-21 (investigação de ground truths — hipótese de GT longos refutada; correções ET-07 e PE-07 aplicadas; re-run bloqueado por Groq TPM)*

@@ -50,10 +50,10 @@
   {
     "id": "ET-07",
     "question": "Qual a dose de isoniazida para adultos no esquema 6H?",
-    "ground_truth": "No esquema 6H pediátrico, a isoniazida é administrada na dose de 10 mg/kg/dia, com dose máxima de 300 mg/dia. Para adultos, o esquema disponível no SUS com isoniazida é o 9H (9 meses), especialmente indicado para PVHIV.",
+    "ground_truth": "Para adultos, a dose de isoniazida nos esquemas 6H e 9H é de 5 a 10 mg/kg/dia, com dose máxima de 300 mg/dia. O esquema 6H contempla 180 doses (6 a 9 meses) e o 9H contempla 270 doses (9 a 12 meses). O esquema 9H protege mais que o 6H e deve ser preferido sempre que houver boa adesão.",
     "category": "esquemas_terapeuticos",
-    "source_document": "GEDIIB_TratamentoTuberculose.md",
-    "source_section": "3) Tratamento da Tuberculose infecção"
+    "source_document": "recomendacoes-para-o-controle-da-tuberculose.md",
+    "source_section": "Quadro 2 - Esquema de tratamento da ILTB"
   },
   {
     "id": "MO-01",
@@ -186,10 +186,10 @@
   {
     "id": "PE-07",
     "question": "Qual esquema usar para paciente com HIV?",
-    "ground_truth": "Para pessoas vivendo com HIV, o esquema 9H (isoniazida por 9 meses) apresenta maior eficácia quando comparado ao esquema de 6 meses. O esquema 9H é especialmente indicado para PVHIV. A contagem de CD4 ≤ 350 células/µL é um critério adicional para indicação de tratamento independente do resultado da PT.",
+    "ground_truth": "Para PVHIV, o esquema preferencial é a isoniazida (9H), pois o esquema 4R (rifampicina) está contraindicado em PVHIV em uso de inibidores de protease e integrase. O esquema 9H (270 doses, 9 a 12 meses) protege mais que o 6H. PVHIV com contagem de CD4 ≤ 350 células/µL têm indicação de tratamento para ILTB independentemente do resultado da PT ou IGRA.",
     "category": "populacoes_especiais",
-    "source_document": "GEDIIB_TratamentoTuberculose.md",
-    "source_section": "3) Tratamento da Tuberculose infecção"
+    "source_document": "recomendacoes-para-o-controle-da-tuberculose.md",
+    "source_section": "Quadro 2 - Esquema de tratamento da ILTB"
   },
   {
     "id": "DI-01",
