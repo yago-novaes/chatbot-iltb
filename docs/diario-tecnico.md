@@ -923,6 +923,8 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 **Metodologia:** auditoria baseada no sumário (TOC) extraído com pypdf dos dois PDFs grandes, cruzado com os cabeçalhos markdown (`##`, `###`) dos respectivos `.md` extraídos pelo Docling, seguida de verificação de presença de conteúdo clínico por busca de termos-chave.
 
+**Relatório completo:** [`docs/audit_ingestion.md`](audit_ingestion.md)
+
 ---
 
 #### Manual .md — Diagnóstico de Gaps
