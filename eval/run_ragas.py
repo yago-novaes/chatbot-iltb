@@ -28,7 +28,7 @@ EVAL_DIR = Path(__file__).parent
 TEST_SET = EVAL_DIR / "test_set.json"
 RESULTS_DIR = EVAL_DIR / "results"
 
-SLEEP_BETWEEN_CALLS = 2  # segundos — respeita rate limit do Groq free tier
+SLEEP_BETWEEN_CALLS = 15  # segundos — necessário para Groq TPM 6K tok/min com prompts de ~1500 tok
 
 
 def _check_prerequisites():

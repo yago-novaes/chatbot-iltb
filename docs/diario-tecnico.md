@@ -856,6 +856,65 @@ Após confirmar que Groq estava ativo (teste manual bem-sucedido), o pipeline co
 
 ---
 
+### 2.13 Patch Manual — Interações Medicamentosas + Limite TPD do Groq ⚠️
+
+**Data:** 2026-03-21
+
+**Contexto:** IM-01 ("Rifampicina tem interação com contraceptivos orais?") e IM-03 ("Isoniazida tem interação com fenitoína?") apresentavam context_recall baixo. A hipótese era que a seção 6.3 do Manual (Interações Medicamentosas, páginas 137–141) não havia sido extraída pelo Docling.
+
+**Diagnóstico — Cenário B confirmado:**
+
+O Docling falha com `std::bad_alloc` a partir da página 319 do PDF do Manual do MS. A seção 6.3 (páginas 137–141 do documento PDF mapeadas para páginas 319+ no índice do Docling) estava completamente ausente do `.md` extraído — nenhum conteúdo de interações medicamentosas indexado.
+
+Confirmado rodando Docling novamente: mesmo erro, mesmas páginas afetadas.
+
+**Solução aplicada:**
+
+1. Extração manual com `pypdf` (v6.8.0, já disponível no venv) nas páginas 138–141 do PDF
+2. Criação de `docs/protocolos/patch_interacoes_medicamentosas.md` com o conteúdo completo:
+   - Tabela: Interações da Isoniazida (11 fármacos)
+   - Seção detalhada: Isoniazida e Fenitoína — efeito é **Maior hepatotoxicidade** (não aumento de níveis plasmáticos como estava no GT)
+   - Tabela: Interações da Rifampicina (14 fármacos)
+   - Seção detalhada: Rifampicina e Contraceptivos Orais
+   - Seção detalhada: Rifampicina e Antirretrovirais em PVHIV
+   - Tabelas: Interações Etambutol e Pirazinamida
+   - Notas clínicas: limiares para suspensão por hepatotoxicidade + piridoxina
+
+3. **Correção IM-03:** ground truth corrigido de "inibe metabolismo da fenitoína, aumentando níveis plasmáticos" para "maior hepatotoxicidade — evitar uso concomitante" (alinhado com o Manual do MS)
+
+4. Re-indexação do ChromaDB: `chroma_db/` deletado, 928 chunks re-indexados incluindo o patch
+
+5. `SLEEP_BETWEEN_CALLS` ajustado de 2s para 15s no `eval/run_ragas.py` (necessário para respeitar TPM do Groq free tier: 6K tok/min com prompts de ~1.500 tok)
+
+**Verificação de indexação:** consulta `"interacoes medicamentosas rifampicina contraceptivos"` retorna `patch_interacoes_medicamentosas.md` como primeiro resultado — conteúdo indexado com sucesso.
+
+**Re-execução do pipeline — bloqueada por TPD (tokens por dia):**
+
+| Chamada | Status | Causa |
+|---|---|---|
+| ET-01, ET-02, ET-03, ET-05 | ✅ Sucesso | TPD ainda disponível |
+| ET-04 e demais (34/38) | ❌ 429 TPD | Limite diário de 100K tokens esgotado por execuções anteriores |
+
+Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 1159"`. O orçamento diário havia sido consumido pelas execuções anteriores (2s sleep run + re-runs do dia). Os scores calculados sobre 4/38 respostas válidas (faithfulness 0.086, etc.) **não são representativos** — `ragas_scores.json` restaurado para os valores válidos da avaliação com gpt-4o-mini.
+
+**Estado atual do pipeline (pronto para re-execução):**
+
+| Componente | Status |
+|---|---|
+| `patch_interacoes_medicamentosas.md` | ✅ Criado e indexado |
+| ChromaDB re-indexado (928 chunks) | ✅ |
+| IM-03 ground truth corrigido | ✅ |
+| `SLEEP_BETWEEN_CALLS = 15s` | ✅ |
+| `ragas_scores.json` | ⏳ Mantido nos valores válidos anteriores até re-execução |
+| Re-execução completa | ⏳ Aguardando reset do TPD do Groq (~24h) |
+
+**Previsão dos próximos scores (qualitativa):**
+- `context_recall`: deve subir (IM-01 e IM-03 agora têm contexto disponível)
+- `context_precision`: pode subir levemente (chunks mais relevantes para IM-*)
+- `faithfulness` e `answer_relevancy`: sem mudança esperada (dependem da qualidade de resposta do LLM, não do retriever)
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1014,7 +1073,7 @@ volumes:
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
 - [x] **Pipeline RAGAS — execução válida com juiz gpt-4o-mini**: avaliação completa (38/38 amostras) concluída — ver seção 2.10
 - [x] **Threshold ajustado para 0.40**: 4 perguntas de interações medicamentosas e diagnóstico excluídas com threshold 0.50; corrigido para 0.40 — ver seção 2.10
-- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking descartado (seção 2.11). Ground truths investigados e corrigidos em ET-07 e PE-07 (seção 2.12) — hipótese de GT longos refutada. Causa real: seção 6.3 do Manual não extraída + retriever top_k insuficiente. Próximos passos: (1) aumentar `top_k` de 4 para 6–8, (2) re-rodar pipeline com sleep 15s entre chamadas (Groq TPM ~6K tok/min)
+- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking descartado (seção 2.11). Ground truths corrigidos em ET-07, PE-07 e IM-03 (seções 2.12–2.13). Patch da seção 6.3 criado e indexado (seção 2.13). Re-run aguardando reset do TPD do Groq (~24h). Próximo passo: `python -m eval.run_ragas` após reset do TPD
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -1084,4 +1143,8 @@ volumes:
 
 ---
 
-*Última atualização: 2026-03-21 (investigação de ground truths — hipótese de GT longos refutada; correções ET-07 e PE-07 aplicadas; re-run bloqueado por Groq TPM)*
+21. **Groq TPD (tokens por dia) é o limitador em múltiplas re-execuções.** O free tier do Groq tem limite de 100.000 tokens/dia para modelos 70B. Com prompts de ~1.500 tokens, são apenas ~66 chamadas por dia. Runs que falham por TPM ainda consomem parte do orçamento diário. Após 2 runs falhos no mesmo dia, o TPD se esgota. Estratégia: monitorar tokens usados antes de iniciar o pipeline, ou usar o Groq apenas em dia com orçamento limpo.
+
+---
+
+*Última atualização: 2026-03-21 (patch seção 6.3 criado e indexado; IM-03 corrigido; SLEEP=15s; re-run bloqueado por TPD Groq)*

@@ -114,10 +114,10 @@
   {
     "id": "IM-03",
     "question": "Isoniazida tem interação com fenitoína?",
-    "ground_truth": "A isoniazida inibe o metabolismo da fenitoína, podendo aumentar seus níveis plasmáticos e o risco de toxicidade. Em pacientes em uso de fenitoína, deve-se monitorar sinais de toxicidade e, se necessário, ajustar a dose do anticonvulsivante.",
+    "ground_truth": "A isoniazida interage com fenilhidantoína (fenitoína), causando maior hepatotoxicidade. A recomendação do Ministério da Saúde é evitar o uso concomitante. Quando ambos os fármacos forem necessários, deve-se monitorar sintomas e enzimas hepáticas conforme indicado.",
     "category": "interacoes_medicamentosas",
     "source_document": "Manual de Recomendações para o controle da Tuberculose no Brasil.md",
-    "source_section": "Interações medicamentosas da isoniazida"
+    "source_section": "Interações medicamentosas da isoniazida — seção 6.3"
   },
   {
     "id": "IM-04",
