@@ -915,6 +915,108 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 ---
 
+### 2.14 Auditoria Proativa de Ingestão e Governança de Dados ✅
+
+**Data:** 2026-03-21
+
+**Motivação:** o patch da seção 6.3 (seção 2.13) revelou que a avaliação automatizada (RAGAS) não substitui a validação de integridade do dado bruto. O Docling falhou silenciosamente em páginas com tabelas complexas, e o gap só foi detectado porque perguntas específicas do test set apontaram context_recall zero. Seções críticas não cobertas pelo test set poderiam permanecer ausentes indefinidamente.
+
+**Metodologia:** auditoria baseada no sumário (TOC) extraído com pypdf dos dois PDFs grandes, cruzado com os cabeçalhos markdown (`##`, `###`) dos respectivos `.md` extraídos pelo Docling, seguida de verificação de presença de conteúdo clínico por busca de termos-chave.
+
+---
+
+#### Manual .md — Diagnóstico de Gaps
+
+**PDF:** `Manual de Recomendações para o controle da Tuberculose no Brasil.pdf` (366 páginas)
+
+**Estrutura do .md extraído:**
+
+| Região do .md | Conteúdo | Status |
+|---|---|---|
+| Posições 0–50k | TOC (sumário em tabela markdown) | ✅ Completo |
+| Posições 50k–120k | Parte I: Epidemiologia | ✅ Completo |
+| Posições 120k–193k | Parte II: Diagnóstico | ✅ Completo |
+| Posições 193k–210k | Parte III: somente seções 4.4.2–4.4.5 (Hepatopatias, Nefropatias, Diabetes, PVHIV) | ⚠️ Parcial |
+| Posições 210k–289k | Parte IV–V: Estratégias Programáticas + Bases Organizacionais | ✅ Completo |
+| Posições 289k–295k | Anexos (fichas SINAN, TDO) | ✅ Completo |
+
+**Seções ausentes do corpo do .md (confirmado por busca de termos-chave):**
+
+| Seção do PDF | Páginas PDF | Status no .md | Relevância para ILTB | Mitigação |
+|---|---|---|---|---|
+| Parte III, Seção 1–4.3: Introdução, Bases Farmacológicas, Escolha do Esquema, Esquema Básico (RHZE) | 97–111 | ❌ AUSENTE | Baixa (TB ativa, fora do escopo) | — |
+| Parte III, 4.4.1 Gestação (TB ativa) | 111–112 | ❌ AUSENTE | Baixa (TB ativa) | PE questions covered by `recomendacoes-para-o-controle-da-tuberculose.md` |
+| Parte III, Seção 5: Seguimento do Tratamento (TB ativa) | 122–126 | ❌ AUSENTE | Baixa (TB ativa) | — |
+| Parte III, 6.1 Reações Adversas ao Esquema Básico | 127–129 | ❌ AUSENTE | **Média** (EA questions) | piridoxina/neuropatia presente em `recomendacoes.md` + `patch_interacoes.md` |
+| Parte III, 6.2 Reações Adversas com ARV | 135–136 | ❌ AUSENTE | Baixa | Referências parciais presentes |
+| **Parte III, 6.3 Interações Medicamentosas** | **137–141** | **✅ PATCHEADO** | **Alta** | `patch_interacoes_medicamentosas.md` |
+| Parte III, Seção 7: TB Drogarresistente | 142–161 | Parcial | Muito baixa (fora do escopo) | — |
+| **Parte III, Seção 8: Tratamento da ILTB** | **163–169** | **❌ AUSENTE** | **Alta** | `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados (ver abaixo) |
+
+**Nota sobre a Seção 8 (ILTB):** a ausência é inesperada — as páginas 163–169 estão antes do limiar de `std::bad_alloc` identificado (página 319+). A causa provável é que o Docling falhou em partes intermediárias do documento (possível página com figura complexa) e pulou essas seções no modo de fallback.
+
+**Verificação de qualidade — tabelas nas seções presentes:**
+- **Seção 4.4.2 Hepatopatias (pos 193k):** Quadro 24 (condutas frente a hepatopatias) — tabela markdown ✅, TGO/TGP ≥ 5× LSN presente ✅
+- **Seção 4.4.3 Nefropatias:** Quadro 25 (cálculo clearance) — presente ✅
+- **Seção 4.4.5 PVHIV:** Quadro 26 (rifabutina com IP) — presente ✅
+- **Seção 8.1.2 Escore pediátrico:** Quadro 11 — presente ✅
+
+---
+
+#### Auditoria da Cobertura por Outras Fontes
+
+**`recomendacoes-para-o-controle-da-tuberculose.md`** (71K chars — documento principal ILTB da atenção básica):
+
+| Conteúdo | Presente |
+|---|---|
+| Isoniazida dose (5–10 mg/kg, máx 300mg/dia) | ✅ |
+| piridoxina 50 mg/dia para neuropatia | ✅ |
+| neuropatia periférica | ✅ |
+| gestantes + ILTB | ✅ (7 ocorrências) |
+| PVHIV / CD4 / antirretroviral | ✅ (12 ocorrências) |
+| PPD / IGRA | ✅ (9 ocorrências) |
+| imunossupressores / anti-TNF | ✅ (3 ocorrências) |
+| suspensão do tratamento | ✅ (5 ocorrências) |
+| hepatotoxicidade | ✅ |
+| 3HP (rifapentina) | ✅ |
+| 6H / 9H | ❌ (presentes em `af_protocolo_vigilancia_iltb` e `GEDIIB`) |
+| 26 Quadros clínicos | ✅ |
+
+**Conclusão:** `recomendacoes-para-o-controle-da-tuberculose.md` cobre a grande maioria do conteúdo clínico necessário para o escopo ILTB, incluindo os itens críticos ausentes do Manual .md. A ausência de "6H/9H" é compensada por `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` e `GEDIIB_TratamentoTuberculose.md`.
+
+---
+
+#### OMS Módulo 4 — Diagnóstico de Gaps
+
+**PDF:** `9789275728185_por.pdf` (84 páginas — Manual Operacional OMS sobre Atenção e Apoio ao Tratamento)
+
+**Escopo do documento:** atenção centrada na pessoa, suporte social, adesão, modelos de cuidado, cuidados paliativos — **NÃO é documento de protocolo clínico**. Ausência de tabelas de posologia é esperada e não constitui gap.
+
+**Resultado:** todos os 6 capítulos do TOC têm cabeçalhos correspondentes no `.md`. Conteúdo de apoio (tabelas de comunicação, checklists, modelos de cuidado) presente. **Sem gaps identificados.**
+
+---
+
+#### Resumo Executivo
+
+| Documento | Seções no TOC | Presentes no .md | Ausentes | Gaps críticos para ILTB |
+|---|---|---|---|---|
+| Manual .md | ~80 seções (Parts I–V) | ~65 | ~15 (concentradas em Parte III 4.1–8) | **Seção 8 ILTB** (mitigado), **6.3** (patcheado) |
+| OMS Módulo 4 .md | 25 seções | 25 | 0 | Nenhum |
+
+**Gaps identificados que requerem ação:**
+
+| # | Gap | Criticidade | Ação |
+|---|---|---|---|
+| 1 | Seção 6.3 Interações Medicamentosas (Manual) | Alta | ✅ **Já patcheado** em `patch_interacoes_medicamentosas.md` |
+| 2 | Seção 8 Tratamento ILTB (Manual) | Alta | ✅ **Mitigado** por `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
+| 3 | Seção 6.1 Reações Adversas (Manual) | Média | ✅ **Mitigado** por piridoxina no `patch_interacoes.md` + `recomendacoes.md` |
+
+**Conclusão:** nenhum patch adicional necessário. A base de dados está suficientemente completa para o escopo ILTB. As questões do test set (EA, MO, PE, IT, ET, IM, DI) têm conteúdo de suporte nas fontes indexadas.
+
+**Decisão de design 📌:** A validação de integridade da base de dados é uma etapa obrigatória do pipeline de ingestão. Em contexto clínico, dado ausente é dado perigoso — o sistema responde com confiança usando informação incompleta. A extração automatizada (Docling) deve ser sempre seguida de auditoria contra o sumário do documento fonte.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1143,8 +1245,10 @@ volumes:
 
 ---
 
+22. **Avaliação automatizada (RAGAS) não substitui governança de dados.** O RAGAS mede a qualidade do pipeline RAG assumindo que a base de dados está completa. Se o extrator de PDF falhar silenciosamente em seções críticas (tabelas, imagens, páginas com alta complexidade visual), o RAGAS não detecta o gap — apenas reporta scores baixos sem identificar a causa raiz. Auditoria proativa da base (cruzamento sumário TOC vs. cabeçalhos extraídos + verificação de qualidade de tabelas em seções críticas) é etapa obrigatória antes da avaliação formal. A auditoria da seção 2.14 revelou que a Seção 8 inteira (Tratamento da ILTB, páginas 163–169) estava ausente do Manual .md — um gap que o RAGAS sozinho nunca teria identificado sem questões específicas cobrindo esse conteúdo.
+
 21. **Groq TPD (tokens por dia) é o limitador em múltiplas re-execuções.** O free tier do Groq tem limite de 100.000 tokens/dia para modelos 70B. Com prompts de ~1.500 tokens, são apenas ~66 chamadas por dia. Runs que falham por TPM ainda consomem parte do orçamento diário. Após 2 runs falhos no mesmo dia, o TPD se esgota. Estratégia: monitorar tokens usados antes de iniciar o pipeline, ou usar o Groq apenas em dia com orçamento limpo.
 
 ---
 
-*Última atualização: 2026-03-21 (patch seção 6.3 criado e indexado; IM-03 corrigido; SLEEP=15s; re-run bloqueado por TPD Groq)*
+*Última atualização: 2026-03-21 (auditoria proativa de ingestão — seção 2.14; sem novos patches necessários; base validada para RAGAS definitivo)*
