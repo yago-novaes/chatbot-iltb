@@ -1019,6 +1019,50 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 ---
 
+#### Revisão Manual do OMS .md — Problemas Estruturais (pós-auditoria automatizada)
+
+**Data:** 2026-03-22
+
+A auditoria automatizada (cruzamento TOC × cabeçalhos) verificou completude mas não qualidade do conteúdo. A revisão manual bloco-a-bloco do `9789275728185_por.md` revelou 10 categorias de problemas que a automação não detecta:
+
+| # | Problema | Impacto no RAG | Frequência |
+|---|---|---|---|
+| 1 | Bullets duplos (`- -`) | Markdown inválido, tokens desperdiçados | ~30 ocorrências |
+| 2 | Listas fragmentadas (parágrafos entre itens numerados) | Chunks órfãos, perda de contexto sequencial | ~15 ocorrências |
+| 3 | Cabeçalhos de tabela ausentes (dados usados como header) | Modelo confunde dado com metadado | 3 tabelas |
+| 4 | Tabelas de coluna única (listas disfarçadas) | Categorias misturadas, contaminação semântica | 2 tabelas |
+| 5 | Tabelas com bullets esmagados (`•` na mesma linha) | Perda de separação entre itens clínicos | 2 tabelas |
+| 6 | Recomendações OMS com nível de evidência órfão | LLM responde sem informar força da evidência | ~5 ocorrências |
+| 7 | Cabeçalhos falsos no meio de listas (`## Alguns exemplos`) | Chunker corta lista ao meio | ~3 ocorrências |
+| 8 | Hierarquia achatada (todos `##`, sem `###`/`####`) | Chunker não distingue capítulo de subseção | 112 cabeçalhos |
+| 9 | Artefatos de OCR (`Î`, `T abela`, `HIV ,`, `ajudálos`) | Poluição visual na resposta ao usuário | ~50 ocorrências |
+| 10 | Notas de rodapé explicativas órfãs | Informação normativa separada do contexto | ~5 ocorrências |
+
+**Decisão 📌 — Pipeline de sanitização em duas camadas:**
+
+Camada 1 (automática): função `sanitize_markdown()` em `app/scripts/extract_pdfs.py` aplica regex para artefatos de OCR (`Î`, `T abela`, bullets duplos, espaços de layout). Executada automaticamente a cada extração.
+
+Camada 2 (manual): engenheiro revisa estrutura de tabelas, hierarquia de cabeçalhos e continuidade de listas. Executada uma vez por documento; os `.md` corrigidos são versionados no git.
+
+A Camada 1 resolve ~40% dos problemas; os 60% restantes são estruturais e exigem intervenção humana informada pelo domínio clínico.
+
+**Resultado da sanitização do OMS .md:**
+
+| Métrica | Antes | Depois |
+|---|---|---|
+| Linhas totais | 1.422 | 1.174 |
+| Cabeçalhos `##` (capítulos) | 112 (todos) | 7 (corretos) |
+| Cabeçalhos `###` (subseções) | 0 | 22 |
+| Cabeçalhos `####` (sub-subseções) | 0 | 57 |
+| Artefatos `Î ` | 76 | 0 |
+| Ocorrências `T abela` | 8 | 0 |
+| Tags `<!-- image -->` | 4 | 0 |
+| Bloco editorial (TOC, copyright, Referências) | presente | removido |
+
+**Tempo investido:** ~3 horas para o documento OMS (84 páginas, 1.421 linhas).
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1251,6 +1295,14 @@ volumes:
 
 21. **Groq TPD (tokens por dia) é o limitador em múltiplas re-execuções.** O free tier do Groq tem limite de 100.000 tokens/dia para modelos 70B. Com prompts de ~1.500 tokens, são apenas ~66 chamadas por dia. Runs que falham por TPM ainda consomem parte do orçamento diário. Após 2 runs falhos no mesmo dia, o TPD se esgota. Estratégia: monitorar tokens usados antes de iniciar o pipeline, ou usar o Groq apenas em dia com orçamento limpo.
 
+23. **Auditoria automatizada de .md não substitui revisão manual estrutural.** O cruzamento TOC × cabeçalhos detecta seções ausentes, mas não detecta: tabelas partidas por quebra de página, listas com itens fragmentados, categorias misturadas em tabelas de coluna única, hierarquia de cabeçalhos achatada, ou bullets esmagados em células de tabela. Para documentos clínicos destinados a RAG, a revisão manual bloco-a-bloco é obrigatória após a extração automatizada.
+
+24. **Sumários, índices e referências bibliográficas nunca devem ser indexados em RAG.** Sumários contêm metadados de navegação (títulos + números de página), não conhecimento clínico. Se indexados, o retriever retorna "veja página 53" em vez da resposta clínica. Referências bibliográficas poluem o contexto com nomes de autores e datas sem utilidade para o LLM. Ambos devem ser removidos do .md antes da indexação.
+
+25. **Tabelas de coluna única em PDFs são listas disfarçadas.** Quando o Docling extrai tabelas que no PDF original eram listas visuais (ex: lista de medicamentos com bordas), ele gera tabelas markdown de uma coluna. Se categorias diferentes aparecem como linhas da mesma tabela (ex: "Equipamento" seguido de "Apoios sociais" na mesma grade), o modelo de embedding associa todos os itens à primeira categoria. Solução: converter para texto hierárquico com cabeçalhos separados por categoria.
+
+26. **Recomendações da OMS devem manter o nível de evidência colado ao texto.** Quando o Docling fragmenta um item de lista e o metadado "(recomendação condicional, evidências de certeza muito baixa)" fica em parágrafo separado, o chunker pode separá-los. Em contexto clínico, orientar uma conduta sem informar a força da evidência é perigoso. O nível de evidência deve estar na mesma linha/bullet que a recomendação.
+
 ---
 
-*Última atualização: 2026-03-21 (auditoria proativa de ingestão — seção 2.14; sem novos patches necessários; base validada para RAGAS definitivo)*
+*Última atualização: 2026-03-22 (sanitização manual OMS .md + função sanitize_markdown() + lições 23–26 — seção 2.14 expandida)*

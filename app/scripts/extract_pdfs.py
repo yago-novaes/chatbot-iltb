@@ -5,6 +5,7 @@ Uso: python -m app.scripts.extract_pdfs [--force]
 """
 import argparse
 import logging
+import re
 import sys
 from pathlib import Path
 
@@ -16,6 +17,42 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
 PROTOCOLOS = Path(__file__).resolve().parents[2] / "docs" / "protocolos"
+
+
+def sanitize_markdown(text: str) -> str:
+    """Limpa artefatos comuns de extração Docling/OCR.
+
+    Resolve problemas automáticos (~40% dos casos). Problemas estruturais
+    (tabelas partidas, hierarquia de cabeçalhos, listas fragmentadas)
+    exigem revisão manual — ver seção 2.14 do diário técnico.
+    """
+    # 1. Artefato de seta → bullet
+    text = text.replace("Î ", "- ")
+
+    # 2. Espaço no meio de palavras comuns
+    text = text.replace("T abela", "Tabela")
+    text = text.replace("F igura", "Figura")
+
+    # 3. Remover marcadores de imagem
+    text = re.sub(r"<!-- image -->\s*", "", text)
+
+    # 4. Bullets duplos
+    text = re.sub(r"^- - ", "* ", text, flags=re.MULTILINE)
+
+    # 5. Múltiplos espaços (layout multi-coluna)
+    text = re.sub(r"  +", " ", text)
+
+    # 6. Espaço antes de vírgula/ponto (artefato de OCR)
+    text = re.sub(r" ([,.])", r"\1", text)
+
+    # 7. Espaço dentro de parênteses: "( texto )" → "(texto)"
+    text = re.sub(r"\( ", "(", text)
+    text = re.sub(r" \)", ")", text)
+
+    # 8. Linhas de pontos de sumário/índice (10+ pontos seguidos)
+    text = re.sub(r"\.{10,}", "", text)
+
+    return text
 
 
 def main():
@@ -40,6 +77,7 @@ def main():
 
         logger.info("Extraindo: %s", pdf.name)
         text = extract_markdown(pdf)
+        text = sanitize_markdown(text)
 
         if not text:
             logger.error("  ERRO: extração retornou texto vazio para %s", pdf.name)
