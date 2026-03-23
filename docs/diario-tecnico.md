@@ -1063,6 +1063,60 @@ A Camada 1 resolve ~40% dos problemas; os 60% restantes são estruturais e exige
 
 ---
 
+#### Sanitização Automática dos Demais .md (Camada 1)
+
+**Data:** 2026-03-23
+
+Após implementar `sanitize_markdown()` e confirmar os resultados no OMS .md, a função foi aplicada retroativamente a todos os demais `.md` do corpus (exceto `9789275728185_por.md`, já corrigido manualmente, e `patch_interacoes_medicamentosas.md`, criado limpo).
+
+| Arquivo | Chars removidos |
+|---|---|
+| `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` | 14.523 |
+| `GEDIIB_TratamentoTuberculose.md` | 728 |
+| `Manual de Recomendações...md` | 50.609 |
+| `recomendacoes-para-o-controle-da-tuberculose.md` | 18.442 |
+| `tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md` | 142 |
+
+O Manual teve o maior impacto (50k chars) — concentrado em `<!-- image -->`, espaços de layout multi-coluna e linhas de pontos de sumário. Os demais documentos tinham principalmente espaços antes de vírgula/ponto e artefatos `Î `.
+
+**Nota:** a sanitização Camada 1 não substitui revisão manual estrutural (tabelas, hierarquia de cabeçalhos) nos demais documentos. Os arquivos foram commitados após a sanitização automática; revisão manual dos outros `.md` é mapeada para antes da avaliação RAGAS definitiva se os scores indicarem problemas de qualidade de chunks.
+
+---
+
+### 2.15 Expansão de sanitize_markdown() + Segunda Rodada nos Demais .md
+
+**Data:** 2026-03-23
+
+A revisão manual do segundo documento (`af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md`) revelou 8 categorias de artefatos não cobertas pela versão inicial da função. A `sanitize_markdown()` foi expandida de 8 para 18 regras:
+
+| # | Regra nova | Problema coberto | Exemplo |
+|---|---|---|---|
+| 4 | Caracteres de controle Unicode | Invisíveis que corrompem embeddings | `\x0b`, `\x1f` |
+| 5 | Escapes falsos | `\_` e `\-` em URLs/nomes de arquivo | `download\_iltb.html` |
+| 7 | Bullets híbridos | `- 1 Ficha...` vira `1. Ficha...` | listas numeradas mal extraídas |
+| 11 | Espaço em barras | `pulmonar/ laríngea` → `pulmonar/laríngea` | layout de 2 colunas |
+| 12 | Hifenização de fim de linha | `contu-\ndo` → `contudo` | quebra OCR entre linhas |
+| 13 | Hifenização intra-palavra | `consi derado` → `considerado` | 15 padrões conhecidos |
+| 15 | Citações como inteiros soltos | `adoecimento 5 ,` → `adoecimento [5],` | numeração bibliográfica |
+| 16 | Capitalização anômala | `QUADRo` → `Quadro` | OCR de texto em negrito |
+| 17 | URLs quebradas com espaços | `http://site. gov.br/` → `http://site.gov.br/` | layout multi-coluna |
+| 18 | Emails quebrados | `tb@ saude.gov.br` → `tb@saude.gov.br` | idem |
+
+Script `app/scripts/sanitize_existing_md.py` criado para aplicar nos documentos restantes sem tocar nos 2 já higienizados manualmente. A importação de `extract_markdown` (que puxa o Docling) foi movida para dentro de `main()` em `extract_pdfs.py` para que `sanitize_markdown` possa ser importada sem depender do Docling.
+
+**Resultado da segunda passagem nos 4 documentos restantes (regras 9–18):**
+
+| Arquivo | Linhas alteradas | Chars removidos |
+|---|---|---|
+| `GEDIIB_TratamentoTuberculose.md` | 7 | 160 |
+| `Manual de Recomendações...md` | 188 | 765 |
+| `recomendacoes-para-o-controle-da-tuberculose.md` | 8 | 100 |
+| `tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md` | 17 | 157 |
+
+Os valores menores (vs. primeira passagem) são esperados: as regras 1–8 já removeram a maior parte do ruído bruto. As regras 9–18 agem sobre artefatos mais sutis (hifenização, caracteres de controle, URLs).
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1303,6 +1357,10 @@ volumes:
 
 26. **Recomendações da OMS devem manter o nível de evidência colado ao texto.** Quando o Docling fragmenta um item de lista e o metadado "(recomendação condicional, evidências de certeza muito baixa)" fica em parágrafo separado, o chunker pode separá-los. Em contexto clínico, orientar uma conduta sem informar a força da evidência é perigoso. O nível de evidência deve estar na mesma linha/bullet que a recomendação.
 
+27. **Aplicar sanitização automática retroativamente ao corpus existente antes de re-indexar.** Quando uma função de limpeza é criada a partir de problemas encontrados em um documento, ela deve ser rodada em todos os `.md` do corpus — não apenas nos futuros. Documentos extraídos antes da função existir contêm os mesmos artefatos. No caso do Manual (~700k chars), a sanitização removeu 50.609 chars de ruído (imagens, espaços de layout, pontos de sumário) que teriam sido indexados como tokens inúteis.
+
+28. **Importações pesadas (Docling, torch) devem ficar dentro de `main()`, não no topo do módulo.** Scripts utilitários como `extract_pdfs.py` são importados por outros scripts para reusar funções leves (ex: `sanitize_markdown`). Se a importação de Docling estiver no topo, qualquer `import extract_pdfs` puxa 2 GB de modelos ML — mesmo em contextos onde o Docling não é necessário. Mover imports pesados para dentro de `main()` (lazy import) isola a dependência e permite reuso seguro.
+
 ---
 
-*Última atualização: 2026-03-22 (sanitização manual OMS .md + função sanitize_markdown() + lições 23–26 — seção 2.14 expandida)*
+*Última atualização: 2026-03-23 (sanitize_markdown expandida 8→18 regras, seção 2.15, lições 27–28)*

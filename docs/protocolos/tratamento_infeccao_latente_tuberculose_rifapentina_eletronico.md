@@ -4,8 +4,6 @@ Secretaria de Vigilância em Saúde e Ambiente Departamento de HIV/Aids, Tubercu
 
 TRATAMENTO DA INFECÇÃO LATENTE PELO MYCOBACTERIUM TUBERCULOSIS COM RIFAPENTINA + ISONIAZIDA (3HP)
 
-<!-- image -->
-
 O tratamento da infecção latente pelo Mycobaterium tuberclosi - ILTB é uma das principais estratégias para a eliminação da tuberculose (TB) como problema de saúde pública no Brasil.
 
 ## POR QUE TRATAR A ILTB?
@@ -15,8 +13,6 @@ O tratamento da ILTB reduz o risco de a pessoa que teve contato com o bacilo des
 ## O QUE É O 3HP?
 
 O 3HP é um novo esquema de tratamento da ILTB de curta duração. Consiste na tomada uma vez (1x) por semana dos medicamentos isoniazida (H) e rifapentina (P), durante três meses. O 3HP já está disponível no SUS.
-
-<!-- image -->
 
 ## QUAL É A POSOLOGIA DO 3HP?
 
@@ -61,45 +57,32 @@ O tratamento estará completo quando ocorrer a tomada de 12 doses de isoniazida 
 
 Nota Informativa Nº 5/2021-CGDR/ DCCI/SVS/MS
 
-https://bit.ly/notainformativa5\_2021
+https://bit.ly/notainformativa5_2021
 
-Nota Técnica Nº 399/2021-CGAFME/ DAF/SCTIE/MS
+NotaTécnicaNº399/2021-CGAFME/DAF/SCTIE/MS
 
-https://bit.ly/notatecnica399\_2021
+https://bit.ly/notatecnica399_2021
 
-<!-- image -->
+##ATENÇÃO!
 
-## ATENÇÃO!
+-AntesdeefetuarotratamentodaILTB,deve-seafastardefinitivamenteaTBativa;
+-Aisoniazida300mgestádisponívelparaaspessoasquefarãousodoesquema3HP.Assim,énecessárioatençãoredobradanadispensaçãodaisoniazida,umavezqueháduasconcentraçõesdomedicamentodisponíveisnarede;
+-Nãoérecomendadoousodoesquema3HPemgestantes;
+-TodososcasosdeILTBdevemsernotificadoseposteriormenteencerradosnoSistemadeInformaçãoparanotificaçãodaspessoasemtratamentodeILTB,oIL-TB;
+-Osmedicamentosdevemsertomadossemprenomesmodiadasemana.Porexemplo,todasasquartas-feiras;
+-Oesquema3HPnãodeveserutilizadoemcasodecontatocommonorresistênciaàisoniazidaourifampicinaoudeefeitosadversosgravesaqualquerdosmedicamentosdo3HP.
 
-<!-- image -->
+ACESSENOSSOSSITES:www.gov.br/aids/pt-br/assuntos/tuberculose
 
-- Antes de efetuar o tratamento da ILTB, deve-se afastar definitivamente a TB ativa;
-- A isoniazida 300mg está disponível para as pessoas que farão uso do esquema 3HP. Assim, é necessário atenção redobrada na dispensação da isoniazida, uma vez que há duas concentrações do medicamento disponíveis na rede;
-- Não é recomendado o uso do esquema 3HP em gestantes;
-- Todos os casos de ILTB devem ser notificados e posteriormente encerrados no Sistema de Informação para notificação das pessoas em tratamento de ILTB, o IL-TB;
-- Os medicamentos devem ser tomados sempre no mesmo dia da semana. Por exemplo, todas as quartas-feiras;
-- O esquema 3HP não deve ser utilizado em caso de contato com monorresistência à isoniazida ou rifampicina ou de efeitos adversos graves a qualquer dos medicamentos do 3HP.
+##SaúdedeAaZ
 
-ACESSE NOSSOS SITES: www.gov.br/aids/pt-br/assuntos/tuberculose
+https://www.gov.br/saude/pt-br/assuntos/saudede-a-a-z/t/tuberculose
 
-## Saúde de A a Z
+##BoletimEpidemiológicodaTB2023
 
-https://www.gov.br/saude/ pt-br/assuntos/saudede-a-a-z/t/tuberculose
+https://www.gov.br/aids/ptbr/centrais-de-conteudo/boletins-epidemiologicos/2023/tuberculose
 
-<!-- image -->
+##ManualdeTratamentodaTB
 
-## Boletim Epidemiológico da TB 2023
+https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/svsa/tuberculose/manual-de-recomendacoese-controle-da-ttuberculoseno-brasil-2a-ed.pdf/view
 
-https://www.gov.br/aids/ptbr/centrais-de-conteudo/ boletins-epidemiologicos/2023/ tuberculose
-
-<!-- image -->
-
-<!-- image -->
-
-## Manual de Tratamento da TB
-
-https://www.gov.br/saude/ pt-br/centrais-de-conteudo/ publicacoes/svsa/tuberculose/ manual-de-recomendacoese-controle-da-ttuberculoseno-brasil-2a-ed.pdf/view
-
-<!-- image -->
-
-<!-- image -->

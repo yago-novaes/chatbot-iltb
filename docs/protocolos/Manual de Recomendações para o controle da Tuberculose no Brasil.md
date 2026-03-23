@@ -2,10 +2,6 @@
 
 2ª edição atualizada
 
-<!-- image -->
-
-<!-- image -->
-
 ## MINISTÉRIO DA SAÚDE
 
 secretaria de Vigilância em saúde departamento de Vigilância das doenças transmissíveis
@@ -15,8 +11,6 @@ secretaria de Vigilância em saúde departamento de Vigilância das doenças tra
 2ª edição atualizada
 
 2011 Ministério da saúde.
-
-<!-- image -->
 
 esta obra é disponibilizada nos termos da licença creative commons - atribuição - não comercial - compartilhamento pela mesma licença 4.0 internacional. É permitida a reprodução parcial ou total desta obra, desde que citada a fonte.
 
@@ -46,7 +40,7 @@ afrânio lineu Kristski; aline ale beraldo; andressa Veras de oliveira; ana caro
 
 brasil. Ministério da saúde. secretaria de Vigilância em saúde. departamento de Vigilância das doenças transmissíveis.
 
-Manual de Recomendações para o controle da tuberculose no brasil / Ministério da saúde, secretaria de Vigilância em saúde, departamento de Vigilância das doenças transmissíveis. - brasília: Ministério da saúde, 2019.
+Manual de Recomendações para o controle da tuberculose no brasil/Ministério da saúde, secretaria de Vigilância em saúde, departamento de Vigilância das doenças transmissíveis. - brasília: Ministério da saúde, 2019.
 
 364 p. : il.
 
@@ -244,449 +238,447 @@ dM
 
 diabetes mellitus
 
-| dlm    | delamanide                                                                   |
+| dlm | delamanide |
 |--------|------------------------------------------------------------------------------|
-| dnc    | Doenças de Notificação Compulsória                                           |
-| do     | declaração de Óbito                                                          |
-| dpoc   | doença pulmonar obstrutiva crônica                                           |
-| dRV/r  | darunavir/ritonavir                                                          |
-| dsei   | distritos sanitários especiais indígenas                                     |
-| dtG    | dolutegravir                                                                 |
-| e      | etambutol                                                                    |
-| ecR    | equipe do consultório na Rua                                                 |
-| eFV    | efavirenz                                                                    |
-| elisa  | ensaio imunoenzimático (do inglês, Enzyme Linked Immunosorbent Assay)        |
-| enF    | enfuvirtida                                                                  |
-| epi    | equipamento de proteção individual                                           |
-| esF    | estratégia da saúde da Família                                               |
-| et     | etionamida                                                                   |
-| etR    | etravirina                                                                   |
-| eua    | estados unidos da américa                                                    |
-| Fap    | Fundação de amparo à pesquisa                                                |
-| FpV/r  | Fosamprenavir/ritonavir                                                      |
-| Funai  | Fundação nacional do Índio                                                   |
-| Funasa | Fundação nacional da saúde                                                   |
-| Gal    | sistema Gerenciador de ambiente laboratorial                                 |
-| H      | isoniazida                                                                   |
-| H h    | isoniazida em altas doses                                                    |
-| Hepa   | Filtro de ar de alta eficiência (do inglês, High Efficiency Particulate Air) |
-| HiV    | Vírus da imunodeficiência Humana (do inglês, Human Imunodeficiency Virus )   |
-| ibGe   | instituto Brasileiro de Geografia e Estatística                              |
-| iec    | informação, educação e comunicação                                           |
-| ig G   | imunoglobulina G                                                             |
-| ig M   | imunoglobulina M                                                             |
-| iGRa   | do inglês, Interferon-gama release assay                                     |
-| iltb   | infecção latente pelo M. tuberculosis                                        |
-| il-tb  | Sistema de informação para notificação das pessoas em tratamento para il TB  |
-| ip     | inibidor da protease                                                         |
-| ipm    | imipenem/cilastatina                                                         |
-| itRn   | inibidores da transcriptase Reversa nucleosídeo                              |
-| lacen  | laboratório central de saúde pública                                         |
+| dnc | Doenças de Notificação Compulsória |
+| do | declaração de Óbito |
+| dpoc | doença pulmonar obstrutiva crônica |
+| dRV/r | darunavir/ritonavir |
+| dsei | distritos sanitários especiais indígenas |
+| dtG | dolutegravir |
+| e | etambutol |
+| ecR | equipe do consultório na Rua |
+| eFV | efavirenz |
+| elisa | ensaio imunoenzimático (do inglês, Enzyme Linked Immunosorbent Assay) |
+| enF | enfuvirtida |
+| epi | equipamento de proteção individual |
+| esF | estratégia da saúde da Família |
+| et | etionamida |
+| etR | etravirina |
+| eua | estados unidos da américa |
+| Fap | Fundação de amparo à pesquisa |
+| FpV/r | Fosamprenavir/ritonavir |
+| Funai | Fundação nacional do Índio |
+| Funasa | Fundação nacional da saúde |
+| Gal | sistema Gerenciador de ambiente laboratorial |
+| H | isoniazida |
+| H h | isoniazida em altas doses |
+| Hepa | Filtro de ar de alta eficiência (do inglês, High Efficiency Particulate Air) |
+| HiV | Vírus da imunodeficiência Humana (do inglês, Human Imunodeficiency Virus) |
+| ibGe | instituto Brasileiro de Geografia e Estatística |
+| iec | informação, educação e comunicação |
+| ig G | imunoglobulina G |
+| ig M | imunoglobulina M |
+| iGRa | do inglês, Interferon-gama release assay |
+| iltb | infecção latente pelo M. tuberculosis |
+| il-tb | Sistema de informação para notificação das pessoas em tratamento para il TB |
+| ip | inibidor da protease |
+| ipm | imipenem/cilastatina |
+| itRn | inibidores da transcriptase Reversa nucleosídeo |
+| lacen | laboratório central de saúde pública |
 
-| lba     | lavado bronco alveolar                                                 |
+| lba | lavado bronco alveolar |
 |---------|------------------------------------------------------------------------|
-| lF      | laboratório de Fronteira                                               |
-| lfx     | levofloxacino                                                          |
-| ll      | laboratórios locais                                                    |
-| lpV/r   | lopinavir/ritonavir                                                    |
-| lRe     | laboratório de Referência estadual                                     |
-| lRn     | laboratório de Referência nacional                                     |
-| lRR     | laboratório de Referência Regional                                     |
-| lt-cd4+ | linfócito t com receptor cd4                                           |
-| lzd     | linezolida                                                             |
-| Mb      | Multibacilar                                                           |
-| Mctic   | Ministério da ciência, tecnologia, inovações e comunicação             |
-| MdR     | Multirresistente                                                       |
-| Mds     | Ministério do desenvolvimento social                                   |
-| Mesp    | Ministério extraordinário da segurança pública                         |
-| Mfx     | Moxifloxacino                                                          |
-| MJ      | Ministério da Justiça                                                  |
-| Mnt     | Micobactéria não tuberculosa                                           |
-| Mpm     | Meropenem                                                              |
-| Ms      | Ministério da saúde                                                    |
-| Mtb     | complexo Mycobacterium tuberculosis                                    |
-| nasF    | núcleo de apoio à saúde da Família                                     |
-| nVp     | nevirapina                                                             |
-| odM     | objetivos do desenvolvimento do Milênio                                |
-| ods     | objetivos do desenvolvimento sustentável                               |
-| oMs     | organização Mundial da saúde                                           |
-| onu     | organização das nações unidas                                          |
-| opas    | organização pan-americana da saúde                                     |
-| osc     | organizações da sociedade civil                                        |
-| pect    | programa estadual de controle da tuberculose                           |
-| pacs    | programa de agentes comunitários da saúde                              |
-| pas     | Ácido paraminossalicílico                                              |
-| pb      | paucibacilar                                                           |
-| pcR     | Reação em cadeia da polimerase (do inglês, Polymerase Chain Reaction ) |
-| pct     | programa de controle da tuberculose                                    |
-| pet     | Tomografia por Emissão de Pósitron                                     |
-| pia     | plano individual de acompanhamento                                     |
+| lF | laboratório de Fronteira |
+| lfx | levofloxacino |
+| ll | laboratórios locais |
+| lpV/r | lopinavir/ritonavir |
+| lRe | laboratório de Referência estadual |
+| lRn | laboratório de Referência nacional |
+| lRR | laboratório de Referência Regional |
+| lt-cd4+ | linfócito t com receptor cd4 |
+| lzd | linezolida |
+| Mb | Multibacilar |
+| Mctic | Ministério da ciência, tecnologia, inovações e comunicação |
+| MdR | Multirresistente |
+| Mds | Ministério do desenvolvimento social |
+| Mesp | Ministério extraordinário da segurança pública |
+| Mfx | Moxifloxacino |
+| MJ | Ministério da Justiça |
+| Mnt | Micobactéria não tuberculosa |
+| Mpm | Meropenem |
+| Ms | Ministério da saúde |
+| Mtb | complexo Mycobacterium tuberculosis |
+| nasF | núcleo de apoio à saúde da Família |
+| nVp | nevirapina |
+| odM | objetivos do desenvolvimento do Milênio |
+| ods | objetivos do desenvolvimento sustentável |
+| oMs | organização Mundial da saúde |
+| onu | organização das nações unidas |
+| opas | organização pan-americana da saúde |
+| osc | organizações da sociedade civil |
+| pect | programa estadual de controle da tuberculose |
+| pacs | programa de agentes comunitários da saúde |
+| pas | Ácido paraminossalicílico |
+| pb | paucibacilar |
+| pcR | Reação em cadeia da polimerase (do inglês, Polymerase Chain Reaction) |
+| pct | programa de controle da tuberculose |
+| pet | Tomografia por Emissão de Pósitron |
+| pia | plano individual de acompanhamento |
 
-| pMct    | programa Municipal de controle da tuberculose                        |
+| pMct | programa Municipal de controle da tuberculose |
 |---------|----------------------------------------------------------------------|
-| pnaisp  | política nacional de atenção integral à saúde prisional              |
-| pncH    | programa nacional de controle da Hanseníase                          |
-| pnct    | programa nacional de controle da tuberculose                         |
-| pni     | programa nacional de imunização                                      |
-| pnis    | política nacional de inclusão social                                 |
-| ppd     | Derivado Proteico Purificado (do inglês, Purified Protein Derivated) |
-| ppl     | pessoa (população) privada de liberdade                              |
-| pt      | prova tuberculínica                                                  |
-| pts     | projeto terapêutico singular                                         |
-| ps      | Profissional de Saúde                                                |
-| pVHiV   | pessoa vivendo com HiV                                               |
-| qp      | Quimioprofilaxia                                                     |
-| R       | Rifampicina                                                          |
-| Ral     | Raltegravir                                                          |
-| Raps    | Rede de atenção psico social                                         |
-| Rfb     | Rifabutina                                                           |
-| RFlp    | estudo de dna (do inglês, Restriction Fragment Length Polimorphism ) |
-| RnM     | Ressonância nuclear Magnética                                        |
-| Rn      | Recém-nascido                                                        |
-| Rpt     | Rifapentina                                                          |
-| RtV     | Ritonavir                                                            |
-| s       | estreptomicina (do inglês, Streptomycin )                            |
-| sae     | serviço de assistência especializada                                 |
-| sas     | secretaria de atenção à saúde                                        |
-| sctie   | secretaria de ciência, tecnologia e insumos estratégicos             |
-| ses     | secretaria de estado da saúde                                        |
-| sia     | sistema de informação ambulatorial                                   |
-| siab    | sistema de informação da atenção básica                              |
-| siasi   | sistema de informação da atenção à saúde indígena                    |
-| siH     | sistema de informação Hospitalar                                     |
-| sinan   | Sistema Nacional de Agravos de Notificação                           |
-| siR     | Síndrome inflamatória da Reconstituição imune                        |
-| sisan   | sistema nacional de segurança alimentar e nutricional                |
-| site-tb | sistema de informação de tratamentos especiais da tb                 |
-| sMs     | secretaria Municipal de saúde                                        |
-| snc     | sistema nervoso central                                              |
+| pnaisp | política nacional de atenção integral à saúde prisional |
+| pncH | programa nacional de controle da Hanseníase |
+| pnct | programa nacional de controle da tuberculose |
+| pni | programa nacional de imunização |
+| pnis | política nacional de inclusão social |
+| ppd | Derivado Proteico Purificado (do inglês, Purified Protein Derivated) |
+| ppl | pessoa (população) privada de liberdade |
+| pt | prova tuberculínica |
+| pts | projeto terapêutico singular |
+| ps | Profissional de Saúde |
+| pVHiV | pessoa vivendo com HiV |
+| qp | Quimioprofilaxia |
+| R | Rifampicina |
+| Ral | Raltegravir |
+| Raps | Rede de atenção psico social |
+| Rfb | Rifabutina |
+| RFlp | estudo de dna (do inglês, Restriction Fragment Length Polimorphism) |
+| RnM | Ressonância nuclear Magnética |
+| Rn | Recém-nascido |
+| Rpt | Rifapentina |
+| RtV | Ritonavir |
+| s | estreptomicina (do inglês, Streptomycin) |
+| sae | serviço de assistência especializada |
+| sas | secretaria de atenção à saúde |
+| sctie | secretaria de ciência, tecnologia e insumos estratégicos |
+| ses | secretaria de estado da saúde |
+| sia | sistema de informação ambulatorial |
+| siab | sistema de informação da atenção básica |
+| siasi | sistema de informação da atenção à saúde indígena |
+| siH | sistema de informação Hospitalar |
+| sinan | Sistema Nacional de Agravos de Notificação |
+| siR | Síndrome inflamatória da Reconstituição imune |
+| sisan | sistema nacional de segurança alimentar e nutricional |
+| site-tb | sistema de informação de tratamentos especiais da tb |
+| sMs | secretaria Municipal de saúde |
+| snc | sistema nervoso central |
 
-| snlsp/sislab   | sistema nacional de laboratórios de saúde pública         |
+| snlsp/sislab | sistema nacional de laboratórios de saúde pública |
 |----------------|-----------------------------------------------------------|
-| sR             | sintomático Respiratório                                  |
-| sRe            | sintomáticos Respiratórios esperados                      |
-| stop tb        | Stop TB Partnership (vinculado à unops/onu)               |
-| sus            | sistema Único de saúde                                    |
-| sVs            | secretaria de Vigilância em saúde                         |
-| ta             | tratamento antitb anterior                                |
-| taRV           | tratamento antiRretroviral                                |
-| tb             | tuberculose                                               |
-| tb dR          | tuberculose drogarresistente                              |
-| tb-HiV         | coinfecção pelo M. tuberculosis e HiV                     |
-| tb MdR         | tuberculose Multirresistente                              |
-| tb RR          | tuberculose com resistência à rifampicina                 |
-| tb XdR         | tuberculose com resistência extensiva                     |
-| tc             | Tomografia Computadorizada                                |
-| tdF            | tenofovir                                                 |
-| tdo            | tratamento diretamente observado                          |
-| ti             | terras indígenas                                          |
-| TNF-α          | Fator de necrose tumoral alfa                             |
-| tpR/r          | tipranavir/ritonavir                                      |
-| tR             | teste Rápido                                              |
-| trd            | terizidona                                                |
-| tRM-tb         | teste Rápido Molecular para tuberculose                   |
-| ts             | teste de sensibilidade                                    |
-| ubs            | unidade básica de saúde                                   |
-| union          | International Union Against Tuberculosis and Lung Disease |
-| up             | unidade prisional                                         |
-| upa            | unidade de pronto atendimento                             |
-| uti            | unidade de terapia intensiva                              |
-| Vd             | Visita domiciliar                                         |
-| Ve             | Vigilância epidemiológica                                 |
-| Vt             | Virgem de tratamento                                      |
-| WHo            | World Health organization                                 |
-| XdR            | Resistência extensiva a drogas                            |
-| Z              | pirazinamida                                              |
-
-<!-- image -->
+| sR | sintomático Respiratório |
+| sRe | sintomáticos Respiratórios esperados |
+| stop tb | Stop TB Partnership (vinculado à unops/onu) |
+| sus | sistema Único de saúde |
+| sVs | secretaria de Vigilância em saúde |
+| ta | tratamento antitb anterior |
+| taRV | tratamento antiRretroviral |
+| tb | tuberculose |
+| tb dR | tuberculose drogarresistente |
+| tb-HiV | coinfecção pelo M. tuberculosis e HiV |
+| tb MdR | tuberculose Multirresistente |
+| tb RR | tuberculose com resistência à rifampicina |
+| tb XdR | tuberculose com resistência extensiva |
+| tc | Tomografia Computadorizada |
+| tdF | tenofovir |
+| tdo | tratamento diretamente observado |
+| ti | terras indígenas |
+| TNF-α | Fator de necrose tumoral alfa |
+| tpR/r | tipranavir/ritonavir |
+| tR | teste Rápido |
+| trd | terizidona |
+| tRM-tb | teste Rápido Molecular para tuberculose |
+| ts | teste de sensibilidade |
+| ubs | unidade básica de saúde |
+| union | International Union Against Tuberculosis and Lung Disease |
+| up | unidade prisional |
+| upa | unidade de pronto atendimento |
+| uti | unidade de terapia intensiva |
+| Vd | Visita domiciliar |
+| Ve | Vigilância epidemiológica |
+| Vt | Virgem de tratamento |
+| WHo | World Health organization |
+| XdR | Resistência extensiva a drogas |
+| Z | pirazinamida |
 
 ## Sumário
 
-| PARTE I • ASPECTOS BÁSICOS E EPIDEMIOLÓGICOS                           |   25 |
+| PARTE I • ASPECTOS BÁSICOS E EPIDEMIOLÓGICOS | 25 |
 |------------------------------------------------------------------------|------|
-| 1. Tuberculose - Características Gerais                                |   27 |
-| 1.1. agente etiológico                                                 |   27 |
-| 1.2. transmissão                                                       |   28 |
-| 1.3. Risco de adoecimento                                              |   29 |
-| 2. O Problema da Tuberculose                                           |   31 |
-| 2.1. no mundo                                                          |   31 |
-| 2.2. no brasil                                                         |   34 |
-| 2.3. determinação social da tuberculose                                |   40 |
-| Referências                                                            |   42 |
-| PARTE II • DIAGNÓSTICO                                                 |   45 |
-| 1. Diagnóstico Clínico                                                 |   48 |
-| 1.1. tuberculose pulmonar                                              |   48 |
-| 1.2. tuberculose extrapulmonar                                         |   49 |
-| 2. Diagnóstico Diferencial                                             |   51 |
-| 2.1. Forma pulmonar                                                    |   51 |
-| 2.2. Forma pleural                                                     |   52 |
-| 2.3. Forma ganglionar                                                  |   53 |
-| 2.4.Forma meningoencefálica                                            |   53 |
-| 2.5. Forma osteoarticular                                              |   53 |
-| 3. Diagnóstico Bacteriológico                                          |   54 |
-| 3.1. exame microscópico direto - baciloscopia direta                   |   54 |
-| 3.2. teste rápido molecular para tuberculose (tRM-tb)                  |   55 |
-| 3.3. cultura para micobactéria, identificação e teste de sensibilidade |   61 |
-| 3.4. coleta, armazenamento e transporte de amostras de escarro         |   62 |
+| 1. Tuberculose - Características Gerais | 27 |
+| 1.1. agente etiológico | 27 |
+| 1.2. transmissão | 28 |
+| 1.3. Risco de adoecimento | 29 |
+| 2. O Problema da Tuberculose | 31 |
+| 2.1. no mundo | 31 |
+| 2.2. no brasil | 34 |
+| 2.3. determinação social da tuberculose | 40 |
+| Referências | 42 |
+| PARTE II • DIAGNÓSTICO | 45 |
+| 1. Diagnóstico Clínico | 48 |
+| 1.1. tuberculose pulmonar | 48 |
+| 1.2. tuberculose extrapulmonar | 49 |
+| 2. Diagnóstico Diferencial | 51 |
+| 2.1. Forma pulmonar | 51 |
+| 2.2. Forma pleural | 52 |
+| 2.3. Forma ganglionar | 53 |
+| 2.4.Forma meningoencefálica | 53 |
+| 2.5. Forma osteoarticular | 53 |
+| 3. Diagnóstico Bacteriológico | 54 |
+| 3.1. exame microscópico direto - baciloscopia direta | 54 |
+| 3.2. teste rápido molecular para tuberculose (tRM-tb) | 55 |
+| 3.3. cultura para micobactéria, identificação e teste de sensibilidade | 61 |
+| 3.4. coleta, armazenamento e transporte de amostras de escarro | 62 |
 
-| 4. Diagnóstico por Imagem                                                                    |   65 |
+| 4. Diagnóstico por Imagem | 65 |
 |----------------------------------------------------------------------------------------------|------|
-| 4.1. Radiografia de tórax                                                                    |   65 |
-| 4.2. tomografia computadorizada de tórax                                                     |   65 |
-| 4.3. outros exames de imagem na avaliação de tuberculose pulmonar e extrapulmonar            |   66 |
-| 4.4.achados da tuberculose pulmonar em exames de imagem                                      |   67 |
-| 5. Diagnóstico Histopatológico                                                               |   69 |
-| 6. Outros Métodos Diagnósticos                                                               |   71 |
-| 6.1. adenosina deaminase (ada)                                                               |   71 |
-| 6.2. outras técnicas biomoleculares                                                          |   71 |
-| 7. Diagnóstico de HIV nas Pessoas com Tuberculose                                            |   73 |
-| 8. Diagnóstico em Situações Especiais                                                        |   75 |
-| 8.1. diagnóstico da tuberculose na infância                                                  |   75 |
-| 8.1. 1. Manifestações clínicas da tb pulmonar em crianças (<10 anos de idade) e adolescentes |   75 |
-| 8.1.2. diagnóstico da tuberculose pulmonar por sistema de escore                             |   76 |
-| 8. 1.3. outros exames complementares para o diagnóstico da tuberculose na criança            |   78 |
-| 8.1.4. tuberculose extrapulmonar na criança                                                  |   79 |
-| 8.1.5. tuberculose perinatal                                                                 |   79 |
-| 8.2. diagnóstico de tuberculose em pessoas vivendo com HiV                                   |   80 |
-| 8.2.1. Síndrome inflamatória da Reconstituição imune (SiR)                                   |   82 |
-| 8.2.2. diagnóstico diferencial                                                               |   82 |
-| 9. Diagnóstico da Infecção Latente pelo M. tuberculosis (ILTB)                               |   83 |
-| 9.1. Definição de infecção latente pelo M. tuberculosis                                      |   83 |
-| 9.2. diagnóstico pela prova tuberculínica                                                    |   84 |
-| 9.3. diagnóstico pelo iGRa                                                                   |   87 |
-| Referências                                                                                  |   88 |
+| 4.1. Radiografia de tórax | 65 |
+| 4.2. tomografia computadorizada de tórax | 65 |
+| 4.3. outros exames de imagem na avaliação de tuberculose pulmonar e extrapulmonar | 66 |
+| 4.4.achados da tuberculose pulmonar em exames de imagem | 67 |
+| 5. Diagnóstico Histopatológico | 69 |
+| 6. Outros Métodos Diagnósticos | 71 |
+| 6.1. adenosina deaminase (ada) | 71 |
+| 6.2. outras técnicas biomoleculares | 71 |
+| 7. Diagnóstico de HIV nas Pessoas com Tuberculose | 73 |
+| 8. Diagnóstico em Situações Especiais | 75 |
+| 8.1. diagnóstico da tuberculose na infância | 75 |
+| 8.1. 1. Manifestações clínicas da tb pulmonar em crianças (<10 anos de idade) e adolescentes | 75 |
+| 8.1.2. diagnóstico da tuberculose pulmonar por sistema de escore | 76 |
+| 8. 1.3. outros exames complementares para o diagnóstico da tuberculose na criança | 78 |
+| 8.1.4. tuberculose extrapulmonar na criança | 79 |
+| 8.1.5. tuberculose perinatal | 79 |
+| 8.2. diagnóstico de tuberculose em pessoas vivendo com HiV | 80 |
+| 8.2.1. Síndrome inflamatória da Reconstituição imune (SiR) | 82 |
+| 8.2.2. diagnóstico diferencial | 82 |
+| 9. Diagnóstico da Infecção Latente pelo M. tuberculosis (ILTB) | 83 |
+| 9.1. Definição de infecção latente pelo M. tuberculosis | 83 |
+| 9.2. diagnóstico pela prova tuberculínica | 84 |
+| 9.3. diagnóstico pelo iGRa | 87 |
+| Referências | 88 |
 
-| PARTE III • TRATAMENTO   | PARTE III • TRATAMENTO                                                                                                                    |   95 |
+| PARTE III • TRATAMENTO | PARTE III • TRATAMENTO | 95 |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|------|
-| 1.                       | Introdução                                                                                                                                |   97 |
-| 2.                       | Bases Bacteriológicas e Farmacológicas                                                                                                    |   98 |
-| 3.                       | A Escolha do Melhor Esquema de Tratamento                                                                                                 |  102 |
-| 4.                       | Esquemas de Tratamento para a Tuberculose                                                                                                 |  104 |
-| 4.1.                     | esquema básico (eb)                                                                                                                       |  105 |
-|                          | 4.1. 1. esquema básico para o tratamento de adultos e adolescentes (≥ 10 anos de idade): 2RHZE/4RH                                        |  105 |
-|                          | 4.1.2. esquema básico para tratamento da tb meningoencefálica e osteoarticular em adultos e adolescentes (≥ 10 anos de idade): 2RHZE/10RH |  106 |
-|                          | 4.1.3. esquema básico para crianças (< 10 anos de idade): 2RHZ/4RH                                                                        |  108 |
-|                          | 4.1.4. esquema básico para tratamento da tb meningoencefálica e osteoarticular para crianças (< 10 anos de idade): 2RHZ/10RH              |  108 |
-| 4.2.                     | considerações sobre o tratamento                                                                                                          |  110 |
-|                          | 4.3.Modalidades de tratamento                                                                                                             |  111 |
-|                          | 4.4.tratamento da tuberculose em condições especiais                                                                                      |  111 |
-|                          | 4.4.1. Gestação                                                                                                                           |  111 |
-|                          | 4.4.2. Hepatopatias                                                                                                                       |  112 |
-|                          | 4.4.3. nefropatias                                                                                                                        |  113 |
-|                          | 4.4.4. diabetes                                                                                                                           |  114 |
-|                          | 4.4.5. infecção pelo HiV                                                                                                                  |  115 |
-| 5.                       | Seguimento do Tratamento                                                                                                                  |  122 |
-| 5.1.                     | seguimento do tratamento em adultos                                                                                                       |  122 |
-| 5.2.                     | seguimento do tratamento em crianças e adolescentes                                                                                       |  124 |
-| 6.                       | Reações Adversas e Interações Medicamentosas                                                                                              |  127 |
-| 6.1.                     | Reações adversas                                                                                                                          |  127 |
-|                          | 6.1. 1. ao esquema básico                                                                                                                 |  127 |
-|                          | 6.1.2. aos esquemas especiais e esquemas para tb resistente                                                                               |  130 |
-|                          | 6.2.Reações adversas com o uso de fármacos para tb e antirretrovirais                                                                     |  135 |
-| 6.3.                     | interações medicamentosas                                                                                                                 |  137 |
+| 1. | Introdução | 97 |
+| 2. | Bases Bacteriológicas e Farmacológicas | 98 |
+| 3. | A Escolha do Melhor Esquema de Tratamento | 102 |
+| 4. | Esquemas de Tratamento para a Tuberculose | 104 |
+| 4.1. | esquema básico (eb) | 105 |
+| | 4.1. 1. esquema básico para o tratamento de adultos e adolescentes (≥ 10 anos de idade): 2RHZE/4RH | 105 |
+| | 4.1.2. esquema básico para tratamento da tb meningoencefálica e osteoarticular em adultos e adolescentes (≥ 10 anos de idade): 2RHZE/10RH | 106 |
+| | 4.1.3. esquema básico para crianças (< 10 anos de idade): 2RHZ/4RH | 108 |
+| | 4.1.4. esquema básico para tratamento da tb meningoencefálica e osteoarticular para crianças (< 10 anos de idade): 2RHZ/10RH | 108 |
+| 4.2. | considerações sobre o tratamento | 110 |
+| | 4.3.Modalidades de tratamento | 111 |
+| | 4.4.tratamento da tuberculose em condições especiais | 111 |
+| | 4.4.1. Gestação | 111 |
+| | 4.4.2. Hepatopatias | 112 |
+| | 4.4.3. nefropatias | 113 |
+| | 4.4.4. diabetes | 114 |
+| | 4.4.5. infecção pelo HiV | 115 |
+| 5. | Seguimento do Tratamento | 122 |
+| 5.1. | seguimento do tratamento em adultos | 122 |
+| 5.2. | seguimento do tratamento em crianças e adolescentes | 124 |
+| 6. | Reações Adversas e Interações Medicamentosas | 127 |
+| 6.1. | Reações adversas | 127 |
+| | 6.1. 1. ao esquema básico | 127 |
+| | 6.1.2. aos esquemas especiais e esquemas para tb resistente | 130 |
+| | 6.2.Reações adversas com o uso de fármacos para tb e antirretrovirais | 135 |
+| 6.3. | interações medicamentosas | 137 |
 
-| 7.                                                                                                                                          |   Tratamento da Tuberculose Drogarresistente 142 |
+| 7. | Tratamento da Tuberculose Drogarresistente 142 |
 |---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
-| 7.1. Resistência adquirida ou secundária                                                                                                    |                                              143 |
-| 7.2. Resistência primária                                                                                                                   |                                              143 |
-| 7.3. intervenções para prevenir a tuberculose drogarresistente                                                                              |                                              144 |
-| 7.4. Classificação da tuberculose drogarresistente                                                                                          |                                              144 |
-| 7.5. Recomendações para a elaboração dos esquemas terapêuticos                                                                              |                                              145 |
-| 7.6. tratamento da tb mono e polirresistente                                                                                                |                                              148 |
-| 7.6. 1. tratamento da monorresistência à isoniazida                                                                                         |                                              149 |
-| 7.6.2. tratamento da monorresistência à rifampicina                                                                                         |                                              151 |
-| 7.6.3. tratamento da polirresistência                                                                                                       |                                              152 |
-| 7.6.4. tratamento da tuberculose com resistência à rifampicina (tb RR), com multirresistência (tb MdR) e com resistência extensiva (tb XdR) |                                              153 |
-| 7.7. esquemas individualizados                                                                                                              |                                              157 |
-| 7.8. situações especiais                                                                                                                    |                                              158 |
-| 7.8. 1. tuberculose drogarresistente em crianças                                                                                            |                                              158 |
-| 7.8.2. tuberculose drogarresistente em gestantes e lactantes                                                                                |                                              159 |
-| 7.8.3. Tuberculose drogarresistente na insuficiência renal                                                                                  |                                              160 |
-| 7.8.4. tuberculose drogarresistente em hepatopatias                                                                                         |                                              160 |
-| 7.8.5. tuberculose drogarresistente em pessoas vivendo com HiV                                                                              |                                              160 |
-| 7.9. seguimento do tratamento da tuberculose drogarresistente                                                                               |                                              161 |
-| 8. Tratamento da Infecção Latente pelo M. tuberculosis (ILTB)                                                                               |                                              163 |
-| 8.1. introdução                                                                                                                             |                                              163 |
-| 8.2. prevenção da infecção pelo M. tuberculosis ou quimioprofilaxia primária                                                                |                                              163 |
-| 8.3.tratamento da infecção latente                                                                                                          |                                              165 |
-| 8.4.indicações de tratamento da infecção latente                                                                                            |                                              165 |
-| 8.4.1. crianças (< 10 anos de idade) contatos de casos pulmonares                                                                           |                                              165 |
-| 8.4.2. adultos e adolescentes                                                                                                               |                                              166 |
-| 8.5.situações especiais                                                                                                                     |                                              167 |
-| 8.5.1. Gestantes                                                                                                                            |                                              167 |
-| 8.5.2. pessoas vivendo com HiV                                                                                                              |                                              167 |
-| 8.5.3. contatos de tuberculose com resistência extensiva ou tuberculose multirresistente                                                    |                                              167 |
+| 7.1. Resistência adquirida ou secundária | 143 |
+| 7.2. Resistência primária | 143 |
+| 7.3. intervenções para prevenir a tuberculose drogarresistente | 144 |
+| 7.4. Classificação da tuberculose drogarresistente | 144 |
+| 7.5. Recomendações para a elaboração dos esquemas terapêuticos | 145 |
+| 7.6. tratamento da tb mono e polirresistente | 148 |
+| 7.6. 1. tratamento da monorresistência à isoniazida | 149 |
+| 7.6.2. tratamento da monorresistência à rifampicina | 151 |
+| 7.6.3. tratamento da polirresistência | 152 |
+| 7.6.4. tratamento da tuberculose com resistência à rifampicina (tb RR), com multirresistência (tb MdR) e com resistência extensiva (tb XdR) | 153 |
+| 7.7. esquemas individualizados | 157 |
+| 7.8. situações especiais | 158 |
+| 7.8. 1. tuberculose drogarresistente em crianças | 158 |
+| 7.8.2. tuberculose drogarresistente em gestantes e lactantes | 159 |
+| 7.8.3. Tuberculose drogarresistente na insuficiência renal | 160 |
+| 7.8.4. tuberculose drogarresistente em hepatopatias | 160 |
+| 7.8.5. tuberculose drogarresistente em pessoas vivendo com HiV | 160 |
+| 7.9. seguimento do tratamento da tuberculose drogarresistente | 161 |
+| 8. Tratamento da Infecção Latente pelo M. tuberculosis (ILTB) | 163 |
+| 8.1. introdução | 163 |
+| 8.2. prevenção da infecção pelo M. tuberculosis ou quimioprofilaxia primária | 163 |
+| 8.3.tratamento da infecção latente | 165 |
+| 8.4.indicações de tratamento da infecção latente | 165 |
+| 8.4.1. crianças (< 10 anos de idade) contatos de casos pulmonares | 165 |
+| 8.4.2. adultos e adolescentes | 166 |
+| 8.5.situações especiais | 167 |
+| 8.5.1. Gestantes | 167 |
+| 8.5.2. pessoas vivendo com HiV | 167 |
+| 8.5.3. contatos de tuberculose com resistência extensiva ou tuberculose multirresistente | 167 |
 
-| 8.6.Regimes terapêuticos e tempo de tratamento da infecção latente pelo M. tuberculosis                                       |   168 |
+| 8.6.Regimes terapêuticos e tempo de tratamento da infecção latente pelo M. tuberculosis | 168 |
 |-------------------------------------------------------------------------------------------------------------------------------|-------|
-| 8.7. seguimento do tratamento da infecção latente pelo M. tuberculosis                                                        |   169 |
-| Referências                                                                                                                   |   170 |
-| Anexos                                                                                                                        |   177 |
-| anexo i - segurança dos fármacos antitb em gestantes                                                                          |   177 |
-| anexo ii - segurança dos fármacos antitb em lactantes                                                                         |   178 |
-| anexo iii - ajuste dos medicamentos em nefropatas                                                                             |   179 |
-| anexo iV - tabela posológica dos medicamentos para adultos e adolescentes (≥ 10 anos de idade)                                |   180 |
-| anexo V - tabela posológica dos medicamentos aminoglicosídeos e polipeptídeos para adolescentes (≥10 anos de idade) e adultos |   181 |
-| anexo Vi - tabela posológica dos medicamentos para crianças (< 10 anos de idade)                                              |   182 |
-| anexo Vii- sumário de resistências cruzadas conhecidas entre os medicamentos antitb                                           |   183 |
-| PARTE IV • ESTRATÉGIAS PROGRAMÁTICAS PARA O CONTROLE DA TUBERCULOSE                                                           |   185 |
-| 1. O Enfrentamento da Tuberculose                                                                                             |   187 |
-| 2. Vacinação                                                                                                                  |   188 |
-| 2.1. indicações                                                                                                               |   188 |
-| 2.2. contraindicações                                                                                                         |   189 |
-| 2.3. adiamento da vacinação                                                                                                   |   189 |
-| 2.4.esquema de vacinação bcG, dose e via de administração                                                                     |   190 |
-| 2.5. evolução da lesão vacinal                                                                                                |   190 |
-| 2.6. eventos adversos                                                                                                         |   191 |
-| 2.7. educação permanente nos serviços de vacinação                                                                            |   191 |
-| 3. Detecção de Casos de Tuberculose                                                                                           |   193 |
-| 3.1. busca ativa de sintomático respiratório (sR)                                                                             |   193 |
-| 3.1. 1. Definição da atividade                                                                                                |   193 |
-| 3.1.2. Definição de Sintomático Respiratório                                                                                  |   194 |
+| 8.7. seguimento do tratamento da infecção latente pelo M. tuberculosis | 169 |
+| Referências | 170 |
+| Anexos | 177 |
+| anexo i - segurança dos fármacos antitb em gestantes | 177 |
+| anexo ii - segurança dos fármacos antitb em lactantes | 178 |
+| anexo iii - ajuste dos medicamentos em nefropatas | 179 |
+| anexo iV - tabela posológica dos medicamentos para adultos e adolescentes (≥ 10 anos de idade) | 180 |
+| anexo V - tabela posológica dos medicamentos aminoglicosídeos e polipeptídeos para adolescentes (≥10 anos de idade) e adultos | 181 |
+| anexo Vi - tabela posológica dos medicamentos para crianças (< 10 anos de idade) | 182 |
+| anexo Vii- sumário de resistências cruzadas conhecidas entre os medicamentos antitb | 183 |
+| PARTE IV • ESTRATÉGIAS PROGRAMÁTICAS PARA O CONTROLE DA TUBERCULOSE | 185 |
+| 1. O Enfrentamento da Tuberculose | 187 |
+| 2. Vacinação | 188 |
+| 2.1. indicações | 188 |
+| 2.2. contraindicações | 189 |
+| 2.3. adiamento da vacinação | 189 |
+| 2.4.esquema de vacinação bcG, dose e via de administração | 190 |
+| 2.5. evolução da lesão vacinal | 190 |
+| 2.6. eventos adversos | 191 |
+| 2.7. educação permanente nos serviços de vacinação | 191 |
+| 3. Detecção de Casos de Tuberculose | 193 |
+| 3.1. busca ativa de sintomático respiratório (sR) | 193 |
+| 3.1. 1. Definição da atividade | 193 |
+| 3.1.2. Definição de Sintomático Respiratório | 194 |
 
-| 3.1.3. objetivo                                                       |   194 |
+| 3.1.3. objetivo | 194 |
 |-----------------------------------------------------------------------|-------|
-| 3.1.4. planejamento da busca ativa de sR                              |   194 |
-| 3.1.5. estratégia de busca ativa em serviços de saúde                 |   195 |
-| 3.1.6. Estratégias de Busca Ativa em contextos específicos            |   195 |
-| 3.2. busca passiva de casos                                           |   197 |
-| 4. Adesão                                                             |   199 |
-| 4.1. conceito                                                         |   199 |
-| 4.2. importância da adesão                                            |   199 |
-| 4.3. o processo de adesão                                             |   200 |
-| 4.3.1. adesão no início do tratamento                                 |   200 |
-| 4.3.2. adesão durante o seguimento do tratamento                      |   200 |
-| 4.4. Fatores que interferem na adesão                                 |   201 |
-| 4.5. estigma                                                          |   202 |
-| 4.6. estratégias que podem melhorar a adesão                          |   202 |
-| 4.6.1. acolhimento                                                    |   202 |
-| 4.6.2. tratamento diretamente observado (tdo)                         |   203 |
-| 4.6.3. projeto terapêutico singular (pts)                             |   206 |
-| 4.6.4. atitude da equipe para o fortalecimento da adesão              |   208 |
-| 4.6.5. organização e estruturação do serviço                          |   208 |
-| 4.7. outras atividades de apoio à adesão                              |   208 |
-| 4.8. Monitoramento e avaliação da adesão                              |   209 |
-| 4.8.1. 'Faltoso' ao tratamento                                        |   209 |
-| 4.8.2. abandono do tratamento                                         |   210 |
-| 4.8.3. estratégias de busca de faltosos e abandonos                   |   210 |
-| 4.9. quando as estratégias falham                                     |   211 |
-| 4.10. Recomendações para os serviços                                  |   211 |
-| 5. Controle de Contatos                                               |   213 |
-| 5.1. Definições para proceder ao controle de contatos                 |   213 |
-| 5.2. identificação e priorização da avaliação de contatos             |   214 |
-| 5.3. indicações da avaliação de contatos                              |   214 |
-| 5.4. avaliação dos contatos                                           |   215 |
-| 5.5. sobre testagem do HiV em contatos                                |   217 |
-| 5.6. operacionalização da avaliação de contatos nos serviços de saúde |   218 |
+| 3.1.4. planejamento da busca ativa de sR | 194 |
+| 3.1.5. estratégia de busca ativa em serviços de saúde | 195 |
+| 3.1.6. Estratégias de Busca Ativa em contextos específicos | 195 |
+| 3.2. busca passiva de casos | 197 |
+| 4. Adesão | 199 |
+| 4.1. conceito | 199 |
+| 4.2. importância da adesão | 199 |
+| 4.3. o processo de adesão | 200 |
+| 4.3.1. adesão no início do tratamento | 200 |
+| 4.3.2. adesão durante o seguimento do tratamento | 200 |
+| 4.4. Fatores que interferem na adesão | 201 |
+| 4.5. estigma | 202 |
+| 4.6. estratégias que podem melhorar a adesão | 202 |
+| 4.6.1. acolhimento | 202 |
+| 4.6.2. tratamento diretamente observado (tdo) | 203 |
+| 4.6.3. projeto terapêutico singular (pts) | 206 |
+| 4.6.4. atitude da equipe para o fortalecimento da adesão | 208 |
+| 4.6.5. organização e estruturação do serviço | 208 |
+| 4.7. outras atividades de apoio à adesão | 208 |
+| 4.8. Monitoramento e avaliação da adesão | 209 |
+| 4.8.1. 'Faltoso' ao tratamento | 209 |
+| 4.8.2. abandono do tratamento | 210 |
+| 4.8.3. estratégias de busca de faltosos e abandonos | 210 |
+| 4.9. quando as estratégias falham | 211 |
+| 4.10. Recomendações para os serviços | 211 |
+| 5. Controle de Contatos | 213 |
+| 5.1. Definições para proceder ao controle de contatos | 213 |
+| 5.2. identificação e priorização da avaliação de contatos | 214 |
+| 5.3. indicações da avaliação de contatos | 214 |
+| 5.4. avaliação dos contatos | 215 |
+| 5.5. sobre testagem do HiV em contatos | 217 |
+| 5.6. operacionalização da avaliação de contatos nos serviços de saúde | 218 |
 
-| 6.                                                                             | Medidas de Controle de Infecção da Tuberculose em Unidades de Saúde                           |   219 |
+| 6. | Medidas de Controle de Infecção da Tuberculose em Unidades de Saúde | 219 |
 |--------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|-------|
-| 6.1.                                                                           | conjuntos de medidas de controle da transmissão do M. tuberculosis                            |   220 |
-|                                                                                | 6.1. 1. Medidas administrativas (ou gerenciais)                                               |   220 |
-|                                                                                | 6.1.2. Medidas de controle ambiental (ou de engenharia)                                       |   221 |
-|                                                                                | 6.1.3. Medidas de proteção respiratória (ou de proteção individual)                           |   222 |
-| 6.2.                                                                           | controle de infecção pelo M. tuberculosis no domicílio e em outros ambientes                  |   223 |
-| 6.3.                                                                           | controle de infecção pelo M. tuberculosis na atenção básica                                   |   224 |
-| 6.4. controle de infecção pelo M. tuberculosis emserviços que atendem pVHiV    | 6.4. controle de infecção pelo M. tuberculosis emserviços que atendem pVHiV                   |   225 |
-| 6.5. controle de infecção pelo M. tuberculosis em ambientes hospitalares       | 6.5. controle de infecção pelo M. tuberculosis em ambientes hospitalares                      |   225 |
-| 6.6.controle de infecção pelo M. tuberculosis em laboratórios                  | 6.6.controle de infecção pelo M. tuberculosis em laboratórios                                 |   227 |
-| 7.                                                                             | Ações Estratégicas para Situações e Populações Especiais                                      |   229 |
-| 7.1.                                                                           | pessoas Vivendo com HiV (pVHiV)                                                               |   229 |
-|                                                                                | 7. 1. 1. caracterização da população                                                          |   229 |
-|                                                                                | 7. 1.2. atividades programáticas recomendadas                                                 |   229 |
-|                                                                                | 7. 1.3. organização da rede de atenção                                                        |   231 |
-| 7.2.                                                                           | pessoas privadas de liberdade (ppl)                                                           |   232 |
-|                                                                                | 7.2. 1. caracterização da população                                                           |   233 |
-|                                                                                | 7.2.2. atividades programáticas recomendadas                                                  |   233 |
-|                                                                                | 7.2.3. Medidas para reduzir a transmissão do M. tuberculosis no contexto carcerário           |   238 |
-|                                                                                | 7.2.4. Detecção de TB entre profissionais do sistema penitenciário                            |   239 |
-|                                                                                | 7.2.5. Vigilância epidemiológica, monitoramento e avaliação                                   |   239 |
-|                                                                                | 7.2.6. ações de informação, educação e comunicação                                            |   240 |
-|                                                                                | 7.2.7. organização da rede de atenção                                                         |   241 |
-| 7.3. população em situação de Rua (psR)                                        | 7.3. população em situação de Rua (psR)                                                       |   241 |
-|                                                                                | 7.3. 1. caracterização da população                                                           |   242 |
-|                                                                                | 7.3.2. atividades programáticas recomendadas                                                  |   243 |
-|                                                                                | 7.3.3. organização da Rede de atenção integrada às pessoas em situação de rua com tuberculose |   245 |
-| 7.4. indígenas                                                                 | 7.4. indígenas                                                                                |   246 |
-| 7.4. 1. caracterização da população e especificidades quanto à atenção à saúde | 7.4. 1. caracterização da população e especificidades quanto à atenção à saúde                |   247 |
-|                                                                                | 7.4.2. atividades programáticas recomendadas                                                  |   248 |
-|                                                                                | 7.4.3. organização da rede de atenção à saúde dos povos indígenas                             |   249 |
+| 6.1. | conjuntos de medidas de controle da transmissão do M. tuberculosis | 220 |
+| | 6.1. 1. Medidas administrativas (ou gerenciais) | 220 |
+| | 6.1.2. Medidas de controle ambiental (ou de engenharia) | 221 |
+| | 6.1.3. Medidas de proteção respiratória (ou de proteção individual) | 222 |
+| 6.2. | controle de infecção pelo M. tuberculosis no domicílio e em outros ambientes | 223 |
+| 6.3. | controle de infecção pelo M. tuberculosis na atenção básica | 224 |
+| 6.4. controle de infecção pelo M. tuberculosis emserviços que atendem pVHiV | 6.4. controle de infecção pelo M. tuberculosis emserviços que atendem pVHiV | 225 |
+| 6.5. controle de infecção pelo M. tuberculosis em ambientes hospitalares | 6.5. controle de infecção pelo M. tuberculosis em ambientes hospitalares | 225 |
+| 6.6.controle de infecção pelo M. tuberculosis em laboratórios | 6.6.controle de infecção pelo M. tuberculosis em laboratórios | 227 |
+| 7. | Ações Estratégicas para Situações e Populações Especiais | 229 |
+| 7.1. | pessoas Vivendo com HiV (pVHiV) | 229 |
+| | 7. 1. 1. caracterização da população | 229 |
+| | 7. 1.2. atividades programáticas recomendadas | 229 |
+| | 7. 1.3. organização da rede de atenção | 231 |
+| 7.2. | pessoas privadas de liberdade (ppl) | 232 |
+| | 7.2. 1. caracterização da população | 233 |
+| | 7.2.2. atividades programáticas recomendadas | 233 |
+| | 7.2.3. Medidas para reduzir a transmissão do M. tuberculosis no contexto carcerário | 238 |
+| | 7.2.4. Detecção de TB entre profissionais do sistema penitenciário | 239 |
+| | 7.2.5. Vigilância epidemiológica, monitoramento e avaliação | 239 |
+| | 7.2.6. ações de informação, educação e comunicação | 240 |
+| | 7.2.7. organização da rede de atenção | 241 |
+| 7.3. população em situação de Rua (psR) | 7.3. população em situação de Rua (psR) | 241 |
+| | 7.3. 1. caracterização da população | 242 |
+| | 7.3.2. atividades programáticas recomendadas | 243 |
+| | 7.3.3. organização da Rede de atenção integrada às pessoas em situação de rua com tuberculose | 245 |
+| 7.4. indígenas | 7.4. indígenas | 246 |
+| 7.4. 1. caracterização da população e especificidades quanto à atenção à saúde | 7.4. 1. caracterização da população e especificidades quanto à atenção à saúde | 247 |
+| | 7.4.2. atividades programáticas recomendadas | 248 |
+| | 7.4.3. organização da rede de atenção à saúde dos povos indígenas | 249 |
 
-| 7.5. profissionais de saúde                                                 | 7.5. profissionais de saúde                                                 |   252 |
+| 7.5. profissionais de saúde | 7.5. profissionais de saúde | 252 |
 |-----------------------------------------------------------------------------|-----------------------------------------------------------------------------|-------|
-|                                                                             | 7.5. 1. caracterização da população                                         |   252 |
-|                                                                             | 7.5.2. atividades programáticas recomendadas                                |   253 |
-|                                                                             | 7.5.3. organização da rede de atenção                                       |   256 |
-| 7.6.                                                                        | usuários de álcool e outras drogas                                          |   257 |
-|                                                                             | 7.6. 1. caracterização da população                                         |   257 |
-|                                                                             | 7.6.2. atividades programáticas recomendadas                                |   257 |
-|                                                                             | 7.6.3. Organização da rede de atenção                                       |   259 |
-| 7.7.                                                                        | pessoas com diabetes mellitus                                               |   260 |
-|                                                                             | 7.7. 1. caracterização da população                                         |   260 |
-|                                                                             | 7.7.2. atividades programáticas preconizadas                                |   262 |
-| 7.8.                                                                        | tabagistas                                                                  |   263 |
-| 7.8.                                                                        | 1. caracterização da população                                              |   264 |
-| 7.8.2.                                                                      | atividades programáticas preconizadas                                       |   264 |
-| Referências                                                                 | Referências                                                                 |   266 |
-| Anexos                                                                      |                                                                             |   271 |
-| anexo Viii - Matriz                                                         | de programação da procura de sintomáticos Respiratórios                     |   271 |
-| anexo iX                                                                    | - listagem dos dsei com suas respectivas unidades Federadas e municípios    |   272 |
-| PARTE V • BASES ORGANIZACIONAIS E POLÍTICAS PARA AS AÇÕES DE CONTROLE DA TB | PARTE V • BASES ORGANIZACIONAIS E POLÍTICAS PARA AS AÇÕES DE CONTROLE DA TB |   277 |
-| 1. Priorização Política do Controle da Tuberculose                          | 1. Priorização Política do Controle da Tuberculose                          |   279 |
-| 2. Papel das Três Esferas de Governo                                        | 2. Papel das Três Esferas de Governo                                        |   280 |
-| 2.1. atribuições das instâncias no controle da tuberculose                  | 2.1. atribuições das instâncias no controle da tuberculose                  |   281 |
-| 3. O Programa Nacional de Controle da Tuberculose                           | 3. O Programa Nacional de Controle da Tuberculose                           |   285 |
-| 3.1 componentes do programa nacional de controle da tuberculose             | 3.1 componentes do programa nacional de controle da tuberculose             |   285 |
-| 4. Redes de Atenção à Saúde                                                 | 4. Redes de Atenção à Saúde                                                 |   287 |
-| 4.1. as redes de atenção à saúde no brasil                                  | 4.1. as redes de atenção à saúde no brasil                                  |   288 |
+| | 7.5. 1. caracterização da população | 252 |
+| | 7.5.2. atividades programáticas recomendadas | 253 |
+| | 7.5.3. organização da rede de atenção | 256 |
+| 7.6. | usuários de álcool e outras drogas | 257 |
+| | 7.6. 1. caracterização da população | 257 |
+| | 7.6.2. atividades programáticas recomendadas | 257 |
+| | 7.6.3. Organização da rede de atenção | 259 |
+| 7.7. | pessoas com diabetes mellitus | 260 |
+| | 7.7. 1. caracterização da população | 260 |
+| | 7.7.2. atividades programáticas preconizadas | 262 |
+| 7.8. | tabagistas | 263 |
+| 7.8. | 1. caracterização da população | 264 |
+| 7.8.2. | atividades programáticas preconizadas | 264 |
+| Referências | Referências | 266 |
+| Anexos | | 271 |
+| anexo Viii - Matriz | de programação da procura de sintomáticos Respiratórios | 271 |
+| anexo iX | - listagem dos dsei com suas respectivas unidades Federadas e municípios | 272 |
+| PARTE V • BASES ORGANIZACIONAIS E POLÍTICAS PARA AS AÇÕES DE CONTROLE DA TB | PARTE V • BASES ORGANIZACIONAIS E POLÍTICAS PARA AS AÇÕES DE CONTROLE DA TB | 277 |
+| 1. Priorização Política do Controle da Tuberculose | 1. Priorização Política do Controle da Tuberculose | 279 |
+| 2. Papel das Três Esferas de Governo | 2. Papel das Três Esferas de Governo | 280 |
+| 2.1. atribuições das instâncias no controle da tuberculose | 2.1. atribuições das instâncias no controle da tuberculose | 281 |
+| 3. O Programa Nacional de Controle da Tuberculose | 3. O Programa Nacional de Controle da Tuberculose | 285 |
+| 3.1 componentes do programa nacional de controle da tuberculose | 3.1 componentes do programa nacional de controle da tuberculose | 285 |
+| 4. Redes de Atenção à Saúde | 4. Redes de Atenção à Saúde | 287 |
+| 4.1. as redes de atenção à saúde no brasil | 4.1. as redes de atenção à saúde no brasil | 288 |
 
-| 4.2.a tuberculose nas redes de atenção à saúde   | 4.2.a tuberculose nas redes de atenção à saúde             |   289 |
+| 4.2.a tuberculose nas redes de atenção à saúde | 4.2.a tuberculose nas redes de atenção à saúde | 289 |
 |--------------------------------------------------|------------------------------------------------------------|-------|
-| 5.                                               | Rede Laboratorial                                          |   298 |
-| 5.1.                                             | organização da rede nacional de laboratórios               |   298 |
-| 5.2.                                             | Hierarquia na rede nacional de laboratórios de tuberculose |   299 |
-| 6.                                               | Intersetorialidade no Controle da Tuberculose              |   301 |
-| 6.1.                                             | Desenvolvimento social                                     |   302 |
-| 6.2.                                             | segurança pública                                          |   306 |
-| 6.3.                                             | direitos Humanos                                           |   307 |
-| 6.4.                                             | educação                                                   |   308 |
-| 6.5.                                             | transportes                                                |   309 |
-| 6.6.                                             | a intersetorialidade na prática                            |   309 |
-| 7.                                               | Participação Comunitária, Mobilização Social e Advocacy    |   311 |
-| 7.1.                                             | cenário atual                                              |   311 |
-| 7.2.                                             | estratégia caMs                                            |   312 |
-| 7.3.                                             | caMs no brasil                                             |   314 |
-| 7.4.                                             | como desenvolver a estratégia caMs                         |   315 |
-| 7.5.                                             | desenvolvendo parcerias para caMs                          |   316 |
-| 8.                                               | Pesquisas em Tuberculose                                   |   318 |
-| 9.                                               | Vigilância Epidemiológica                                  |   320 |
-| 9.1.                                             | objetivo                                                   |   320 |
-| 9.2.                                             | Definição de caso                                          |   320 |
-| 9.3.                                             | Notificação                                                |   321 |
-| 9.4.                                             | investigação epidemiológica                                |   322 |
-| 9.5.                                             | Vigilância em ambiente hospitalar                          |   325 |
-| 9.6.                                             | Vigilância em outras instituições                          |   325 |
-| 9.7.                                             | Vigilância em populações mais vulneráveis                  |   325 |
-| 9.8.                                             | Vigilância da infecção latente pelo M. tuberculosis        |   326 |
-| 9.9.                                             | Medidas de prevenção e controle                            |   328 |
+| 5. | Rede Laboratorial | 298 |
+| 5.1. | organização da rede nacional de laboratórios | 298 |
+| 5.2. | Hierarquia na rede nacional de laboratórios de tuberculose | 299 |
+| 6. | Intersetorialidade no Controle da Tuberculose | 301 |
+| 6.1. | Desenvolvimento social | 302 |
+| 6.2. | segurança pública | 306 |
+| 6.3. | direitos Humanos | 307 |
+| 6.4. | educação | 308 |
+| 6.5. | transportes | 309 |
+| 6.6. | a intersetorialidade na prática | 309 |
+| 7. | Participação Comunitária, Mobilização Social e Advocacy | 311 |
+| 7.1. | cenário atual | 311 |
+| 7.2. | estratégia caMs | 312 |
+| 7.3. | caMs no brasil | 314 |
+| 7.4. | como desenvolver a estratégia caMs | 315 |
+| 7.5. | desenvolvendo parcerias para caMs | 316 |
+| 8. | Pesquisas em Tuberculose | 318 |
+| 9. | Vigilância Epidemiológica | 320 |
+| 9.1. | objetivo | 320 |
+| 9.2. | Definição de caso | 320 |
+| 9.3. | Notificação | 321 |
+| 9.4. | investigação epidemiológica | 322 |
+| 9.5. | Vigilância em ambiente hospitalar | 325 |
+| 9.6. | Vigilância em outras instituições | 325 |
+| 9.7. | Vigilância em populações mais vulneráveis | 325 |
+| 9.8. | Vigilância da infecção latente pelo M. tuberculosis | 326 |
+| 9.9. | Medidas de prevenção e controle | 328 |
 
-| 9. 10. Vigilância dos casos de tratamentos especiais para tuberculose                                       |   329 |
+| 9. 10. Vigilância dos casos de tratamentos especiais para tuberculose | 329 |
 |-------------------------------------------------------------------------------------------------------------|-------|
-| 10. Sistemas de Informação                                                                                  |   330 |
-| 10.1. instrumentos de registro de dados sobre tuberculose                                                   |   330 |
-| 10.2. o sistema de informação de agravos de notificação - sinan                                             |   332 |
-| 10.3. sistema de informação de tratamentos especiais da tuberculose - site-tb                               |   339 |
-| 11. Planejamento, monitoramento e avaliação                                                                 |   348 |
-| 11.1. planejamento                                                                                          |   348 |
-| 11.2. Monitoramento e avaliação                                                                             |   352 |
-| 11.3. estratégias de monitoramento e avaliação                                                              |   354 |
-| Referências                                                                                                 |   356 |
-| Anexos                                                                                                      |   359 |
-| anexo X - livro de registro de sintomático respiratório no serviço de saúde                                 |   359 |
-| Anexo Xi - Ficha de notificação/investigação                                                                |   360 |
-| anexo Xii - livro de registro e acompanhamento de tratamento dos casos de tuberculose                       |   361 |
-| anexo Xiii - boletim de acompanhamento de casos no sinan                                                    |   362 |
-| anexo XiV - Ficha de acompanhamento da tomada diária da medicação do tratamento diretamente observado - tdo |   363 |
+| 10. Sistemas de Informação | 330 |
+| 10.1. instrumentos de registro de dados sobre tuberculose | 330 |
+| 10.2. o sistema de informação de agravos de notificação - sinan | 332 |
+| 10.3. sistema de informação de tratamentos especiais da tuberculose - site-tb | 339 |
+| 11. Planejamento, monitoramento e avaliação | 348 |
+| 11.1. planejamento | 348 |
+| 11.2. Monitoramento e avaliação | 352 |
+| 11.3. estratégias de monitoramento e avaliação | 354 |
+| Referências | 356 |
+| Anexos | 359 |
+| anexo X - livro de registro de sintomático respiratório no serviço de saúde | 359 |
+| Anexo Xi - Ficha de notificação/investigação | 360 |
+| anexo Xii - livro de registro e acompanhamento de tratamento dos casos de tuberculose | 361 |
+| anexo Xiii - boletim de acompanhamento de casos no sinan | 362 |
+| anexo XiV - Ficha de acompanhamento da tomada diária da medicação do tratamento diretamente observado - tdo | 363 |
 
 ## apresentação do Manual
 
@@ -696,7 +688,7 @@ o recrudescimento da tuberculose em consequência da epidemia de aids e os seus 
 
 pela primeira vez em décadas, surgem novidades nos campos diagnósticos e terapêuticos: testes rápidos moleculares, novos fármacos desenvolvidos especificamente para o tratamento da tb, inúmeras vacinas preventivas e terapêuticas em fase de desenvolvimento, novos regimes encurtados sendo testados em ensaios clínicos multicêntricos, enfim, em um cenário sempre tão carente de novidades, começa a florescer a esperança.
 
-nesse contexto, o brasil tem um papel extremamente relevante. na assembleia Mundial da saúde do ano de 2014, na sede da oMs em Genebra, o país foi o principal proponente de uma nova estratégia global de combate à doença, chamada de estratégia Fim da tuberculose ( End TB Strategy ). a proposta foi aprovada por unanimidade pelos países membros das nações unidas e tem como visão um mundo livre da tuberculose até o ano de 2035.
+nesse contexto, o brasil tem um papel extremamente relevante. na assembleia Mundial da saúde do ano de 2014, na sede da oMs em Genebra, o país foi o principal proponente de uma nova estratégia global de combate à doença, chamada de estratégia Fim da tuberculose (End TB Strategy). a proposta foi aprovada por unanimidade pelos países membros das nações unidas e tem como visão um mundo livre da tuberculose até o ano de 2035.
 
 a nova estratégia, além de metas extremamente ousadas, traz o enfrentamento dos determinantes sociais e a inovação como base de seus três pilares. a inovação está presente na atenção centrada nos pacientes, no estímulo crescente à pesquisa e à adoção de novas tecnologias e na introdução de um novo componente capaz de potencializar o efeito das demais medidas: a utilização da proteção social como ferramenta de apoio aos pacientes e às comunidades afetadas. passa-se, efetivamente, a encarar a tuberculose como um fenômeno multicausal que extrapola o campo biomédico.
 
@@ -724,17 +716,17 @@ a tb é uma doença que pode ser prevenida e curada, mas ainda prevalece em cond
 
 ## 1.1. aGente etiolÓGico
 
-a tb pode ser causada por qualquer uma das sete espécies que integram o complexo Mycobacterium tuberculosis : M. tuberculosis , M. bovis , M. africanum , M. canetti , M. microti , M. pinnipedi e M. caprae .
+a tb pode ser causada por qualquer uma das sete espécies que integram o complexo Mycobacterium tuberculosis : M. tuberculosis, M. bovis, M. africanum, M. canetti, M. microti, M. pinnipedi e M. caprae.
 
-em saúde pública, a espécie mais importante é a M. tuberculosis , conhecida também como bacilo de Koch (bK). o M. tuberculosis é fino, ligeiramente curvo e mede de 0,5 a 3 μm. É um bacilo álcool-ácido resistente (baaR), aeróbio, com parede celular rica em lipídios (ácidos micólicos e arabinogalactano), o que lhe confere baixa permeabilidade, reduz a efetividade da maioria dos antibióticos e facilita sua sobrevida nos macrófagos (RossMan; MacGReGoR, 1995).
+em saúde pública, a espécie mais importante é a M. tuberculosis, conhecida também como bacilo de Koch (bK). o M. tuberculosis é fino, ligeiramente curvo e mede de 0,5 a 3 μm. É um bacilo álcool-ácido resistente (baaR), aeróbio, com parede celular rica em lipídios (ácidos micólicos e arabinogalactano), o que lhe confere baixa permeabilidade, reduz a efetividade da maioria dos antibióticos e facilita sua sobrevida nos macrófagos (RossMan; MacGReGoR, 1995).
 
-em alguns locais, o M. bovis pode ter especial relevância como agente etiológico da tb e apresenta-se de forma idêntica ao M. tuberculosis , com maior frequência da forma ganglionar e outras extrapulmonares. a ocorrência é mais comum em locais que consomem leite e derivados não pasteurizados ou não fervidos de rebanho bovino infectado; em pessoas que residem em áreas rurais e em profissionais do campo (veterinários, ordenhadores, funcionários de matadouros, entre outros). nessas situações, os serviços de vigilância sanitária devem ser informados para atuar na identificação precoce das fontes de infecção e no controle da doença, prevenindo assim a ocorrência de novos casos. outro grupo de micobactérias, as micobactérias não tuberculosas (Mnt), compreendem diversas espécies como M. avium, M. kansasii, M. intracellulare e M. abscessos com relevância epidemiológica no brasil restrita a determinadas populações ou regiões (bieRRenbacH et al., 2001).
+em alguns locais, o M. bovis pode ter especial relevância como agente etiológico da tb e apresenta-se de forma idêntica ao M. tuberculosis, com maior frequência da forma ganglionar e outras extrapulmonares. a ocorrência é mais comum em locais que consomem leite e derivados não pasteurizados ou não fervidos de rebanho bovino infectado; em pessoas que residem em áreas rurais e em profissionais do campo (veterinários, ordenhadores, funcionários de matadouros, entre outros). nessas situações, os serviços de vigilância sanitária devem ser informados para atuar na identificação precoce das fontes de infecção e no controle da doença, prevenindo assim a ocorrência de novos casos. outro grupo de micobactérias, as micobactérias não tuberculosas (Mnt), compreendem diversas espécies como M. avium, M. kansasii, M. intracellulare e M. abscessos com relevância epidemiológica no brasil restrita a determinadas populações ou regiões (bieRRenbacH et al., 2001).
 
 ## 1.2. tRansMissão
 
 o M. tuberculosis é transmitido por via aérea, de uma pessoa com tb pulmonar ou laríngea, que elimina bacilos no ambiente (caso fonte), a outra pessoa, por exalação de aerossóis oriundos da tosse, fala ou espirro. o termo 'bacilífero' refere-se a pessoas com tb pulmonar ou laríngea que tem baciloscopia positiva no escarro. esses casos têm maior capacidade de transmissão, entretanto pessoas com outros exames bacteriológicos como cultura e/ou teste Rápido Molecular da tuberculose (tRM-tb) positivos também podem transmitir. a tb acomete, prioritariamente, o pulmão que também é a porta de entrada da maioria dos casos.
 
-a transmissão se faz por via respiratória, pela inalação de aerossóis produzidos pela tosse, fala ou espirro de um doente com tuberculose ativa pulmonar ou laríngea. as gotículas exaladas (gotículas de Pflüger ) rapidamente se tornam secas e transformam-se em partículas menores (&lt;5-10 μm de diâmetro). Essas partículas menores (núcleos de Wells ), contendo um a dois bacilos, podem manter-se em suspensão no ar por muitas horas e são capazes de alcançar os alvéolos, onde podem se multiplicar e provocar a chamada primo-infecção (RiedeR; otHeRs, 1999). outras vias de transmissão (pele e placenta) são raras e desprovidas de importância epidemiológica. Os bacilos que se depositam em roupas, lençóis, copos e outros objetos dificilmente se dispersam em aerossóis e, por isso, não têm papel na transmissão da doença.
+a transmissão se faz por via respiratória, pela inalação de aerossóis produzidos pela tosse, fala ou espirro de um doente com tuberculose ativa pulmonar ou laríngea. as gotículas exaladas (gotículas de Pflüger) rapidamente se tornam secas e transformam-se em partículas menores (&lt;5-10 μm de diâmetro). Essas partículas menores (núcleos de Wells), contendo um a dois bacilos, podem manter-se em suspensão no ar por muitas horas e são capazes de alcançar os alvéolos, onde podem se multiplicar e provocar a chamada primo-infecção (RiedeR; otHeRs, 1999). outras vias de transmissão (pele e placenta) são raras e desprovidas de importância epidemiológica. Os bacilos que se depositam em roupas, lençóis, copos e outros objetos dificilmente se dispersam em aerossóis e, por isso, não têm papel na transmissão da doença.
 
 a probabilidade de uma pessoa ser infectada depende de fatores exógenos. entre eles, pode-se citar a infectividade do caso-fonte, a duração do contato e o tipo de ambiente partilhado.
 
@@ -752,16 +744,16 @@ no brasil, assim como em outros países que possuem condições de vida semelhan
 
 QUADRO 1 Risco de adoecimento por tuberculose nas populações vulneráveis
 
-| POPULAÇÕES VULNERÁVEIS               | RISCO DE ADOECIMENTO POR TB   |
+| POPULAÇÕES VULNERÁVEIS | RISCO DE ADOECIMENTO POR TB |
 |--------------------------------------|-------------------------------|
-| Pessoas vivendo em situação de rua 1 | 56 X maior                    |
-| Pessoas vivendo com o HIV 2          | 28 X maior                    |
-| Pessoas privadas de liberdade 2      | 28 X maior                    |
-| Indígenas**                          | 3 X maior                     |
+| Pessoas vivendo em situação de rua 1 | 56 X maior |
+| Pessoas vivendo com o HIV 2 | 28 X maior |
+| Pessoas privadas de liberdade 2 | 28 X maior |
+| Indígenas** | 3 X maior |
 
 Fonte: CGPNCT/SVS/MS.
 
-1 Dados do Sistema de Notificação e Acompanhamento dos Casos de Tuberculose - TB-WEB/SP e Prefeitura Municipal da São Paulo. Secretaria Municipal de Assistência e Desenvolvimento Social. Censo da população em situação de rua na muni  cipalidade de São Paulo, 2015. São Paulo, 2015.
+1 Dados do Sistema de Notificação e Acompanhamento dos Casos de Tuberculose - TB-WEB/SP e Prefeitura Municipal da São Paulo. Secretaria Municipal de Assistência e Desenvolvimento Social. Censo da população em situação de rua na muni cipalidade de São Paulo, 2015. São Paulo, 2015.
 
 2 Dados do Sistema de Informação de Agravos de Notificação - Sinan, avaliados março de 2017.
 
@@ -783,7 +775,7 @@ a região das américas representa cerca de 3,0% da carga mundial de tuberculose
 
 em relação aos desfechos de tratamento, em 2014, o percentual de sucesso de tratamento foi de 83% entre os casos novos e recidivas, 52% entre os casos de tb MdR e 28% entre os casos de tb com resistência extensiva a drogas (tb XdR). assim como nos casos com diagnóstico de resistência, os resultados obtidos na coorte de casos de tb coinfectados com HiV são preocupantes. nesses indivíduos o percentual de sucesso de tratamento foi de 75% (WHo, 2016).
 
-em 1993, a organização Mundial da saúde (oMs) declarou a tb como emergência mundial, recomendando, posteriormente, que os países adotassem a estratégia dots ( Directly Observed Treatment Short-Course) como o caminho para o alcance do controle da tb. a estratégia representava uma resposta global à ocorrência da doença.
+em 1993, a organização Mundial da saúde (oMs) declarou a tb como emergência mundial, recomendando, posteriormente, que os países adotassem a estratégia dots (Directly Observed Treatment Short-Course) como o caminho para o alcance do controle da tb. a estratégia representava uma resposta global à ocorrência da doença.
 
 Em 2000, 189 países firmaram compromisso para combater a extrema pobreza e outros males da sociedade. isso se concretizou nos oito objetivos de desenvolvimento do Milênio (odM), que deveriam ser alcançados até 2015. a tb foi contemplada no sexto objetivo, tendo como meta deter o aumento da incidência da doença. em consonância com os odM, a oMs também estabeleceu metas para serem alcançadas em 2015: reduzir em 50% a taxa de incidência e mortalidade se comparados aos valores de 1990.
 
@@ -795,14 +787,12 @@ o alcance das metas mundiais para o controle da tuberculose e a falta de diretri
 
 diante disso, foi aprovada na aMs, em 2014, a 'estratégia global e metas para prevenção, atenção e controle da tuberculose pós-2015', mais tarde denominada estratégia pelo Fim da tuberculose, cujo principal proponente foi o brasil (WHo, 2014a). a estratégia tem como visão ' um mundo livre da tuberculose: zero morte, adoecimento e sofrimento devido à tuberculose' e por objetivo o fim da epidemia global da doença. As metas, para cumprimento até 2035, são:
 
--  Reduzir o coeficiente de incidência para menos de 10 casos por 100 mil habitantes; e
--  reduzir o número de óbitos por tuberculose em 95%.
+- Reduzir o coeficiente de incidência para menos de 10 casos por 100 mil habitantes; e
+- reduzir o número de óbitos por tuberculose em 95%.
 
 tendo em vista o alcance das metas, a estratégia foi baseada em quatro princípios (Figura 1). Além dos princípios, foram identificados três pilares norteadores para o processo de alcance das metas, sendo o primeiro voltado para a atenção ao paciente, o segundo para o componente social e o terceiro para a pesquisa e inovação (WHo, 2015) (quadro 2).
 
 FIGURA 1 princípios da estratégia pelo Fim da tuberculose
-
-<!-- image -->
 
 Fonte: Adaptado de BRASIl, 2017.
 
@@ -810,22 +800,22 @@ QUADRO 2 pilares e componentes da estratégia pelo Fim da tuberculose
 
 ## PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE
 
--  Diagnóstico precoce, teste de sensibilidade antimicrobiano universal, investigação sistemática dos contatos e das populações mais vulneráveis.
--  Tratamento de todos os casos de tuberculose, incluindo casos de tuberculose drogarresistente e apoio ao paciente.
--  Atividades colaborativas TB-HIV e manejo de outras comorbidades.
--  Tratamento preventivo para pessoas com alto risco de adoecimento e vacina contra a tuberculose.
+- Diagnóstico precoce, teste de sensibilidade antimicrobiano universal, investigação sistemática dos contatos e das populações mais vulneráveis.
+- Tratamento de todos os casos de tuberculose, incluindo casos de tuberculose drogarresistente e apoio ao paciente.
+- Atividades colaborativas TB-HIV e manejo de outras comorbidades.
+- Tratamento preventivo para pessoas com alto risco de adoecimento e vacina contra a tuberculose.
 
 ## PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO
 
--  Compromisso político, alocação adequada de recursos para o cuidado e prevenção da tuberculose.
--  Envolvimento comunitário, das organizações da sociedade civil e dos setores público e privado.
--  Políticas de cobertura universal em saúde, regulamentação da notificação de casos, registro vital, uso qualitativo e racional de medicamentos e controle da infecção.
--  Proteção social, redução da pobreza e ações relacionadas aos determinantes da tuberculose.
+- Compromisso político, alocação adequada de recursos para o cuidado e prevenção da tuberculose.
+- Envolvimento comunitário, das organizações da sociedade civil e dos setores público e privado.
+- Políticas de cobertura universal em saúde, regulamentação da notificação de casos, registro vital, uso qualitativo e racional de medicamentos e controle da infecção.
+- Proteção social, redução da pobreza e ações relacionadas aos determinantes da tuberculose.
 
 ## PILAR 3. INTENSIFICAÇãO DA PESQUISA E INOVAÇãO
 
--  Descoberta, desenvolvimento e rápida absorção de novas ferramentas, intervenções e estratégias.
--  Pesquisa para otimizar a implantação e impacto, e promoção de inovações.
+- Descoberta, desenvolvimento e rápida absorção de novas ferramentas, intervenções e estratégias.
+- Pesquisa para otimizar a implantação e impacto, e promoção de inovações.
 
 Fonte: BRASIL, 2017.
 
@@ -839,17 +829,13 @@ o país tem destaque ainda por sua participação no bRics (bloco formado por br
 
 ## 2.2. no bRasil
 
-o brasil está entre os 30 países de alta carga para tb e tb-HiV considerados prioritários pela oMs para o controle da doença no mundo. em 2015, o percentual de detecção da tuberculose no país, segundo a oMs, foi de 87,0% (WHo, 2017). nos últimos 10 anos, foram diagnosticados, em média, 71 mil casos novos da doença. Em 2017, o número de casos notificados foi de 72.770 e os coeficientes de incidência variaram de 10,0 a 74,7 casos por 100 mil habitantes entre as Unidades Federadas (UF) (Figura 2). No ano de 2016, foram noti  ficados 4.483 óbitos por TB, o que corresponde ao coeficente de mortalidade de 2,2 óbitos por 100.000 habitantes (Figura 3). o percentual de sucesso de tratamento reportado para os casos novos com confirmação laboratorial foi de 74,6%, em 2016, com 10,8% de abandono de tratamento, e 4,1% dos registros com informação ignorada quanto ao desfecho. Dos casos de TB notificados em 2017, 77,8% foram testados para HiV, apresentando 9,5% de coinfecção.
+o brasil está entre os 30 países de alta carga para tb e tb-HiV considerados prioritários pela oMs para o controle da doença no mundo. em 2015, o percentual de detecção da tuberculose no país, segundo a oMs, foi de 87,0% (WHo, 2017). nos últimos 10 anos, foram diagnosticados, em média, 71 mil casos novos da doença. Em 2017, o número de casos notificados foi de 72.770 e os coeficientes de incidência variaram de 10,0 a 74,7 casos por 100 mil habitantes entre as Unidades Federadas (UF) (Figura 2). No ano de 2016, foram noti ficados 4.483 óbitos por TB, o que corresponde ao coeficente de mortalidade de 2,2 óbitos por 100.000 habitantes (Figura 3). o percentual de sucesso de tratamento reportado para os casos novos com confirmação laboratorial foi de 74,6%, em 2016, com 10,8% de abandono de tratamento, e 4,1% dos registros com informação ignorada quanto ao desfecho. Dos casos de TB notificados em 2017, 77,8% foram testados para HiV, apresentando 9,5% de coinfecção.
 
 FIGURA 2 coeficiente de incidência de tuberculose, todas as formas, por unidades Federadas, 2017
-
-<!-- image -->
 
 Fonte: SES/Sinan e IBGE, 2017.
 
 FIGURA 3 coeficiente de mortalidade de tuberculose por unidades Federadas, 2016
-
-<!-- image -->
 
 Fonte: SES/Sinan e IBGE, 2016.
 
@@ -857,22 +843,20 @@ em 2017, foram diagnosticados e acompanhados no sistema de informação de trata
 
 de acordo com a oMs, o brasil atingiu as metas dos odM relacionados à incidência e mortalidade por tuberculose, contribuindo, assim, para redução da carga da tb no mundo (WHo, 2015). ainda de acordo com a oMs, o brasil possui a maior taxa de detecção entre os países de alta carga (WHo, 2017).
 
-o bom resultado alcançado parece estar relacionado ao crescimento econômico, a iniciativas governamentais para reduzir a desigualdade na saúde, ao compromisso político para garantir a cobertura universal do Sistema único de Saúde (SUS) e ao aumento do financiamento para as ações destinadas ao controle da TB. No entanto, alguns desafios e ações fazem-se necessários, como o aumento da cobertura da testagem para HiV, a melhora na adesão ao tratamento, consequentemente, a cura dos casos e expansão da oferta de tratamento de infecção latente pelo M. tuberculosis .
+o bom resultado alcançado parece estar relacionado ao crescimento econômico, a iniciativas governamentais para reduzir a desigualdade na saúde, ao compromisso político para garantir a cobertura universal do Sistema único de Saúde (SUS) e ao aumento do financiamento para as ações destinadas ao controle da TB. No entanto, alguns desafios e ações fazem-se necessários, como o aumento da cobertura da testagem para HiV, a melhora na adesão ao tratamento, consequentemente, a cura dos casos e expansão da oferta de tratamento de infecção latente pelo M. tuberculosis.
 
 o brasil não possui uma epidemia generalizada, mas concentrada em algumas populações, como as pessoas vivendo com HiV (pVHiV), em situação de rua, privadas de liberdade (ppl), a população indígena e pessoas que vivem em aglomerados e em situação de pobreza.
 
 apesar de todos os avanços ocorridos nos últimos anos, o país está longe da meta estabelecida na estratégia pelo Fim da tb até 2035. no boletim epidemiológico de março de 2016 do Ministério da saúde (Ms), a análise publicada demonstra que, caso ocorra uma melhoria progressiva dos indicadores que estão associados ao coeficiente de incidência (redução do coeficiente de aids para 10 por 100 mil habitantes, aumento da cobertura da Estratégia Saúde da Família (esF) e da realização do tratamento diretamente observado (tdo) até 90,0%), o coeficiente de incidência de casos novos de TB seria de 20,7/100 mil hab. no ano de 2035 (Figura 4), valor acima da meta de menos de 10 casos por 100 mil habitantes (bRasil, 2016).
 
-FIGURA 4 Coeficiente  de  incidência  de  tuberculose  no  Brasil:  valores  observados  de  2001 a 2014 e preditos para o período 2015 a 2035
-
-<!-- image -->
+FIGURA 4 Coeficiente de incidência de tuberculose no Brasil: valores observados de 2001 a 2014 e preditos para o período 2015 a 2035
 
 Fonte: Brasil, 2016.
 
-- a  Modelo de Poisson se o cenário atual das variáveis ano, coeficiente de incidência de aids, ESF e TDO, não sofrer alteração dos valores observados em 2014.
+- a Modelo de Poisson se o cenário atual das variáveis ano, coeficiente de incidência de aids, ESF e TDO, não sofrer alteração dos valores observados em 2014.
 - b Modelo de poisson ajustado por ano com a melhoria progressiva até 2035 das variáveis: coeficiente incidência de aids para 10/100 mil hab., esF para 90,0% e tdo para 90,0%.
 
-Para ampliar a velocidade da redução do coeficiente de incidência no Brasil, o Programa nacional de controle da tuberculose elaborou o plano nacional com o objetivo de acabar com a tb como problema de saúde pública. esse documento estabelece estratégias que devem apoiar o planejamento das ações programáticas em todos os níveis da atenção, buscando o alcance das metas de menos de 10 casos por 100 mil habitantes e menos de 1 óbito por 100 mil habitantes (bRasil, 2017) .
+Para ampliar a velocidade da redução do coeficiente de incidência no Brasil, o Programa nacional de controle da tuberculose elaborou o plano nacional com o objetivo de acabar com a tb como problema de saúde pública. esse documento estabelece estratégias que devem apoiar o planejamento das ações programáticas em todos os níveis da atenção, buscando o alcance das metas de menos de 10 casos por 100 mil habitantes e menos de 1 óbito por 100 mil habitantes (bRasil, 2017).
 
 seguindo modelo proposto pela oMs, o plano serve de instrumento norteador para estados e municípios no planejamento de ações que permitam a melhoria da situação da pessoa com tuberculose nos municípios.
 
@@ -880,21 +864,21 @@ para alcance dos objetivos, os programas precisarão envolver os diferentes seto
 
 QUADRO 3 pilares, objetivos e estratégias do plano nacional pelo Fim da tuberculose
 
-| PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE                                                                                         | PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE | PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Objetivos                                                                                                                                             | Estratégias                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| Diagnosticar precocemente todas as formas de tuberculose, com oferta universal de cultura e teste de sensibilidade, incluindo o uso de testes rápidos |  Fortalecer a rede de diagnóstico laboratorial existente no país;  ampliar o acesso aos métodos diagnósticos com o teste rápido molecular, baciloscopia, cultura, teste de sensibilidade, entre outros;  ampliar a realização de cultura e teste de sensibilidade para todos os casos de tuberculose;  promover ações que garantam o acesso ao diagnóstico oportuno da tuberculose sensível e resistente, tendo em vista o início oportuno do tratamento;  intensificar a busca ativa de casos, consideradas as particula- ridades das populações mais vulneráveis nos territórios;  promover ações que viabilizem o acesso ao diagnóstico das populações mais vulneráveis, especialmente pessoas vivendo com HIV e população privada de liberdade;  intensificar a avaliação de contatos.                                                                                                                                                            |
-| Tratar de forma adequada e oportuna todos os casos diagnosticados de tuberculose visando à integralidade do cuidado                                   |  Estimular o desenvolvimento do cuidado centrado na pessoa com tuberculose;  organizar a rede de atenção local, tendo em vista a organização da atenção básica, unidades de pronto atendimento, referências e hospitais para favorecer o acesso e a qualidade da assistência;  integrar ações de vigilância epidemiológica e assistência;  adotar estratégias para acompanhamento do tratamento, capazes de reduzir os desfechos desfavoráveis;  desenvolver ações que favoreçam a adesão ao tratamento da tuberculose, como o tratamento diretamente observado e outras;  integrar o cuidado do paciente com tuberculose com outros equipamentos da rede da saúde e assistência social;  promover ações que viabilizem o tratamento adequado das populações mais vulneráveis, especialmente pessoas vivendo com HIV e população privada de liberdade;  implantar a vigilância da tuberculose drogarresistente;  implantar a vigilância do óbito. |
+| Objetivos | Estratégias |
+| Diagnosticar precocemente todas as formas de tuberculose, com oferta universal de cultura e teste de sensibilidade, incluindo o uso de testes rápidos | Fortalecer a rede de diagnóstico laboratorial existente no país; ampliar o acesso aos métodos diagnósticos com o teste rápido molecular, baciloscopia, cultura, teste de sensibilidade, entre outros; ampliar a realização de cultura e teste de sensibilidade para todos os casos de tuberculose; promover ações que garantam o acesso ao diagnóstico oportuno da tuberculose sensível e resistente, tendo em vista o início oportuno do tratamento; intensificar a busca ativa de casos, consideradas as particula- ridades das populações mais vulneráveis nos territórios; promover ações que viabilizem o acesso ao diagnóstico das populações mais vulneráveis, especialmente pessoas vivendo com HIV e população privada de liberdade; intensificar a avaliação de contatos. |
+| Tratar de forma adequada e oportuna todos os casos diagnosticados de tuberculose visando à integralidade do cuidado | Estimular o desenvolvimento do cuidado centrado na pessoa com tuberculose; organizar a rede de atenção local, tendo em vista a organização da atenção básica, unidades de pronto atendimento, referências e hospitais para favorecer o acesso e a qualidade da assistência; integrar ações de vigilância epidemiológica e assistência; adotar estratégias para acompanhamento do tratamento, capazes de reduzir os desfechos desfavoráveis; desenvolver ações que favoreçam a adesão ao tratamento da tuberculose, como o tratamento diretamente observado e outras; integrar o cuidado do paciente com tuberculose com outros equipamentos da rede da saúde e assistência social; promover ações que viabilizem o tratamento adequado das populações mais vulneráveis, especialmente pessoas vivendo com HIV e população privada de liberdade; implantar a vigilância da tuberculose drogarresistente; implantar a vigilância do óbito. |
 
 continua
 
 continuação
 
-| PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE   | PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE | PILAR 1. PREVENÇãO E CUIDADO INTEGRADO E CENTRADO NO PACIENTE |
 |-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Objetivos                                                       | Estratégias                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| Intensificar as atividades colaborativas TB-HIV                 |  Estabelecer grupos de trabalho para planejar ações em conjunto TB-HIV;  oferecer testagem para HIV a todas as pessoas com tuberculose;  realizar rastreamento da tuberculose em todas as visitas da pessoa vivendo com HIV aos serviços de saúde;  diagnosticar e tratar a infecção latente da tuberculose em pessoas vivendo com HIV/aids;  realizar o cuidado das pessoas com coinfecção TB-HIV em um mesmo serviço;  iniciar de forma oportuna a terapia antirretroviral (TARV);  executar o conjunto de ações colaborativas definidas para TB-HIV.    |
-| Intensificar as ações de prevenção                              |  Implantar a vigilância da Infecção Latente de Tuberculose (ILTB);  incorporar novas tecnologias para o diagnóstico da ILTB no país, com o objetivo de ampliar a rede de diagnóstico da ILTB;  ampliar o diagnóstico e tratamento da ILTB como uma das principais estratégias de prevenção da tuberculose no país;  implantar esquemas encurtados de tratamento da ILTB com o objetivo de melhorar a adesão a essa estratégia;  manter altas e homogêneas coberturas vacinais de BCG;  implementar as medidas de controle de infecção nos serviços de saúde. |
+| Objetivos | Estratégias |
+| Intensificar as atividades colaborativas TB-HIV | Estabelecer grupos de trabalho para planejar ações em conjunto TB-HIV; oferecer testagem para HIV a todas as pessoas com tuberculose; realizar rastreamento da tuberculose em todas as visitas da pessoa vivendo com HIV aos serviços de saúde; diagnosticar e tratar a infecção latente da tuberculose em pessoas vivendo com HIV/aids; realizar o cuidado das pessoas com coinfecção TB-HIV em um mesmo serviço; iniciar de forma oportuna a terapia antirretroviral (TARV); executar o conjunto de ações colaborativas definidas para TB-HIV. |
+| Intensificar as ações de prevenção | Implantar a vigilância da Infecção Latente de Tuberculose (ILTB); incorporar novas tecnologias para o diagnóstico da ILTB no país, com o objetivo de ampliar a rede de diagnóstico da ILTB; ampliar o diagnóstico e tratamento da ILTB como uma das principais estratégias de prevenção da tuberculose no país; implantar esquemas encurtados de tratamento da ILTB com o objetivo de melhorar a adesão a essa estratégia; manter altas e homogêneas coberturas vacinais de BCG; implementar as medidas de controle de infecção nos serviços de saúde. |
 
 ## PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO
 
@@ -912,54 +896,54 @@ Estratégias
 
 Inserir ações de controle da tuberculose nos Planos Plurianuais;
 
-
+
 
 pautar a tuberculose nas instâncias de pactuação e controle social;
 
-
+
 
 implementar ações de comunicação,
 
-
+
 
 advocacy social para ampliar a visibilidade da doença;
 
 disponibilizar, em tempo oportuno, insumos para o diagnóstico
 
-
+
 
 e medicamentos para o tratamento de todas as formas de tuberculose: sensível, resistente e infecção latente;
 
 utilizar ferramenta informatizada para monitoramento do
 
-
+
 
 estoque de medicamentos de primeira linha;
 
 propor políticas que promovam controle de infecção como
 
-
+
 
 estratégia de prevenção da doença.
 
 e mobilização continua
 
-| PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO                                                                              | PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO | PILAR 2. POLÍTICAS ARROjADAS E SISTEMAS DE APOIO |
 |-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Objetivos                                                                                                                     | Estratégias                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| Fortalecer a articulação intra e intersetorial para garantia dos direitos humanos e cidadania nas ações de controle da doença |  Pautar a tuberculose na agenda política das três esferas de governos, por meio da articulação com executivo, legislativo e judiciário;  pautar a tuberculose nas seguintes agendas de trabalho: assistência social, educação, justiça, direitos humanos, entre outros;  implementar as recomendações das políticas vigentes de articulação intra e intersetorial;  implementar as recomendações da Instrução Operacional conjunta entre Secretaria de Vigilância em Saúde (SVS) e Secretaria Nacional de Assistência Social (SNAS);  fomentar a elaboração de legislações que contribuam para proteção social da pessoa com tuberculose;  pautar a tuberculose nos meios de comunicação disponíveis. |
-| Fortalecer a participação da sociedade civil nas estratégias de enfrentamento da doença                                       |  Estabelecer espaços de articulação entre gestão e sociedade civil para o controle da tuberculose;  fomentar ações comunitárias de mobilização social para o enfrentamento da doença;  apoiar as ações de comunicação, advocacy e mobilização social desenvolvidas pela sociedade civil;  incluir a participação da sociedade civil na elaboração de campanhas de comunicação de tuberculose;  incluir a participação da sociedade civil no planejamento, monitoramento e avaliação das ações de enfrentamento da tuberculose nas três esferas de gestão.                                                                                                                                               |
-| Melhorar a qualidade dos sistemas informatizados de registro de casos para tomada de decisão mais oportuna                    |  Aprimorar a análise dos indicadores relacionados à doença;  adequar os sistemas de informação Sinan, SITE-TB, Sistema Gerenciador de Ambiente Laboratorial (GAL), entre outros, para atender as necessidades da vigilância da tuberculose;  integrar os sistemas de informação para atender as necessidades da vigilância da tuberculose;  apoiar o desenvolvimento científico e tecnológico no país;  fortalecer a utilização dos sistemas de informação para registro dos casos.                                                                                                                                                                                                                     |
+| Objetivos | Estratégias |
+| Fortalecer a articulação intra e intersetorial para garantia dos direitos humanos e cidadania nas ações de controle da doença | Pautar a tuberculose na agenda política das três esferas de governos, por meio da articulação com executivo, legislativo e judiciário; pautar a tuberculose nas seguintes agendas de trabalho: assistência social, educação, justiça, direitos humanos, entre outros; implementar as recomendações das políticas vigentes de articulação intra e intersetorial; implementar as recomendações da Instrução Operacional conjunta entre Secretaria de Vigilância em Saúde (SVS) e Secretaria Nacional de Assistência Social (SNAS); fomentar a elaboração de legislações que contribuam para proteção social da pessoa com tuberculose; pautar a tuberculose nos meios de comunicação disponíveis. |
+| Fortalecer a participação da sociedade civil nas estratégias de enfrentamento da doença | Estabelecer espaços de articulação entre gestão e sociedade civil para o controle da tuberculose; fomentar ações comunitárias de mobilização social para o enfrentamento da doença; apoiar as ações de comunicação, advocacy e mobilização social desenvolvidas pela sociedade civil; incluir a participação da sociedade civil na elaboração de campanhas de comunicação de tuberculose; incluir a participação da sociedade civil no planejamento, monitoramento e avaliação das ações de enfrentamento da tuberculose nas três esferas de gestão. |
+| Melhorar a qualidade dos sistemas informatizados de registro de casos para tomada de decisão mais oportuna | Aprimorar a análise dos indicadores relacionados à doença; adequar os sistemas de informação Sinan, SITE-TB, Sistema Gerenciador de Ambiente Laboratorial (GAL), entre outros, para atender as necessidades da vigilância da tuberculose; integrar os sistemas de informação para atender as necessidades da vigilância da tuberculose; apoiar o desenvolvimento científico e tecnológico no país; fortalecer a utilização dos sistemas de informação para registro dos casos. |
 
 continua
 
 conclusão
 
-| PILAR 3. INTENSIFICAÇãO DA PESQUISA E INOVAÇãO                                                                 | PILAR 3. INTENSIFICAÇãO DA PESQUISA E INOVAÇãO                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| PILAR 3. INTENSIFICAÇãO DA PESQUISA E INOVAÇãO | PILAR 3. INTENSIFICAÇãO DA PESQUISA E INOVAÇãO |
 |----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Objetivos                                                                                                      | Estratégias                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Estabelecer parcerias para fomentar a realização de pesquisas no país em temas de interesse para saúde pública |  Fortalecer a integração dos programas de controle da tuberculose com instituições acadêmicas e sociedade civil;  participar da implementação da agenda prioritária de pesquisas de tuberculose em todas as esferas de governo;  fomentar parcerias intersetoriais para promover a realização de pesquisa em tuberculose;  apoiar o desenvolvimento científico e tecnológico no país;  incentivar a divulgação dos resultados das pesquisas desenvolvidas. |
-| Promover a incorporação de iniciativas inovadoras para aprimorar o controle da tuberculose                     |  Estimular a utilização dos resultados das pesquisas no enfrenta- mento da tuberculose;  estimular a troca e a implantação de experiências exitosas das ações de controle entre os programas de controle da tuberculose;  incorporar, de maneira oportuna, novas tecnologias de diagnóstico;  incorporar, de maneira oportuna, novos medicamentos aos esquemas de tratamento da doença ativa e infecção latente.                                             |
+| Objetivos | Estratégias |
+| Estabelecer parcerias para fomentar a realização de pesquisas no país em temas de interesse para saúde pública | Fortalecer a integração dos programas de controle da tuberculose com instituições acadêmicas e sociedade civil; participar da implementação da agenda prioritária de pesquisas de tuberculose em todas as esferas de governo; fomentar parcerias intersetoriais para promover a realização de pesquisa em tuberculose; apoiar o desenvolvimento científico e tecnológico no país; incentivar a divulgação dos resultados das pesquisas desenvolvidas. |
+| Promover a incorporação de iniciativas inovadoras para aprimorar o controle da tuberculose | Estimular a utilização dos resultados das pesquisas no enfrenta- mento da tuberculose; estimular a troca e a implantação de experiências exitosas das ações de controle entre os programas de controle da tuberculose; incorporar, de maneira oportuna, novas tecnologias de diagnóstico; incorporar, de maneira oportuna, novos medicamentos aos esquemas de tratamento da doença ativa e infecção latente. |
 
 Fonte: BRASIL, 2017.
 
@@ -987,77 +971,75 @@ crescimento dos índices de abandono do tratamento na população pobre ou extre
 
 ## ReFeRÊncias
 
-bieRRenbacH, a. et al. skin test reactivity to mycobacterial antigens parallels the phylogenetic structure of their genus. The international journal of tuberculosis and lung disease , v. 5, n. 7, p. 656-663, 2001.
+bieRRenbacH, a. et al. skin test reactivity to mycobacterial antigens parallels the phylogenetic structure of their genus. The international journal of tuberculosis and lung disease, v. 5, n. 7, p. 656-663, 2001.
 
-blooM, b. R. back to a frightening future. Nature , v. 358, n. 6387, p. 538-539, 1992.
+blooM, b. R. back to a frightening future. Nature, v. 358, n. 6387, p. 538-539, 1992.
 
-boccia, d. et al. the association between household socioeconomic position and prevalent tuberculosis in Zambia: a case-control study. PloS one , v. 6, n. 6, p. e20824, 2011.
+boccia, d. et al. the association between household socioeconomic position and prevalent tuberculosis in Zambia: a case-control study. PloS one, v. 6, n. 6, p. e20824, 2011.
 
 bRasil, conselHo nacional de saÚde. Resolução n o 444, de 6 de julho de 2011. a Resolução que trata do enfrentamento da tuberculose no brasil. 2011 a.
 
-bRasil, MinistÉRio da saÚde. doenças negligenciadas: estratégias do Ministério da saúde. Rev Saúde Pública , v. 44, n. 1, p. 200-202, 2010.
+bRasil, MinistÉRio da saÚde. doenças negligenciadas: estratégias do Ministério da saúde. Rev Saúde Pública, v. 44, n. 1, p. 200-202, 2010.
 
 bRasil, MinistÉRio da saÚde. boletim epidemiológico da tuberculose 2014. v. 44, 2014b.
 
-BRASil, MiNiSTÉRiO DA SAúDE. Perspectivas brasileiras para o fim da tuberculose como problema de saúde pública. Boletim epidemiológico , v. 47, n. 13, p. 1-15, 2016.
+BRASil, MiNiSTÉRiO DA SAúDE. Perspectivas brasileiras para o fim da tuberculose como problema de saúde pública. Boletim epidemiológico, v. 47, n. 13, p. 1-15, 2016.
 
-bRasil, MinistÉRio da saÚde. Plano Nacional pelo Fim da Tuberculose como Problema de Saúde Pública . brasília: Ministério da saúde, 2017.
+bRasil, MinistÉRio da saÚde. Plano Nacional pelo Fim da Tuberculose como Problema de Saúde Pública. brasília: Ministério da saúde, 2017.
 
-castRo, J. política social no brasil: marco conceitual e análise da ampliação do escopo, escala e gasto público. Revista brasileira de monitoramento e avaliação , n. 1, p. 66-95, 2011.
+castRo, J. política social no brasil: marco conceitual e análise da ampliação do escopo, escala e gasto público. Revista brasileira de monitoramento e avaliação, n. 1, p. 66-95, 2011.
 
-cdc, centeRs FoR disease contRol and pReVention. tuberculosis morbidity-united states, 1992. MMWR. Morbidity and mortality weekly report , v. 42, n. 36, p. 696- 697,703-704, 1993.
+cdc, centeRs FoR disease contRol and pReVention. tuberculosis morbidity-united states, 1992. MMWR. Morbidity and mortality weekly report, v. 42, n. 36, p. 696- 697,703-704, 1993.
 
-coMstocK, G.; edWaRds, l.; liVesaY, V. tuberculosis morbidity in the us navy: its distribution and decline. American Review of Respiratory Disease , v. 110, n. 5, p. 572-580, 1974.
+coMstocK, G.; edWaRds, l.; liVesaY, V. tuberculosis morbidity in the us navy: its distribution and decline. American Review of Respiratory Disease, v. 110, n. 5, p. 572-580, 1974.
 
-dYe, c. et al. trends in tuberculosis incidence and their determinants in 134 countries. Bulletin of the World Health Organization , v. 87, n. 9, p. 683-691, 2009.
+dYe, c. et al. trends in tuberculosis incidence and their determinants in 134 countries. Bulletin of the World Health Organization, v. 87, n. 9, p. 683-691, 2009.
 
-GRZYboWsKi, s.; baRnett, G.; stYblo, K. contacts of cases of active pulmonary tuberculosis. Bull Int Union Tuberc , n. 50, p. 90-106, 1975.
+GRZYboWsKi, s.; baRnett, G.; stYblo, K. contacts of cases of active pulmonary tuberculosis. Bull Int Union Tuberc, n. 50, p. 90-106, 1975.
 
-HaRGReaVes, J. R. et al. the social determinants of tuberculosis: From evidence to action. American journal of Public Health , v. 101, n. 4, p. 654-662, abr. 2011.
+HaRGReaVes, J. R. et al. the social determinants of tuberculosis: From evidence to action. American journal of Public Health, v. 101, n. 4, p. 654-662, abr. 2011.
 
-JaRaMillo, e. encompassing treatment with prevention: the path for a lasting control of tuberculosis. Social Science &amp; Medicine , v. 49, n. 3, p. 393-404, 1999.
+JaRaMillo, e. encompassing treatment with prevention: the path for a lasting control of tuberculosis. Social Science &amp; Medicine, v. 49, n. 3, p. 393-404, 1999.
 
-lienHaRdt, c. From exposure to disease: the role of environmental factors in susceptibility to and development of tuberculosis. Epidemiologic reviews , v. 23, n. 2, p. 288-301, 2001.
+lienHaRdt, c. From exposure to disease: the role of environmental factors in susceptibility to and development of tuberculosis. Epidemiologic reviews, v. 23, n. 2, p. 288-301, 2001.
 
-lÖnnRotH, K. et al. tuberculosis: the role of risk factors and social determinants. Equity, social determinants and public health programmes , v. 219, p. 293, 2010.
+lÖnnRotH, K. et al. tuberculosis: the role of risk factors and social determinants. Equity, social determinants and public health programmes, v. 219, p. 293, 2010.
 
-McKeoWn, t.; RecoRd, R. Reasons for the decline of mortality in england and Wales during the nineteenth century. Population studies , v. 16, n. 2, p. 94-122, 1962.
+McKeoWn, t.; RecoRd, R. Reasons for the decline of mortality in england and Wales during the nineteenth century. Population studies, v. 16, n. 2, p. 94-122, 1962.
 
-paiM, J. et al. the brazilian health system: history, advances, and challenges. The Lancet , v. 377, n. 9779, p. 1778-1797, 2011.
+paiM, J. et al. the brazilian health system: history, advances, and challenges. The Lancet, v. 377, n. 9779, p. 1778-1797, 2011.
 
-RasanatHan, K. et al. the social determinants of health: key to global tuberculosis control. The International journal of Tuberculosis and Lung Disease , v. 15 (suppl 2), n. 6, p. s30-s36, 2011.
+RasanatHan, K. et al. the social determinants of health: key to global tuberculosis control. The International journal of Tuberculosis and Lung Disease, v. 15 (suppl 2), n. 6, p. s30-s36, 2011.
 
-RaViGlione, M. Developing the post-2015 TB Strategy and Targets: Vision and Process. Kuala Lumpur: World Heatl Organization, 2012 Kuala lumpur, 2012. disponível em: &lt;http://www.who.int/tb/Kualalumpurnewstrategyintro.pdf&gt;. acesso em: 22 fev. 2015
+RaViGlione, M. Developing the post-2015 TB Strategy and Targets: Vision and Process. Kuala Lumpur: World Heatl Organization, 2012 Kuala lumpur, 2012. disponível em: &lt;http://www.who.int/tb/Kualalumpurnewstrategyintro.pdf&gt;.acessoem:22fev.2015
 
-RiedeR, H. l.; otHeRs. Epidemiologic basis of tuberculosis control. [s.l.] international union against tuberculosis and lung disease (iuatld), 1999.
+RiedeR,H.l.;otHeRs.Epidemiologicbasisoftuberculosiscontrol.[s.l.]internationalunionagainsttuberculosisandlungdisease(iuatld), 1999.
 
-RossMan, M. d.; MacGReGoR, R. Introduction and brief history . 1. ed. philadelphia: McGraw-Hill, 1995.
+RossMan, M. d.; MacGReGoR, R. Introduction and brief history. 1. ed. philadelphia: McGraw-Hill, 1995.
 
-saaVacool, J. philadelphia and the white plague. Trans Stud Coll Physicians Phila , v. 8, p. 147-182, 1986.
+saaVacool, J. philadelphia and the white plague. Trans Stud Coll Physicians Phila, v. 8, p. 147-182, 1986.
 
-sHiloVa, M.; dYe, c. the resurgence of tuberculosis in Russia. Philosophical Transactions of the Royal Society of London B: Biological Sciences , v. 356, n. 1411, p. 1069-1075, 2001.
+sHiloVa, M.; dYe, c. the resurgence of tuberculosis in Russia. Philosophical Transactions of the Royal Society of London B: Biological Sciences, v. 356, n. 1411, p. 1069-1075, 2001.
 
-WHo, WoRld HealtH oRGaniZation. the global plan to stop tb, 2006-2015: actions for life: towards a world free of tuberculosis. Int j Tuberc Lung Dis , v. 10, n. 3, p. 240-241, 2006.
+WHo, WoRld HealtH oRGaniZation. the global plan to stop tb, 2006-2015: actions for life: towards a world free of tuberculosis. Int j Tuberc Lung Dis, v. 10, n. 3, p. 240-241, 2006.
 
-WHo, WoRld HealtH oRGaniZation. Monitoring of the achievemen t of the healthrelated Millennium Development Goals: Report by th e Secretariat . [s.l: s.n.].
+WHo, WoRld HealtH oRGaniZation. Monitoring of the achievemen t of the healthrelated Millennium Development Goals: Report by th e Secretariat. [s.l: s.n.].
 
-WHo, WoRld HealtH oRGaniZation. Draft global strategy and targets for tuberculosis prevention, care and control after 2015. [A67/11] secretariat World Health assembly, 2014a. Disponível em: &lt;http://apps.who.int/gb/ebwha/pdf\_files/WHA67/A67\_11-en.pdf&gt;. acesso em: 22 jun. 2014
+WHo, WoRld HealtH oRGaniZation. Draft global strategy and targets for tuberculosis prevention, care and control after 2015. [A67/11] secretariat World Health assembly, 2014a. Disponível em: &lt;http://apps.who.int/gb/ebwha/pdf_files/WHA67/A67_11-en.pdf&gt;.acessoem:22jun.2014
 
-WHo, WoRld HealtH oRGaniZation. Global tuberculosis report 2014 . Geneva: WHo, 2014b.
+WHo,WoRldHealtHoRGaniZation.Globaltuberculosisreport2014.Geneva:WHo,2014b.
 
-WHo, WoRld HealtH oRGaniZation. WHO End TB Strategy . [s.l.] WHo document production services, Geneva, switzerland, 2015.
+WHo,WoRldHealtHoRGaniZation.WHOEndTBStrategy.[s.l.]WHodocumentproductionservices,Geneva,switzerland,2015.
 
-WHo, WoRld HealtH oRGaniZation. Global tuberculosis report 2016 . [s.l.] Geneva: WHo, 2016.
+WHo,WoRldHealtHoRGaniZation.Globaltuberculosisreport2016.[s.l.]Geneva:WHo,2016.
 
-WHo, WoRld HealtH oRGaniZation. Global tuberculosis report 2017 . [s.l.] Geneva: WHo, 2017.
+WHo,WoRldHealtHoRGaniZation.Globaltuberculosisreport2017.[s.l.]Geneva:WHo,2017.
 
-XiMenes, R. et al. is it better to be rich in a poor area or poor in a rich area? a multilevel analysis of a case-control study of social determinants of tuberculosis. International journal of epidemiology , v. 38, n. 5, p. 1285-1296, 2009.
+XiMenes,R.etal.isitbettertoberichinapoorareaorpoorinaricharea?amultilevelanalysisofacase-controlstudyofsocialdeterminantsoftuberculosis.Internationaljournalofepidemiology,v.38,n.5,p.1285-1296,2009.
 
-<!-- image -->
+##DiAGNÓSTiCo
 
-## DiAGNÓSTiCo
-
-a tuberculose (tb) pode acometer uma série de órgãos e/ou sistemas. a apresentação da tb na forma pulmonar, além de ser mais frequente, é também a mais relevante para a saúde pública, pois é essa forma, especialmente a bacilífera, a responsável pela manutenção da cadeia de transmissão da doença. a busca ativa de sintomático respiratório (sR) (ver capítulo detecção de casos de tuberculose) é uma importante estratégia para o controle da tb, uma vez que permite a detecção precoce das formas pulmonares. no entanto o diagnóstico de tb é mais amplo do que a busca ativa e deve considerar os vários aspectos descritos neste capítulo.
+atuberculose(tb) pode acometer uma série de órgãos e/ou sistemas. a apresentação da tb na forma pulmonar, além de ser mais frequente, é também a mais relevante para a saúde pública, pois é essa forma, especialmente a bacilífera, a responsável pela manutenção da cadeia de transmissão da doença. a busca ativa de sintomático respiratório (sR) (ver capítulo detecção de casos de tuberculose) é uma importante estratégia para o controle da tb, uma vez que permite a detecção precoce das formas pulmonares. no entanto o diagnóstico de tb é mais amplo do que a busca ativa e deve considerar os vários aspectos descritos neste capítulo.
 
 ## sintoMÁtico RespiRatÓRio
 
@@ -1077,7 +1059,7 @@ a tb pulmonar primária normalmente ocorre em seguida ao primeiro contato do ind
 
 a tb pulmonar pós-primária ou secundária pode ocorrer em qualquer idade, mas é mais comum no adolescente e no adulto jovem. tem como característica principal a tosse seca ou produtiva. em locais com elevadas taxas de incidência de tb, toda pessoa que procura a unidade de saúde devido à tosse prolongada (busca passiva) deve ter a tb incluída na sua investigação diagnóstica.
 
-nos casos em que a tosse é produtiva, a expectoração pode ser purulenta ou mucoide, com ou sem sangue. a febre vespertina, sem calafrios, não costuma ultrapassar os 38,5  o c. a sudorese noturna e a anorexia são comuns. o exame físico geralmente mostra fácies de doença crônica e emagrecimento, embora indivíduos com bom estado geral e sem perda do apetite também possam ter tb pulmonar. a ausculta pulmonar pode apresentar diminuição do murmúrio vesicular, sopro anfórico ou mesmo ser normal.
+nos casos em que a tosse é produtiva, a expectoração pode ser purulenta ou mucoide, com ou sem sangue. a febre vespertina, sem calafrios, não costuma ultrapassar os 38,5 o c. a sudorese noturna e a anorexia são comuns. o exame físico geralmente mostra fácies de doença crônica e emagrecimento, embora indivíduos com bom estado geral e sem perda do apetite também possam ter tb pulmonar. a ausculta pulmonar pode apresentar diminuição do murmúrio vesicular, sopro anfórico ou mesmo ser normal.
 
 A TB miliar refere-se a um aspecto radiológico pulmonar específico, que pode ocorrer tanto na forma primária quanto na forma secundária da tb. É uma forma grave da doença, que é mais comum em pacientes imunocomprometidos, como pessoas infectadas com HiV em fase avançada de imunossupressão. a apresentação clínica pode ser aguda ou subaguda, com maior frequência em crianças e em adultos jovens. de uma forma mais incomum, a tb miliar apresenta-se como doença crônica (idosos) ou mesmo febre de origem obscura. os sintomas como febre, astenia, emagrecimento e tosse ocorrem em 80% dos casos.
 
@@ -1111,10 +1093,10 @@ na forma pulmonar, o diagnóstico diferencial deve ser feito principalmente com 
 
 QUADRO 4 principais doenças que fazem diagnóstico diferencial com as formas pulmonares de tb.
 
-| NEOPLASIAS                 | Câncer de pulmão (especialmente o carcinoma de células escamosas) Linfomas Sarcoma de Kaposi Carcinomatose metastática                                      |
+| NEOPLASIAS | Câncer de pulmão (especialmente o carcinoma de células escamosas) Linfomas Sarcoma de Kaposi Carcinomatose metastática |
 |----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| OUTRAS MICOBACTÉRIAS       | Micobacterioses não tuberculosas M. avium M. kansasii M. abscessus M. xenopi                                                                                |
-| INFECÇÕES FúNGICAS         | Histoplasmose Paracoccidioidomicose Aspergiloma Criptococose                                                                                                |
+| OUTRAS MICOBACTÉRIAS | Micobacterioses não tuberculosas M. avium M. kansasii M. abscessus M. xenopi |
+| INFECÇÕES FúNGICAS | Histoplasmose Paracoccidioidomicose Aspergiloma Criptococose |
 | OUTRAS DOENÇAS BACTERIANAS | Abscesso pulmonar Pneumonia necrotizante Streptococcus pneumoniae Haemophilus influenzae Klebsiella pneumonae Staphylococcus aureus Actinomicose Nocardiose |
 
 Fonte: Adaptado de Gadkowski LB, Stout JE, 2008.
@@ -1139,7 +1121,7 @@ a ada é produzida por linfócitos e monócitos e encontra-se elevada nas doenç
 
 ## 2.3. FoRMa GanGlionaR
 
-na forma ganglionar, o diagnóstico diferencial da tb deve ser feito com doenças linfoproliferativas; outras micobactérias (complexo Mycobacterium avium-intracellulare , Mycobacterium scrofulaceum , Mycobacterium kansasii , Mycobacterium bovis , Mycobacterium haemophilum ); infecções bacterianas; infecções fúngicas, como histoplasmose e criptococose, especialmente em pacientes imunocomprometidos; toxoplasmose e sarcoidose (Fontanilla; baRnes; ReYn, 2011).
+na forma ganglionar, o diagnóstico diferencial da tb deve ser feito com doenças linfoproliferativas; outras micobactérias (complexo Mycobacterium avium-intracellulare, Mycobacterium scrofulaceum, Mycobacterium kansasii, Mycobacterium bovis, Mycobacterium haemophilum); infecções bacterianas; infecções fúngicas, como histoplasmose e criptococose, especialmente em pacientes imunocomprometidos; toxoplasmose e sarcoidose (Fontanilla; baRnes; ReYn, 2011).
 
 ## 2.4. FoRMa MeninGoenceFÁlica
 
@@ -1147,7 +1129,7 @@ Por ter apresentação inespecífica, a TB meníngea deve incluir, entre os dife
 
 ## 2.5. FoRMa osteoaRticulaR
 
-na tb óssea, o principal diferencial deve ser feito com artrite séptica ou osteomielite causadas por outros patógenos como Staphylococcus aureus e Brucella melitensis , criptococose, histoplasmose e etiologias não infecciosas como osteossarcoma, mieloma múltiplo, linfoma não Hodkin, histiocitose X, doença de paget e outras neoplasias ósseas (GaRG; soMVansHi, 2011).
+na tb óssea, o principal diferencial deve ser feito com artrite séptica ou osteomielite causadas por outros patógenos como Staphylococcus aureus e Brucella melitensis, criptococose, histoplasmose e etiologias não infecciosas como osteossarcoma, mieloma múltiplo, linfoma não Hodkin, histiocitose X, doença de paget e outras neoplasias ósseas (GaRG; soMVansHi, 2011).
 
 ## 3. Diagnóstico Bacteriológico
 
@@ -1161,9 +1143,9 @@ a baciloscopia do escarro, desde que executada corretamente em todas as suas fas
 
 a baciloscopia de escarro é indicada nas seguintes condições:
 
--  no sintomático respiratório, durante estratégia de busca ativa;
--  em caso de suspeita clínica e/ou radiológica de tb pulmonar, independentemente do tempo de tosse;
--  para  acompanhamento e controle  de  cura  em  casos  pulmonares  com  confirmação laboratorial.
+- no sintomático respiratório, durante estratégia de busca ativa;
+- em caso de suspeita clínica e/ou radiológica de tb pulmonar, independentemente do tempo de tosse;
+- para acompanhamento e controle de cura em casos pulmonares com confirmação laboratorial.
 
 a baciloscopia de escarro deve ser realizada em duas amostras: uma por ocasião do primeiro contato com a pessoa que tosse e outra, independentemente do resultado da primeira, no dia seguinte, com a coleta do material sendo feita preferencialmente ao despertar. nos casos em que houver indícios clínicos e radiológicos de suspeita de tb e as duas amostras de diagnóstico apresentarem resultado negativo, podem ser solicitadas amostras adicionais.
 
@@ -1175,22 +1157,22 @@ individualizados. diagnóstico de certeza bacteriológica só é obtido com a cu
 
 QUADRO 5 leitura e interpretação dos resultados de baciloscopia de escarro
 
-| LEITURA                                                    | RESULTADO                                    |
+| LEITURA | RESULTADO |
 |------------------------------------------------------------|----------------------------------------------|
-| Não são encontrados BAAR em 100 campos observados          | NEGATIVO                                     |
-| 1 a 9 BAAR em 100 campos observados                        | Relata-se a quantidade de bacilos encontrada |
-| 10 a 99 BAAR em 100 campos observados                      | POSITIVO +                                   |
-| 1 a 10 BAAR por campo em 50 campos observados              | POSITIVO ++                                  |
-| Em média mais de 10 BAAR por campo em 20 campos observados | POSITIVO +++                                 |
+| Não são encontrados BAAR em 100 campos observados | NEGATIVO |
+| 1 a 9 BAAR em 100 campos observados | Relata-se a quantidade de bacilos encontrada |
+| 10 a 99 BAAR em 100 campos observados | POSITIVO + |
+| 1 a 10 BAAR por campo em 50 campos observados | POSITIVO ++ |
+| Em média mais de 10 BAAR por campo em 20 campos observados | POSITIVO +++ |
 
 Fonte: Adaptado de BRASIl, 2008.
 
 QUADRO 6 leitura e interpretação de resultados de baciloscopias de outros materiais
 
-| ACHADOS                                                           | RESULTADO   |
+| ACHADOS | RESULTADO |
 |-------------------------------------------------------------------|-------------|
-| Não são encontrados BAAR no material examinado                    | Negativo    |
-| São encontrados BAAR em qualquer quantidade no material examinado | Positivo    |
+| Não são encontrados BAAR no material examinado | Negativo |
+| São encontrados BAAR em qualquer quantidade no material examinado | Positivo |
 
 Fonte: Adaptado de BRASIL, 2008.
 
@@ -1206,11 +1188,11 @@ a sensibilidade do tRM-tb em amostras de escarro de adultos é de cerca de 90% s
 
 o tRM-tb está indicado nas seguintes situações:
 
--  diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes (Figura 5);
--  diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes de populações de maior vulnerabilidade (Figura 6);
--  diagnóstico de tb extrapulmonar nos materiais biológicos já validados;
--  triagem de resistência à rifampicina nos casos de retratamento (Figura 7);
--  triagem de resistência à rifampicina nos casos com suspeita de falência (ver capítulo esquemas de tratamento para a tuberculose) ao tratamento da tb.
+- diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes (Figura 5);
+- diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes de populações de maior vulnerabilidade (Figura 6);
+- diagnóstico de tb extrapulmonar nos materiais biológicos já validados;
+- triagem de resistência à rifampicina nos casos de retratamento (Figura 7);
+- triagem de resistência à rifampicina nos casos com suspeita de falência (ver capítulo esquemas de tratamento para a tuberculose) ao tratamento da tb.
 
 a sensibilidade do tRM-tb para o diagnóstico em crianças (&lt;10 anos de idade) é menor que a apresentada para adultos (66%). a evolução do conhecimento sobre o tRM-tb na tb pediátrica mostrou que a sua utilização ainda é limitada na infância. seu excelente desempenho se observa na tb bacteriológica, que corresponde à minoria de casos nesta população.
 
@@ -1226,90 +1208,84 @@ necessário manter a investigação. essas amostras devem ser processadas de aco
 
 ## amostras recomendadas para realização do tRM-tb:
 
--  escarro;
--  escarro induzido;
--  lavado broncoalveolar;
--  lavado gástrico;
--  líquor;
--  gânglios linfáticos e outros tecidos.
+- escarro;
+- escarro induzido;
+- lavado broncoalveolar;
+- lavado gástrico;
+- líquor;
+- gânglios linfáticos e outros tecidos.
 
 os cinco possíveis resultados para o tRM-tb estão apresentados no quadro 7.
 
 QUADRO 7 Resultados do tRM-tb
 
-| RESULTADOS                                              | INTERPRETAÇãO 1                                                                                     |
+| RESULTADOS | INTERPRETAÇãO 1 |
 |---------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| MTB 2 não detectado                                     | Negativo                                                                                            |
-| MTB detectado e resistência à rifampicina não-detectada | Positivo para tuberculose, sem resistência à rifampicina                                            |
-| MTB detectado e resistência à rifampicina detectada     | Positivo para tuberculose, com resistência à rifampicina                                            |
+| MTB 2 não detectado | Negativo |
+| MTB detectado e resistência à rifampicina não-detectada | Positivo para tuberculose, sem resistência à rifampicina |
+| MTB detectado e resistência à rifampicina detectada | Positivo para tuberculose, com resistência à rifampicina |
 | MTB detectado e resistência à rifampicina indeterminada | Positivo para tuberculose, resistência à rifampicina inconclusiva - repetir o teste em nova amostra |
-| Sem resultado/inválido/erro                             | Inconclusivo - repetir o teste em nova amostra                                                      |
+| Sem resultado/inválido/erro | Inconclusivo - repetir o teste em nova amostra |
 
 Fonte: BRASIL, 2016.
 
 1 Interpretação para os casos novos de tuberculose. Para casos de retratamento, ver recomendações no texto do tópico 3.2. Teste rápido molecular para tuberculose (TRM-TB).
 
-2 MTB - complexo Mycobacterium tuberculosis .
+2 MTB - complexo Mycobacterium tuberculosis.
 
 o tRM-tb para diagnóstico de tb ativa deve ter sua utilização realizada de forma diferenciada de acordo com as populações investigadas. os algoritmos a seguir descrevem a investigação de casos novos em adultos e adolescentes na população geral (Figura 5); casos novos em adultos e adolescentes de populações de maior vulnerabilidade (Figura 6); e casos de retratamento em adultos e adolescentes (Figura 7).
 
-FIGURA 5 algoritmo  diagnóstico  de  casos  novos  de  tb  pulmonar  e  laríngea  em  adultos  e adolescentes baseado no tRM-tb.
-
-<!-- image -->
+FIGURA 5 algoritmo diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes baseado no tRM-tb.
 
 Fonte: CGPNCT/SVS/MS.
 
-1  Realizar cultura de escarro preferencialmente pelo método automatizado.
+1 Realizar cultura de escarro preferencialmente pelo método automatizado.
 
-2  TS - Teste de Sensibilidade.
+2 TS - Teste de Sensibilidade.
 
-3  Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à  referência  terciária  imediatamente  sem  que  se  aguardem  os  resultados  dos  novos  exames  solicitados.  Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TS deverá ser encaminhado à referência terciária.
+3 Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à referência terciária imediatamente sem que se aguardem os resultados dos novos exames solicitados. Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TS deverá ser encaminhado à referência terciária.
 
 4 EB - Esquema Básico - reavaliar o tratamento após resultado da cultura com TS.
 
-5  Investigar micobacteriose não tuberculosa (MNT) e outros diagnósticos diferenciais.
+5 Investigar micobacteriose não tuberculosa (MNT) e outros diagnósticos diferenciais.
 
-FIGURA 6 algoritmo  diagnóstico  de  casos  novos  de  tb  pulmonar  e  laríngea  em  adultos  e adolescentes de populações com maior vulnerabilidade 1 baseado no tRM-tb
-
-<!-- image -->
+FIGURA 6 algoritmo diagnóstico de casos novos de tb pulmonar e laríngea em adultos e adolescentes de populações com maior vulnerabilidade 1 baseado no tRM-tb
 
 Fonte: CGPNCT/SVS/MS.
 
-1 Populações  consideradas  de  maior  vulnerabilidade:  profissionais  de  saúde,  pessoas  vivendo  com  HIV/aids, população privada de liberdade, população em situação de rua, povos indígenas, contatos de tuberculose resistente.
+1 Populações consideradas de maior vulnerabilidade: profissionais de saúde, pessoas vivendo com HIV/aids, população privada de liberdade, população em situação de rua, povos indígenas, contatos de tuberculose resistente.
 
-2  TS - Teste de Sensibilidade.
+2 TS - Teste de Sensibilidade.
 
-3  Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à  referência  terciária  imediatamente  sem  que  se  aguardem  os  resultados  dos  novos  exames  solicitados.  Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TSA deverá ser encaminhado à referência terciária.
+3 Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à referência terciária imediatamente sem que se aguardem os resultados dos novos exames solicitados. Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TSA deverá ser encaminhado à referência terciária.
 
-4  Resgatar resultado de cultura previamente realizada, nos casos com resistência à rifampicina detectada, realizar cultura preferencialmente pelo método automatizado.
+4 Resgatar resultado de cultura previamente realizada, nos casos com resistência à rifampicina detectada, realizar cultura preferencialmente pelo método automatizado.
 
-5  Investigar micobacteriose não tuberculosa (MNT) e outros diagnósticos diferenciais.
+5 Investigar micobacteriose não tuberculosa (MNT) e outros diagnósticos diferenciais.
 
-6  EB - Esquema Básico.
+6 EB - Esquema Básico.
 
 FIGURA 7 algoritmo diagnóstico para casos de retratamento de tb pulmonar e laríngea em adultos e adolescentes. triagem para resistência à rifampicina com tRM-tb.
 
-<!-- image -->
-
 Fonte: CGPNCT/SVS/MS.
 
-1  TS - Teste de Sensibilidade.
+1 TS - Teste de Sensibilidade.
 
-2  Baciloscopia positiva - pelo menos uma positiva das duas baciloscopias.
+2 Baciloscopia positiva - pelo menos uma positiva das duas baciloscopias.
 
-3  Baciloscopia negativa - duas baciloscopias negativas.
+3 Baciloscopia negativa - duas baciloscopias negativas.
 
-4  MNT - micobateriose não-tuberculosa.
+4 MNT - micobateriose não-tuberculosa.
 
 5 Repetir o TRM-TB em nova amostra de escarro para confirmação da resistência com o objetivo de aumentar a sensibilidade do diagnóstico da resistência.
 
-6  Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à  referência  terciária  imediatamente  sem  que  se  aguardem  os  resultados  dos  novos  exames  solicitados.  Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TS deverá ser encaminhado à referência terciária.
+6 Referência terciária - ambulatório de referência para tratamento de tuberculose resistente. O paciente deve chegar à referência terciária imediatamente sem que se aguardem os resultados dos novos exames solicitados. Nesse serviço, a avaliação médica e a conduta adequada deverão ser tomadas em até sete dias. O resultado da cultura com TS deverá ser encaminhado à referência terciária.
 
-7  Resgatar resultado de cultura previamente realizada e, nos casos com resistência à rifampicina detectada, realizar cultura preferencialmente pelo método automatizado.
+7 Resgatar resultado de cultura previamente realizada e, nos casos com resistência à rifampicina detectada, realizar cultura preferencialmente pelo método automatizado.
 
-8  Referência de tuberculose secundária ou terciária dependendo da rede local. O paciente deve chegar à referência o mais rapidamente possível.
+8 Referência de tuberculose secundária ou terciária dependendo da rede local. O paciente deve chegar à referência o mais rapidamente possível.
 
-9   EB - Esquema Básico.
+9 EB - Esquema Básico.
 
 todos os exames (baciloscopia, tRM-tb ou cultura) deverão ser realizados, preferencialmente, na mesma amostra de escarro. Caso o volume seja insuficiente, deve-se coletar uma segunda amostra.
 
@@ -1319,7 +1295,7 @@ Para confirmação da resistência à rifampicina por meio do TRM-TB (segundo ex
 
 A cultura é um método de elevada especificidade e sensibilidade no diagnóstico da TB. Nos casos pulmonares com baciloscopia negativa, a cultura do escarro pode aumentar em até 30% o diagnóstico bacteriológico da doença.
 
-os métodos para cultura de micobactérias utilizam a semeadura da amostra em meios de cultura sólidos e líquidos. os meios de cultura mais comumente utilizados são os sólidos à base de ovo, löwenstein-Jensen e ogawa-Kudoh. eles têm a vantagem de serem de menor custo e de apresentarem um baixo índice de contaminação. a desvantagem do meio sólido é o tempo de detecção do crescimento bacteriano, que varia de 14 a 30 dias, podendo estenderse por até oito semanas. o meio líquido é utilizado nos métodos automatizados disponíveis no brasil, entre eles MGit®, no qual o tempo de resultado varia entre 5 a 12 dias, quando positivo; e 42 dias, quando negativo .
+os métodos para cultura de micobactérias utilizam a semeadura da amostra em meios de cultura sólidos e líquidos. os meios de cultura mais comumente utilizados são os sólidos à base de ovo, löwenstein-Jensen e ogawa-Kudoh. eles têm a vantagem de serem de menor custo e de apresentarem um baixo índice de contaminação. a desvantagem do meio sólido é o tempo de detecção do crescimento bacteriano, que varia de 14 a 30 dias, podendo estenderse por até oito semanas. o meio líquido é utilizado nos métodos automatizados disponíveis no brasil, entre eles MGit®, no qual o tempo de resultado varia entre 5 a 12 dias, quando positivo; e 42 dias, quando negativo.
 
 A identificação da espécie é feita por métodos bioquímicos e fenotípicos ou por meio de técnicas moleculares.
 
@@ -1333,8 +1309,8 @@ atualmente, o Ministério da saúde recomenda que seja realizada cultura para mi
 
 ## Locais COM acesso ao TRM-TB
 
--  todo caso com diagnóstico de tb por meio de tRM-tb deverá realizar cultura e ts, independentemente de apresentar ou não resistência à rifampicina;
--  todo  caso  com  suspeita  de  tb  com  tRM-tb  negativo,  com  persistência  do  quadro clínico, deverá realizar cultura e ts.
+- todo caso com diagnóstico de tb por meio de tRM-tb deverá realizar cultura e ts, independentemente de apresentar ou não resistência à rifampicina;
+- todo caso com suspeita de tb com tRM-tb negativo, com persistência do quadro clínico, deverá realizar cultura e ts.
 
 Casos identificados com resistência à rifampicina diagnosticado por TRM-TB devem ter a cultura e o ts realizados preferencialmente por método automatizado, visando a agilizar o diagnóstico.
 
@@ -1380,9 +1356,9 @@ Conservação e transporte - idealmente, as amostras clínicas devem ser enviada
 
 no transporte de amostras, deve-se considerar três condições importantes:
 
--  refrigeração;
--  proteção contra a luz solar; e
--  acondicionamento adequado para que não haja risco de derramamento.
+- refrigeração;
+- proteção contra a luz solar; e
+- acondicionamento adequado para que não haja risco de derramamento.
 
 para transportar potes de escarro da unidade de saúde para o laboratório, recomenda-se a utilização de caixas térmicas com gelo reciclável ou cubos de gelo dentro de um saco plástico. as requisições dos exames devem ser enviadas com o material, fora da caixa de transporte.
 
@@ -1400,14 +1376,14 @@ A radiografia de tórax deve ser solicitada para todo paciente com suspeita clí
 
 Para notificação de casos de TB, os resultados das radiografias de tórax devem ser registrados conforme descrito no quadro 9.
 
-QUADRO 9 Classificação  dos  achados  radiológicos  da  tuberculose  pulmonar  descritas  na notificação.
+QUADRO 9 Classificação dos achados radiológicos da tuberculose pulmonar descritas na notificação.
 
-| CLASSIFICAÇãO   | ACHADOS                                                                                                                                                                         |
+| CLASSIFICAÇãO | ACHADOS |
 |-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Normal          | Sem alterações sugestivas de atividade de tuberculose.                                                                                                                          |
-| Suspeito        | Alterações sugestivas de atividade de tuberculose, como cavidades, nódulos, consolidações, massas, processo intersticial (miliar), derrame pleural e alargamento de mediastino. |
-| Sequela         | Imagens sugestivas de lesões cicatriciais, como bandas, retrações parenquimatosas e calcificações.                                                                              |
-| Outras doenças  | Imagens sugestivas de pneumopatias não tuberculosas, como Doença Pulmonar Obstrutiva Crônica (DPOC) e outras doenças respiratórias.                                             |
+| Normal | Sem alterações sugestivas de atividade de tuberculose. |
+| Suspeito | Alterações sugestivas de atividade de tuberculose, como cavidades, nódulos, consolidações, massas, processo intersticial (miliar), derrame pleural e alargamento de mediastino. |
+| Sequela | Imagens sugestivas de lesões cicatriciais, como bandas, retrações parenquimatosas e calcificações. |
+| Outras doenças | Imagens sugestivas de pneumopatias não tuberculosas, como Doença Pulmonar Obstrutiva Crônica (DPOC) e outras doenças respiratórias. |
 
 Fonte: CGPNCT/SVS/MS.
 
@@ -1417,13 +1393,11 @@ A tomografia computadorizada (TC) do tórax é mais sensível para demonstrar al
 
 as alterações sugestivas de atividade e sequela de tb na tc de tórax estão descritas no quadro 10.
 
-QUADRO  10  alterações  sugestivas  de  tuberculose  ativa  ou  sequela  de  tuberculose  em tomografia computadorizada de tórax.
+QUADRO 10 alterações sugestivas de tuberculose ativa ou sequela de tuberculose em tomografia computadorizada de tórax.
 
-<!-- image -->
-
-| SINAIS SUGESTIVOS DE TUBERCULOSE ATIVA                                                                                                                                                                                                                  | SINAIS SUGESTIVOS DE SEQUELA DE TUBERCULOSE                                                                     |
+| SINAIS SUGESTIVOS DE TUBERCULOSE ATIVA | SINAIS SUGESTIVOS DE SEQUELA DE TUBERCULOSE |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-|  Cavidades de paredes espessas  Nódulos  Nódulos centrolobulares de distribuição segmentar  Nódulos centrolobulares confluentes  Consolidações  Espessamento de paredes brônquicas  Aspecto de 'árvore em brotamento'  Massas  Bronquiectasias |  Bandas  Nódulos calcificados  Cavidades de paredes finas  Bronquiectasias de tração  Espessamento pleural |
+| Cavidades de paredes espessas Nódulos Nódulos centrolobulares de distribuição segmentar Nódulos centrolobulares confluentes Consolidações Espessamento de paredes brônquicas Aspecto de 'árvore em brotamento' Massas Bronquiectasias | Bandas Nódulos calcificados Cavidades de paredes finas Bronquiectasias de tração Espessamento pleural |
 
 Fonte: Adaptado de BOMBARDA, S. et al, 2003.
 
@@ -1447,7 +1421,7 @@ a partir desse foco inicial, pode ocorrer a progressão para necrose caseosa, el
 
 O acometimento das cadeias ganglionares depende da localização do processo inflamatório no parênquima pulmonar. a associação do nódulo de Ghon e linfonodomegalias hilares é denominada complexo de Ranke. esses nódulos são potencialmente focos de bacilos, que podem evoluir para a cura, com fibrose e calcificação, ou para a doença.
 
-a  disseminação  da  doença  para  o  sistema  linfático  pode  ser  visualizada  como linfonodomegalias hilares e/ou alargamento do mediastino. Geralmente, são linfonodos maiores que 2 cm, com áreas de baixa atenuação central associadas a um aumento de atenuação perinodal, correspondendo a focos de necrose caseosa central. essas alterações são mais bem visualizadas na tc e ocorrem com maior frequência em crianças menores de cinco anos de idade, sendo, geralmente, unilaterais.
+a disseminação da doença para o sistema linfático pode ser visualizada como linfonodomegalias hilares e/ou alargamento do mediastino. Geralmente, são linfonodos maiores que 2 cm, com áreas de baixa atenuação central associadas a um aumento de atenuação perinodal, correspondendo a focos de necrose caseosa central. essas alterações são mais bem visualizadas na tc e ocorrem com maior frequência em crianças menores de cinco anos de idade, sendo, geralmente, unilaterais.
 
 o aumento de linfonodos mediastinais pode ocasionar compressão dos brônquios e lesão da parede brônquica com drenagem do material necrótico para dentro da luz brônquica (tb endobrônquica). a obstrução brônquica total ou parcial pode ocasionar atelectasias, que são visualizadas na radiografia e na TC de tórax.
 
@@ -1467,7 +1441,7 @@ a disseminação da infecção através dos brônquios resulta em novos focos de
 
 outros achados são o espessamento da parede brônquica e o aspecto de 'árvore em brotamento'. também pode ocorrer o aspecto em mosaico que se traduz pela coexistência de áreas de maior e de menor densidade do parênquima pulmonar, sendo essas últimas decorrentes do aprisionamento aéreo por bronquiolite constritiva cicatricial (Ko; paRK; KiM, 2014).
 
-as  atelectasias  podem  ser  segmentares  ou  lobares  e  são  causadas  por  fibrose (broncoestenoses). são lesões sugestivas de sequelas de tuberculose. no entanto, a distinção entre sequela e lesão em atividade requer confirmação bacteriológica e análise clínica.
+as atelectasias podem ser segmentares ou lobares e são causadas por fibrose (broncoestenoses). são lesões sugestivas de sequelas de tuberculose. no entanto, a distinção entre sequela e lesão em atividade requer confirmação bacteriológica e análise clínica.
 
 os tuberculomas são opacidades redondas ou ovaladas, geralmente localizadas em lobos superiores, e podem representar sequela ou doença em atividade. observam-se pequenos nódulos satélites circundando o nódulo maior, mais bem visualizados na tc de tórax, e o diagnóstico diferencial deve ser feito principalmente com o câncer de pulmão.
 
@@ -1475,7 +1449,7 @@ os tuberculomas são opacidades redondas ou ovaladas, geralmente localizadas em 
 
 a avaliação histológica de fragmento de tecido obtido por biópsia é um método empregado na investigação das formas pulmonares que se apresentam radiologicamente como doença difusa e nas formas extrapulmonares (CONDE; FiTERMAN; liMA, 2011). Assim, a identificação histológica de granuloma com necrose de caseificação é compatível com o diagnóstico de TB. A identificação de um granuloma sem necrose de caseificação deve ser interpretada com cuidado e à luz dos achados clínicos, visto que outras doenças granulomatosas, como sarcoidose e silicose, podem ter essa apresentação histológica. além do granuloma, a análise histológica pode também buscar bacilos no fragmento de tecido. embora a baciloscopia do tecido seja usualmente negativa nos pacientes não imunossuprimidos, ela é positiva, com frequência, nos pacientes com imunossupressão mais avançada, onde a identificação de granuloma é incomum (conde; FiteRMan; liMa, 2011).
 
-Uma vez que o método diagnóstico de certeza de TB é a cultura seguida da confirmação da espécie M. tuberculosis , sempre que possível um ou dois fragmentos obtidos por biopsia devem ser armazenados em água destilada ou em soro fisiológico 0,9% e enviados para cultura em meio específico.
+Uma vez que o método diagnóstico de certeza de TB é a cultura seguida da confirmação da espécie M. tuberculosis, sempre que possível um ou dois fragmentos obtidos por biopsia devem ser armazenados em água destilada ou em soro fisiológico 0,9% e enviados para cultura em meio específico.
 
 os rendimentos de análise histológica de materiais obtidos através de biopsias teciduais, no diagnóstico da tb extrapulmonar, são listados a seguir.
 
@@ -1503,32 +1477,30 @@ TB de glândulas endócrinas as suprarrenais são as glândulas mais acometidas.
 
 ## 6.1. ADENOSiNA DEAMiNASE (ADA)
 
-Em amostras clínicas (fluidos), a detecção da ADA, enzima intracelular presente particularmente no linfócito ativado, pode auxiliar no diagnóstico da tb ativa. o teste é colorimétrico, com base na técnica de Giusti comercializada e é de fácil execução em qualquer laboratório que disponha de espectofotômetro. a determinação do aumento da atividade da ada no líquido pleural, sobretudo se associado a alguns parâmetros, como idade (&lt;45 anos), predomínio de linfócitos (acima de 80%) e proteína alta (exsudato), é indicadora de pleurite tuberculosa (da silVa JR et al., 2013; MoRisson; neVes, 2008). no uso de ada in house , esse teste somente pode ser disponibilizado em laboratórios aprovados em programas de acreditação laboratorial, para minimizar o risco de baixa confiabilidade nos resultados oferecidos.
+Em amostras clínicas (fluidos), a detecção da ADA, enzima intracelular presente particularmente no linfócito ativado, pode auxiliar no diagnóstico da tb ativa. o teste é colorimétrico, com base na técnica de Giusti comercializada e é de fácil execução em qualquer laboratório que disponha de espectofotômetro. a determinação do aumento da atividade da ada no líquido pleural, sobretudo se associado a alguns parâmetros, como idade (&lt;45 anos), predomínio de linfócitos (acima de 80%) e proteína alta (exsudato), é indicadora de pleurite tuberculosa (da silVa JR et al., 2013; MoRisson; neVes, 2008). no uso de ada in house, esse teste somente pode ser disponibilizado em laboratórios aprovados em programas de acreditação laboratorial, para minimizar o risco de baixa confiabilidade nos resultados oferecidos.
 
 ## 6.2. outRas tÉcnicas bioMoleculaRes
 
 nos últimos anos, novos testes moleculares diagnósticos baseados na técnica da reação em cadeia da polimerase (pcR) foram desenvolvidos, o que tem representado um avanço na detecção de doenças infecciosas. para o diagnóstico da tb, a oMs recomenda as seguintes tecnologias (WHo, 2015).
 
--  Line  Probe  Assay  (LPA)  técnica  de  biologia  molecular  para  o  diagnóstico  rápido da tuberculose drogarresistente. comercialmente encontram-se disponíveis os Genotype  MtbdR plus ®  e  MtbdR sl ®.  ambos  são  ensaios  qualitativos  que  utilizam membranas de nitrocelulose com sondas de regiões parciais de genes de resistência. o  Genotype  MtbdR plus ®,  a  partir  de  amostras  de  escarro  positivo  ou  de  culturas positivas, identifica o complexo M. tuberculosis e as principais mutações que conferem resistência  à  rifampicina  e  isoniazida  a  partir  de  sondas  das  regiões  parciais  de resistência dos genes rpo b para rifampicina, kat G e inh a para isoniazida (WHo, 2016a). os  resultados  são  obtidos  em  48  horas,  o  que  agiliza  a  introdução  de  tratamento correto ao paciente. em 2016, a organização Mundial da saúde passou a recomendar, adicionalmente ao Genotype MtbdR plus ®,  o  Genotype MtbdR sl ®,  que possibilita a identificação de resistência também aos medicamentos injetáveis e de segunda linha, por meio de sondas de genes de resistência gyr a, gyr b, rrs e ei s (WHo, 2016b). o lpa é  uma  metodologia  complexa  que  exige  alta  infraestrutura  laboratorial  e  técnicos especializados.
+- Line Probe Assay (LPA) técnica de biologia molecular para o diagnóstico rápido da tuberculose drogarresistente. comercialmente encontram-se disponíveis os Genotype MtbdR plus ® e MtbdR sl ®. ambos são ensaios qualitativos que utilizam membranas de nitrocelulose com sondas de regiões parciais de genes de resistência. o Genotype MtbdR plus ®, a partir de amostras de escarro positivo ou de culturas positivas, identifica o complexo M. tuberculosis e as principais mutações que conferem resistência à rifampicina e isoniazida a partir de sondas das regiões parciais de resistência dos genes rpo b para rifampicina, kat G e inh a para isoniazida (WHo, 2016a). os resultados são obtidos em 48 horas, o que agiliza a introdução de tratamento correto ao paciente. em 2016, a organização Mundial da saúde passou a recomendar, adicionalmente ao Genotype MtbdR plus ®, o Genotype MtbdR sl ®, que possibilita a identificação de resistência também aos medicamentos injetáveis e de segunda linha, por meio de sondas de genes de resistência gyr a, gyr b, rrs e ei s (WHo, 2016b). o lpa é uma metodologia complexa que exige alta infraestrutura laboratorial e técnicos especializados.
 
--  AccuProbe Mycobacterium tuberculosis Complex culture identification test (Gen-Probe) -baseado na hibridização de uma sonda, marcada com reagente quimioluminescente, ao  16s-rRna  do  organismo  alvo.  o  híbrido  dna/Rna  marcado  é  medido  em  um luminômetro. O teste é específico para identificação do complexo M. tuberculosis de amostras de escarro positivas e negativas. o teste é usado como complemento dos exames de baciloscopia e cultura.
--  INNO-LiPA MYCOBACTERIA v2 detecta e identifica simultaneamente 16 espécies de micobactérias,  dentre  elas  o  complexo M.  tuberculosis .  baseado  nas  diferenças  da região espaçadora 16s-23s rRna, pode ser feito a partir de cultura líquida ou sólida.
+- AccuProbe Mycobacterium tuberculosis Complex culture identification test (Gen-Probe) -baseado na hibridização de uma sonda, marcada com reagente quimioluminescente, ao 16s-rRna do organismo alvo. o híbrido dna/Rna marcado é medido em um luminômetro. O teste é específico para identificação do complexo M. tuberculosis de amostras de escarro positivas e negativas. o teste é usado como complemento dos exames de baciloscopia e cultura.
+- INNO-LiPA MYCOBACTERIA v2 detecta e identifica simultaneamente 16 espécies de micobactérias, dentre elas o complexo M. tuberculosis. baseado nas diferenças da região espaçadora 16s-23s rRna, pode ser feito a partir de cultura líquida ou sólida.
 
 ## 7. Diagnóstico de HIV nas Pessoas com Tuberculose
 
 Todo paciente com diagnóstico de tuberculose deve ser testado para HIV.
 
-o diagnóstico precoce de infecção pelo HiV em pessoas com tb tem importante impacto no curso clínico da doença. portanto, o teste diagnóstico para HiV, preferencialmente o rápido, deve ser oferecido, o mais cedo possível, a toda pessoa com diagnóstico estabelecido de tb (Figura 8) .
+o diagnóstico precoce de infecção pelo HiV em pessoas com tb tem importante impacto no curso clínico da doença. portanto, o teste diagnóstico para HiV, preferencialmente o rápido, deve ser oferecido, o mais cedo possível, a toda pessoa com diagnóstico estabelecido de tb (Figura 8).
 
 O diagnóstico precoce de infecção pelo HIV em pessoas com tuberculose tem importante impacto no curso clínico das duas doenças.
 
 FIGURA 8 solicitação de testes diagnósticos para HiV em pessoas com tuberculose.
 
-<!-- image -->
-
 a portaria nº 29, de 17 de dezembro de 2013 (bRasil, 2013), aprova o Manual técnico para o diagnóstico de HiV (bRasil, 2014) e recomenda a utilização de teste Rápido (tR) para o diagnóstico de HiV em pessoas com tb. o teste rápido de sangue total obtido através de punção digital é amplamente disseminado na atenção básica e em programas de controle de tb (bRasil, 2013).
 
-os tR's são imunoensaios simples, de fácil execução, com resultado obtido em até 30 minutos. o teste deve ser ofertado no momento do diagnóstico da tb ou o mais rapidamente possível no próprio estabelecimento de saúde em que o paciente for atendido e deve ser realizado por profissionais de saúde capacitados. O MS oferece modelos de treinamentos presencial ou a distância (sistema telelab, disponível em &lt; https://www.telelab.aids.gov.br/index. php/component/k2/item/93-diagnostico-de-hiv&gt; ), que aborda vários aspectos relativos à qualidade, segurança e execução do tR.
+os tR's são imunoensaios simples, de fácil execução, com resultado obtido em até 30 minutos. o teste deve ser ofertado no momento do diagnóstico da tb ou o mais rapidamente possível no próprio estabelecimento de saúde em que o paciente for atendido e deve ser realizado por profissionais de saúde capacitados. O MS oferece modelos de treinamentos presencial ou a distância (sistema telelab, disponível em &lt; https://www.telelab.aids.gov.br/index.php/component/k2/item/93-diagnostico-de-hiv&gt;), que aborda vários aspectos relativos à qualidade, segurança e execução do tR.
 
 De acordo com os fluxogramas de diagnóstico da infecção pelo Hiv que envolvem TR, o diagnóstico só pode ser estabelecido após a realização de dois tR, e o laudo deverá ser emitido por um profissional de saúde habilitado. Nas situações em que somente um teste rápido for ofertado ao paciente, ele se caracterizará por um teste de triagem e, portanto, não haverá a emissão de um laudo. nesse caso, o paciente que obtiver resultado reagente para o teste de triagem deverá ser encaminhado para o serviço de saúde referência de diagnóstico para o Hiv estabelecido pela rede para a confirmação do diagnóstico.
 
@@ -1554,7 +1526,7 @@ A febre, quando presente, é persistente, geralmente acima de 38ºC, e ocorre ao
 
 de um modo geral, a frequência dos sintomas é baixa, mas, quando presentes de forma persistente (e não remitente), são de grande valor no diagnóstico da tb em crianças (MaRais et al., 2005).
 
-Ao término da infância e no início da adolescência (≥  10 anos de idade), aparecem formas sintomáticas semelhantes às encontradas em adultos. os pacientes quase sempre têm sintomas respiratórios e são mais frequentemente positivos à baciloscopia. nessa faixa de idade, é fácil realizar o exame de escarro e o diagnóstico pode ser comprovado pelos métodos bacteriológicos convencionais (baciloscopia e cultura) (sant'anna et al., 2006). em adolescentes, as manifestações clínicas da tb pulmonar assemelham-se às de adultos. Mais recentemente, o teste rápido molecular (tRM-tb) trouxe grande contribuição para o diagnóstico nessa população.
+Ao término da infância e no início da adolescência (≥ 10 anos de idade), aparecem formas sintomáticas semelhantes às encontradas em adultos. os pacientes quase sempre têm sintomas respiratórios e são mais frequentemente positivos à baciloscopia. nessa faixa de idade, é fácil realizar o exame de escarro e o diagnóstico pode ser comprovado pelos métodos bacteriológicos convencionais (baciloscopia e cultura) (sant'anna et al., 2006). em adolescentes, as manifestações clínicas da tb pulmonar assemelham-se às de adultos. Mais recentemente, o teste rápido molecular (tRM-tb) trouxe grande contribuição para o diagnóstico nessa população.
 
 ## 8.1.2. Diagnóstico da tuberculose pulmonar por sistema de escore
 
@@ -1566,7 +1538,7 @@ Deve ser realizado em posição póstero-anterior (PA) e perfil e, na maioria da
 
 Em adolescentes, os aspectos mais encontrados são infiltrados e condensações nos terços superiores dos pulmões e escavações. correspondem ao padrão radiológico da tuberculose tipo adulto (sant'anna et al., 2013).
 
-a prova tuberculínica (pt) deve ser interpretada como sugestiva de infecção por M. tuberculosis , independentemente do tempo de vacinação pela BCG. Considerar positivo quando ≥ a 5mm e negativa quando &lt; a 5 mm (ver capítulo diagnóstico da infecção latente pelo M. tuberculosis ). o efeito da bcG sobre o resultado da prova tuberculínica reduz com o passar do tempo, principalmente se a BCG foi feita antes de um ano de idade, realidade da população brasileira. (FaRHat et al., 2006; MenZies; VissandJee; aMYot, 1992).
+a prova tuberculínica (pt) deve ser interpretada como sugestiva de infecção por M. tuberculosis, independentemente do tempo de vacinação pela BCG. Considerar positivo quando ≥ a 5mm e negativa quando &lt; a 5 mm (ver capítulo diagnóstico da infecção latente pelo M. tuberculosis). o efeito da bcG sobre o resultado da prova tuberculínica reduz com o passar do tempo, principalmente se a BCG foi feita antes de um ano de idade, realidade da população brasileira. (FaRHat et al., 2006; MenZies; VissandJee; aMYot, 1992).
 
 outro teste empregado para detectar a infeção pelo M. tuberculosis é a dosagem sanguínea de interferon gama (denominados iGRas). assim como a pt, também não é capaz de distinguir entre infecção e doença, mas tem uma ótima especificidade, geralmente não reagindo com outras micobactérias. os iGRas, no entanto, têm custo elevado e seus resultados são incertos em menores de 5 anos de idade (cHen et al., 2011).
 
@@ -1578,14 +1550,14 @@ a utilização do escore propicia diagnóstico e intervenção terapêutica prec
 
 QUADRO 11 diagnóstico da tuberculose pulmonar em crianças e adolescentes com baciloscopia negativa ou tRM-tb não detectado
 
-| QUADRO CLÍNICO-RADIOLÓGICO                                                                          | QUADRO CLÍNICO-RADIOLÓGICO                                                                                                                                                                                                                                                     | CONTATO DE ADULTO COM TUBERCULOSE   | PROVA TUBERCULÍNICA              | ESTADO NUTRICIONAL                      |
+| QUADRO CLÍNICO-RADIOLÓGICO | QUADRO CLÍNICO-RADIOLÓGICO | CONTATO DE ADULTO COM TUBERCULOSE | PROVA TUBERCULÍNICA | ESTADO NUTRICIONAL |
 |-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|----------------------------------|-----------------------------------------|
-| Febre ou sintomas como tosse, adinamia, expectoração, emagrecimento, sudorese por 2 semanas ou mais | Adenomegalia hilar ou padrão miliar e/ou Condensação ou infiltrado (com ou sem escavação) inalterado por 2 semanas ou mais e/ou Condensação ou infiltrado (com ou sem escavação) por 2 semanas ou mais, evoluindo com piora ou sem melhora com antibióticos para germes comuns | Próximo, nos últimos 2 anos         | PT entre 5-9mm 5 pontos PT ≥10mm | Desnutrição grave (peso < percentil 10) |
-| 15 pontos                                                                                           | pontos                                                                                                                                                                                                                                                                         | 10 pontos                           | 10 pontos                        | 5 pontos                                |
-|                                                                                                     | 15                                                                                                                                                                                                                                                                             |                                     |                                  |                                         |
-| Assintomático ou com sintomas há menos de 2 semanas 0 ponto                                         | Condensação ou infiltrado de qualquer tipo por menos de 2 semanas 5 pontos                                                                                                                                                                                                     | Ocasional ou negativo               | PT <5mm                          | Peso ≥ percentil 10                     |
-| Infecção respiratória com melhora após uso de antibióticos para germes comuns ou sem antibióticos   | Radiografia normal                                                                                                                                                                                                                                                             | Ocasional ou negativo               | PT <5mm                          | Peso ≥ percentil 10                     |
-| -10 pontos                                                                                          | - 5 pontos                                                                                                                                                                                                                                                                     | 0 ponto                             | 0 ponto                          | 0 ponto                                 |
+| Febre ou sintomas como tosse, adinamia, expectoração, emagrecimento, sudorese por 2 semanas ou mais | Adenomegalia hilar ou padrão miliar e/ou Condensação ou infiltrado (com ou sem escavação) inalterado por 2 semanas ou mais e/ou Condensação ou infiltrado (com ou sem escavação) por 2 semanas ou mais, evoluindo com piora ou sem melhora com antibióticos para germes comuns | Próximo, nos últimos 2 anos | PT entre 5-9mm 5 pontos PT ≥10mm | Desnutrição grave (peso < percentil 10) |
+| 15 pontos | pontos | 10 pontos | 10 pontos | 5 pontos |
+| | 15 | | | |
+| Assintomático ou com sintomas há menos de 2 semanas 0 ponto | Condensação ou infiltrado de qualquer tipo por menos de 2 semanas 5 pontos | Ocasional ou negativo | PT <5mm | Peso ≥ percentil 10 |
+| Infecção respiratória com melhora após uso de antibióticos para germes comuns ou sem antibióticos | Radiografia normal | Ocasional ou negativo | PT <5mm | Peso ≥ percentil 10 |
+| -10 pontos | - 5 pontos | 0 ponto | 0 ponto | 0 ponto |
 
 continua
 
@@ -1597,14 +1569,14 @@ continua
 
 30 a 35 pontos (diagnóstico possível)  indicativo de tuberculose; orienta-se iniciar o tratamento a critério médico.
 
-- &lt; 25 pontos (diagnóstico pouco provável)  deve-se prosseguir com a investigação na criança. Deverá ser  feito  diagnóstico  diferencial  com  outras  doenças  pulmonares  e  podem  ser  empregados  métodos complementares de diagnóstico, como baciloscopias e cultura de escarro induzido ou de lavado gástrico, broncoscopia, histopatológico de punções e outros exames de métodos rápidos.
+- &lt; 25 pontos (diagnóstico pouco provável)  deve-se prosseguir com a investigação na criança. Deverá ser feito diagnóstico diferencial com outras doenças pulmonares e podem ser empregados métodos complementares de diagnóstico, como baciloscopias e cultura de escarro induzido ou de lavado gástrico, broncoscopia, histopatológico de punções e outros exames de métodos rápidos.
 
 Fonte: Adaptado de Sant' Anna CC et al., 2006.
 
 ## observações:
 
 1. na impossibilidade de realizar a prova tuberculínica, recomenda-se empregar o sistema de pontuação e, caso este não permita o diagnóstico da tuberculose pulmonar, o caso deve ser individualizado e, se oportuno, enviado a serviço de referência.
-2.  crianças  com  suspeita  de  tuberculose,  muitas  vezes,  após  reavaliações,  repetição  dos  exames  e terapêuticas empíricas para germes comuns ou quadros alérgicos, se investigados por pediatras ou médicos treinados em unidades de referência, podem ter tal diagnóstico afastado (Rossoni, 2015).
+2. crianças com suspeita de tuberculose, muitas vezes, após reavaliações, repetição dos exames e terapêuticas empíricas para germes comuns ou quadros alérgicos, se investigados por pediatras ou médicos treinados em unidades de referência, podem ter tal diagnóstico afastado (Rossoni, 2015).
 
 ## 8.1.3. Outros exames complementares para o diagnóstico da tuberculose na criança
 
@@ -1630,18 +1602,18 @@ deve ser avaliada, individualmente, a necessidade de realização de prova de fu
 
 QUADRO 24 condutas frente a hepatopatias
 
-| PACIENTES COM DOENÇA HEPÁTICA PRÉVIA: hepatite viral aguda; hepatites crônicas (viral, autoimune, criptogênica);   | sem cirrose                                                               | TGO / TGP > 5 x LSN (*)                                                                | 9 RELfx* ou 5 Cm 3 E Lfx / 7 E Lfx*                                                           |
+| PACIENTES COM DOENÇA HEPÁTICA PRÉVIA: hepatite viral aguda; hepatites crônicas (viral, autoimune, criptogênica); | sem cirrose | TGO/TGP > 5 x LSN (*) | 9 RELfx* ou 5 Cm 3 E Lfx/7 E Lfx* |
 |--------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| hepatopatia alcoólica;                                                                                             | com cirrose                                                               | TGO / TGP < 5 x LSN (*)                                                                | Esquema Básico                                                                                |
-| esteatose hepática.                                                                                                |                                                                           | 5 Cm 3 E Lfx / 7 E Lfx*                                                                | 5 Cm 3 E Lfx / 7 E Lfx*                                                                       |
-| PACIENTES SEM DOENÇA HEPÁTICA                                                                                      | TGO / TGP ≥ 5 x lSN (*) (sem sintomas)                                    | Interromper o tratamento. Monitorar função hepática (cada 3 a 7 dias) até normalização | Reintrodução: (RE →RE+H→REHZ) do Esquema Básico ou Início de Esquema Especial (ver quadro 33) |
-| PACIENTES SEM DOENÇA HEPÁTICA                                                                                      | TGO / TGP ≥ 3 x lSN (*) (com sintomas, incluindo a presença de icterícia) | Interromper o tratamento. Monitorar função hepática (cada 3 a 7 dias) até normalização | Reintrodução: (RE →RE+H→REHZ) do Esquema Básico ou Início de Esquema Especial (ver quadro 33) |
-| PRÉVIA: com hepatotoxicidade ao esquema básico.                                                                    | casos graves de tb ou hepatotoxicidade grave                              | Monitorar função hepática (cada 3 a 7 dias) até normalização                           | 5 Cm 3 E Lfx / 7 E Lfx*                                                                       |
-| PRÉVIA: com hepatotoxicidade ao esquema básico.                                                                    | Níveis de TGO / TGP ≥ 3 x lsn (*)                                         | Se após 4 semanas mantiver TGO/TGP ≥ 3 x LSN (*)                                       | 5 Cm 3 E Lfx / 7 E Lfx*                                                                       |
+| hepatopatia alcoólica; | com cirrose | TGO/TGP < 5 x LSN (*) | Esquema Básico |
+| esteatose hepática. | | 5 Cm 3 E Lfx/7 E Lfx* | 5 Cm 3 E Lfx/7 E Lfx* |
+| PACIENTES SEM DOENÇA HEPÁTICA | TGO/TGP ≥ 5 x lSN (*) (sem sintomas) | Interromper o tratamento. Monitorar função hepática (cada 3 a 7 dias) até normalização | Reintrodução: (RE →RE+H→REHZ) do Esquema Básico ou Início de Esquema Especial (ver quadro 33) |
+| PACIENTES SEM DOENÇA HEPÁTICA | TGO/TGP ≥ 3 x lSN (*) (com sintomas, incluindo a presença de icterícia) | Interromper o tratamento. Monitorar função hepática (cada 3 a 7 dias) até normalização | Reintrodução: (RE →RE+H→REHZ) do Esquema Básico ou Início de Esquema Especial (ver quadro 33) |
+| PRÉVIA: com hepatotoxicidade ao esquema básico. | casos graves de tb ou hepatotoxicidade grave | Monitorar função hepática (cada 3 a 7 dias) até normalização | 5 Cm 3 E Lfx/7 E Lfx* |
+| PRÉVIA: com hepatotoxicidade ao esquema básico. | Níveis de TGO/TGP ≥ 3 x lsn (*) | Se após 4 semanas mantiver TGO/TGP ≥ 3 x LSN (*) | 5 Cm 3 E Lfx/7 E Lfx* |
 
 Fonte: Adaptado de BRASIl, 2011.
 
-TGO  -  Transaminase  glutâmico-oxalacética;  TGP  -  Transaminase  glutâmico-pirúvica;  LSN  -  Limite  superior  da normalidade; R - Rifampicina; E - Etambutol; Lfx - Levofloxacino; Cm - Capreomicina; H - Isoniazida; Z - Pirazinamina.
+TGO - Transaminase glutâmico-oxalacética; TGP - Transaminase glutâmico-pirúvica; LSN - Limite superior da normalidade; R - Rifampicina; E - Etambutol; Lfx - Levofloxacino; Cm - Capreomicina; H - Isoniazida; Z - Pirazinamina.
 
 *O primeiro número indica o tempo de tratamento (em meses), o segundo número indica a quantidade de dias durante a semana. Quando não há descrição, consideram-se sete dias na semana.
 
@@ -1649,20 +1621,20 @@ TGO  -  Transaminase  glutâmico-oxalacética;  TGP  -  Transaminase  glutâmico
 
 ## observações:
 
--  As  fluoroquinolonas  induzem  à  resistência  microbiana  em  curto  período,  por  isso recomenda-se fortemente o tratamento diretamente observado.
--  substituir a capreomicina por estreptomicina quando sensível no ts e sem história de utilização prévia da estreptomicina.
+- As fluoroquinolonas induzem à resistência microbiana em curto período, por isso recomenda-se fortemente o tratamento diretamente observado.
+- substituir a capreomicina por estreptomicina quando sensível no ts e sem história de utilização prévia da estreptomicina.
 
 ## 4.4.3. Nefropatias
 
-nos pacientes com nefropatias é necessário conhecer a taxa de depuração de creatinina ( clearance ) antes de iniciar o esquema terapêutico, para que sejam ajustadas as doses dos medicamentos que apresentam eliminação renal (quadro 25).
+nos pacientes com nefropatias é necessário conhecer a taxa de depuração de creatinina (clearance) antes de iniciar o esquema terapêutico, para que sejam ajustadas as doses dos medicamentos que apresentam eliminação renal (quadro 25).
 
 o clearance de creatinina é usado para avaliar a velocidade e a eficiência da filtração sanguínea nos rins. ajuda a detectar e a diagnosticar disfunção renal e/ou diminuição do fluxo sanguíneo renal.
 
 QUADRO 25 Fórmula para o cálculo clearance de creatinina (unidade: ml/min)
 
-| PARA HOMENS   | (140 - idade do paciente) X peso (em kg) / 72 X creatinina sérica (mg/dL)          |
+| PARA HOMENS | (140 - idade do paciente) X peso (em kg)/72 X creatinina sérica (mg/dL) |
 |---------------|------------------------------------------------------------------------------------|
-| PARA MULHERES | (140 - idade do paciente) X peso (em kg) / [72 X creatinina sérica (mg/dL)] X 0,85 |
+| PARA MULHERES | (140 - idade do paciente) X peso (em kg)/[72 X creatinina sérica (mg/dL)] X 0,85 |
 
 Fonte: COCKCROFT DW, GAULT MH. 1976.
 
@@ -1670,9 +1642,9 @@ no anexo iii, encontram-se os ajustes nas doses e frequências dos medicamentos 
 
 ## observações:
 
--  para pacientes nefropatas ( clearence de creatinina &lt; 30ml/min) que usarão somente medicamentos do esquema básico no tratamento da tb, considerando a utilização de dose fixa combinada, o esquema preconizado consiste em: RHZE (2ª, 4ª e 6ª) e RH (3ª, 5ª, sábado e domingo) durante 2 meses na fase intensiva, seguidos de RH diariamente durante 4 meses na fase de manutenção (considerar o peso para avaliar a quantidade de comprimidos).
--  em todos os casos recomenda-se a realização do tratamento diretamente observado.
--  para pacientes em hemodiálise, os medicamentos deverão ser tomados após o procedimento, no mesmo dia.
+- para pacientes nefropatas (clearence de creatinina &lt; 30ml/min) que usarão somente medicamentos do esquema básico no tratamento da tb, considerando a utilização de dose fixa combinada, o esquema preconizado consiste em: RHZE (2ª, 4ª e 6ª) e RH (3ª, 5ª, sábado e domingo) durante 2 meses na fase intensiva, seguidos de RH diariamente durante 4 meses na fase de manutenção (considerar o peso para avaliar a quantidade de comprimidos).
+- em todos os casos recomenda-se a realização do tratamento diretamente observado.
+- para pacientes em hemodiálise, os medicamentos deverão ser tomados após o procedimento, no mesmo dia.
 
 ## 4.4.4. Diabetes
 
@@ -1694,9 +1666,9 @@ a rifabutina está recomendada em substituição à rifampicina, nos esquemas te
 
 QUADRO 26 esquema com rifabutina para tratamento da tuberculose em adultos e adolescentes (≥ 10 anos de idade)
 
-| FASE DE ATAQUE   | FASE DE MANUTENÇãO   |
+| FASE DE ATAQUE | FASE DE MANUTENÇãO |
 |------------------|----------------------|
-| 2Rfb H Z E       | 4 Rfb H              |
+| 2Rfb H Z E | 4 Rfb H |
 
 Fonte: CGPNCT/SVS/MS.
 
@@ -1704,8 +1676,8 @@ Rfb - Rifabutina; H - Isoniazida; Z - Pirazinamida; E - Etambutol.
 
 ## observações:
 
--  não está recomendada a utilização da rifabutina em gestantes (ver anexo i).
--  as dosagens preconizadas para medicamentos individualizados estão disponíveis nos anexos iV, V e Vi.
+- não está recomendada a utilização da rifabutina em gestantes (ver anexo i).
+- as dosagens preconizadas para medicamentos individualizados estão disponíveis nos anexos iV, V e Vi.
 
 ## busca ativa de tuberculose em pVHiV
 
@@ -1715,10 +1687,10 @@ desse modo, a busca ativa pode mudar o curso de ambos os agravos, uma vez que pr
 
 em pVHiV, a busca ativa da tb está baseada no rastreamento de quatro sinais/sintomas, em todas as visitas das pVHiV ao serviço de saúde. embora não sejam exclusivos da tuberculose, são eles:
 
--  tosse; e/ou
--  febre; e/ou
--  emagrecimento; e/ou
--  sudorese noturna.
+- tosse; e/ou
+- febre; e/ou
+- emagrecimento; e/ou
+- sudorese noturna.
 
 A presença de qualquer um desses sintomas deve desencadear a investigação específica para tb, que pode variar de acordo com a forma clínica da tb sob suspeição. Vale lembrar que, quanto maior a imunossupressão, maior a possibilidade de formas atípicas e disseminadas. É preciso que a unidade que atende PvHiv identifique suas referências para exames complementares ou procedimentos invasivos, tais como exames de imagem, biópsias teciduais, entre outros.
 
@@ -1780,11 +1752,11 @@ o tratamento da tuberculose em ppl pode ter início antes ou durante o encarcera
 
 o tratamento de tb nas ppl deve ser diretamente observado e realizado exclusivamente por profissionais de saúde, para que seja possível (DiUANA et al., 2008):
 
--  fortalecer o vínculo entre a PPl e o serviço/profissionais de saúde;
--  garantir  um  acesso  rápido  ao  serviço  de  saúde  em  caso  de  ocorrência  de  efeitos adversos decorrentes do tratamento, assim reduzindo a possibilidade de uso irregular;
--  favorecer o reconhecimento do preso como alguém que está doente, cujo cuidado é responsabilidade dele e dos profissionais de saúde;
--  evitar que a medicação seja usada como elemento de troca e de pressão; e
--  possibilitar momentos de troca de informações, estabelecimento do cuidado, diferenciando-se de medidas de controle e fiscalização que prevalecem nas prisões.
+- fortalecer o vínculo entre a PPl e o serviço/profissionais de saúde;
+- garantir um acesso rápido ao serviço de saúde em caso de ocorrência de efeitos adversos decorrentes do tratamento, assim reduzindo a possibilidade de uso irregular;
+- favorecer o reconhecimento do preso como alguém que está doente, cujo cuidado é responsabilidade dele e dos profissionais de saúde;
+- evitar que a medicação seja usada como elemento de troca e de pressão; e
+- possibilitar momentos de troca de informações, estabelecimento do cuidado, diferenciando-se de medidas de controle e fiscalização que prevalecem nas prisões.
 
 o acompanhamento do tratamento deve incluir a consulta mensal, a aferição regular do peso que poderá indicar necessidade de ajuste de doses do medicamento e a solicitação das baciloscopias de controle. no contexto de encarceramento, a baciloscopia adquire maior relevância, uma vez que permite avaliar a presença de bacilos viáveis no escarro.
 
@@ -1796,17 +1768,13 @@ Assegurar a continuidade do tratamento após o livramento se constitui em um gra
 
 por isso, as recomendações a seguir podem ajudar que a ppl continue o seu tratamento após a saída do sistema carcerário.
 
-FIGURA  15  Fluxograma  para  avaliação  da  infecção  latente  em  profissionais  de  saúde  no momento da admissão ao trabalho
-
-<!-- image -->
+FIGURA 15 Fluxograma para avaliação da infecção latente em profissionais de saúde no momento da admissão ao trabalho
 
 Fonte: BRASIL 2011.
 
-1 O  efeito booster representa  a  reativação  da  resposta  tuberculínica  pelas  células  de  memória  (BCG ou infecção remota por M. tuberculosis ). Está presente em cerca de 6% dos profissionais de saúde e é definido quando a segunda PT é ≥ 10mm, com incremento de pelo menos 6mm em relação à primeira PT.  Nesses indivíduos, não há indicação de tratamento da ILTB, pois o risco de adoecimento é muito baixo. Essa 2ª aplicação da tuberculina é utilizada apenas para excluir uma falsa conversão, no futuro, em indivíduos testados de forma seriada. Se o resultado da segunda aplicação for = 10mm, mesmo sem incremento de 6mm em relação à primeira, a PT não deve ser repetida futuramente.
+1 O efeito booster representa a reativação da resposta tuberculínica pelas células de memória (BCG ou infecção remota por M. tuberculosis). Está presente em cerca de 6% dos profissionais de saúde e é definido quando a segunda PT é ≥ 10mm, com incremento de pelo menos 6mm em relação à primeira PT. Nesses indivíduos, não há indicação de tratamento da ILTB, pois o risco de adoecimento é muito baixo. Essa 2ª aplicação da tuberculina é utilizada apenas para excluir uma falsa conversão, no futuro, em indivíduos testados de forma seriada. Se o resultado da segunda aplicação for = 10mm, mesmo sem incremento de 6mm em relação à primeira, a PT não deve ser repetida futuramente.
 
 FIGURA 16 Fluxograma para avaliação da infecção latente em profissionais de saúde durante o exame periódico
-
-<!-- image -->
 
 Fonte: BRASIL 2011.
 
@@ -1826,8 +1794,8 @@ O profissional de saúde com sinais e/ou sintomas compatíveis com tuberculose d
 
 os trabalhadores de saúde com tuberculose devem ser autorizados a retornar ao trabalho quando:
 
--  tiverem  dois  resultados  negativos  de  baciloscopia  coletados  a  cada  24  horas  de intervalo, após 15 dias de tratamento; e
--  responderem  ao  tratamento  antittb,  com  melhora  clínica  e  bacteriológica,  que provavelmente será efetivo com base em resultados de teste de sensibilidade aos antimicrobiano.
+- tiverem dois resultados negativos de baciloscopia coletados a cada 24 horas de intervalo, após 15 dias de tratamento; e
+- responderem ao tratamento antittb, com melhora clínica e bacteriológica, que provavelmente será efetivo com base em resultados de teste de sensibilidade aos antimicrobiano.
 
 além disso, os trabalhadores de saúde com tuberculose devem ser autorizados a retornar ao trabalho quando estiverem em condições clínicas e ausência de transmissibilidade.
 
@@ -1845,23 +1813,23 @@ Os municípios e estados devem organizar sua rede de forma a antecipar e constru
 
 compete à área técnica ou aos programas estaduais de controle da tuberculose:
 
--  gerenciar e executar supletivamente as ações de controle da tuberculose;
--  realizar articulações intra e intersetoriais que possam fortalecer as ações de controle da tuberculose;
--  monitorar os indicadores epidemiológicos e acompanhar o cumprimento das metas estabelecidas nos instrumentos de gestão do sus;
--  executar  as  rotinas  de  vinculação  dos  casos  de  tuberculose  de  transferências intermunicipais notificados no Sinan e monitorar a completitude dos dados com vistas à melhoria da qualidade da informação;
--  gerenciar  e  monitorar  os  casos  em  tratamentos  especiais  para  tuberculose  pelo sistema de informação de tratamentos especiais de tuberculose (site-tb);
--  analisar e divulgar informações epidemiológicas por meio de boletins e informes e  utilizá-las  para  fins  de  definição  de  prioridades,  planejamento, monitoramento, avaliação, bem como para o fortalecimento da transparência ativa e do controle social;
--  priorizar municípios para o controle da tuberculose segundo critérios epidemiológicos e operacionais;
--  realizar visitas de monitoramento das ações de controle da tuberculose aos municípios prioritários para o controle da doença;
--  realizar  o  controle  logístico,  calcular  a  demanda  e  armazenar  adequadamente  os medicamentos para tuberculose e insumos no nível estadual;
--  promover e participar da capacitação de recursos humanos na área de tuberculose, fomentando a integração entre instituições de ensino e o serviço;
--  assessorar  as  coordenadorias  regionais  na  implantação  e/ou  implementação  do programa de controle da tuberculose nos municípios;
--  apoiar os programas municipais na identificação e capacitação dos serviços de saúde sobre as ações de controle da tuberculose;
--  manter estreita articulação com o laboratório de Referência estadual e Regional e participar  do  planejamento  das  ações  de  diagnóstico  bacteriológico  e  controle  de qualidade;
--  identificar estabelecimentos de referência secundária e terciária para a tuberculose, de referência estadual e regional e apoiar política e tecnicamente esses serviços;
--  promover  e  acompanhar  o  desenvolvimento  de  pesquisas  em  âmbito  estadual  e municipal e participar de pesquisas nacionais;
--  formular, imprimir e distribuir material educativo/informativo; e
--  estimular a organização e a participação da sociedade civil no controle da tuberculose.
+- gerenciar e executar supletivamente as ações de controle da tuberculose;
+- realizar articulações intra e intersetoriais que possam fortalecer as ações de controle da tuberculose;
+- monitorar os indicadores epidemiológicos e acompanhar o cumprimento das metas estabelecidas nos instrumentos de gestão do sus;
+- executar as rotinas de vinculação dos casos de tuberculose de transferências intermunicipais notificados no Sinan e monitorar a completitude dos dados com vistas à melhoria da qualidade da informação;
+- gerenciar e monitorar os casos em tratamentos especiais para tuberculose pelo sistema de informação de tratamentos especiais de tuberculose (site-tb);
+- analisar e divulgar informações epidemiológicas por meio de boletins e informes e utilizá-las para fins de definição de prioridades, planejamento, monitoramento, avaliação, bem como para o fortalecimento da transparência ativa e do controle social;
+- priorizar municípios para o controle da tuberculose segundo critérios epidemiológicos e operacionais;
+- realizar visitas de monitoramento das ações de controle da tuberculose aos municípios prioritários para o controle da doença;
+- realizar o controle logístico, calcular a demanda e armazenar adequadamente os medicamentos para tuberculose e insumos no nível estadual;
+- promover e participar da capacitação de recursos humanos na área de tuberculose, fomentando a integração entre instituições de ensino e o serviço;
+- assessorar as coordenadorias regionais na implantação e/ou implementação do programa de controle da tuberculose nos municípios;
+- apoiar os programas municipais na identificação e capacitação dos serviços de saúde sobre as ações de controle da tuberculose;
+- manter estreita articulação com o laboratório de Referência estadual e Regional e participar do planejamento das ações de diagnóstico bacteriológico e controle de qualidade;
+- identificar estabelecimentos de referência secundária e terciária para a tuberculose, de referência estadual e regional e apoiar política e tecnicamente esses serviços;
+- promover e acompanhar o desenvolvimento de pesquisas em âmbito estadual e municipal e participar de pesquisas nacionais;
+- formular, imprimir e distribuir material educativo/informativo; e
+- estimular a organização e a participação da sociedade civil no controle da tuberculose.
 
 ## 2.1.3. Instância regional
 
@@ -1871,24 +1839,24 @@ em determinados estados e municípios, a estrutura administrativa inclui um nív
 
 nos municípios de pequeno porte ou a depender de sua estrutura organizacional, é comum que não exista um programa Municipal de controle da tuberculose, sendo essas funções acumuladas por profissionais responsáveis pela vigilância de diferentes agravos (ex.: iTS, HiV, hanseníase e outros). compete ao responsável pela tuberculose:
 
--  executar as ações para o controle da tuberculose localmente e supervisionar/monitorar no nível central do município;
--  realizar articulações intra e intersetoriais que possam fortalecer as ações de controle da tuberculose;
--  monitorar os indicadores epidemiológicos, bem como acompanhar o cumprimento de metas propostas nos instrumentos de gestão do sus;
--  coordenar  a  busca  ativa  de  sintomáticos  respiratórios  no  município,  bem  como supervisionar e participar da investigação e do controle dos contatos de pessoas com tuberculose na comunidade;
--  notificar  os  casos  de  tuberculose ao Sinan, bem como acompanhá-lo, por meio do sistema  de  informação,  durante  todo  o  tratamento,  com  a  geração  de  boletins  de acompanhamento mensal;
--  analisar  e  divulgar  informações  epidemiológicas  por  meio  de  boletins  e  informes e  utilizá-las  para  fins  de  definição  de  prioridades,  planejamento,  monitoramento, avaliação, bem como para o fortalecimento da transparência ativa e do controle social;
--  realizar visitas de monitoramento das ações de controle da tuberculose aos serviços de saúde;
--  assegurar a realização dos exames diagnósticos, conforme preconizado nas normas;
--  participar da operacionalização do tratamento diretamente observado no município e acompanhar as medidas de controle preventivas e profiláticas;
--  providenciar, junto ao órgão regional ou estadual, os medicamentos para o tratamento da tuberculose e distribuí-los às respectivas unidades de saúde;
--  articular-se  com  as  unidades  executoras,  como  as  equipes  da  estratégia  saúde  da Família e/ou de agentes comunitários e com os segmentos organizados da comunidade, aperfeiçoando as ações de controle da tuberculose em todas as suas fases, inclusive com a participação da sociedade civil na promoção à saúde e no controle social das ações realizadas pelos três níveis de governo;
+- executar as ações para o controle da tuberculose localmente e supervisionar/monitorar no nível central do município;
+- realizar articulações intra e intersetoriais que possam fortalecer as ações de controle da tuberculose;
+- monitorar os indicadores epidemiológicos, bem como acompanhar o cumprimento de metas propostas nos instrumentos de gestão do sus;
+- coordenar a busca ativa de sintomáticos respiratórios no município, bem como supervisionar e participar da investigação e do controle dos contatos de pessoas com tuberculose na comunidade;
+- notificar os casos de tuberculose ao Sinan, bem como acompanhá-lo, por meio do sistema de informação, durante todo o tratamento, com a geração de boletins de acompanhamento mensal;
+- analisar e divulgar informações epidemiológicas por meio de boletins e informes e utilizá-las para fins de definição de prioridades, planejamento, monitoramento, avaliação, bem como para o fortalecimento da transparência ativa e do controle social;
+- realizar visitas de monitoramento das ações de controle da tuberculose aos serviços de saúde;
+- assegurar a realização dos exames diagnósticos, conforme preconizado nas normas;
+- participar da operacionalização do tratamento diretamente observado no município e acompanhar as medidas de controle preventivas e profiláticas;
+- providenciar, junto ao órgão regional ou estadual, os medicamentos para o tratamento da tuberculose e distribuí-los às respectivas unidades de saúde;
+- articular-se com as unidades executoras, como as equipes da estratégia saúde da Família e/ou de agentes comunitários e com os segmentos organizados da comunidade, aperfeiçoando as ações de controle da tuberculose em todas as suas fases, inclusive com a participação da sociedade civil na promoção à saúde e no controle social das ações realizadas pelos três níveis de governo;
 
--  participar  do  planejamento,  programação  e  organização  das  Redes  de  atenção  à saúde  para  o  atendimento  ao  paciente  com  tuberculose,  em  articulação  com  sua esfera estadual;
--  identificar  e  organizar  a  rede  de  laboratórios  locais  e  suas  referências  municipais, regionais e estaduais;
--  identificar, mapear e capacitar as equipes da Atenção Básica sobre as ações de controle da tuberculose com o apoio do estado;
--  identificar, mapear e capacitar as unidades de referência secundária e terciária para o controle da tuberculose com o apoio dos estados;
--  estimular a organização e a participação da sociedade civil no controle da tuberculose;
--  elaborar e distribuir materiais educativos/informativos.
+- participar do planejamento, programação e organização das Redes de atenção à saúde para o atendimento ao paciente com tuberculose, em articulação com sua esfera estadual;
+- identificar e organizar a rede de laboratórios locais e suas referências municipais, regionais e estaduais;
+- identificar, mapear e capacitar as equipes da Atenção Básica sobre as ações de controle da tuberculose com o apoio do estado;
+- identificar, mapear e capacitar as unidades de referência secundária e terciária para o controle da tuberculose com o apoio dos estados;
+- estimular a organização e a participação da sociedade civil no controle da tuberculose;
+- elaborar e distribuir materiais educativos/informativos.
 
 ## 3. O Programa Nacional de Controle da Tuberculose
 
@@ -1904,16 +1872,16 @@ o pnct se divide em componentes estratégicos com o objetivo de assegurar a espe
 
 ## observações:
 
--  a recidiva e o reingresso após abandono são considerados casos de retratamento;
--  as definições de tipo de entrada - transferência, não sabe e pós-óbito - são operacionais e utilizadas para efeitos de registro no sinan;
--  a Ficha de Notificação/investigação preenchida pela unidade notificante deverá ser encaminhada ao primeiro nível informatizado para que seja incluída no sinan. a partir de então, a base de dados sobre tuberculose é formada e é possível a realização da análise situacional. dessa forma, é importante o preenchimento correto e completo, evitando campos em branco ou preenchidos como 'ignorado'.
+- a recidiva e o reingresso após abandono são considerados casos de retratamento;
+- as definições de tipo de entrada - transferência, não sabe e pós-óbito - são operacionais e utilizadas para efeitos de registro no sinan;
+- a Ficha de Notificação/investigação preenchida pela unidade notificante deverá ser encaminhada ao primeiro nível informatizado para que seja incluída no sinan. a partir de então, a base de dados sobre tuberculose é formada e é possível a realização da análise situacional. dessa forma, é importante o preenchimento correto e completo, evitando campos em branco ou preenchidos como 'ignorado'.
 
 ## 10.2.2. Acompanhamento dos casos de tuberculose: atualização dos dados
 
 Uma vez confirmado o diagnóstico, o paciente deve ser acompanhado até o seu encerramento. algumas estratégias de acompanhamento do tratamento são recomendadas:
 
--  utilizar o livro de registro de pacientes e acompanhamento de tratamento dos casos de tuberculose;
--  preencher, mensalmente, o boletim de acompanhamento, gerado pelo sinan, e enviar ao primeiro nível informatizado. essa atividade é de competência das unidades de saúde e o boletim de acompanhamento deve ser gerado pelo primeiro nível informatizado.
+- utilizar o livro de registro de pacientes e acompanhamento de tratamento dos casos de tuberculose;
+- preencher, mensalmente, o boletim de acompanhamento, gerado pelo sinan, e enviar ao primeiro nível informatizado. essa atividade é de competência das unidades de saúde e o boletim de acompanhamento deve ser gerado pelo primeiro nível informatizado.
 
 as informações referentes à realização de baciloscopias de controle, outros exames realizados, total de contatos examinados, realização de tdo, situação de encerramento e data de encerramento estão presentes no boletim de acompanhamento.
 
@@ -1923,17 +1891,17 @@ para o encerramento oportuno, recomenda-se que os casos de tuberculose em tratam
 
 o encerramento de casos é realizado de acordo com os critérios a seguir:
 
--  cura - paciente que apresentar duas baciloscopias negativas, sendo uma em qualquer mês  de  acompanhamento  e  outra  ao  final  do  tratamento  (5º  ou  6º  mês).  Para  os casos com necessidade de ampliar o tempo de tratamento, serão considerados os dois últimos meses. a alta por cura também será dada ao paciente que completou o tratamento sem evidência de falência e teve alta com base em critérios clínicos e radiológicos, por impossibilidade de realização de exames de baciloscopia;
--  abandono - paciente que fez uso de medicamento por 30 dias ou mais e interrompeu o tratamento por 30 dias consecutivos ou mais;
+- cura - paciente que apresentar duas baciloscopias negativas, sendo uma em qualquer mês de acompanhamento e outra ao final do tratamento (5º ou 6º mês). Para os casos com necessidade de ampliar o tempo de tratamento, serão considerados os dois últimos meses. a alta por cura também será dada ao paciente que completou o tratamento sem evidência de falência e teve alta com base em critérios clínicos e radiológicos, por impossibilidade de realização de exames de baciloscopia;
+- abandono - paciente que fez uso de medicamento por 30 dias ou mais e interrompeu o tratamento por 30 dias consecutivos ou mais;
 
--  abandono primário - paciente que fez uso de medicamento por menos de 30 dias e interrompeu 30 dias consecutivos ou mais, ou quando o paciente diagnosticado não iniciar o tratamento;
--  óbito por tuberculose - quando o óbito apresentar a tuberculose como causa básica, a  qual  deve  estar  de  acordo  com  as  informações  contidas  no  siM.  a  tuberculose corresponde aos códigos A15 ao A19 da 10ª Classificação internacional de Doenças (cid);
--  óbito por outras causas - quando a causa básica não foi a tuberculose, mas a tuberculose consta como causa associada. as causas de morte devem estar de acordo com as informações contidas no siM;
--  transferência - quando o doente for transferido para outro serviço de saúde. a transferência deve ser processada por meio de documento que contenha informações sobre o diagnóstico e o tratamento realizado até aquele momento. É de responsabilidade da unidade de origem a confirmação de que o paciente compareceu à unidade para a qual foi transferido;
--  mudança de diagnóstico -  quando ocorrer alteração no diagnóstico e for elucidado que não se tratava de um caso de tuberculose;
--  mudança de esquema -  quando  o  paciente  necessitar  da  adoção  de  regimes  terapêuticos  diferentes  do  esquema  básico,  seja  por  intolerância  e/ou  por  toxicidade medicamentosa;
--  tuberculose drogarresistente (TB DR) - quando houver confirmação, por meio de teste de sensibilidade ou teste rápido molecular para tuberculose (tRM-tb), de resistência a  qualquer  medicamento  antituberculose,  independentemente  do  esquema  de tratamento a ser utilizado,  exceto  casos  de  monorresistência  ao  etambutol,  pirazinamida ou estreptomicina que mantenham o uso do esquema básico. os casos com diagnóstico de resistência à rifampicina pelo teste rápido molecular para tuberculose (TRM-TB) devem ser encerrados no Sinan como TB DR e notificados no SiTE-TB;
--  falência -  será  registrada  nas  seguintes  situações:  persistência  da  baciloscopia de  escarro  positiva  ao  final  do  tratamento;  doentes  que  no  início  do  tratamento apresentavam  baciloscopia  fortemente  positiva  (++  ou  +  +  +)  e  mantiveram  essa situação até o 4º mês; baciloscopia positiva inicial seguida de negativação e de novos resultados  positivos  por  2  meses  consecutivos,  a  partir  do  4º  mês  de  tratamento. o aparecimento de poucos bacilos no exame direto do escarro, nas proximidades do 5º ou 6º mês do tratamento, isoladamente, não significa, necessariamente, a falência do  tratamento.  o  paciente  deverá  ser  acompanhado  com  exames  bacteriológicos (baciloscopia, cultura e teste de sensibilidade antimicrobiana) para melhor definição.
+- abandono primário - paciente que fez uso de medicamento por menos de 30 dias e interrompeu 30 dias consecutivos ou mais, ou quando o paciente diagnosticado não iniciar o tratamento;
+- óbito por tuberculose - quando o óbito apresentar a tuberculose como causa básica, a qual deve estar de acordo com as informações contidas no siM. a tuberculose corresponde aos códigos A15 ao A19 da 10ª Classificação internacional de Doenças (cid);
+- óbito por outras causas - quando a causa básica não foi a tuberculose, mas a tuberculose consta como causa associada. as causas de morte devem estar de acordo com as informações contidas no siM;
+- transferência - quando o doente for transferido para outro serviço de saúde. a transferência deve ser processada por meio de documento que contenha informações sobre o diagnóstico e o tratamento realizado até aquele momento. É de responsabilidade da unidade de origem a confirmação de que o paciente compareceu à unidade para a qual foi transferido;
+- mudança de diagnóstico - quando ocorrer alteração no diagnóstico e for elucidado que não se tratava de um caso de tuberculose;
+- mudança de esquema - quando o paciente necessitar da adoção de regimes terapêuticos diferentes do esquema básico, seja por intolerância e/ou por toxicidade medicamentosa;
+- tuberculose drogarresistente (TB DR) - quando houver confirmação, por meio de teste de sensibilidade ou teste rápido molecular para tuberculose (tRM-tb), de resistência a qualquer medicamento antituberculose, independentemente do esquema de tratamento a ser utilizado, exceto casos de monorresistência ao etambutol, pirazinamida ou estreptomicina que mantenham o uso do esquema básico. os casos com diagnóstico de resistência à rifampicina pelo teste rápido molecular para tuberculose (TRM-TB) devem ser encerrados no Sinan como TB DR e notificados no SiTE-TB;
+- falência - será registrada nas seguintes situações: persistência da baciloscopia de escarro positiva ao final do tratamento; doentes que no início do tratamento apresentavam baciloscopia fortemente positiva (++ ou + + +) e mantiveram essa situação até o 4º mês; baciloscopia positiva inicial seguida de negativação e de novos resultados positivos por 2 meses consecutivos, a partir do 4º mês de tratamento. o aparecimento de poucos bacilos no exame direto do escarro, nas proximidades do 5º ou 6º mês do tratamento, isoladamente, não significa, necessariamente, a falência do tratamento. o paciente deverá ser acompanhado com exames bacteriológicos (baciloscopia, cultura e teste de sensibilidade antimicrobiana) para melhor definição.
 
 ## 10.2.4. Rotinas para qualificação dos dados do Sinan
 
@@ -1947,25 +1915,25 @@ a seguir são descritas as diversas possibilidades de registros duplicados e os 
 
 Homônimos : são registros que apresentam primeiro e último nomes iguais dos pacientes, mesma data de nascimento e mesmo sexo. no entanto, após análise de outros dados e, se necessário, investigação, conclui-se que são pessoas diferentes.
 
--  Procedimento: esses registros devem ser marcados para 'não listaR' no relatório de duplicidade.
+- Procedimento: esses registros devem ser marcados para 'não listaR' no relatório de duplicidade.
 
 Duplo registro em tratamentos diferentes : é a situação em que o paciente foi notificado mais de uma vez, contudo referente a diferentes tratamentos por recidiva ou reingresso após abandono.
 
--  Procedimento: esses registros devem ser marcados como 'não listaR' no relatório de duplicidade, uma vez que são tratamentos diferentes e é necessário que fiquem todos os registros no sistema.
+- Procedimento: esses registros devem ser marcados como 'não listaR' no relatório de duplicidade, uma vez que são tratamentos diferentes e é necessário que fiquem todos os registros no sistema.
 
 Duplo registro durante o mesmo tratamento: é a situação em que o paciente foi notificado mais de uma vez por unidades de saúde diferentes durante o mesmo tratamento devido à transferência oficial ou espontânea.
 
--  Procedimentos: se  existirem  duas  notificações  de  um  mesmo  paciente  atendido em unidades de saúde diferentes, deve-se avaliar se houve transferência (intra ou intermunicipal). Em caso afirmativo, os dois registros devem ser viNCUlADOS e deverá ser  comunicada  a  alta  por  transferência  à  primeira  unidade  que  notificou  o  caso. Na segunda unidade de saúde, o campo 'Tipo de entrada' da ficha de notificação/ investigação deverá ser preenchido com a categoria 'transferência'.
+- Procedimentos: se existirem duas notificações de um mesmo paciente atendido em unidades de saúde diferentes, deve-se avaliar se houve transferência (intra ou intermunicipal). Em caso afirmativo, os dois registros devem ser viNCUlADOS e deverá ser comunicada a alta por transferência à primeira unidade que notificou o caso. Na segunda unidade de saúde, o campo 'Tipo de entrada' da ficha de notificação/ investigação deverá ser preenchido com a categoria 'transferência'.
 
- ao executar a 'rotina de vinculação' para dois registros, o sinan mantém em um único registro os dados de notificação/investigação da unidade de origem e os dados de acompanhamento  remetidos  pela  unidade  de  saúde  atualmente  responsável  pela conclusão do tratamento. o primeiro nível informatizado capaz de detectar o duplo registro devido à transferência deverá efetuar a vinculação das notificações.
+ ao executar a 'rotina de vinculação' para dois registros, o sinan mantém em um único registro os dados de notificação/investigação da unidade de origem e os dados de acompanhamento remetidos pela unidade de saúde atualmente responsável pela conclusão do tratamento. o primeiro nível informatizado capaz de detectar o duplo registro devido à transferência deverá efetuar a vinculação das notificações.
 
- quando o paciente efetuou mais de uma transferência durante o mesmo tratamento, devem ser realizadas sucessivas vinculações das notificações, mantendo, desse modo, os dados da notificação/investigação mais antigos e o acompanhamento pela unidade de saúde responsável pela conclusão do tratamento.
+ quando o paciente efetuou mais de uma transferência durante o mesmo tratamento, devem ser realizadas sucessivas vinculações das notificações, mantendo, desse modo, os dados da notificação/investigação mais antigos e o acompanhamento pela unidade de saúde responsável pela conclusão do tratamento.
 
- aos casos que tiverem a situação de encerramento preenchida como transferência, o sinan possibilitará a inserção do município e/ou estado de destino do paciente. com o registro no sistema, do local de destino do paciente, o monitoramento dos casos em trânsito e a comunicação entre os PCT desses locais ficarão mais fáceis.
+ aos casos que tiverem a situação de encerramento preenchida como transferência, o sinan possibilitará a inserção do município e/ou estado de destino do paciente. com o registro no sistema, do local de destino do paciente, o monitoramento dos casos em trânsito e a comunicação entre os PCT desses locais ficarão mais fáceis.
 
 Duplicidade verdadeira: ocorre quando há mais de uma notificação de um paciente, referente ao mesmo tratamento, pela mesma unidade de saúde, com números de notificações diferentes (ex.: paciente notificado duas vezes pela mesma US como dois casos novos ou duas recidivas).
 
--  Procedimento: o primeiro registro deve ser atualizado com as informações do segundo e depois o segundo registro (mais atual) deverá ser excluído do sinan pelo primeiro nível informatizado. os duplos registros devido à transferência de tratamento para outra unidade de saúde devem ser vinculados. Já os duplos registros devido à recidiva ou reingresso após abandono não devem ser vinculados e devem ser marcados como 'não listaR' no relatório de duplicidade. a vinculação de registros deve ser realizada após a conclusão do tratamento com o objetivo de evitar possíveis perdas de dados pelo  sistema  de  informação.  durante  o  processo  de  duplicidade  do  sinan,  quando uma  ficha  que  havia  sido  vinculada  anteriormente  'aparecer'  novamente,  devido provavelmente à atualização de alguma variável no nível informatizado inferior, deve realizar-se a atualização das informações da ficha anteriormente vinculada e depois selecionar a opção 'não listaR' na rotina de duplicidade.
+- Procedimento: o primeiro registro deve ser atualizado com as informações do segundo e depois o segundo registro (mais atual) deverá ser excluído do sinan pelo primeiro nível informatizado. os duplos registros devido à transferência de tratamento para outra unidade de saúde devem ser vinculados. Já os duplos registros devido à recidiva ou reingresso após abandono não devem ser vinculados e devem ser marcados como 'não listaR' no relatório de duplicidade. a vinculação de registros deve ser realizada após a conclusão do tratamento com o objetivo de evitar possíveis perdas de dados pelo sistema de informação. durante o processo de duplicidade do sinan, quando uma ficha que havia sido vinculada anteriormente 'aparecer' novamente, devido provavelmente à atualização de alguma variável no nível informatizado inferior, deve realizar-se a atualização das informações da ficha anteriormente vinculada e depois selecionar a opção 'não listaR' na rotina de duplicidade.
 
 ## situações especiais em caso de intercorrências
 
@@ -1973,23 +1941,23 @@ quando o paciente com tuberculose é acompanhado por uma unidade ambulatorial e 
 
 Situação 1 - paciente com tuberculose em tratamento em um serviço de saúde (seja de atenção primária ou unidades de referência) e procura um serviço de urgência/emergência ou unidade de referência em virtude de uma intercorrência, entretanto o tratamento será mantido no serviço de saúde que iniciou o tratamento.
 
--  Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada e situação de encerramento por transferência. o serviço de saúde que iniciou o caso, responsável pelo paciente, deve acompanhar o andamento da intercorrência e manter o acompanhamento do caso na ficha de notificação inicial. Cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, pedir para 'NãO liSTAR' e aguardar o encerramento da primeira ficha, dado pelo serviço de saúde que está acompanhando o caso.
+- Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada e situação de encerramento por transferência. o serviço de saúde que iniciou o caso, responsável pelo paciente, deve acompanhar o andamento da intercorrência e manter o acompanhamento do caso na ficha de notificação inicial. Cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, pedir para 'NãO liSTAR' e aguardar o encerramento da primeira ficha, dado pelo serviço de saúde que está acompanhando o caso.
 
 Situação 2 - paciente com tuberculose em tratamento em um serviço de saúde (seja de atenção primária ou unidades de referência) e procura um serviço de urgência/emergência ou unidade de referência em virtude de uma intercorrência. caso o paciente venha a falecer nesse serviço de urgência/emergência ou unidade de referência.
 
--  Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada transferência e encerrará como óbito. o serviço de saúde que iniciou o caso deve encerrá-lo como transferência. cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, realizar a viNCUlAçãO.
+- Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada transferência e encerrará como óbito. o serviço de saúde que iniciou o caso deve encerrá-lo como transferência. cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, realizar a viNCUlAçãO.
 
 Situação 3 - paciente com tuberculose em tratamento em um serviço de saúde (seja de atenção primária ou unidades de referência) e procura um serviço de urgência/emergência ou unidade de referência em virtude de uma intercorrência. após o contato com esse serviço, seja por decisão dos profissionais de saúde ou do paciente, o tratamento e o acompanhamento serão realizados nesse novo local.
 
--  Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada transferência e acompanhará o caso até o final. O serviço de saúde que iniciou o caso deve encerrá-lo como transferência. esse mesmo critério deve  ser  usado  para  encerramento  e  mudança  de  diagnóstico,  bem  como  para  os desfechos que deverão ser acompanhados pelo site-tb (tb-dR, mudança de esquema e falência). Cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, realizar a Vinculação.
+- Procedimento: o serviço de urgência/emergência ou unidade de referência notificará o caso com tipo de entrada transferência e acompanhará o caso até o final. O serviço de saúde que iniciou o caso deve encerrá-lo como transferência. esse mesmo critério deve ser usado para encerramento e mudança de diagnóstico, bem como para os desfechos que deverão ser acompanhados pelo site-tb (tb-dR, mudança de esquema e falência). Cabe à vigilância, ao encontrar essas duas fichas na lista de duplicidades, realizar a Vinculação.
 
 ## preenchimento de endereço na população privada de liberdade
 
 para preenchimento dos campos relacionados ao endereço no caso de pacientes de tuberculose diagnosticados na população privada de liberdade:
 
--  Município e UF de Notificação: do presídio;
--  Município e UF de Residência: do presídio (para fins de cálculos de indicadores);
--  endereço do paciente (campos 'logradouro' e 'ponto de referência'): nesse caso é o endereço de residência do paciente (para fins de Busca Ativa em caso de soltura do mesmo).
+- Município e UF de Notificação: do presídio;
+- Município e UF de Residência: do presídio (para fins de cálculos de indicadores);
+- endereço do paciente (campos 'logradouro' e 'ponto de referência'): nesse caso é o endereço de residência do paciente (para fins de Busca Ativa em caso de soltura do mesmo).
 
 ## 10.2.5. Análise de dados do Sinan
 
@@ -2003,7 +1971,7 @@ um banco de dados atualizado e de qualidade é útil para avaliação dos servi�
 
 ## 10.3. sisteMa de inFoRMação de tRataMentos ESPECiAiS DA TUBERCUlOSE - SiTE-TB
 
-casos especiais de tuberculose são aqueles que não tiveram indicação de uso do esquema básico, seja pela ocorrência de reações adversas, de certas comorbidades ou ainda por resistência a algum medicamento antituberculose. Esses casos deverão ser notificados no sistema de informação de tratamentos especiais de tuberculose (site-tb), um sistema online , complementar ao Sinan, que permite notificar, acompanhar e encerrar esses casos, além dos casos de micobacterioses não tuberculosas (MNT) que foram identificados como diagnóstico diferencial de tuberculose.
+casos especiais de tuberculose são aqueles que não tiveram indicação de uso do esquema básico, seja pela ocorrência de reações adversas, de certas comorbidades ou ainda por resistência a algum medicamento antituberculose. Esses casos deverão ser notificados no sistema de informação de tratamentos especiais de tuberculose (site-tb), um sistema online, complementar ao Sinan, que permite notificar, acompanhar e encerrar esses casos, além dos casos de micobacterioses não tuberculosas (MNT) que foram identificados como diagnóstico diferencial de tuberculose.
 
 todos os casos especiais de tratamento da tuberculose deverão ser acompanhados nas referências para o tratamento da doença. as referências secundárias são indicadas para tratar pacientes que apresentaram efeitos adversos 'maiores' e comorbidades, e as referências terciárias são para os casos de tuberculose resistente.
 
@@ -2011,10 +1979,10 @@ Antes de se iniciar a notificação, é recomendada a verificação do caso por 
 
 O paciente é encaminhado para uma unidade de referência onde ocorre a notificação e o tratamento após a validação do registro. A 'validação' é um processo de verificação de coerência das informações registradas na notificação. O caso é notificado diretamente no site-tb, permanecendo na situação 'aguardando validação'. uma vez validado, o caso recebe numeração sequencial gerada pelo próprio sistema, que é o seu número de notificação. Para a validação, todas as informações são consideradas, mas a coerência fundamental é verificada nas seguintes questões:
 
--  se há duplicidade de registro de caso e a correta vinculação a registros anteriores;
--  se o caso está corretamente classificado, considerando-se a classificação, o tipo de paciente e os tratamentos anteriores;
--  se a classificação e o tipo de paciente estão de acordo com os resultados laboratoriais, principalmente o teste de sensibilidade;
--  se  o  esquema  terapêutico  proposto  está  coerente  com  a  classificação,  o  tipo  de paciente, teste de sensibilidade e tratamentos anteriores.
+- se há duplicidade de registro de caso e a correta vinculação a registros anteriores;
+- se o caso está corretamente classificado, considerando-se a classificação, o tipo de paciente e os tratamentos anteriores;
+- se a classificação e o tipo de paciente estão de acordo com os resultados laboratoriais, principalmente o teste de sensibilidade;
+- se o esquema terapêutico proposto está coerente com a classificação, o tipo de paciente, teste de sensibilidade e tratamentos anteriores.
 
 a validação é realizada por equipe de médicos especialistas de diversas unidades de referência para tuberculose do país.
 
@@ -2026,56 +1994,56 @@ Todos os casos confirmados de tuberculose devem obrigatoriamente ser notificados
 
 ## 10.3.2. Casos que devem ser encerrados no Sinan e notificados no SITE-TB
 
--  os casos de tuberculose que iniciaram tratamento com o esquema básico e necessitarem utilizar  algum esquema especial de tratamento deverão ser encerrados no sinan como 'mudança de esquema', 'falência' ou 'tb dR', de acordo com as suas especificidades;
--  os casos de tuberculose que iniciaram tratamento com esquema especial, seja por comorbidades  ou  resistência,  devem  ser  notificados  no  Sinan,  encerrados  como mudança de esquema ou TB DR e notificados no SiTE-TB;
--  os casos de MNT não devem ser notificados no Sinan. No entanto, se isso ocorrer, eles devem ser encerrados como 'mudança de diagnóstico' no sinan antes de serem notificados no SiTE-TB;
--  os casos com monorresistência à isoniazida ou à rifampicina deverão ser encerrados no Sinan como TB DR e, posteriormente, notificados no SiTE-TB, independentemente do esquema de tratamento utilizado;
--  os casos com diagnóstico de resistência à rifampicina pelo teste rápido molecular para tuberculose (TRM-TB) devem ser encerrados no Sinan como TB DR e notificados no site-tb, independentemente do esquema de tratamento utilizado, e mesmo antes da confirmação do tipo de resistência pelo teste de sensibilidade.
+- os casos de tuberculose que iniciaram tratamento com o esquema básico e necessitarem utilizar algum esquema especial de tratamento deverão ser encerrados no sinan como 'mudança de esquema', 'falência' ou 'tb dR', de acordo com as suas especificidades;
+- os casos de tuberculose que iniciaram tratamento com esquema especial, seja por comorbidades ou resistência, devem ser notificados no Sinan, encerrados como mudança de esquema ou TB DR e notificados no SiTE-TB;
+- os casos de MNT não devem ser notificados no Sinan. No entanto, se isso ocorrer, eles devem ser encerrados como 'mudança de diagnóstico' no sinan antes de serem notificados no SiTE-TB;
+- os casos com monorresistência à isoniazida ou à rifampicina deverão ser encerrados no Sinan como TB DR e, posteriormente, notificados no SiTE-TB, independentemente do esquema de tratamento utilizado;
+- os casos com diagnóstico de resistência à rifampicina pelo teste rápido molecular para tuberculose (TRM-TB) devem ser encerrados no Sinan como TB DR e notificados no site-tb, independentemente do esquema de tratamento utilizado, e mesmo antes da confirmação do tipo de resistência pelo teste de sensibilidade.
 
 ## 10.3.3. Casos notificados no Sinan que não devem ser notificados no SITE-TB
 
--  casos de coinfecção tb-HiV em que a rifampicina for substituída pela rifabutina, por não serem considerados tratamentos especiais;
--  os casos com alguma complicação durante o tratamento com o esquema básico, que farão a introdução do esquema droga a droga. Esses casos só deverão ser notificados no SiTE-TB após a definição do esquema especial definitivo;
--  casos com monorresistência à estreptomicina, ao etambutol ou à pirazinamida, que mantenham o uso do esquema básico.
+- casos de coinfecção tb-HiV em que a rifampicina for substituída pela rifabutina, por não serem considerados tratamentos especiais;
+- os casos com alguma complicação durante o tratamento com o esquema básico, que farão a introdução do esquema droga a droga. Esses casos só deverão ser notificados no SiTE-TB após a definição do esquema especial definitivo;
+- casos com monorresistência à estreptomicina, ao etambutol ou à pirazinamida, que mantenham o uso do esquema básico.
 
 em todas as situações acima, o acompanhamento deve ser feito no sinan até seu encerramento.
 
 ## 10.3.4. Outras recomendações para casos com histórico de tratamento especial de tuberculose
 
--  casos encerrados no site-tb como cura ou tratamento completo que apresentarem recidiva deverão ser notificados e encerrados novamente no Sinan, mesmo que o caso inicie o tratamento com esquema especial e precise ser renotificado no SiTE-TB;
--  casos encerrados no SiTE-TB como abandono deverão ser renotificados e encerrados no Sinan, para posterior notificação no SiTE-TB;
--  casos notificados no SiTE-TB com o diagnóstico de resistência à rifampicina pelo TRM-TB e, posteriormente, classificados como tuberculose sensível pelo teste de sensibilidade e cujo reinício do esquema básico seja decidido pelo médico assistente devem ser encerrados no site-tb como mudança de esquema. no sinan, o caso encerrado como tb dR deve ser reaberto, para se dar continuidade ao tratamento com esquema básico. caso o médico assistente mantenha o esquema especial em tratamento, continuar o seguimento no site-tb até seu encerramento.
+- casos encerrados no site-tb como cura ou tratamento completo que apresentarem recidiva deverão ser notificados e encerrados novamente no Sinan, mesmo que o caso inicie o tratamento com esquema especial e precise ser renotificado no SiTE-TB;
+- casos encerrados no SiTE-TB como abandono deverão ser renotificados e encerrados no Sinan, para posterior notificação no SiTE-TB;
+- casos notificados no SiTE-TB com o diagnóstico de resistência à rifampicina pelo TRM-TB e, posteriormente, classificados como tuberculose sensível pelo teste de sensibilidade e cujo reinício do esquema básico seja decidido pelo médico assistente devem ser encerrados no site-tb como mudança de esquema. no sinan, o caso encerrado como tb dR deve ser reaberto, para se dar continuidade ao tratamento com esquema básico. caso o médico assistente mantenha o esquema especial em tratamento, continuar o seguimento no site-tb até seu encerramento.
 
 QUADRO 52 tipos de entrada dos pacientes de tuberculose com esquema especial, tuberculose drogarresistente e micobactéria não tuberculosa no site-tb
 
-| TIPOS DE ENTRADA                 | TUBERCULOSE COM ESQUEMA ESPECIAL (TB)                                                                                                                                 | TUBERCULOSE DROGARRESISTENTE (TB DR)                                                                                                                                                                                                                     | MICOBACTÉRIA NãO TUBERCULOSA (MNT)                                                                                   |
+| TIPOS DE ENTRADA | TUBERCULOSE COM ESQUEMA ESPECIAL (TB) | TUBERCULOSE DROGARRESISTENTE (TB DR) | MICOBACTÉRIA NãO TUBERCULOSA (MNT) |
 |----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
-| Caso novo                        | -                                                                                                                                                                     | Qualquer pessoa que nunca se submeteu ao tratamento para TB DR ou o fez por menos de 30 dias                                                                                                                                                             | Qualquer pessoa que nunca se submeteu ao tratamento para MNT ou o fez por menos de 30 dias                           |
-| Reingresso após abandono         | Caso de TB sensível tratado anteriormente com esquema especial, mas que deixou de tomar os medicamentos por 30 dias consecutivos ou mais                              | Caso de TB DR tratado anteriormente com esquema para TB DR, mas que deixou de tomar os medicamentos por 30 dias consecutivos ou mais                                                                                                                     | Caso de MNT tratado anteriormente para MNT que deixou de tomar os medica- mentos por 30 dias consecutivos ou mais    |
-| Recidiva                         | Caso de TB sensível, tratado anteriormente com esquema especial e que recebeu alta por cura comprovada ou por ter completado o tratamento                             | Caso de TB DR, tratado anteriormente com esquema para TB DR e que recebeu alta por cura comprovada ou por ter completado o tratamento                                                                                                                    | Caso de MNT tratado anteriormente para MNT e que recebeu alta por cura comprovada ou por ter completado o tratamento |
-| Falência ao primeiro tratamento  | Caso de TB sensível que apresentou falência ao primeiro tratamento de tuberculose (ainda sem comprovação laboratorial de resistência)                                 | Caso de TB DR que apresentou falência ao primeiro tratamento de TB DR                                                                                                                                                                                    | Caso de MNT que apresentou falência ao primeiro tratamento para MNT                                                  |
-| Falência ao retratamento         | Caso de TB sensível que apresentou falência ao retratamento (recidiva ou reingresso após abandono) de tuberculose (ainda sem comprovação laboratorial de resistência) | Caso de TB DR que apresentou falência ao retratamento de TB DR                                                                                                                                                                                           | Caso de MNT que apresentou falência ao retratamento para MNT                                                         |
-| Mudança de esquema               | Caso de TB sensível tratado com esquema básico ou esquema especial que necessitou mudar o esquema de tratamento                                                       | -                                                                                                                                                                                                                                                        | Caso de MNT que necessitou mudar o esquema de tratamento                                                             |
-| Mudança do padrão de resistência | -                                                                                                                                                                     | Caso de TB DR em que há al- teração do padrão de resis- tência com necessidade de um novo tratamento para TB DR. Em caso de alteração do esquema de tratamento em uso, porém sem alteração do padrão de resistência, não é necessário renotificar o caso | -                                                                                                                    |
+| Caso novo | - | Qualquer pessoa que nunca se submeteu ao tratamento para TB DR ou o fez por menos de 30 dias | Qualquer pessoa que nunca se submeteu ao tratamento para MNT ou o fez por menos de 30 dias |
+| Reingresso após abandono | Caso de TB sensível tratado anteriormente com esquema especial, mas que deixou de tomar os medicamentos por 30 dias consecutivos ou mais | Caso de TB DR tratado anteriormente com esquema para TB DR, mas que deixou de tomar os medicamentos por 30 dias consecutivos ou mais | Caso de MNT tratado anteriormente para MNT que deixou de tomar os medica- mentos por 30 dias consecutivos ou mais |
+| Recidiva | Caso de TB sensível, tratado anteriormente com esquema especial e que recebeu alta por cura comprovada ou por ter completado o tratamento | Caso de TB DR, tratado anteriormente com esquema para TB DR e que recebeu alta por cura comprovada ou por ter completado o tratamento | Caso de MNT tratado anteriormente para MNT e que recebeu alta por cura comprovada ou por ter completado o tratamento |
+| Falência ao primeiro tratamento | Caso de TB sensível que apresentou falência ao primeiro tratamento de tuberculose (ainda sem comprovação laboratorial de resistência) | Caso de TB DR que apresentou falência ao primeiro tratamento de TB DR | Caso de MNT que apresentou falência ao primeiro tratamento para MNT |
+| Falência ao retratamento | Caso de TB sensível que apresentou falência ao retratamento (recidiva ou reingresso após abandono) de tuberculose (ainda sem comprovação laboratorial de resistência) | Caso de TB DR que apresentou falência ao retratamento de TB DR | Caso de MNT que apresentou falência ao retratamento para MNT |
+| Mudança de esquema | Caso de TB sensível tratado com esquema básico ou esquema especial que necessitou mudar o esquema de tratamento | - | Caso de MNT que necessitou mudar o esquema de tratamento |
+| Mudança do padrão de resistência | - | Caso de TB DR em que há al- teração do padrão de resis- tência com necessidade de um novo tratamento para TB DR. Em caso de alteração do esquema de tratamento em uso, porém sem alteração do padrão de resistência, não é necessário renotificar o caso | - |
 
 Fonte: BRASIL, 2017c.
 
 ## 10.3.5. Classificação dos casos inseridos no SITE-TB
 
--  Tuberculose com esquema especial (TB) qualquer caso de tuberculose sensível ou sem comprovação laboratorial de resistência, que utilize outro tratamento diferente do esquema básico;
--  Tuberculose drogarresistente  (TB  DR)  caso  de  tuberculose  com  qualquer  tipo  de resistência identificada pelo teste de sensibilidade ou TRM-TB, independentemente do esquema de tratamento utilizado, exceto casos de monorresistência ao etambutol, à pirazinamida ou à estreptomicina, que mantenham a utilização do esquema básico. estes deverão manter seu seguimento no sinan;
--  Micobactéria não tuberculosa (MNT) casos com identificação de micobactérias não tuberculosas pelos métodos laboratoriais (cultura para micobactéria com identificação de espécie), que foram identificados como diagnóstico diferencial de tuberculose.
+- Tuberculose com esquema especial (TB) qualquer caso de tuberculose sensível ou sem comprovação laboratorial de resistência, que utilize outro tratamento diferente do esquema básico;
+- Tuberculose drogarresistente (TB DR) caso de tuberculose com qualquer tipo de resistência identificada pelo teste de sensibilidade ou TRM-TB, independentemente do esquema de tratamento utilizado, exceto casos de monorresistência ao etambutol, à pirazinamida ou à estreptomicina, que mantenham a utilização do esquema básico. estes deverão manter seu seguimento no sinan;
+- Micobactéria não tuberculosa (MNT) casos com identificação de micobactérias não tuberculosas pelos métodos laboratoriais (cultura para micobactéria com identificação de espécie), que foram identificados como diagnóstico diferencial de tuberculose.
 
 Durante a notificação da TB DR no sistema, há necessidade de classificação do caso conforme o padrão de resistência (Quadro 53) do bacilo identificado pelo teste de sensibilidade.
 
-QUADRO  53  Classificação  da  tuberculose  drogarresistente  de  acordo  com  o  padrão  de resistência
+QUADRO 53 Classificação da tuberculose drogarresistente de acordo com o padrão de resistência
 
-| CLASSIFICAÇãO             | DESCRIÇãO                                                                                                                                                                       |
+| CLASSIFICAÇãO | DESCRIÇãO |
 |---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Monorresistência          | Resistência a 1 fármaco antituberculose                                                                                                                                         |
-| Polirresistência          | Resistência a 2 ou mais fármacos antituberculose, exceto a associação rifampicina e isoniazida                                                                                  |
-| Multirresistência         | Resistência a pelo menos rifampicina e isoniazida                                                                                                                               |
-| Resistência extensiva     | Resistência à rifampicina e isoniazida, associada à fluoroquinolona e a um injetável de segunda linha (amicacina e capreomicina)                                                |
+| Monorresistência | Resistência a 1 fármaco antituberculose |
+| Polirresistência | Resistência a 2 ou mais fármacos antituberculose, exceto a associação rifampicina e isoniazida |
+| Multirresistência | Resistência a pelo menos rifampicina e isoniazida |
+| Resistência extensiva | Resistência à rifampicina e isoniazida, associada à fluoroquinolona e a um injetável de segunda linha (amicacina e capreomicina) |
 | Resistência à rifampicina | Resistência à rifampicina diagnosticada por meio do Teste Rápido Molecular para Tuberculose (TRM-TB), independentemente de resultados futuros utilizando teste de sensibilidade |
 
 Fonte: BRASIL,2017c.
@@ -2096,14 +2064,14 @@ os casos de tb, tb dR e Mnt serão encerrados no site-tb como 'cura', 'tratament
 
 QUADRO 54 encerramentos dos casos de tb, tb dR e Mnt
 
-| TIPOS DE ENCERRAMENTO   | TUBERCULOSE COM ESQUEMA ESPECIAL (TB)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | TUBERCULOSE DROGARRESISTENTE (TB DR) E MICOBACTÉRIA NãO TUBERCULOSA (MNT)                                                                                                                                                                                                                                                                                                               |
+| TIPOS DE ENCERRAMENTO | TUBERCULOSE COM ESQUEMA ESPECIAL (TB) | TUBERCULOSE DROGARRESISTENTE (TB DR) E MICOBACTÉRIA NãO TUBERCULOSA (MNT) |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Cura                    | Paciente que apresentar 2 bacilos- copias negativas, sendo uma em qualquer mês de acompanhamento e outra ao final do tratamento (5 o ou 6 o mês). Para os casos com neces- sidade de ampliar o tempo de tratamento, serão considerados os 2 últimos meses.                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Para registrar cura, devem-se considerar o tempo previsto para o tratamento, as avaliações clínicas, radiológica e bacte- riológica. Recomenda-se a realização de cultura para controle do tratamento a cada 3 meses. Será considerado curado o caso de TB MDR ou TB XDR que apre- sentar pelo menos 3 culturas negativas após o 12º mês de tratamento.                                 |
-| Tratamento completo     | Paciente que completou o tratamento sem evidência de falência e teve alta com base em critérios clínicos e radio- lógicos, por impossibilidade de realizar exames de baciloscopia ou cultura.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Paciente que completou o tempo estipulado para o tratamento, com evolução clínica e radiológica favoráveis, porém sem as culturas de acompanhamento realizadas.                                                                                                                                                                                                                         |
-| Abandono                | Paciente que interrompeu o tratamento por 30 dias consecutivos ou mais.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Paciente que interrompeu o tratamento por 30 dias consecutivos ou mais.                                                                                                                                                                                                                                                                                                                 |
-| Falência                | Pacientes com persistência da baciloscopia de escarro positiva ao final do tratamento; doentes que no início do tratamento apresentavam baciloscopia positiva (+ + ou + + +) e mantiveram essa situação até o 4º mês; baciloscopia positiva inicial seguida de negativação e de novos resultados positivos por 2 meses consecutivos, a partir do 4º mês de tratamento. O aparecimento de poucos bacilos no exame direto do escarro, nas proximidades do 5º ou 6º mês do tratamento, isoladamente, não significa, necessariamente, a falência do tratamento. O paciente deverá ser acompanhado com exames bacterioló- gicos (baciloscopia, cultura e teste de sensibilidade) para melhor definição. Paciente cujo óbito foi causado pela | Paciente que apresente duas ou mais culturas positivas, dentre as três recomendadas após 12 o mês de tratamento ou três culturas positivas consecutivas após o 12° mês de tratamento, com intervalo mínimo de 30 dias. A falência poderá também ser considerada de acordo com a avaliação médica e a decisão de alterar o tratamento precocemente devido à piora clínica e radiológica. |
-| Óbito por tuberculose   | tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Paciente cujo óbito foi causado pela tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM.                                                                                                                                                                                                                                       |
-| Óbito por outra causa   | Paciente cujo óbito foi devido a causas diferentes da tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Paciente cujo óbito foi devido a causas diferentes da tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM.                                                                                                                                                                                                                      |
+| Cura | Paciente que apresentar 2 bacilos- copias negativas, sendo uma em qualquer mês de acompanhamento e outra ao final do tratamento (5 o ou 6 o mês). Para os casos com neces- sidade de ampliar o tempo de tratamento, serão considerados os 2 últimos meses. | Para registrar cura, devem-se considerar o tempo previsto para o tratamento, as avaliações clínicas, radiológica e bacte- riológica. Recomenda-se a realização de cultura para controle do tratamento a cada 3 meses. Será considerado curado o caso de TB MDR ou TB XDR que apre- sentar pelo menos 3 culturas negativas após o 12º mês de tratamento. |
+| Tratamento completo | Paciente que completou o tratamento sem evidência de falência e teve alta com base em critérios clínicos e radio- lógicos, por impossibilidade de realizar exames de baciloscopia ou cultura. | Paciente que completou o tempo estipulado para o tratamento, com evolução clínica e radiológica favoráveis, porém sem as culturas de acompanhamento realizadas. |
+| Abandono | Paciente que interrompeu o tratamento por 30 dias consecutivos ou mais. | Paciente que interrompeu o tratamento por 30 dias consecutivos ou mais. |
+| Falência | Pacientes com persistência da baciloscopia de escarro positiva ao final do tratamento; doentes que no início do tratamento apresentavam baciloscopia positiva (+ + ou + + +) e mantiveram essa situação até o 4º mês; baciloscopia positiva inicial seguida de negativação e de novos resultados positivos por 2 meses consecutivos, a partir do 4º mês de tratamento. O aparecimento de poucos bacilos no exame direto do escarro, nas proximidades do 5º ou 6º mês do tratamento, isoladamente, não significa, necessariamente, a falência do tratamento. O paciente deverá ser acompanhado com exames bacterioló- gicos (baciloscopia, cultura e teste de sensibilidade) para melhor definição. Paciente cujo óbito foi causado pela | Paciente que apresente duas ou mais culturas positivas, dentre as três recomendadas após 12 o mês de tratamento ou três culturas positivas consecutivas após o 12° mês de tratamento, com intervalo mínimo de 30 dias. A falência poderá também ser considerada de acordo com a avaliação médica e a decisão de alterar o tratamento precocemente devido à piora clínica e radiológica. |
+| Óbito por tuberculose | tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM. | Paciente cujo óbito foi causado pela tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM. |
+| Óbito por outra causa | Paciente cujo óbito foi devido a causas diferentes da tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM. | Paciente cujo óbito foi devido a causas diferentes da tuberculose, ocorrido durante o tratamento. A causa do óbito deve estar de acordo com as informações do SIM. |
 
 Continua
 
@@ -2131,8 +2099,8 @@ Estratégia é o que será feito para operacionalizar o objetivo definido. As es
 
 ## exemplo de formulação de estratégias:
 
-- 1 - aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade;
-- 2 - envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento.
+1. - aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade;
+2. - envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento.
 
 ## elaboração do plano de trabalho
 
@@ -2142,9 +2110,9 @@ Nessa etapa também são definidos os responsáveis por cada atividade. A partic
 
 ## exemplo de ações para o plano de trabalho:
 
-- 1 - capacitar os profissionais dos serviços de saúde sobre o controle da tuberculose na população privada de liberdade;
-- 2 - ofertar tratamento diretamente observado para as pessoas privadas de liberdade com tuberculose;
-- 3 - realizar Busca Ativa de indivíduos que abandonaram o tratamento.
+1. - capacitar os profissionais dos serviços de saúde sobre o controle da tuberculose na população privada de liberdade;
+2. - ofertar tratamento diretamente observado para as pessoas privadas de liberdade com tuberculose;
+3. - realizar Busca Ativa de indivíduos que abandonaram o tratamento.
 
 ## 11.2. MonitoRaMento e aValiação
 
@@ -2158,15 +2126,15 @@ tais indicadores devem ser analisados considerando o contexto em que foram obtid
 
 Os indicadores são escolhidos com base em sua capacidade de refletir os objetivos do programa, podendo ser classificados em:
 
--  indicadores de processo: medem os efeitos imediatos das atividades e podem ser monitorados em curto espaço de tempo, ou seja, logo que a atividade for realizada. ex.: número de profissionais do sistema prisional treinados para realização do tratamento diretamente observado;
--  indicadores  de  resultado: relacionados  diretamente  aos  objetivos  específicos  e podem ser mensurados em um espaço de tempo mediano. ex.: proporção de casos de tuberculose em tratamento diretamente observado no sistema prisional;
--  indicadores de impacto: relacionados ao objetivo geral. podem ser mensurados após um espaço de tempo maior e geralmente sofrem influência de outros fatores externos às atividades de controle da tuberculose. Ex.: coeficiente de incidência de tuberculose na população privada de liberdade.
+- indicadores de processo: medem os efeitos imediatos das atividades e podem ser monitorados em curto espaço de tempo, ou seja, logo que a atividade for realizada. ex.: número de profissionais do sistema prisional treinados para realização do tratamento diretamente observado;
+- indicadores de resultado: relacionados diretamente aos objetivos específicos e podem ser mensurados em um espaço de tempo mediano. ex.: proporção de casos de tuberculose em tratamento diretamente observado no sistema prisional;
+- indicadores de impacto: relacionados ao objetivo geral. podem ser mensurados após um espaço de tempo maior e geralmente sofrem influência de outros fatores externos às atividades de controle da tuberculose. Ex.: coeficiente de incidência de tuberculose na população privada de liberdade.
 
 exemplo de indicadores de monitoramento do plano de trabalho:
 
-- 1 - número de profissionais dos serviços de saúde capacitados sobre o controle da tuberculose na população privada de liberdade;
-- 2 - proporção de casos de tuberculose na população privada de liberdade que realizaram tratamento diretamente observado;
-- 3 - proporção de cura de casos de tuberculose na população privada de liberdade.
+1. - número de profissionais dos serviços de saúde capacitados sobre o controle da tuberculose na população privada de liberdade;
+2. - proporção de casos de tuberculose na população privada de liberdade que realizaram tratamento diretamente observado;
+3. - proporção de cura de casos de tuberculose na população privada de liberdade.
 
 o quadro 55 apresenta o processo de planejamento consolidado utilizando o exemplo apresentado em cada etapa.
 
@@ -2174,13 +2142,13 @@ QUADRO 55 etapas do planejamento segundo exemplo teórico de situação problema
 
 pRobleMa identiFicado: o aumento do percentual de abandono do tratamento na população privada de liberdade eleva o risco de desenvolvimento de bacilos resistentes.
 
-| OBjETIVO                                                                          | META                                                                                                    | ESTRATÉGIA                                                                                                                                                                                                                 | PLANO DE TRABALHO                                                                                                   | MONITORAMENTO                                                                                                                                                     | AVALIAÇãO                                                                                                                                          |
+| OBjETIVO | META | ESTRATÉGIA | PLANO DE TRABALHO | MONITORAMENTO | AVALIAÇãO |
 |-----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Capacitar os profissionais dos serviços de saúde sobre o controle da tuberculose na população privada de liberdade. | Número de profissionais dos serviços de saúde capacitados sobre o controle da tuberculose na população privada de liberdade.                                      | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
-| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Ofertar tratamento diretamente observado para as pessoas privadas de liberdade com tuberculose. Realizar Ativa de   | Proporção de casos de tuberculose na população privada de liberdade que realizaram tratamento diretamente observado. Proporção de cura de casos de tuberculose na | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
-| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Busca indivíduos que abandonaram o tratamento.                                                                      | população privada de liberdade.                                                                                                                                   | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
+| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Capacitar os profissionais dos serviços de saúde sobre o controle da tuberculose na população privada de liberdade. | Número de profissionais dos serviços de saúde capacitados sobre o controle da tuberculose na população privada de liberdade. | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
+| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Ofertar tratamento diretamente observado para as pessoas privadas de liberdade com tuberculose. Realizar Ativa de | Proporção de casos de tuberculose na população privada de liberdade que realizaram tratamento diretamente observado. Proporção de cura de casos de tuberculose na | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
+| Reduzir o percentual de abandono do tratamento na população privada de liberdade. | Reduzir até 5% o percentual de abandono do tratamento na população privada de liberdade no ano de 2014. | Aumentar a proporção de tratamento diretamente observado realizado na população privada de liberdade. Envolver os agentes de segurança para facilitar a realização de ações que visem a fortalecer a adesão ao tratamento. | Busca indivíduos que abandonaram o tratamento. | população privada de liberdade. | O quanto as intervenções (ações) executadas contribuíram para a redução do percentual de abandono do tratamento na população privada de liberdade. |
 
-Fonte: CGPNCT/SVS/MS .
+Fonte: CGPNCT/SVS/MS.
 
 ## 11.3. estRatÉGias de MonitoRaMento e aValiação
 
@@ -2192,25 +2160,25 @@ o monitoramente tem o objetivo de acompanhar a situação epidemiológica da doe
 
 QUADRO 56 principais indicadores epidemiológicos e operacionais do controle da tuberculose
 
-| BLOCOS       | INDICADORES                                                                                                             | FONTE DE INFORMAÇãO   |
+| BLOCOS | INDICADORES | FONTE DE INFORMAÇãO |
 |--------------|-------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| Morbidade    | Coeficiente de incidência de tuberculose por 100 mil habitantes                                                         | Sinan                 |
-| Morbidade    | Percentual de coinfecção TB-HIV                                                                                         | Sinan                 |
-| Morbidade    | Número de casos novos de tuberculose drogarresistente                                                                   | SITE-TB               |
-| Mortalidade  | Coeficiente de mortalidade por tuberculose por 100 mil habitantes                                                       | SIM                   |
-| Operacionais | Percentual de realização de cultura de escarro nos casos de retratamento de tuberculose                                 | Sinan                 |
-| Operacionais | Percentual de testagem para o HIV entre os casos novos de tuberculose                                                   | Sinan                 |
-| Operacionais | Percentual de cura entre os casos novos de tuberculose pulmonar confirmados por critério laboratorial                   | Sinan                 |
-| Operacionais | Percentual de abandono de tratamento entre os casos novos de tuberculose pulmonar confirmados por critério laboratorial | Sinan                 |
-| Operacionais | Proporção de casos de tuberculose multirresistente segundo situação de encerramento                                     | SITE-TB               |
+| Morbidade | Coeficiente de incidência de tuberculose por 100 mil habitantes | Sinan |
+| Morbidade | Percentual de coinfecção TB-HIV | Sinan |
+| Morbidade | Número de casos novos de tuberculose drogarresistente | SITE-TB |
+| Mortalidade | Coeficiente de mortalidade por tuberculose por 100 mil habitantes | SIM |
+| Operacionais | Percentual de realização de cultura de escarro nos casos de retratamento de tuberculose | Sinan |
+| Operacionais | Percentual de testagem para o HIV entre os casos novos de tuberculose | Sinan |
+| Operacionais | Percentual de cura entre os casos novos de tuberculose pulmonar confirmados por critério laboratorial | Sinan |
+| Operacionais | Percentual de abandono de tratamento entre os casos novos de tuberculose pulmonar confirmados por critério laboratorial | Sinan |
+| Operacionais | Proporção de casos de tuberculose multirresistente segundo situação de encerramento | SITE-TB |
 
 Continua
 
 Conclusão
 
-| BLOCOS       | INDICADORES                                                                                                                                                                                                                                                                                                       | FONTE DE INFORMAÇãO   |
+| BLOCOS | INDICADORES | FONTE DE INFORMAÇãO |
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| Operacionais | Percentual de casos novos pulmonares confirmados por critério laboratorial Proporção de casos novos de tuberculose pulmonar com confirma- ção laboratorial que realizaram tratamento diretamente observado Percentual de contatos examinados dos casos novos de tuberculose confirmados por critério laboratorial | Sinan                 |
+| Operacionais | Percentual de casos novos pulmonares confirmados por critério laboratorial Proporção de casos novos de tuberculose pulmonar com confirma- ção laboratorial que realizaram tratamento diretamente observado Percentual de contatos examinados dos casos novos de tuberculose confirmados por critério laboratorial | Sinan |
 
 Fonte: Adaptado de BRASIL, 2017b.
 
@@ -2228,69 +2196,69 @@ tem o objetivo de contribuir política e tecnicamente para a melhoria contínua 
 
 ## Referências
 
-beceRRa-posada, F.; espinal, M. a.; ReedeR, J. Operational research to strengthen tuberculosis control in the Americas . [s.l.] scielo public Health, 2016.
+beceRRa-posada, F.; espinal, M. a.; ReedeR, J. Operational research to strengthen tuberculosis control in the Americas. [s.l.] scielo public Health, 2016.
 
-bRasil, câMaRa dos deputados. Relatório da Subcomissão Especial Destinada a Analisar e Diagnosticar a Situação em que se Encontram as Políticas de Governo Relacionadas às Doenças Determinadas pela Pobreza . comissão de seguridada social e Família, câmara dos deputados ed. brasília: [s.n.].
+bRasil, câMaRa dos deputados. Relatório da Subcomissão Especial Destinada a Analisar e Diagnosticar a Situação em que se Encontram as Políticas de Governo Relacionadas às Doenças Determinadas pela Pobreza. comissão de seguridada social e Família, câmara dos deputados ed. brasília: [s.n.].
 
-bRasil, GoVeRno FedeRal. Constituição da república federativa do Brasil . 1988, p. 28. bRasil, GoVeRno FedeRal. Lei nº 8.080/90 . 1990.
+bRasil, GoVeRno FedeRal. Constituição da república federativa do Brasil. 1988, p. 28. bRasil, GoVeRno FedeRal. Lei nº 8.080/90. 1990.
 
-bRasil, MinistÉRio da saÚde. Portaria nº 73, de 9 de março de 1998 . constitui comissão para desenvolver os instrumentos, definir fluxos e no novo software do Sinan. 1998.
+bRasil, MinistÉRio da saÚde. Portaria nº 73, de 9 de março de 1998. constitui comissão para desenvolver os instrumentos, definir fluxos e no novo software do Sinan. 1998.
 
-bRasil, MinistÉRio da saÚde. Plano Estratégico para o Controle da Tuberculose, Brasil 2007-2015 . [s.l.] Ministério da saúde brasília, dF, 2007a.
+bRasil, MinistÉRio da saÚde. Plano Estratégico para o Controle da Tuberculose, Brasil 2007-2015. [s.l.] Ministério da saúde brasília, dF, 2007a.
 
 bRasil, MinistÉRio da saÚde. Sistema de Informação de Agravos de Notificação - Sinan : normas e rotinas. brasília: Ministério da saúde brasília, 2007b.
 
 bRasil, MinistÉRio da saÚde. Indicadores básicos para a saúde no Brasil : conceitos e aplicações. 2 ed. ed. [s.l.] Ministério da saúde brasília, 2008.
 
-bRasil, MinistÉRio da saÚde. Guia de vigilância epidemiológica . brasília: Ministério da saúde brasília, 2009a.
+bRasil, MinistÉRio da saÚde. Guia de vigilância epidemiológica. brasília: Ministério da saúde brasília, 2009a.
 
 bRasil, MinistÉRio da saÚde. Sistema de Planejamento do SUS : uma construção coletiva. instrumentos básicos. brasília: Ministério da saúde brasília, 2009b.
 
-bRasil, MinistÉRio da saÚde. Portaria nº 4279, de 30 de dezembro de 2010 . estabelece diretrizes para a organização da Rede de atenção à saúde no âmbito do sistema Único de saúde (sus). 2010.
+bRasil, MinistÉRio da saÚde. Portaria nº 4279, de 30 de dezembro de 2010. estabelece diretrizes para a organização da Rede de atenção à saúde no âmbito do sistema Único de saúde (sus). 2010.
 
-bRasil, MinistÉRio da saÚde. Decreto nº 7508, de 28 de junho de 2011 . Regulamenta a lei nº 8.080, de 19 de setembro de 1990, para dispor sobre a organização do sistema Único de saúde-sus, o planejamento da saúde, a assistência à saúde ea articulação interfederativa, e dá outras providências. 2011.
+bRasil, MinistÉRio da saÚde. Decreto nº 7508, de 28 de junho de 2011. Regulamenta a lei nº 8.080, de 19 de setembro de 1990, para dispor sobre a organização do sistema Único de saúde-sus, o planejamento da saúde, a assistência à saúde ea articulação interfederativa, e dá outras providências. 2011.
 
 bRasil, MinistÉRio da saÚde. Ofício Circular nº 27/2014 - cGpnct/deVit/sVs/Ms, 2014.
 
-bRasil, MinistÉRio da saÚde. Manual de planejamento no SUS . [s.l.] Ministério da saúde brasília, 2016.
+bRasil, MinistÉRio da saÚde. Manual de planejamento no SUS. [s.l.] Ministério da saúde brasília, 2016.
 
-bRasil, MinistÉRio da saÚde. Portaria nº 2436, de 21 de setembro de 2017 , que aprova a política nacional de atenção básica. 2017 a.
+bRasil, MinistÉRio da saÚde. Portaria nº 2436, de 21 de setembro de 2017, que aprova a política nacional de atenção básica. 2017 a.
 
-bRasil, MinistÉRio da saÚde. Plano Nacional pelo Fim da Tuberculose como Problema de Saúde Pública . brasília: Ministério da saúde, 2017b.
+bRasil, MinistÉRio da saÚde. Plano Nacional pelo Fim da Tuberculose como Problema de Saúde Pública. brasília: Ministério da saúde, 2017b.
 
-bRasil, MinistÉRio da saÚde. Guia de Vigilância em Saúde . Ministério de saúde, 2017c.
+bRasil, MinistÉRio da saÚde. Guia de Vigilância em Saúde. Ministério de saúde, 2017c.
 
-bRito, R. c. et al. Resistência aos medicamentos anti-tuberculose de cepas de Mycobacterium tuberculosis isoladas de pacientes atendidos em hospital geral de referência para tratamento de AIDS no Rio de janeiro . Jornal brasileiro de pneumologia, v. 30, p. 4, 2004.
+bRito, R. c. et al. Resistência aos medicamentos anti-tuberculose de cepas de Mycobacterium tuberculosis isoladas de pacientes atendidos em hospital geral de referência para tratamento de AIDS no Rio de janeiro. Jornal brasileiro de pneumologia, v. 30, p. 4, 2004.
 
-bRito, R. c. et al. drug-resistant tuberculosis in six hospitals in Rio de Janeiro, brazil. The international journal of tuberculosis and lung disease , v. 14, n. 1, p. 24-33, 2010.
+bRito, R. c. et al. drug-resistant tuberculosis in six hospitals in Rio de Janeiro, brazil. The international journal of tuberculosis and lung disease, v. 14, n. 1, p. 24-33, 2010.
 
-caRValHo, a. c. et al. clinical presentation and survival of smear-positive pulmonary tuberculosis patients of a university general hospital in a developing country. Memórias do Instituto Oswaldo Cruz , v. 97, n. 8, p. 1225-1230, 2002.
+caRValHo, a. c. et al. clinical presentation and survival of smear-positive pulmonary tuberculosis patients of a university general hospital in a developing country. Memórias do Instituto Oswaldo Cruz, v. 97, n. 8, p. 1225-1230, 2002.
 
-CHORNY, A. H. Planificación en Salud: viejas ideas en nuevos ropajes: Cuadernos Médico Sociales , Rosário, v. 73, p. 5-30, 1998.
+CHORNY, A. H. Planificación en Salud: viejas ideas en nuevos ropajes: Cuadernos Médico Sociales, Rosário, v. 73, p. 5-30, 1998.
 
-dallaRi, s. G. et al. advocacia em saúde no brasil contemporâneo. Revista de Saúde Pública , v. 30, p. 592-601, 1996.
+dallaRi, s. G. et al. advocacia em saúde no brasil contemporâneo. Revista de Saúde Pública, v. 30, p. 592-601, 1996.
 
-KRitsKi, a. et al. O papel da Rede Brasileira de Pesquisas em Tuberculose nos esforços nacionais e internacionais para a eliminação da tuberculose . v. 44, n. 2, p. 77-81, 2018.
+KRitsKi, a. et al. O papel da Rede Brasileira de Pesquisas em Tuberculose nos esforços nacionais e internacionais para a eliminação da tuberculose. v. 44, n. 2, p. 77-81, 2018.
 
-Mendes, e. V. As redes de atenção à saúde . [s.l.] organização pan-americana da saúde, 2011.
+Mendes, e. V. As redes de atenção à saúde. [s.l.] organização pan-americana da saúde, 2011.
 
-MoisÉs, M. et al. a política federal de saneamento básico e as iniciativas de participação, mobilização, controle social, educação em saúde e ambiental nos programas governamentais de saneamento. Ciência &amp; saúde coletiva , v. 15, p. 2581-2591, 2010.
+MoisÉs, M. et al. a política federal de saneamento básico e as iniciativas de participação, mobilização, controle social, educação em saúde e ambiental nos programas governamentais de saneamento. Ciência &amp; saúde coletiva, v. 15, p. 2581-2591, 2010.
 
-OlivEiRA, H. M. DE M. G. et al. Epidemiological profile of hospitalized patients with TB at a referral hospital in the city of Rio de Janeiro, brazil. jornal brasileiro de pneumologia , v. 35, n. 8, p. 780-787, 2009.
+OlivEiRA, H. M. DE M. G. et al. Epidemiological profile of hospitalized patients with TB at a referral hospital in the city of Rio de Janeiro, brazil. jornal brasileiro de pneumologia, v. 35, n. 8, p. 780-787, 2009.
 
-opas, oRGaniZação pan aMeRicana da saÚde. Regional Plan for Tuberculosis Control , 2006-2015. [s.l.] pan american Health organization Washington dc, 2006.
+opas, oRGaniZação pan aMeRicana da saÚde. Regional Plan for Tuberculosis Control, 2006-2015. [s.l.] pan american Health organization Washington dc, 2006.
 
-RotH, V. R. et al. a multicenter evaluation of tuberculin skin test positivity and conversion among health care workers in brazilian hospitals. The International journal of Tuberculosis and Lung Disease , v. 9, n. 12, p. 1335-1342, 2005.
+RotH, V. R. et al. a multicenter evaluation of tuberculin skin test positivity and conversion among health care workers in brazilian hospitals. The International journal of Tuberculosis and Lung Disease, v. 9, n. 12, p. 1335-1342, 2005.
 
-RouquaYRol, M. Z. Epidemiologia &amp; Saúde . 6. ed. Rio de Janeiro: Medsi, 2003.
+RouquaYRol, M. Z. Epidemiologia &amp; Saúde. 6. ed. Rio de Janeiro: Medsi, 2003.
 
-santos FilHo, e. t. dos; santos, Z. M. G. dos s. estratégias de controle da tuberculose no brasil: articulação e participação da sociedade civil. Revista de saúde pública , v. 41, p. 111-116, 2007.
+santos FilHo, e. t. dos; santos, Z. M. G. dos s. estratégias de controle da tuberculose no brasil: articulação e participação da sociedade civil. Revista de saúde pública, v. 41, p. 111-116, 2007.
 
-silVa, s. F. da; MaGalHães JunioR, H. M. Redes de atenção à saúde: importância e conceitos. silva sF, organizador. Redes de atenção à saúde no SUS: o pacto pela saúde e redes regionalizadas de ações e serviços de saúde . campinas: idisa, conasems, p. 69-85, 2008.
+silVa, s. F. da; MaGalHães JunioR, H. M. Redes de atenção à saúde: importância e conceitos. silva sF, organizador. Redes de atenção à saúde no SUS: o pacto pela saúde e redes regionalizadas de ações e serviços de saúde. campinas: idisa, conasems, p. 69-85, 2008.
 
-upleKaR, M. et al. WHO's new End TB Strategy . lancet, 23 mar. 2015.
+upleKaR, M. et al. WHO's new End TB Strategy. lancet, 23 mar. 2015.
 
-WaGneR, e. H. et al. Quality improvement in chronic illness care: a collaborative approach. The joint Commission journal on quality improvement , v. 27, n. 2, p. 63-80, 2001.
+WaGneR, e. H. et al. Quality improvement in chronic illness care: a collaborative approach. The joint Commission journal on quality improvement, v. 27, n. 2, p. 63-80, 2001.
 
 WHo, WoRld HealtH oRGaniZation. The global plan to stop TB, 2006-2015 : actions for life: towards a world free of tuberculosis. int J tuberc lung dis, v. 10, n. 3, p. 240-241, 2006.
 
@@ -2299,8 +2267,6 @@ WHo, WoRld HealtH oRGaniZation. Advocacy, communication and social mobilization 
 ## Anexos
 
 ## ANEXO X - livRO DE REGiSTRO DE SiNTOMáTiCO RespiRatÓRio no seRViço de saÚde
-
-<!-- image -->
 
 ## ANEXO Xi - FiCHA DE NOTiFiCAçãO/iNvESTiGAçãO
 
@@ -2320,7 +2286,7 @@ ou de teste rapido molecularpara tuberculose.
 
 CRITERIoCLiNIco-EPIDEMIOLOGIcO-étodocasoquenaopreencheocriteriodeconfirmacaolaboratorial acimadescrito,masquerecebeuodiagnostico de tuberculose ativa.Essa definicao leva em consideracao dados clinico-epidemiologicos associadosa avaliacao de outros exames complementares (como os de imagem,histologicos,entre outros).
 
-- 1 Tipo de Notificacao
+1. Tipo de Notificacao
 
 2 - Individual
 
@@ -2344,13 +2310,13 @@ UF
 
 Codigo(IBGE)
 
-- 6 Unidade de Saude(ou outra fonte notificadora)
+6. Unidade de Saude(ou outra fonte notificadora)
 
 Codligo
 
 7Data do Diagnostico
 
-- 8 Nome do Paciente
+8. Nome do Paciente
 
 - 9Data deNascimento
 
@@ -2398,9 +2364,9 @@ I - Ignorado
 
 14Escolaridade
 
-0-Analfabeto 1-1# a 4 serie incompleta do EF (antigo primario ou 1° grau)24 serie completa do EF (antigo primario ou 19 grau) 3-5°a8serie incompleta dioEF(antigoginasioou1°grau)4-Ensinofundamental completo(antigoginasioou1°grau) 5-Ensino medio incompleto (antigo colegial ou 2° grau ) 6-Ensino medio completo（antigo colegial ou 2° grau)7-Educacio superior incompleta8-Educacao superior completa 9-lgnorado10- Nao se aplica
+0-Analfabeto 1-1# a 4 serie incompleta do EF (antigo primario ou 1° grau)24 serie completa do EF (antigo primario ou 19 grau) 3-5°a8serie incompleta dioEF(antigoginasioou1°grau)4-Ensinofundamental completo(antigoginasioou1°grau) 5-Ensino medio incompleto (antigo colegial ou 2° grau) 6-Ensino medio completo（antigo colegial ou 2° grau)7-Educacio superior incompleta8-Educacao superior completa 9-lgnorado10- Nao se aplica
 
-- 15 Numero do CartaoSUS
+15. Numero do CartaoSUS
 
 - 16Nomedamae
 
@@ -2428,7 +2394,7 @@ Numero
 
 25 Geocampo2
 
-- 26 Ponto de Referencia
+26. Ponto de Referencia
 
 27CEP
 
@@ -2444,7 +2410,7 @@ Numero
 
 ## DadosComplementaresdoCaso
 
-- 31 N° do Prontuario
+31. N° do Prontuario
 
 32TipodeEntrada
 
@@ -2452,7 +2418,7 @@ Numero
 
 - [ ] 2-Recidiva
 
-- 3 - Reingresso Apos Abandono
+3. - Reingresso Apos Abandono
 
 4-Nao Sabe
 
@@ -2482,7 +2448,7 @@ Profissional de Saude
 
 1-Pleural
 
-\_2-Gang.Perif.
+_2-Gang.Perif.
 
 7-Meningoencefalico
 
@@ -2604,13 +2570,7 @@ SVS
 
 02/10/2014
 
-<!-- image -->
-
 ## ANEXO Xii - livRO DE REGiSTRO E ACOMPANHAMENTO DE tRataMento dos casos de tubeRculose
-
-<!-- image -->
-
-<!-- image -->
 
 ## ANEXO Xiii - BOlETiM DE ACOMPANHAMENTO DE CASOS no sinan
 
@@ -2722,24 +2682,11 @@ SVS
 
 09/01/2014
 
-<!-- image -->
-
 ## ANEXO Xiv - FiCHA DE ACOMPANHAMENTO DA TOMADA diÁRia da Medicação do tRataMento diRetaMente OBSERvADO - TDO
 
 MinistÉRio da saÚde secRetaRia de ViGilância eM saÚde pRoGRaMa nacional de contRole da tubeRculose/deVit
 
 FICHA DE ACOMPANHAMENTO DA TOMADA DIÁRIA DA MEDICAÇãO DO TRATAMENTO DIRETAMENTE OBSERVADO - TDO
 
-<!-- image -->
-
 Biblioteca Virtual em Saúde do Ministério da Saúde www.saude.gov.br/bvs
 
-<!-- image -->
-
-<!-- image -->
-
-<!-- image -->
-
-<!-- image -->
-
-<!-- image -->
