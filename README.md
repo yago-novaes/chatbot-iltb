@@ -1,10 +1,10 @@
-# Chatbot ILTB — POC
+# Chatbot ILTB
 
-Chatbot de suporte clínico para enfermeiros sobre **Infecção Latente pelo Mycobacterium tuberculosis (ILTB)**, desenvolvido como TCC na UFES.
+Assistente clínico para enfermeiros sobre **Infecção Latente pelo Mycobacterium tuberculosis (ILTB)**, desenvolvido como TCC em Engenharia de Produção na UFES (defesa: junho/2026).
 
-Arquitetura: **RAG (Retrieval-Augmented Generation)** sobre 6 protocolos do Ministério da Saúde e OMS, com embeddings locais e LLM via API.
+Arquitetura **RAG (Retrieval-Augmented Generation)** sobre 7 documentos do Ministério da Saúde e OMS, com embeddings locais e LLM via API.
 
-**Status:** POC funcional com avaliação RAGAS completa (38 perguntas, 4 métricas). Próxima fase: piloto com 5 enfermeiras na Hetzner.
+**Status:** pipeline RAG funcional com avaliação RAGAS (baseline estabelecido). Próxima fase: re-indexação pós-sanitização + deploy piloto na Hetzner.
 
 ---
 
@@ -18,7 +18,7 @@ Pergunta do enfermeiro
         │
         ▼
   [ Retriever ]  ──→  ChromaDB  ←──  sentence-transformers (local, 384D)
-        │
+        │              top_k=4, threshold=0.40
         ▼
   [ Prompt Builder ]  (contexto + pergunta)
         │
@@ -29,53 +29,70 @@ Pergunta do enfermeiro
   Resposta fundamentada nos protocolos
 ```
 
-**Pipeline de ingestão:**
+**Pipeline de ingestão (offline):**
 
 ```
-PDFs (docs/protocolos/)
+docs/protocolos/*.pdf
         │
         ▼
-  [ Docling → .md ]  ──→  sanitize_markdown() v3  (25 regras — Camada 1 automática)
+  [ Docling → .md ]  ──→  sanitize_markdown() v3  (25 regras automáticas)
         │                        │
-        │              revisão manual (Camada 2 — 3 docs higienizados)
+        │              revisão manual (3 docs higienizados manualmente)
         ▼
-  [ Chunker semântico ]  (por cabeçalhos markdown)
+  [ split_by_sections() ]  (chunking semântico por cabeçalhos markdown)
         │
         ▼
-  [ ChromaDB ]  (persistido em chroma_db/)
+  [ ChromaDB ]  (928 chunks — coleção iltb_protocols)
 ```
 
-> `sanitize_markdown()` cobre: artefatos OCR, hifenização quebrada, bullets malformados, citações, bibliography aglutinada, URLs/emails fragmentados, cabeçalhos repetidos em caps. Ver `app/scripts/extract_pdfs.py`.
+---
+
+## Stack
+
+| Componente | Tecnologia |
+|---|---|
+| Backend | FastAPI async + uvicorn |
+| Embeddings | `paraphrase-multilingual-MiniLM-L12-v2` (local, 384D, sem chave) |
+| Vector store | ChromaDB (persistente, cosine similarity) |
+| LLM produção | Groq `llama-3.3-70b-versatile` (free tier) |
+| LLM juiz RAGAS | OpenAI `gpt-4o-mini` |
+| Extração PDF | Docling (IBM, local, PDF → Markdown) |
+| Avaliação | RAGAS 0.4 (faithfulness, answer_relevancy, context_precision, context_recall) |
 
 ---
 
 ## Base de Conhecimento
 
-6 documentos indexados:
+7 arquivos indexados (928 chunks):
 
-| Documento | Fonte | Escopo |
+| Documento | Fonte | Status |
 |---|---|---|
-| Manual de Recomendações para o Controle da TB no Brasil | Ministério da Saúde | Protocolo clínico completo |
-| Recomendações para o Controle da TB | Ministério da Saúde | ILTB — atenção básica |
-| Protocolo de Vigilância da ILTB (2ª ed.) | Ministério da Saúde | Diagnóstico e vigilância ILTB |
-| GEDIIB — Tratamento da Tuberculose | GEDIIB | Especialidades / gastroenterologia |
-| Tratamento ILTB com Rifapentina | Ministério da Saúde | Esquema 3HP |
-| Manual Operacional OMS Módulo 4 | OMS | Atenção e apoio ao tratamento |
+| Manual de Recomendações para o Controle da TB no Brasil | Ministério da Saúde | 🔄 sanitização automática |
+| Recomendações para o Controle da TB | Ministério da Saúde | 🔄 sanitização automática |
+| Protocolo de Vigilância da ILTB (2ª ed.) | Ministério da Saúde | ✅ higienizado manualmente |
+| GEDIIB — Tratamento da Tuberculose | GEDIIB | ✅ higienizado manualmente |
+| Tratamento ILTB com Rifapentina | Ministério da Saúde | 🔄 sanitização automática |
+| Manual Operacional OMS — Módulo 4 | OMS | ✅ higienizado manualmente |
+| patch_interacoes_medicamentosas.md | MS (reconstruído) | ✅ patch manual |
+
+> O patch foi necessário porque o Docling falhou na extração das tabelas de interações medicamentosas (seção 6.3 do Manual — páginas com alta complexidade visual).
 
 ---
 
 ## Avaliação (RAGAS)
 
-38 perguntas clínicas cobrindo 7 categorias: esquemas terapêuticos (ET), populações especiais (PE), efeitos adversos (EA), manejo odontológico (MO), interações medicamentosas (IM), diagnóstico (DI) e imunossuprimidos (IT).
+40 perguntas clínicas (36 in-scope + 4 fora do escopo) cobrindo 7 categorias: esquemas terapêuticos, populações especiais, efeitos adversos, manejo odontológico, interações medicamentosas, diagnóstico e imunossuprimidos.
 
-| Métrica | Score |
-|---|---|
-| context_precision | 0.55 |
-| faithfulness | 0.38 |
-| context_recall | 0.38 |
-| answer_relevancy | 0.31 |
+**Scores baseline** (pré-sanitização completa, LLM juiz: `gpt-4o-mini`):
 
-LLM juiz: `gpt-4o-mini`. Scores pré-sanitização completa dos `.md`; nova rodada planejada após re-indexação.
+| Métrica | Score | Alvo |
+|---|---|---|
+| context_precision | 0.548 | ≥ 0.75 |
+| faithfulness | 0.375 | ≥ 0.80 |
+| context_recall | 0.382 | — |
+| answer_relevancy | 0.310 | — |
+
+Re-avaliação planejada após re-indexação com os `.md` sanitizados.
 
 ---
 
@@ -108,10 +125,6 @@ cp .env.example .env
 
 ### Opção A — Groq (gratuito, recomendado para desenvolvimento)
 
-1. Crie uma conta em [console.groq.com](https://console.groq.com)
-2. Gere uma API Key
-3. Configure o `.env`:
-
 ```env
 LLM_PROVIDER=groq
 LLM_API_KEY=gsk_sua_chave_aqui
@@ -119,7 +132,7 @@ LLM_MODEL=llama-3.3-70b-versatile
 LLM_BASE_URL=https://api.groq.com/openai/v1
 ```
 
-> **Atenção:** o free tier do Groq tem limite de 100k tokens/dia (70B) e 6k tokens/min. Para o pipeline RAGAS completo (38 perguntas), usar OpenAI.
+> **Atenção:** o free tier do Groq tem limite de 6k tokens/min e 100k tokens/dia. Para o pipeline RAGAS completo (40 perguntas), usar `SLEEP_BETWEEN_CALLS=15` no `.env` ou preferir OpenAI.
 
 ### Opção B — OpenAI
 
@@ -157,7 +170,7 @@ Se `LLM_API_KEY` não estiver definida, a API roda em modo mock: o RAG funciona 
 python -m app.scripts.ingest
 ```
 
-Os `.md` em `docs/protocolos/` são chunkados e indexados no ChromaDB. Re-executar re-indexa tudo.
+Chunkeia os `.md` em `docs/protocolos/` e indexa no ChromaDB. Re-executar re-indexa tudo.
 
 ### 2. Iniciar a API
 
@@ -229,55 +242,10 @@ curl -X POST http://localhost:8000/ingest
 
 ---
 
-## Estrutura do Projeto
-
-```
-chatbot-iltb/
-├── app/
-│   ├── requirements.txt
-│   ├── scripts/
-│   │   ├── extract_pdfs.py          # Extrai PDFs → .md via Docling + sanitize_markdown()
-│   │   ├── ingest.py                # Indexa os .md no ChromaDB
-│   │   └── sanitize_existing_md.py  # Aplica sanitize_markdown() nos .md existentes
-│   └── src/
-│       ├── config.py                # Configurações via .env (pydantic-settings)
-│       ├── main.py                  # FastAPI entrypoint
-│       ├── api/routes/              # chat, health, ingest, search
-│       ├── llm/
-│       │   ├── client.py            # Cliente unificado (Groq/OpenAI/Ollama/mock)
-│       │   └── prompts.py           # Templates de prompt clínico
-│       ├── rag/
-│       │   ├── embeddings.py        # sentence-transformers local
-│       │   ├── retriever.py         # Busca vetorial no ChromaDB
-│       │   └── ingestion/
-│       │       ├── chunker.py       # Chunking semântico por cabeçalhos
-│       │       ├── indexer.py       # Indexação no ChromaDB
-│       │       └── pdf_extractor.py # Docling wrapper
-│       └── session/
-│           └── manager.py           # Histórico de conversa por sessão
-├── docs/
-│   ├── protocolos/                  # PDFs + .md higienizados (6 documentos)
-│   ├── audit_ingestion.md           # Relatório de auditoria de integridade dos .md
-│   └── diario-tecnico.md            # Diário de engenharia (decisões, experimentos, lições)
-├── eval/
-│   ├── run_ragas.py                 # Pipeline de avaliação RAGAS
-│   ├── test_set.json                # 38 perguntas clínicas com ground truths
-│   └── results/                     # Scores e detalhamento por pergunta
-├── infra/
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   └── nginx/
-├── poc/                             # Versão inicial da POC (referência histórica)
-├── .env.example
-└── README.md
-```
-
----
-
 ## Avaliação RAGAS
 
 ```bash
-# Requer RAGAS_LLM_API_KEY no .env (OpenAI recomendado)
+# Requer RAGAS_LLM_API_KEY no .env (OpenAI recomendado como juiz)
 python -m eval.run_ragas
 
 # Apenas gerar respostas (sem avaliar)
@@ -285,23 +253,71 @@ python -m eval.run_ragas --pipeline-only
 
 # Apenas avaliar respostas já geradas
 python -m eval.run_ragas --scores-only
+
+# Limitar número de perguntas
+python -m eval.run_ragas --max-questions 10
 ```
 
-> Com Groq free tier: usar `SLEEP_BETWEEN_CALLS=15` no `.env` e aguardar reset do TPD (100k tokens/dia) entre runs.
+> Com Groq free tier: definir `SLEEP_BETWEEN_CALLS=15` no `.env` para respeitar o limite de TPM.
+
+---
+
+## Estrutura do Projeto
+
+```
+chatbot-iltb/
+├── app/
+│   ├── requirements.txt
+│   ├── scripts/
+│   │   ├── extract_pdfs.py          # Extrai PDFs → .md via Docling + sanitize_markdown() v3
+│   │   ├── sanitize_existing_md.py  # Aplica sanitize_markdown() nos .md já extraídos
+│   │   └── ingest.py                # Indexa os .md no ChromaDB
+│   └── src/
+│       ├── config.py                # Settings via .env (pydantic-settings)
+│       ├── main.py                  # FastAPI entrypoint
+│       ├── api/routes/              # chat, health, ingest, search
+│       ├── llm/
+│       │   ├── client.py            # Cliente unificado (Groq/OpenAI/Ollama/mock)
+│       │   └── prompts.py           # Templates de prompt clínico
+│       ├── rag/
+│       │   ├── embeddings.py        # sentence-transformers local
+│       │   ├── retriever.py         # Busca vetorial no ChromaDB (top_k=4, threshold=0.40)
+│       │   └── ingestion/
+│       │       ├── chunker.py       # split_by_sections() — chunking por cabeçalhos markdown
+│       │       ├── indexer.py       # Indexação no ChromaDB
+│       │       └── pdf_extractor.py # Docling wrapper
+│       └── session/
+│           └── manager.py           # Histórico de conversa por sessão (TTL 30min)
+├── docs/
+│   ├── protocolos/                  # PDFs originais + .md higienizados (7 arquivos)
+│   ├── audit_ingestion.md           # Relatório de auditoria de integridade dos .md
+│   └── diario-tecnico.md            # Diário de engenharia (decisões, experimentos, lições)
+├── eval/
+│   ├── run_ragas.py                 # Pipeline de avaliação RAGAS
+│   ├── test_set.json                # 40 perguntas clínicas com ground truths
+│   └── results/                     # ragas_scores.json, ragas_detailed.json
+├── infra/
+│   ├── Dockerfile
+│   ├── docker-compose.yml           # Bind 127.0.0.1:8000 — não expõe porta publicamente
+│   └── nginx/
+│       └── default.conf
+├── poc/                             # Versão inicial da POC (referência histórica)
+├── .env.example
+└── README.md
+```
 
 ---
 
 ## Roadmap
 
 - [x] POC funcional (RAG + FastAPI + mock)
-- [x] Ingestão dos 6 protocolos reais do MS/OMS
-- [x] Pipeline de extração PDF → Markdown (Docling + sanitize_markdown)
-- [x] sanitize_markdown() v3 — 25 regras + corpus sanitizado (3 docs manuais + 3 automáticos)
+- [x] Ingestão dos 7 documentos reais do MS/OMS/GEDIIB
+- [x] Pipeline de extração PDF → Markdown (Docling + `sanitize_markdown()` v3 — 25 regras)
 - [x] Auditoria de integridade da base de conhecimento
-- [x] Avaliação RAGAS com gpt-4o-mini (38 perguntas, baseline pré-sanitização)
-- [ ] Re-avaliação RAGAS pós-sanitização completa dos .md
+- [x] Avaliação RAGAS — baseline (40 perguntas, `gpt-4o-mini` como juiz)
+- [ ] Re-indexação + re-avaliação RAGAS pós-sanitização completa
 - [ ] Deploy piloto — Hetzner CPX31 via Docker
 - [ ] Integração WhatsApp Business API (webhook Meta)
 - [ ] Histórico de conversa persistido por usuário
 - [ ] Logging de perguntas para análise (sem dados do paciente)
-- [ ] Busca híbrida (dense + sparse) com Qdrant — Fase 5
+- [ ] Busca híbrida (dense + sparse) — Fase 5
