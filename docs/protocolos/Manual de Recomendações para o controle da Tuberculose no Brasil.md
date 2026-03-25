@@ -897,13 +897,10 @@ Estratégias
 Inserir ações de controle da tuberculose nos Planos Plurianuais;
 
 
-
 pautar a tuberculose nas instâncias de pactuação e controle social;
 
 
-
 implementar ações de comunicação,
-
 
 
 advocacy social para ampliar a visibilidade da doença;
@@ -911,17 +908,14 @@ advocacy social para ampliar a visibilidade da doença;
 disponibilizar, em tempo oportuno, insumos para o diagnóstico
 
 
-
 e medicamentos para o tratamento de todas as formas de tuberculose: sensível, resistente e infecção latente;
 
 utilizar ferramenta informatizada para monitoramento do
 
 
-
 estoque de medicamentos de primeira linha;
 
 propor políticas que promovam controle de infecção como
-
 
 
 estratégia de prevenção da doença.
@@ -2274,7 +2268,6 @@ WHo, WoRld HealtH oRGaniZation. Advocacy, communication and social mobilization 
 
 Republica Federativa doBrasil Ministerio da Saude
 
-SISTEMADEINFORMACAODEAGRAVOSDENOTIFICACAO
 
 No
 
@@ -2293,8 +2286,6 @@ CRITERIoCLiNIco-EPIDEMIOLOGIcO-étodocasoquenaopreencheocriteriodeconfirmacaolab
 Dados Gerais
 
 Agravo/doenca
-
-TUBERCULOSE
 
 Codigo(CID10)
 
@@ -2574,7 +2565,6 @@ SVS
 
 ## ANEXO Xiii - BOlETiM DE ACOMPANHAMENTO DE CASOS no sinan
 
-TELADEACOMPANHAMENTODETUBERCULOSE
 
 48UF49Municipio deNotificacaoAtual
 

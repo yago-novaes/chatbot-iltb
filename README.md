@@ -1,8 +1,10 @@
-# POC Chatbot ILTB
+# Chatbot ILTB — POC
 
-Prova de conceito do chatbot de suporte clínico para enfermeiros sobre **Infecção Latente pelo Mycobacterium tuberculosis (ILTB)**.
+Chatbot de suporte clínico para enfermeiros sobre **Infecção Latente pelo Mycobacterium tuberculosis (ILTB)**, desenvolvido como TCC na UFES.
 
-Arquitetura: **RAG (Retrieval-Augmented Generation)** sobre protocolos do Ministério da Saúde, com LLM via API.
+Arquitetura: **RAG (Retrieval-Augmented Generation)** sobre 6 protocolos do Ministério da Saúde e OMS, com embeddings locais e LLM via API.
+
+**Status:** POC funcional com avaliação RAGAS completa (38 perguntas, 4 métricas). Próxima fase: piloto com 5 enfermeiras na Hetzner.
 
 ---
 
@@ -15,17 +17,63 @@ Pergunta do enfermeiro
   [ FastAPI /chat ]
         │
         ▼
-  [ Retriever ]  ──→  ChromaDB (embeddings locais sentence-transformers)
+  [ Retriever ]  ──→  ChromaDB  ←──  sentence-transformers (local, 384D)
         │
         ▼
   [ Prompt Builder ]  (contexto + pergunta)
         │
         ▼
-  [ LLM Client ]  ──→  Groq / OpenAI / Ollama
+  [ LLM Client ]  ──→  Groq / OpenAI / Ollama / Mock
         │
         ▼
-  Resposta fundamentada no protocolo
+  Resposta fundamentada nos protocolos
 ```
+
+**Pipeline de ingestão:**
+
+```
+PDFs (docs/protocolos/)
+        │
+        ▼
+  [ Docling → .md ]  ──→  sanitize_markdown()  (Camada 1 automática)
+        │                        │
+        │              revisão manual (Camada 2)
+        ▼
+  [ Chunker semântico ]  (por cabeçalhos markdown)
+        │
+        ▼
+  [ ChromaDB ]  (persistido em chroma_db/)
+```
+
+---
+
+## Base de Conhecimento
+
+6 documentos indexados:
+
+| Documento | Fonte | Escopo |
+|---|---|---|
+| Manual de Recomendações para o Controle da TB no Brasil | Ministério da Saúde | Protocolo clínico completo |
+| Recomendações para o Controle da TB | Ministério da Saúde | ILTB — atenção básica |
+| Protocolo de Vigilância da ILTB (2ª ed.) | Ministério da Saúde | Diagnóstico e vigilância ILTB |
+| GEDIIB — Tratamento da Tuberculose | GEDIIB | Especialidades / gastroenterologia |
+| Tratamento ILTB com Rifapentina | Ministério da Saúde | Esquema 3HP |
+| Manual Operacional OMS Módulo 4 | OMS | Atenção e apoio ao tratamento |
+
+---
+
+## Avaliação (RAGAS)
+
+38 perguntas clínicas cobrindo 7 categorias: esquemas terapêuticos (ET), populações especiais (PE), efeitos adversos (EA), manejo odontológico (MO), interações medicamentosas (IM), diagnóstico (DI) e imunossuprimidos (IT).
+
+| Métrica | Score |
+|---|---|
+| context_precision | 0.55 |
+| faithfulness | 0.38 |
+| context_recall | 0.38 |
+| answer_relevancy | 0.31 |
+
+LLM juiz: `gpt-4o-mini`. Scores pré-sanitização completa dos `.md`; nova rodada planejada após re-indexação.
 
 ---
 
@@ -39,31 +87,26 @@ Pergunta do enfermeiro
 ## Instalação
 
 ```bash
-# 1. Clone ou entre na pasta do projeto
-cd poc-chatbot-iltb
+git clone https://github.com/yago-novaes/chatbot-iltb.git
+cd chatbot-iltb
 
-# 2. Crie e ative um ambiente virtual
 python -m venv .venv
 source .venv/bin/activate        # Linux/Mac
 .venv\Scripts\activate           # Windows
 
-# 3. Instale as dependências
-pip install -r requirements.txt
+pip install -r app/requirements.txt
 
-# 4. Configure o ambiente
 cp .env.example .env
-# Edite o .env com suas configurações (ver seção abaixo)
+# Edite o .env conforme a seção abaixo
 ```
 
 ---
 
 ## Configuração do LLM
 
-Edite o arquivo `.env`. Três opções:
+### Opção A — Groq (gratuito, recomendado para desenvolvimento)
 
-### Opção A — Groq (gratuito, recomendado para a POC)
-
-1. Cadastre-se em [console.groq.com](https://console.groq.com) (gratuito)
+1. Crie uma conta em [console.groq.com](https://console.groq.com)
 2. Gere uma API Key
 3. Configure o `.env`:
 
@@ -74,7 +117,9 @@ LLM_MODEL=llama-3.3-70b-versatile
 LLM_BASE_URL=https://api.groq.com/openai/v1
 ```
 
-### Opção B — OpenAI (pago)
+> **Atenção:** o free tier do Groq tem limite de 100k tokens/dia (70B) e 6k tokens/min. Para o pipeline RAGAS completo (38 perguntas), usar OpenAI.
+
+### Opção B — OpenAI
 
 ```env
 LLM_PROVIDER=openai
@@ -85,9 +130,9 @@ LLM_BASE_URL=https://api.openai.com/v1
 
 ### Opção C — Ollama (100% local, sem chave)
 
-1. Instale o [Ollama](https://ollama.com)
-2. Baixe um modelo: `ollama pull llama3.2`
-3. Configure o `.env`:
+```bash
+ollama pull llama3.2
+```
 
 ```env
 LLM_PROVIDER=ollama
@@ -96,9 +141,9 @@ LLM_MODEL=llama3.2
 LLM_BASE_URL=http://localhost:11434/v1
 ```
 
-### Modo Mock (sem nenhuma configuração)
+### Modo Mock (sem configuração)
 
-Se não configurar nada, a API roda em **modo mock**: o RAG funciona normalmente (busca e recupera trechos), mas a geração de texto é simulada. Útil para validar o pipeline.
+Se `LLM_API_KEY` não estiver definida, a API roda em modo mock: o RAG funciona normalmente (busca e recupera trechos), mas a geração de texto é simulada.
 
 ---
 
@@ -107,31 +152,24 @@ Se não configurar nada, a API roda em **modo mock**: o RAG funciona normalmente
 ### 1. Indexar os documentos
 
 ```bash
-python scripts/ingest.py
+python -m app.scripts.ingest
 ```
 
-Saída esperada:
-```
-Iniciando ingestão dos documentos...
-✓ 42 chunks indexados com sucesso.
-```
+Os `.md` em `docs/protocolos/` são chunkados e indexados no ChromaDB. Re-executar re-indexa tudo.
 
 ### 2. Iniciar a API
 
 ```bash
-python -m src.main
+python -m app.src.main
 ```
 
-A API estará disponível em `http://localhost:8000`.
-
-Documentação interativa: `http://localhost:8000/docs`
+API disponível em `http://localhost:8000` — documentação interativa em `http://localhost:8000/docs`.
 
 ---
 
 ## Endpoints
 
 ### `GET /health`
-Verifica o status do serviço.
 
 ```bash
 curl http://localhost:8000/health
@@ -146,42 +184,22 @@ curl http://localhost:8000/health
 }
 ```
 
----
-
-### `POST /ingest`
-Indexa (ou re-indexa) os documentos da pasta `docs/`.
-
-```bash
-curl -X POST http://localhost:8000/ingest
-```
-
-```json
-{
-  "status": "success",
-  "chunks_indexed": 42,
-  "message": "42 chunks indexados com sucesso."
-}
-```
-
----
-
 ### `POST /chat`
-Envia uma pergunta e recebe resposta baseada nos protocolos.
 
 ```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
-  -d '{"question": "Qual é a dose de isoniazida para adultos no esquema 6H?"}'
+  -d '{"question": "Qual a dose de isoniazida no esquema 6H para adultos?"}'
 ```
 
 ```json
 {
-  "answer": "No esquema 6H, a dose de isoniazida para adultos é de 5-10 mg/kg/dia, com dose máxima de 300 mg/dia, administrada por via oral preferencialmente em jejum, durante 6 meses.",
+  "answer": "No esquema 6H, a dose de isoniazida para adultos é 5–10 mg/kg/dia, máximo 300 mg/dia, via oral, preferencialmente em jejum, por 6 meses.",
   "sources": [
     {
-      "source": "protocolo_iltb_exemplo.md",
-      "score": 0.91,
-      "excerpt": "### 4.1 Isoniazida (INH) — Esquema 6H (Padrão)\n- **Dose adultos:** 5-10 mg/kg/dia, máximo 300 mg/dia..."
+      "source": "recomendacoes-para-o-controle-da-tuberculose.md",
+      "score": 0.87,
+      "excerpt": "..."
     }
   ],
   "llm_provider": "groq",
@@ -189,10 +207,9 @@ curl -X POST http://localhost:8000/chat \
 }
 ```
 
----
-
 ### `POST /search`
-Busca trechos relevantes sem gerar resposta (útil para depurar o RAG).
+
+Retorna chunks relevantes sem gerar resposta (útil para depurar o RAG):
 
 ```bash
 curl -X POST http://localhost:8000/search \
@@ -200,48 +217,88 @@ curl -X POST http://localhost:8000/search \
   -d '{"query": "efeitos adversos isoniazida", "top_k": 3}'
 ```
 
+### `POST /ingest`
+
+Re-indexa os documentos via HTTP (equivalente ao script CLI):
+
+```bash
+curl -X POST http://localhost:8000/ingest
+```
+
 ---
 
 ## Estrutura do Projeto
 
 ```
-poc-chatbot-iltb/
+chatbot-iltb/
+├── app/
+│   ├── requirements.txt
+│   ├── scripts/
+│   │   ├── extract_pdfs.py          # Extrai PDFs → .md via Docling + sanitize_markdown()
+│   │   ├── ingest.py                # Indexa os .md no ChromaDB
+│   │   └── sanitize_existing_md.py  # Aplica sanitize_markdown() nos .md existentes
+│   └── src/
+│       ├── config.py                # Configurações via .env (pydantic-settings)
+│       ├── main.py                  # FastAPI entrypoint
+│       ├── api/routes/              # chat, health, ingest, search
+│       ├── llm/
+│       │   ├── client.py            # Cliente unificado (Groq/OpenAI/Ollama/mock)
+│       │   └── prompts.py           # Templates de prompt clínico
+│       ├── rag/
+│       │   ├── embeddings.py        # sentence-transformers local
+│       │   ├── retriever.py         # Busca vetorial no ChromaDB
+│       │   └── ingestion/
+│       │       ├── chunker.py       # Chunking semântico por cabeçalhos
+│       │       ├── indexer.py       # Indexação no ChromaDB
+│       │       └── pdf_extractor.py # Docling wrapper
+│       └── session/
+│           └── manager.py           # Histórico de conversa por sessão
 ├── docs/
-│   └── protocolo_iltb_exemplo.md   # Documento de exemplo (substituir pelos reais)
-├── scripts/
-│   └── ingest.py                   # CLI para indexar documentos
-├── src/
-│   ├── config.py                   # Configurações via .env
-│   ├── main.py                     # FastAPI app
-│   ├── llm/
-│   │   └── client.py               # Cliente LLM (Groq/OpenAI/Ollama/mock)
-│   └── rag/
-│       ├── ingestion.py            # Leitura, chunking e indexação
-│       └── retriever.py            # Busca vetorial no ChromaDB
-├── .env.example                    # Modelo de configuração
-├── requirements.txt
+│   ├── protocolos/                  # PDFs + .md higienizados (6 documentos)
+│   ├── audit_ingestion.md           # Relatório de auditoria de integridade dos .md
+│   └── diario-tecnico.md            # Diário de engenharia (decisões, experimentos, lições)
+├── eval/
+│   ├── run_ragas.py                 # Pipeline de avaliação RAGAS
+│   ├── test_set.json                # 38 perguntas clínicas com ground truths
+│   └── results/                     # Scores e detalhamento por pergunta
+├── infra/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── nginx/
+├── poc/                             # Versão inicial da POC (referência histórica)
+├── .env.example
 └── README.md
 ```
 
 ---
 
-## Adicionando Documentos Reais
-
-Basta colocar arquivos `.md` ou `.txt` na pasta `docs/` e re-executar:
+## Avaliação RAGAS
 
 ```bash
-python scripts/ingest.py
+# Requer RAGAS_LLM_API_KEY no .env (OpenAI recomendado)
+python -m eval.run_ragas
+
+# Apenas gerar respostas (sem avaliar)
+python -m eval.run_ragas --pipeline-only
+
+# Apenas avaliar respostas já geradas
+python -m eval.run_ragas --scores-only
 ```
 
-Formatos PDF: converter para `.md` ou `.txt` antes (ex: usando `pymupdf` ou `pdfplumber`).
+> Com Groq free tier: usar `SLEEP_BETWEEN_CALLS=15` no `.env` e aguardar reset do TPD (100k tokens/dia) entre runs.
 
 ---
 
-## Próximos Passos (roadmap da POC → produção)
+## Roadmap
 
-- [ ] Integração com WhatsApp Business API (webhook Meta)
-- [ ] Suporte a PDF direto na ingestão
-- [ ] Histórico de conversa por usuário
+- [x] POC funcional (RAG + FastAPI + mock)
+- [x] Ingestão dos 6 protocolos reais do MS/OMS
+- [x] Pipeline de extração PDF → Markdown (Docling + sanitize_markdown)
+- [x] Avaliação RAGAS com gpt-4o-mini (38 perguntas)
+- [x] Auditoria de integridade da base de conhecimento
+- [ ] Re-avaliação RAGAS pós-sanitização dos .md
+- [ ] Deploy piloto — Hetzner CPX31 via Docker
+- [ ] Integração WhatsApp Business API (webhook Meta)
+- [ ] Histórico de conversa persistido por usuário
 - [ ] Logging de perguntas para análise (sem dados do paciente)
-- [ ] Deploy no Hetzner CPX31 via Docker
-- [ ] Autenticação básica na API
+- [ ] Busca híbrida (dense + sparse) com Qdrant — Fase 5

@@ -119,6 +119,41 @@ def sanitize_markdown(text: str) -> str:
     # 18. Espaços em emails (ex: "tuberculose@ saude.gov.br")
     text = re.sub(r"(\w)@ (\w)", r"\1@\2", text)
 
+    # === NOVAS REGRAS (v3 — baseadas no GEDIIB) ===
+
+    # 19. Cabeçalhos/rodapés de página repetidos (URLs de organizações, nomes aglutinados)
+    #     Ex: "WWW.GEDIIB.ORG.BR", "ORGANIZACAOBRASILEIRADEDOENCADECROHNECOLITE"
+    #     Padrão: linhas que são APENAS URL ou texto em CAPS sem espaços (>20 chars)
+    text = re.sub(r"^WWW\.[A-Z]+\.[A-Z.]+\s*$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^[A-Z]{20,}\s*$", "", text, flags=re.MULTILINE)
+
+    # 20. Strings aglutinadas de rodapé com padrão de organização
+    #     Ex: "NIZACAO BRASILEIRA..." fragmentos soltos de nomes institucionais
+    #     NOTA: regex conservador — só remove linhas curtas (<80 chars) 100% maiúsculas
+    text = re.sub(r"^[A-Z\s]{10,80}$", lambda m: "" if sum(1 for c in m.group() if c.isupper()) / max(len(m.group().replace(" ", "")), 1) > 0.8 else m.group(), text, flags=re.MULTILINE)
+
+    # 21. Listas com letras como bullets: "a)", "b)", "c)" → "a.", "b.", "c."
+    #     Converte para formato que parsers Markdown reconhecem melhor
+    text = re.sub(r"^([a-z])\)\s", r"\1. ", text, flags=re.MULTILINE)
+
+    # 22. Citações com parênteses e espaço antes do ponto: "(3-5) ." → "[3-5]."
+    text = re.sub(r"\((\d[\d,\s-]*)\)\s*\.", r"[\1].", text)
+    text = re.sub(r"\((\d[\d,\s-]*)\)\s*;", r"[\1];", text)
+    text = re.sub(r"\((\d[\d,\s-]*)\)\s*,", r"[\1],", text)
+
+    # 23. Bibliografia aglutinada: "2.BRASIL.MinistériodaSaúde"
+    #     Padrão: número + ponto + palavra sem espaço
+    #     NOTA: muito difícil de fazer com regex sem falsos positivos.
+    #     Apenas adicionar espaço após número+ponto no início de linha (padrão de referência)
+    text = re.sub(r"^(\d{1,3})\.([A-Z])", r"\1. \2", text, flags=re.MULTILINE)
+
+    # 24. "Disponívelem" → "Disponível em", "Acessoem" → "Acesso em"
+    text = text.replace("Disponívelem", "Disponível em")
+    text = text.replace("Acessoem", "Acesso em")
+
+    # 25. Limpar linhas vazias excessivas (3+ linhas vazias → 2)
+    text = re.sub(r"\n{4,}", "\n\n\n", text)
+
     return text
 
 

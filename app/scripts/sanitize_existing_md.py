@@ -19,6 +19,7 @@ DOCS_DIR = Path("docs/protocolos")
 SKIP_FILES = {
     "9789275728185_por.md",
     "af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md",
+    "GEDIIB_TratamentoTuberculose.md",
     "patch_interacoes_medicamentosas.md",
 }
 

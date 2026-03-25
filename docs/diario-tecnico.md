@@ -1115,6 +1115,29 @@ Script `app/scripts/sanitize_existing_md.py` criado para aplicar nos documentos 
 
 Os valores menores (vs. primeira passagem) são esperados: as regras 1–8 já removeram a maior parte do ruído bruto. As regras 9–18 agem sobre artefatos mais sutis (hifenização, caracteres de controle, URLs).
 
+**Terceira iteração — achados do GEDIIB (2026-03-23):**
+
+| Problema | Exemplo | Regra adicionada |
+|---|---|---|
+| Cabeçalhos/rodapés de página repetidos | `WWW.GEDIIB.ORG.BR` no meio de parágrafos | #19 (regex linhas caps-only) |
+| Strings aglutinadas em caps | `ORGANIZACAOBRASILEIRADEDOENCADECROHNECOLITE` | #20 (lambda >80% maiúsculas) |
+| Listas com letras como bullets | `a)`, `b)`, `c)` | #21 (→ `a.`, `b.`, `c.`) |
+| Citações com parênteses soltos | `(3-5) .` | #22 (→ `[3-5].`) |
+| Bibliografia aglutinada | `2.BRASIL.MinistériodaSaúde` | #23 (espaço após nº+ponto) |
+| Palavras-chave fundidas | `Disponívelem`, `Acessoem` | #24 (replace direto) |
+
+`sanitize_markdown()` agora tem 25 regras (v1: 8, v2: 18, v3: 25). Três documentos higienizados manualmente. Três restantes passam pela sanitização automática + revisão manual focada nas seções relevantes para o test set RAGAS.
+
+**Resultado da terceira passagem nos 3 documentos restantes (regras 19–25):**
+
+| Arquivo | Linhas alteradas | Chars removidos |
+|---|---|---|
+| `Manual de Recomendações...md` | 1237 | +95 |
+| `recomendacoes-para-o-controle-da-tuberculose.md` | 2 | -2 |
+| `tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md` | 1 | -1 |
+
+O alto número de linhas alteradas no Manual reflete principalmente a regra #23 (espaço após número+ponto em referências bibliográficas), que cascateia o diff por deslocamento de linhas no zip. O saldo de chars é próximo de zero — remoções de artefatos compensadas pela inserção de espaços em bibliografias.
+
 ---
 
 ## FASE 3 — Backend FastAPI
@@ -1363,4 +1386,4 @@ volumes:
 
 ---
 
-*Última atualização: 2026-03-23 (sanitize_markdown expandida 8→18 regras, seção 2.15, lições 27–28)*
+*Última atualização: 2026-03-25 (sanitize_markdown expandida 18→25 regras v3, seção 2.15 expandida, 3 docs sanitizados automaticamente)*
