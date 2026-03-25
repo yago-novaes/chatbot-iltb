@@ -12,6 +12,7 @@ import json
 import logging
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -300,10 +301,24 @@ def main():
     scores = _print_summary(result)
 
     RESULTS_DIR.mkdir(exist_ok=True)
-    (RESULTS_DIR / "ragas_scores.json").write_text(
-        json.dumps(scores, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"\nResultados salvos em {RESULTS_DIR}/")
+    scores_path = RESULTS_DIR / "ragas_scores.json"
+
+    # Empilha entradas — não sobrescreve. Migra formato antigo (dict) para lista automaticamente.
+    entry = {
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "llm": f"{settings.llm_provider}/{settings.llm_model}",
+        "n_questions": len(records),
+        **scores,
+    }
+    if scores_path.exists():
+        existing = json.loads(scores_path.read_text(encoding="utf-8"))
+        history = existing if isinstance(existing, list) else [existing]
+    else:
+        history = []
+    history.append(entry)
+
+    scores_path.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\nResultados salvos em {RESULTS_DIR}/ ({len(history)} entradas no histórico)")
 
     if not args.scores_only:
         _check_fallback(out_of_scope)

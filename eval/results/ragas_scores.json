@@ -1,6 +1,22 @@
-{
-  "faithfulness": 0.375,
-  "answer_relevancy": 0.3097,
-  "context_precision": 0.5475,
-  "context_recall": 0.3816
-}
+[
+  {
+    "timestamp": "2026-03-13T00:00:00Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "baseline — pré-sanitização dos .md (seção 2.10 do diário)",
+    "faithfulness": 0.375,
+    "answer_relevancy": 0.31,
+    "context_precision": 0.548,
+    "context_recall": 0.382
+  },
+  {
+    "timestamp": "2026-03-25T00:00:00Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "pós-sanitização completa — ChromaDB recriado, 820 chunks (seção 2.16 do diário)",
+    "faithfulness": 0.5279,
+    "answer_relevancy": 0.4858,
+    "context_precision": 0.6192,
+    "context_recall": 0.5789
+  }
+]

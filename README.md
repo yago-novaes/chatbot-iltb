@@ -83,16 +83,14 @@ docs/protocolos/*.pdf
 
 40 perguntas clínicas (36 in-scope + 4 fora do escopo) cobrindo 7 categorias: esquemas terapêuticos, populações especiais, efeitos adversos, manejo odontológico, interações medicamentosas, diagnóstico e imunossuprimidos.
 
-**Scores baseline** (pré-sanitização completa, LLM juiz: `gpt-4o-mini`):
+LLM produção: `llama-3.3-70b-versatile` (Groq). LLM juiz: `gpt-4o-mini` (OpenAI). 38 perguntas in-scope avaliadas.
 
-| Métrica | Score | Alvo |
-|---|---|---|
-| context_precision | 0.548 | ≥ 0.75 |
-| faithfulness | 0.375 | ≥ 0.80 |
-| context_recall | 0.382 | — |
-| answer_relevancy | 0.310 | — |
-
-Re-avaliação planejada após re-indexação com os `.md` sanitizados.
+| Métrica | Baseline (pré-sanitização) | Atual (pós-sanitização) | Alvo |
+|---|---|---|---|
+| faithfulness | 0.375 | **0.528** | ≥ 0.80 |
+| context_precision | 0.548 | **0.619** | ≥ 0.75 |
+| context_recall | 0.382 | **0.579** | — |
+| answer_relevancy | 0.310 | **0.486** | — |
 
 ---
 
@@ -315,7 +313,7 @@ chatbot-iltb/
 - [x] Pipeline de extração PDF → Markdown (Docling + `sanitize_markdown()` v3 — 25 regras)
 - [x] Auditoria de integridade da base de conhecimento
 - [x] Avaliação RAGAS — baseline (40 perguntas, `gpt-4o-mini` como juiz)
-- [ ] Re-indexação + re-avaliação RAGAS pós-sanitização completa
+- [x] Re-indexação + re-avaliação RAGAS pós-sanitização completa
 - [ ] Deploy piloto — Hetzner CPX31 via Docker
 - [ ] Integração WhatsApp Business API (webhook Meta)
 - [ ] Histórico de conversa persistido por usuário

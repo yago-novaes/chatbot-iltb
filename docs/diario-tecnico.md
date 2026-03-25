@@ -1140,6 +1140,47 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 
 ---
 
+### 2.16 Re-avaliação RAGAS Pós-Sanitização
+
+**Data:** 2026-03-25
+
+**Objetivo:** medir impacto da sanitização completa dos `.md` na qualidade do pipeline RAG.
+
+**O que mudou desde a última avaliação (seção 2.10):**
+- 3 documentos higienizados manualmente (OMS, Protocolo ILTB, GEDIIB)
+- 3 documentos sanitizados automaticamente + revisão manual (Manual MS, Recomendações, Rifapentina)
+- Patch de interações medicamentosas (seção 6.3) indexado desde 2.13
+- Correções de ground truth (ET-07, PE-07, IM-03) aplicadas em 2.12
+- ChromaDB recriado do zero com todos os `.md` limpos
+- `sanitize_markdown()` com 25 regras (v3)
+
+**ChromaDB re-indexado:** 820 chunks (vs. 928 anterior — diferença de 108 chunks proveniente da remoção de ruído pelos `.md` sanitizados).
+
+**Query de sanidade:** `patch_interacoes_medicamentosas.md` retornou score 0.835 na primeira posição para a query "interações medicamentosas da rifampicina com contraceptivos" — patch corretamente indexado.
+
+**Resultados:**
+
+| Métrica | Pré-sanitização (2.10) | Pós-sanitização (2.16) | Delta | Delta % |
+|---|---|---|---|---|
+| faithfulness | 0.375 | **0.528** | +0.153 | +41% |
+| context_precision | 0.548 | **0.619** | +0.071 | +13% |
+| context_recall | 0.382 | **0.579** | +0.197 | +52% |
+| answer_relevancy | 0.310 | **0.486** | +0.176 | +57% |
+| Chunks indexados | 928 | 820 | -108 | -12% |
+
+38 perguntas in-scope avaliadas. 4 perguntas fora do escopo verificadas separadamente (sem avaliação RAGAS — usam threshold de score para fallback).
+
+**Análise:**
+
+- `context_recall` +52% é o ganho mais expressivo: a sanitização eliminou ruído dos chunks, fazendo com que os trechos relevantes fiquem mais concentrados e passem a ser recuperados com mais frequência nas top-k posições.
+- `answer_relevancy` +57%: respostas mais coerentes quando o contexto recuperado é mais limpo — o LLM alucina menos quando os chunks não contêm artefatos OCR.
+- `faithfulness` ainda abaixo do alvo (0.528 vs. ≥ 0.80): o LLM (llama-3.3-70b-versatile via Groq) produz afirmações além do que os chunks fornecem. Próximo passo: ajuste de prompt (instrução explícita para citar apenas o que está no contexto) ou migração para modelo mais conservador.
+- `context_precision` ainda abaixo do alvo (0.619 vs. ≥ 0.75): nem todos os 4 chunks recuperados são igualmente relevantes. Possíveis melhorias: reranker, ajuste de `top_k` ou `threshold`.
+
+**Conclusão:** a sanitização dos `.md` teve impacto positivo e mensurável em todas as métricas. Os ganhos maiores foram em `context_recall` e `answer_relevancy`, confirmando que a qualidade dos chunks impacta diretamente a qualidade das respostas. O gap de `faithfulness` indica que o próximo vetor de melhoria é o prompt engineering ou troca de modelo, não mais a qualidade da base.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1386,4 +1427,4 @@ volumes:
 
 ---
 
-*Última atualização: 2026-03-25 (sanitize_markdown expandida 18→25 regras v3, seção 2.15 expandida, 3 docs sanitizados automaticamente)*
+*Última atualização: 2026-03-25 (re-avaliação RAGAS pós-sanitização — seção 2.16; todos os scores melhoraram)*
