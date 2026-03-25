@@ -35,15 +35,17 @@ Pergunta do enfermeiro
 PDFs (docs/protocolos/)
         │
         ▼
-  [ Docling → .md ]  ──→  sanitize_markdown()  (Camada 1 automática)
+  [ Docling → .md ]  ──→  sanitize_markdown() v3  (25 regras — Camada 1 automática)
         │                        │
-        │              revisão manual (Camada 2)
+        │              revisão manual (Camada 2 — 3 docs higienizados)
         ▼
   [ Chunker semântico ]  (por cabeçalhos markdown)
         │
         ▼
   [ ChromaDB ]  (persistido em chroma_db/)
 ```
+
+> `sanitize_markdown()` cobre: artefatos OCR, hifenização quebrada, bullets malformados, citações, bibliography aglutinada, URLs/emails fragmentados, cabeçalhos repetidos em caps. Ver `app/scripts/extract_pdfs.py`.
 
 ---
 
@@ -294,9 +296,10 @@ python -m eval.run_ragas --scores-only
 - [x] POC funcional (RAG + FastAPI + mock)
 - [x] Ingestão dos 6 protocolos reais do MS/OMS
 - [x] Pipeline de extração PDF → Markdown (Docling + sanitize_markdown)
-- [x] Avaliação RAGAS com gpt-4o-mini (38 perguntas)
+- [x] sanitize_markdown() v3 — 25 regras + corpus sanitizado (3 docs manuais + 3 automáticos)
 - [x] Auditoria de integridade da base de conhecimento
-- [ ] Re-avaliação RAGAS pós-sanitização dos .md
+- [x] Avaliação RAGAS com gpt-4o-mini (38 perguntas, baseline pré-sanitização)
+- [ ] Re-avaliação RAGAS pós-sanitização completa dos .md
 - [ ] Deploy piloto — Hetzner CPX31 via Docker
 - [ ] Integração WhatsApp Business API (webhook Meta)
 - [ ] Histórico de conversa persistido por usuário
