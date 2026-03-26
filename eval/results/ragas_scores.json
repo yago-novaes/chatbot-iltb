@@ -18,5 +18,33 @@
     "answer_relevancy": 0.4858,
     "context_precision": 0.6192,
     "context_recall": 0.5789
+  },
+  {
+    "timestamp": "2026-03-25T22:10:09Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.5859,
+    "answer_relevancy": 0.5337,
+    "context_precision": 0.6557,
+    "context_recall": 0.6079
+  },
+  {
+    "timestamp": "2026-03-26T01:17:31Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.4293,
+    "answer_relevancy": 0.3579,
+    "context_precision": 0.6345,
+    "context_recall": 0.5816
+  },
+  {
+    "timestamp": "2026-03-26T01:43:43Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "INVÁLIDO — TPD Groq esgotado (98.286/100.000 tokens já usados). 36/38 respostas são mensagens de erro. Desconsiderar. Ver seção 2.19 do diário.",
+    "faithfulness": 0.0497,
+    "answer_relevancy": 0.026,
+    "context_precision": 0.6374,
+    "context_recall": 0.6079
   }
 ]

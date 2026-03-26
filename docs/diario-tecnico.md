@@ -1140,6 +1140,44 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 
 ---
 
+### 2.17 Sanitização Focada do Manual do MS
+
+**Data:** 2026-03-25
+
+**Estratégia:** sanitização focada nas seções relevantes para o escopo ILTB — não revisão completa das 366 páginas. Seções de epidemiologia, vigilância programática e bases organizacionais mantidas sem edição manual adicional.
+
+**O que foi feito:**
+
+1. `sanitize_markdown()` v3 — já havia sido aplicada (0 alterações adicionais)
+2. **Remoção de blocos sem valor para RAG:**
+   - Front matter: ficha catalográfica, equipe editorial, lista de abreviaturas (~393 linhas)
+   - Sumário e apresentação institucional (~312 linhas)
+   - Referências bibliográficas (2 blocos — epidemiologia e organizacional)
+   - Anexos: formulários SINAN (fichas de notificação, livros de registro — ~420 linhas de OCR corrompido)
+3. **Correção de hierarquia de cabeçalhos nas seções prioritárias:**
+   - `4.4.2`–`4.4.4` (Hepatopatias, Nefropatias, Diabetes) → `###`
+   - Seções PVHIV/ILTB → `###` com título normalizado
+   - `8.1` (diagnóstico na infância) → `###`; `8.1.1`–`8.1.3` → `###`/`####`
+4. **Remoção de cabeçalhos falsos:** `## observações:`, `## conclusão`, `## INTERPRETAÇãO` → texto inline (`**Observações:**` etc.)
+
+**Resultado:**
+
+| Métrica | Antes | Depois |
+|---|---|---|
+| Linhas | 2.682 | 1.411 |
+| Chars | ~241K | ~184K |
+| `##` cabeçalhos | 154 | 87 |
+| `###` cabeçalhos | 0 | 11 |
+| `####` cabeçalhos | 0 | 1 |
+
+**Seções ausentes confirmadas (falha Docling — `std::bad_alloc`):**
+- Seção 9 da Parte II: Diagnóstico da ILTB (PPD/IGRA, prova tuberculínica) — coberta por `recomendacoes-para-o-controle-da-tuberculose.md` e `af_protocolo_vigilancia_iltb_2ed`
+- Seção 8 da Parte III: Tratamento da ILTB (esquemas 6H, 9H, 3HP) — coberta pelos mesmos documentos + `tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md`
+
+**Impacto esperado no RAG:** remoção de ~57K chars de ruído (formulários, referências, sumário de navegação) deve melhorar `context_precision` — chunks do Manual agora carregam apenas conteúdo clínico.
+
+---
+
 ### 2.16 Re-avaliação RAGAS Pós-Sanitização
 
 **Data:** 2026-03-25
@@ -1178,6 +1216,107 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 - `context_precision` ainda abaixo do alvo (0.619 vs. ≥ 0.75): nem todos os 4 chunks recuperados são igualmente relevantes. Possíveis melhorias: reranker, ajuste de `top_k` ou `threshold`.
 
 **Conclusão:** a sanitização dos `.md` teve impacto positivo e mensurável em todas as métricas. Os ganhos maiores foram em `context_recall` e `answer_relevancy`, confirmando que a qualidade dos chunks impacta diretamente a qualidade das respostas. O gap de `faithfulness` indica que o próximo vetor de melhoria é o prompt engineering ou troca de modelo, não mais a qualidade da base.
+
+---
+
+### 2.18 Re-avaliação RAGAS — Sanitização Completa (Manual MS)
+
+**Data:** 2026-03-25
+
+**Objetivo:** medir impacto incremental da sanitização focada do Manual do MS (o maior documento da base — 47% de redução de linhas, remoção de front matter, sumário, referências e anexos, hierarquia corrigida nas seções prioritárias).
+
+**ChromaDB:** 742 chunks (vs. 820 em 2.16 — -78 chunks do Manual sanitizado).
+
+**Resultados:**
+
+| Métrica | Baseline (2.10) | Pós-sanitização parcial (2.16) | Sanitização completa (2.18) | Delta vs 2.16 | Delta total |
+|---|---|---|---|---|---|
+| faithfulness | 0.375 | 0.528 | **0.586** | +0.058 (+11%) | +0.211 (+56%) |
+| context_precision | 0.548 | 0.619 | **0.656** | +0.037 (+6%) | +0.108 (+20%) |
+| context_recall | 0.382 | 0.579 | **0.608** | +0.029 (+5%) | +0.226 (+59%) |
+| answer_relevancy | 0.310 | 0.486 | **0.534** | +0.048 (+10%) | +0.224 (+72%) |
+| Chunks | 928 | 820 | 742 | -78 (-10%) | -186 (-20%) |
+
+38 perguntas avaliadas. Nenhuma com `contexts=[]`.
+
+**Análise:**
+
+- Todos os 4 scores melhoraram. A sanitização do Manual contribuiu +5–11% sobre a rodada parcial, confirmando que remoção de ruído estrutural (formulários SINAN, referências bibliográficas, sumário de navegação) melhora tanto a recuperação quanto a geração.
+- `faithfulness` acumula +56% desde o baseline mas permanece longe do alvo (0.80). O LLM (llama-3.3-70b-versatile) continua adicionando afirmações além do que os chunks fornecem. **Próximo vetor: prompt engineering** — instrução explícita para citar apenas o que está no contexto.
+- `context_precision` +20% total — a base está mais limpa, mas ainda há chunks recuperados com relevância marginal. Avaliar reranker ou aumento de penalização por score baixo.
+- Perguntas com menor contexto recuperado (proxy para maior risco de alucinação): PE-06 (DII + anti-TNF), DI-01 (ponto de corte PT), IT-05 (contatos de TB) — todos têm contexto fragmentado em chunks curtos, indicando gaps reais na base (cobertura limitada de DII e critérios de PT no corpus).
+
+**Próximos passos priorizados:**
+1. Prompt engineering — system prompt com instrução de groundedness (`cite apenas informações presentes no contexto fornecido`)
+2. Avaliar `top_k=5` ou `top_k=6` para PE-06/DI-01/IT-05 (contexto insuficiente)
+3. Re-avaliação RAGAS pós-prompt-engineering para fechar o gap de `faithfulness`
+
+### 2.19 Prompt Engineering para Faithfulness ⚠️ (em andamento)
+
+**Data:** 2026-03-26
+
+**Contexto:** `faithfulness` estava em 0.586 após sanitização completa. Alvo: ≥ 0.80. Análise das respostas do `ragas_detailed.json` revelou um padrão consistente: o LLM adicionava parágrafos finais de síntese ("Portanto...", "Em resumo...") com afirmações que iam além do que os chunks forneciam — o principal vetor de penalização RAGAS.
+
+---
+
+#### Prompt v1 — baseline (faithfulness 0.586)
+
+5 regras simples: "SOMENTE com base nos trechos", cite a seção de origem, sem diagnósticos. Sem instrução explícita anti-síntese.
+
+---
+
+#### Prompt v2 — anti-síntese estrito + limite de 4 frases ❌
+
+**Hipótese:** forçar concisão eliminaria os parágrafos de síntese.
+
+**Mudanças:**
+- "EXCLUSIVAMENTE com base nos trechos... NÃO use conhecimento próprio"
+- "NÃO faça sínteses, conclusões ou inferências além do que está escrito"
+- Limite explícito: "responda em no máximo 4 frases"
+
+**Resultado:** faithfulness **0.429** (–0.157, –27% vs v1). Regressão grave.
+
+**Diagnóstico da falha:**
+- O limite de 4 frases forçou o LLM a usar o fallback "Não encontrei essa informação..." mesmo quando o contexto tinha informação parcial
+- O RAGAS interpreta essa resposta como uma afirmação de que *não há informação no contexto* — que é **não faithful** quando o contexto claramente contém dados relacionados
+- O "NÃO faça sínteses" também bloqueou combinações legítimas de múltiplos chunks
+- Lição: restrições de formato que causam fallbacks incorretos são mais prejudiciais à faithfulness do que parágrafos de síntese
+
+---
+
+#### Prompt v3 — anti-síntese cirúrgico (aguardando validação)
+
+**Hipótese:** remover apenas os padrões de síntese problemáticos ("Portanto...", "Em resumo...") sem restringir o tamanho da resposta preserva respostas completas e legítimas.
+
+**Mudanças vs v2:**
+- Manteve "EXCLUSIVAMENTE" (regra 1)
+- Substituiu "NÃO faça sínteses" → "Cada afirmação deve ter suporte direto e verificável... NÃO adicione detalhes ou elaborações além do literalmente escrito"
+- **Removeu o limite de 4 frases**
+- Fallback mais inteligente: usar "Não encontrei..." APENAS se os trechos não contiverem NENHUMA informação relevante (antes: qualquer incompletude ativava o fallback)
+- Adicionou regra específica: "Não adicione parágrafos de conclusão ou síntese ('Portanto...', 'Em resumo...')"
+
+**Status:** ⚠️ Avaliação RAGAS inválida — TPD Groq esgotado durante a coleta.
+
+---
+
+#### Falha de execução — Groq TPD esgotado
+
+Ao rodar `python -m eval.run_ragas` com o prompt v3, o TPD (Tokens Per Day) do Groq estava em 98.286/100.000 tokens já consumidos da sessão anterior. Resultado: apenas as 2 primeiras perguntas (ET-01, ET-02) obtiveram respostas reais; as 36 restantes receberam mensagens de erro "Rate limit reached". O RAGAS avaliou esses erros como respostas, produzindo:
+
+| Métrica | Valor | Interpretação |
+|---|---|---|
+| faithfulness | 0.050 | 36/38 respostas são strings de erro — inválido |
+| answer_relevancy | 0.026 | idem |
+| context_precision | 0.637 | retrieval não afetado (não usa LLM de pipeline) |
+| context_recall | 0.608 | retrieval não afetado |
+
+Entrada marcada como `INVÁLIDO` no `ragas_scores.json`.
+
+**Causa raiz:** o pipeline de coleta (38 perguntas × ~2.500 tokens ≈ 95K tokens) consome quase todo o TPD de 100K. Sessões de desenvolvimento que acontecem antes da rodada de avaliação esgotam a margem. Solução: aguardar reset do TPD (meia-noite UTC) antes de re-rodar.
+
+**Prevenção:** usar `--max-questions 12` quando o TPD estiver parcialmente consumido; ou configurar `LLM_PROVIDER` de pipeline diferente do free tier Groq.
+
+**Próximo passo:** re-rodar `python -m eval.run_ragas` após o reset do TPD (~meia-noite UTC de 2026-03-26). Se faithfulness v3 > 0.586, o prompt está na direção correta; se ainda < 0.80, avaliar top_k=5/6 para perguntas com contexto fragmentado (PE-06, DI-01, IT-05).
 
 ---
 
@@ -1427,4 +1566,4 @@ volumes:
 
 ---
 
-*Última atualização: 2026-03-25 (re-avaliação RAGAS pós-sanitização — seção 2.16; todos os scores melhoraram)*
+*Última atualização: 2026-03-25 (avaliação RAGAS completa pós-sanitização total — seção 2.18; faithfulness 0.375→0.586, context_recall 0.382→0.608)*
