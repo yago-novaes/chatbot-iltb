@@ -1338,6 +1338,57 @@ Prompt engineering restriction-based está esgotado como vetor para este modelo.
 3. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.66 → 0.75. Chunks mais precisos podem compensar alucinações que emergem de contexto ambíguo.
 4. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado; mais chunks podem fornecer cobertura suficiente para evitar fallbacks incorretos.
 
+### 2.20 Sanitização Estrutural via LLM (gpt-4o-mini) ❌ Descartado
+
+**Data:** 2026-03-26
+
+**Objetivo:** usar gpt-4o-mini em build-time para corrigir problemas estruturais (Camada 2) que regex não resolve no Manual do MS — tabelas partidas, hierarquia achatada, listas fragmentadas. Hipótese: estrutura Markdown melhor → chunks mais coesos → retrieval mais preciso.
+
+**Justificativa LGPD:** documento público do MS processado em build-time. Nenhum dado pessoal enviado. Pipeline de produção (run-time) permanece local (Groq/Llama).
+
+**Configuração:**
+- Script: `app/scripts/sanitize_with_llm.py`
+- Modelo: gpt-4o-mini, temperature=0.0
+- Blocos: ~3.000 tokens com corte em cabeçalhos (`#`)
+- Validação por bloco: ratio output/input entre 0.5–1.5, finish_reason=stop
+- Fallback: bloco original mantido se validação falhar
+- Pós-processamento: `sanitize_markdown()` v3 sobre o output LLM
+
+**Execução:**
+- Blocos: 15 (doc de 185K chars ÷ ~3.000 tokens/bloco)
+- Erros/fallback: 0/15
+- Ratio médio: ~1.00 em todos os blocos (sem truncamento, sem invenção)
+- Chars: 185.074 → 185.095 (+21) após LLM; → 184.933 (–162) após regex
+- Linhas: 1.411 → 1.340 (–71 por consolidação de fragmentos)
+- Custo estimado: ~97K tokens API × $0.15/$0.60 por 1M ≈ **$0.07**
+- Chunks ChromaDB: 742 → 738 (–4)
+
+**RAGAS pós-sanitização LLM:**
+
+| Métrica | Regex+manual (2.18) | Pós-LLM | Delta |
+|---|---|---|---|
+| faithfulness | **0.586** | 0.463 | –21% |
+| answer_relevancy | **0.534** | 0.441 | –17% |
+| context_precision | **0.656** | 0.652 | –1% |
+| context_recall | **0.608** | 0.517 | **–15%** |
+| Chunks | 742 | 738 | –4 |
+
+**Regressão em todas as métricas.** Arquivo revertido ao `.bak`, ChromaDB re-indexado para 742 chunks.
+
+**Análise da falha:**
+
+A queda de `context_recall` em 15 pontos é o sinal mais informativo: o retriever passou a recuperar menos contexto relevante para as perguntas do test set. Possíveis mecanismos:
+
+1. **Alteração semântica sutil:** mesmo com temperature=0 e prompt estrito, gpt-4o-mini pode ter reformulado frases clinicamente equivalentes mas semanticamente diferentes para o embedding model (`paraphrase-multilingual-MiniLM-L12-v2`). Pequenas mudanças de vocabulário podem deslocar os vetores o suficiente para piorar o recall.
+
+2. **Consolidação de fragmentos vs. granularidade do chunker:** a redução de 71 linhas veio de fusão de fragmentos — o que pode ter criado chunks mais longos e heterogêneos, diluindo a especificidade semântica de cada chunk.
+
+3. **Normalização de capitalização:** o prompt pedia correção de "QUADRo → Quadro". Se as queries do test set usavam as formas originais, a normalização pode ter reduzido a similaridade cossenoidal.
+
+**Lição:** LLM sanitization de build-time com o objetivo de melhorar retrieval é uma hipótese não confirmada para este corpus. O embedding model é sensível a variações lexicais sutis que preservam o significado clínico mas alteram a representação vetorial. Regex determinístico, que preserva o vocabulário original, mantém a consistência semântica entre corpus e queries.
+
+**Script mantido** em `app/scripts/sanitize_with_llm.py` para documentação e potencial uso futuro com corpus diferente ou embedding model mais robusto.
+
 ---
 
 ## FASE 3 — Backend FastAPI
