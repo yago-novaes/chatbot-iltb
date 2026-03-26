@@ -1251,7 +1251,7 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 2. Avaliar `top_k=5` ou `top_k=6` para PE-06/DI-01/IT-05 (contexto insuficiente)
 3. Re-avaliação RAGAS pós-prompt-engineering para fechar o gap de `faithfulness`
 
-### 2.19 Prompt Engineering para Faithfulness ⚠️ (em andamento)
+### 2.19 Prompt Engineering para Faithfulness ❌ (anti-padrão identificado)
 
 **Data:** 2026-03-26
 
@@ -1295,28 +1295,48 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 - Fallback mais inteligente: usar "Não encontrei..." APENAS se os trechos não contiverem NENHUMA informação relevante (antes: qualquer incompletude ativava o fallback)
 - Adicionou regra específica: "Não adicione parágrafos de conclusão ou síntese ('Portanto...', 'Em resumo...')"
 
-**Status:** ⚠️ Avaliação RAGAS inválida — TPD Groq esgotado durante a coleta.
+**Resultado:** faithfulness **0.457** (–22% vs v1). Segunda regressão consecutiva.
 
 ---
 
-#### Falha de execução — Groq TPD esgotado
+#### Consolidação — quadro comparativo das 3 versões
 
-Ao rodar `python -m eval.run_ragas` com o prompt v3, o TPD (Tokens Per Day) do Groq estava em 98.286/100.000 tokens já consumidos da sessão anterior. Resultado: apenas as 2 primeiras perguntas (ET-01, ET-02) obtiveram respostas reais; as 36 restantes receberam mensagens de erro "Rate limit reached". O RAGAS avaliou esses erros como respostas, produzindo:
+| Versão | faithfulness | answer_relevancy | context_precision | context_recall |
+|---|---|---|---|---|
+| v1 — 5 regras simples | **0.586** | **0.534** | 0.656 | **0.608** |
+| v2 — EXCLUSIVAMENTE + 4 frases | 0.429 | 0.358 | 0.634 | 0.582 |
+| v3 — anti-síntese cirúrgico | 0.457 | 0.412 | **0.659** | 0.595 |
 
-| Métrica | Valor | Interpretação |
-|---|---|---|
-| faithfulness | 0.050 | 36/38 respostas são strings de erro — inválido |
-| answer_relevancy | 0.026 | idem |
-| context_precision | 0.637 | retrieval não afetado (não usa LLM de pipeline) |
-| context_recall | 0.608 | retrieval não afetado |
+v1 domina em faithfulness e answer_relevancy. v2 e v3 pioraram os dois principais scores apesar de terem intenções distintas.
 
-Entrada marcada como `INVÁLIDO` no `ragas_scores.json`.
+---
 
-**Causa raiz:** o pipeline de coleta (38 perguntas × ~2.500 tokens ≈ 95K tokens) consome quase todo o TPD de 100K. Sessões de desenvolvimento que acontecem antes da rodada de avaliação esgotam a margem. Solução: aguardar reset do TPD (meia-noite UTC) antes de re-rodar.
+#### Anti-padrão identificado: restrições explícitas de groundedness prejudicam faithfulness
 
-**Prevenção:** usar `--max-questions 12` quando o TPD estiver parcialmente consumido; ou configurar `LLM_PROVIDER` de pipeline diferente do free tier Groq.
+**Hipótese principal:** `llama-3.3-70b-versatile` interpreta instruções como "EXCLUSIVAMENTE", "NÃO use conhecimento próprio", "NÃO adicione elaborações" como sinal para ser conservador → aumenta uso de fallback "Não encontrei essa informação..." mesmo em perguntas com contexto parcial. O RAGAS 0.4 extrai statements de cada resposta; o statement "não encontrei informação sobre X" é avaliado como **não faithful** quando o contexto contém informação relacionada a X — penalizando exatamente as respostas que a instrução anti-fallback tentou melhorar.
 
-**Próximo passo:** re-rodar `python -m eval.run_ragas` após o reset do TPD (~meia-noite UTC de 2026-03-26). Se faithfulness v3 > 0.586, o prompt está na direção correta; se ainda < 0.80, avaliar top_k=5/6 para perguntas com contexto fragmentado (PE-06, DI-01, IT-05).
+**Hipótese secundária:** a instrução de citação "indique o documento de origem" nos prompts v2/v3 pode gerar statements do tipo "Segundo o Manual de Recomendações do MS, Seção 4.4..." onde o nome exato do documento ou seção não aparece literalmente nos chunks — afirmações que RAGAS conta como não suportadas.
+
+**Lição:** para este modelo e corpus, prompts com menos restrições explícitas produzem melhor faithfulness RAGAS.
+
+---
+
+#### Nota de execução — Groq TPD esgotado (primeira tentativa)
+
+A primeira execução com v3 foi invalidada: TPD estava em 98.286/100.000 tokens. 36/38 respostas foram strings de erro ("Rate limit reached"). Entrada marcada como `INVÁLIDO` no `ragas_scores.json`. Segunda execução realizada após reset do TPD (meia-noite UTC). **Prevenção:** usar `--max-questions 12` quando TPD estiver parcialmente consumido.
+
+---
+
+#### Conclusão e próximos vetores
+
+**Ativo restaurado:** `SYSTEM_PROMPT = _SYSTEM_PROMPT_V1` (5 regras simples, faithfulness 0.586).
+
+Prompt engineering restriction-based está esgotado como vetor para este modelo. Próximas alternativas priorizadas:
+
+1. **Few-shot no prompt** — adicionar 1–2 exemplos de resposta fiel (par pergunta/resposta ideal) sem instruções restritivas. Hipótese: exemplos demonstram o comportamento sem desencadear o efeito conservador das negações.
+2. **Upgrade de modelo** — testar `gpt-4o-mini` como LLM de pipeline (já usado como juiz). Um modelo com melhor instruction-following pode seguir as regras v3 sem o efeito colateral dos fallbacks.
+3. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.66 → 0.75. Chunks mais precisos podem compensar alucinações que emergem de contexto ambíguo.
+4. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado; mais chunks podem fornecer cobertura suficiente para evitar fallbacks incorretos.
 
 ---
 
