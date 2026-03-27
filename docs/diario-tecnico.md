@@ -1382,7 +1382,36 @@ O problema: qualquer RAGAS completo + testes manuais no mesmo dia excede o TPD. 
 - Se faithfulness v4 ≈ 0.586 → few-shot neutro, teto do Llama confirmado, considerar upgrade de modelo
 - Se faithfulness v4 < 0.586 → few-shot prejudica, reverter para v1
 
-### 2.20 Sanitização Estrutural via LLM (gpt-4o-mini) ❌ Descartado
+### 2.20 Checkpointing no Pipeline de Avaliação RAGAS ✅
+
+**Data:** 2026-03-27
+
+**Problema:** o `run_ragas.py` original acumulava todas as 38 respostas em memória e salvava `ragas_detailed.json` apenas no final. Duas execuções foram invalidadas por TPD Groq esgotado (v3 e v4 na seção 2.19), custando 48h de calendário para um pipeline de 15 minutos. Se o script falhasse na pergunta 35, os ~65K tokens já gastos eram desperdiçados.
+
+**Solução implementada:**
+- Cache intermediário `eval/results/_ragas_cache.json`: cada resposta válida é persistida imediatamente após coleta (uma chamada `_save_cache()` por pergunta).
+- Lógica de resume em `_collect_results()`: perguntas com resposta válida no cache são puladas — zero tokens consumidos no próximo run.
+- `_is_valid_answer()`: strings de erro ("Rate limit", "ERRO:", "Error code:") e strings vazias não são cacheadas, garantindo retry automático.
+- Flag `--clear-cache`: apaga o cache para forçar re-coleta completa (necessário quando prompt ou índice mudam).
+- `--scores-only` preservado: continua usando `ragas_detailed.json` sem depender do cache.
+
+**Comportamento em caso de falha parcial:**
+
+```
+Run 1: coleta ET-01..ET-32 → TPD esgotado na ET-33
+        Cache: 32 respostas salvas
+Run 2 (dia seguinte): pula ET-01..ET-32 (cache hit)
+        Coleta apenas ET-33..ET-38 (~11K tokens vs. 72K do run completo)
+        RAGAS calculado com 38/38 respostas
+```
+
+**Validação:** `_is_valid_answer()` e ciclo load/save testados unitariamente sem API.
+
+**Restrição operacional mantida:** `--clear-cache` deve ser usado sempre que o prompt ou o índice mudarem, para evitar mistura de respostas de prompts diferentes.
+
+---
+
+### 2.21 Sanitização Estrutural via LLM (gpt-4o-mini) ❌ Descartado
 
 **Data:** 2026-03-26
 

@@ -6,6 +6,11 @@ Pré-requisitos:
   - Collection indexada (POST /ingest ou python -m app.scripts.ingest)
   - LLM_PROVIDER != "mock" e LLM_API_KEY válida no .env
   - pip install ragas datasets langchain-openai
+
+Checkpointing:
+  Cada resposta do pipeline é salva em _ragas_cache.json imediatamente após coleta.
+  Se o script falhar (TPD, rede), basta re-rodar — perguntas já respondidas são puladas.
+  Use --clear-cache para forçar re-coleta completa.
 """
 import asyncio
 import json
@@ -28,9 +33,35 @@ logger = logging.getLogger(__name__)
 EVAL_DIR = Path(__file__).parent
 TEST_SET = EVAL_DIR / "test_set.json"
 RESULTS_DIR = EVAL_DIR / "results"
+CACHE_PATH = RESULTS_DIR / "_ragas_cache.json"
 
 SLEEP_BETWEEN_CALLS = 15  # segundos — necessário para Groq TPM 6K tok/min com prompts de ~1500 tok
 
+
+# === Checkpointing ===
+
+def _load_cache() -> dict:
+    """Carrega respostas já coletadas do cache. Chave: question id."""
+    if CACHE_PATH.exists():
+        return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
+    return {}
+
+
+def _save_cache(cache: dict):
+    """Persiste cache após cada resposta."""
+    RESULTS_DIR.mkdir(exist_ok=True)
+    CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _is_valid_answer(answer: str) -> bool:
+    """Retorna False para strings de erro que não devem ser cacheadas."""
+    if not answer:
+        return False
+    invalid_markers = ["Rate limit", "ERRO:", "Error code:"]
+    return not any(marker in answer for marker in invalid_markers)
+
+
+# === Pipeline ===
 
 def _check_prerequisites():
     if settings.llm_provider == "mock" or settings.llm_api_key in ("mock", "", None):
@@ -63,32 +94,63 @@ async def _run_pipeline(question: str, top_k: int = 4) -> tuple[str, list[str]]:
 
 
 async def _collect_results(questions: list[dict]) -> list[dict]:
-    records = []
+    """Coleta respostas do pipeline com checkpointing por pergunta."""
+    cache = _load_cache()
+    cached_count = sum(1 for item in questions if item["id"] in cache)
+    if cached_count:
+        print(f"  Cache: {cached_count}/{len(questions)} respostas já disponíveis (pulando API)")
+
     for i, item in enumerate(questions, 1):
+        qid = item["id"]
         q = item["question"]
-        print(f"  [{i}/{len(questions)}] {q[:60]}...")
+
+        # Pular se já tem resposta válida no cache
+        if qid in cache and _is_valid_answer(cache[qid].get("answer", "")):
+            print(f"  [{i}/{len(questions)}] {qid}: cache hit (skip)")
+            continue
+
+        print(f"  [{i}/{len(questions)}] {q[:60]}...", end=" ", flush=True)
         try:
             answer, contexts = await _run_pipeline(q)
-            records.append({
-                "id": item["id"],
-                "question": q,
-                "answer": answer,
-                "contexts": contexts,
-                "ground_truth": item["ground_truth"],
-                "category": item["category"],
-            })
+
+            if _is_valid_answer(answer):
+                cache[qid] = {
+                    "id": qid,
+                    "question": q,
+                    "answer": answer,
+                    "contexts": contexts,
+                    "ground_truth": item["ground_truth"],
+                    "category": item["category"],
+                }
+                _save_cache(cache)
+                print("OK")
+            else:
+                # Resposta inválida (rate limit, erro) — não cachear, exibir aviso
+                print(f"INVALIDO: {answer[:80]}")
+
         except Exception as e:
-            logger.error("Erro na pergunta %s: %s", item["id"], e)
-            records.append({
-                "id": item["id"],
-                "question": q,
-                "answer": f"ERRO: {e}",
-                "contexts": [],
-                "ground_truth": item["ground_truth"],
-                "category": item["category"],
-            })
+            logger.error("Erro na pergunta %s: %s", qid, e)
+            print(f"ERRO: {e}")
+            # Não cachear erros — permite retry na próxima execução
+
         if i < len(questions):
             time.sleep(SLEEP_BETWEEN_CALLS)
+
+    # Montar records na ordem original do test set
+    records = []
+    missing = []
+    for item in questions:
+        qid = item["id"]
+        if qid in cache and _is_valid_answer(cache[qid].get("answer", "")):
+            records.append(cache[qid])
+        else:
+            missing.append(qid)
+
+    if missing:
+        print(f"\nAVISO: {len(missing)} perguntas sem resposta válida: {missing}")
+        print("Re-rode o script para tentar novamente (o cache preserva as respostas já coletadas).")
+
+    print(f"\n{len(records)}/{len(questions)} respostas válidas para avaliação RAGAS")
     return records
 
 
@@ -203,7 +265,7 @@ def _print_summary(result) -> dict:
         except (KeyError, TypeError):
             return 0
 
-    total = len(records) if hasattr(result, '__len__') else "?"
+    total = len(records) if "records" in dir() else "?"
 
     print("\n=== Resultados RAGAS ===")
     any_score = False
@@ -244,7 +306,7 @@ def _check_fallback(out_of_scope: list[dict]):
             print(f"  OK  (sem chunks) — {item['question'][:60]}")
         else:
             max_score = max(c.score for c in chunks)
-            print(f"  {'OK ' if max_score < 0.50 else 'AVISO'} (score máx: {max_score:.3f}) — {item['question'][:60]}")
+            print(f"  {'OK ' if max_score < 0.50 else 'AVISO'} (score max: {max_score:.3f}) — {item['question'][:60]}")
 
 
 def main():
@@ -265,6 +327,12 @@ def main():
              "Útil para caber no TPM do Groq free tier (6K tokens/min). "
              "Recomendado: --max-questions 12 (48 jobs, ~57K tokens total).",
     )
+    parser.add_argument(
+        "--clear-cache",
+        action="store_true",
+        help="Apaga o cache de respostas intermediárias (_ragas_cache.json) antes de coletar. "
+             "Use para forçar re-coleta completa (ex: prompt mudou, re-indexação feita).",
+    )
     args = parser.parse_args()
 
     print("=== Avaliação RAGAS — Chatbot ILTB ===\n")
@@ -284,8 +352,19 @@ def main():
         _check_prerequisites()
         in_scope, out_of_scope = _load_test_set()
 
-        print("\nExecutando pipeline RAG para cada pergunta...")
+        if args.clear_cache:
+            if CACHE_PATH.exists():
+                CACHE_PATH.unlink()
+                print(f"Cache limpo: {CACHE_PATH.name}")
+            else:
+                print("Cache não existia (nada a limpar).")
+
+        print("\nColetando respostas do pipeline RAG (com checkpointing)...")
         records = asyncio.run(_collect_results(in_scope))
+
+        if not records:
+            print("ERRO: Nenhuma resposta válida coletada. Verifique TPD do Groq e re-rode.")
+            sys.exit(1)
 
         print("\nSalvando resultados detalhados...")
         RESULTS_DIR.mkdir(exist_ok=True)
