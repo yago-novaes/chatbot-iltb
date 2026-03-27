@@ -1251,7 +1251,7 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 2. Avaliar `top_k=5` ou `top_k=6` para PE-06/DI-01/IT-05 (contexto insuficiente)
 3. Re-avaliação RAGAS pós-prompt-engineering para fechar o gap de `faithfulness`
 
-### 2.19 Prompt Engineering para Faithfulness ❌ (anti-padrão identificado)
+### 2.19 Prompt Engineering para Faithfulness ❌ (teto do Llama 3.3 70B — v1 permanece melhor)
 
 **Data:** 2026-03-26
 
@@ -1299,15 +1299,16 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 
 ---
 
-#### Consolidação — quadro comparativo das 3 versões
+#### Consolidação — quadro comparativo final (v1–v4)
 
 | Versão | faithfulness | answer_relevancy | context_precision | context_recall |
 |---|---|---|---|---|
 | v1 — 5 regras simples | **0.586** | **0.534** | 0.656 | **0.608** |
 | v2 — EXCLUSIVAMENTE + 4 frases | 0.429 | 0.358 | 0.634 | 0.582 |
 | v3 — anti-síntese cirúrgico | 0.457 | 0.412 | **0.659** | 0.595 |
+| v4 — few-shot (2 exemplos) | 0.574 | 0.439 | 0.653 | 0.582 |
 
-v1 domina em faithfulness e answer_relevancy. v2 e v3 pioraram os dois principais scores apesar de terem intenções distintas.
+v1 domina em faithfulness (+0.012 vs v4) e answer_relevancy. Nenhuma variação de prompt ultrapassou o baseline v1. Teto do Llama 3.3 70B identificado neste corpus.
 
 ---
 
@@ -1327,20 +1328,19 @@ A primeira execução com v3 foi invalidada: TPD estava em 98.286/100.000 tokens
 
 ---
 
-#### Conclusão parcial (v1/v2/v3) e próximos vetores
+#### Conclusão definitiva — prompt engineering esgotado como vetor
 
-**Ativo atual:** `SYSTEM_PROMPT = _SYSTEM_PROMPT_V4` (few-shot, aguardando validação definitiva).
+**Ativo atual:** `SYSTEM_PROMPT = _SYSTEM_PROMPT_V1` (revertido após v4).
 
-Prompt engineering restriction-based está esgotado como vetor para este modelo. Próximas alternativas priorizadas:
+Quatro variantes de prompt testadas; nenhuma superou v1. O teto de faithfulness com Llama 3.3 70B neste corpus parece estar em ~0.59. Próximas alternativas priorizadas:
 
-1. **Few-shot no prompt** — ver seção abaixo (v4 implementado, aguardando RAGAS válido).
-2. **Upgrade de modelo** — testar `gpt-4o-mini` como LLM de pipeline (já usado como juiz).
-3. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.66 → 0.75.
-4. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado.
+1. **Upgrade de modelo** — testar `gpt-4o-mini` como LLM de pipeline (já usado como juiz RAGAS).
+2. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.65 → 0.75.
+3. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado.
 
 ---
 
-#### Prompt v4 — few-shot (2 exemplos, sem negações) ⚠️ Aguardando validação
+#### Prompt v4 — few-shot (2 exemplos, sem negações) ❌ DESCONTINUADO
 
 **Data:** 2026-03-26/27
 
@@ -1360,9 +1360,20 @@ Prompt engineering restriction-based está esgotado como vetor para este modelo.
 - IM-01: citação específica de fonte (patch_interacoes_medicamentosas.md), sem síntese ✅
 - DI-01: fallback parcial correto — admite lacuna sem fallback total ✅
 
-**RAGAS:** Duas tentativas inválidas por TPD Groq esgotado.
+**RAGAS final (2026-03-27, LLM juiz: gpt-4o-mini):**
 
-**Padrão de falha identificado — Groq TPD 100K/dia:**
+| Métrica | v4 | v1 (ref) | Δ |
+|---|---|---|---|
+| faithfulness | 0.574 | **0.586** | –0.012 |
+| answer_relevancy | 0.439 | **0.534** | –0.095 |
+| context_precision | 0.653 | 0.656 | –0.003 |
+| context_recall | 0.582 | **0.608** | –0.026 |
+
+v4 ficou abaixo de v1 em todas as métricas. Few-shot não trouxe ganho de faithfulness — hipótese refutada.
+
+**Diagnóstico provável:** os exemplos do v4 aumentam o tamanho do prompt (+300 tokens), reduzindo a atenção efetiva do modelo ao contexto real. Além disso, o tom mais "suave" pode ter reduzido o alinhamento com o padrão de citação.
+
+**Padrão de falha operacional — Groq TPD 100K/dia:**
 
 | Operação | Tokens aprox. |
 |---|---|
@@ -1371,16 +1382,9 @@ Prompt engineering restriction-based está esgotado como vetor para este modelo.
 | Teste manual (3 × ~1.900) | ~5.700 |
 | **Total máximo seguro** | **< 100.000** |
 
-O problema: qualquer RAGAS completo + testes manuais no mesmo dia excede o TPD. A v4 run de 2026-03-27T00:06Z começou antes da meia-noite UTC (com TPD ainda acumulado do v3 run de 12:57Z). ET-01 e ET-02 passaram; ET-03 em diante foram erros.
+Duas tentativas inválidas por TPD: corrida de 2026-03-27T00:06Z começou com TPD quase esgotado pelo v3 run de 12:57Z do dia anterior. Run válido executado em 2026-03-27 como PRIMEIRA operação após reset.
 
-**Restrição operacional confirmada:** o pipeline de avaliação completo (38 perguntas) deve ser a PRIMEIRA e ÚNICA operação Groq do dia. Qualquer chamada anterior (teste manual, re-run parcial) invalida a corrida.
-
-**Próximo passo:** re-rodar `python -m eval.run_ragas` como PRIMEIRA operação após reset do TPD (meia-noite UTC de 2026-03-27 → 2026-03-28). Prompt v4 permanece ativo.
-
-**Cenários esperados:**
-- Se faithfulness v4 > 0.586 → few-shot funciona, documentar como técnica preferida para LLMs open-source
-- Se faithfulness v4 ≈ 0.586 → few-shot neutro, teto do Llama confirmado, considerar upgrade de modelo
-- Se faithfulness v4 < 0.586 → few-shot prejudica, reverter para v1
+**Resultado:** `SYSTEM_PROMPT` revertido para `_SYSTEM_PROMPT_V1`. Prompt engineering esgotado como vetor. Próximo foco: modelo ou retrieval.
 
 ### 2.20 Checkpointing no Pipeline de Avaliação RAGAS ✅
 

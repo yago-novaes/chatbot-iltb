@@ -2,10 +2,11 @@
 Prompts do sistema — separados do código para facilitar iteração.
 
 Histórico de versões:
-  v1 — instrução básica de groundedness (5 regras) — faithfulness 0.586
+  v1 — instrução básica de groundedness (5 regras) — faithfulness 0.586 ← MELHOR
   v2 — 2026-03-26 — reforço anti-síntese + brevidade — DESCONTINUADO — faithfulness 0.429
   v3 — 2026-03-26 — anti-síntese cirúrgico sem limite — DESCONTINUADO — faithfulness 0.457
-  v4 — 2026-03-26 — few-shot (2 exemplos, sem negações) — (ver seção 2.19 do diário)
+  v4 — 2026-03-27 — few-shot (2 exemplos, sem negações) — DESCONTINUADO — faithfulness 0.574
+       (ver seção 2.19 do diário — teto do Llama 3.3 70B identificado)
 
 Nota de arquitetura: o {context} chega pelo user message (client.py:_build_messages),
 não pelo system prompt. Os exemplos do v4 são autocontidos no system prompt.
@@ -117,5 +118,6 @@ Recomendo verificar diretamente o Manual de Recomendações do MS.
 === FIM DOS EXEMPLOS ===
 """
 
-# SYSTEM_PROMPT ativo — v4 (few-shot, sem negações)
-SYSTEM_PROMPT = _SYSTEM_PROMPT_V4
+# SYSTEM_PROMPT ativo — v1 (melhor resultado: faithfulness 0.586)
+# v4 few-shot testado em 2026-03-27 → 0.574 < 0.586 → revertido para v1
+SYSTEM_PROMPT = _SYSTEM_PROMPT_V1
