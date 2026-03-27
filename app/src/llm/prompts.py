@@ -2,15 +2,13 @@
 Prompts do sistema — separados do código para facilitar iteração.
 
 Histórico de versões:
-  v1 — instrução básica de groundedness (5 regras) — ATIVO — faithfulness 0.586 (melhor)
+  v1 — instrução básica de groundedness (5 regras) — faithfulness 0.586
   v2 — 2026-03-26 — reforço anti-síntese + brevidade — DESCONTINUADO — faithfulness 0.429
   v3 — 2026-03-26 — anti-síntese cirúrgico sem limite — DESCONTINUADO — faithfulness 0.457
+  v4 — 2026-03-26 — few-shot (2 exemplos, sem negações) — (ver seção 2.19 do diário)
 
-Conclusão da sessão de prompt engineering (seção 2.19 do diário):
-  Prompts com restrições explícitas ("EXCLUSIVAMENTE", "NÃO adicione") pioraram a faithfulness.
-  Hipótese: llama-3.3-70b-versatile interpreta restrições como sinal para usar fallbacks, e o
-  RAGAS penaliza "Não encontrei..." como afirmação não suportada quando o contexto tem info parcial.
-  v1 permanece como prompt ativo. Próximo vetor: few-shot ou upgrade de modelo.
+Nota de arquitetura: o {context} chega pelo user message (client.py:_build_messages),
+não pelo system prompt. Os exemplos do v4 são autocontidos no system prompt.
 """
 
 # Prompt v1 — ATIVO (faithfulness 0.586 — melhor resultado)
@@ -89,5 +87,35 @@ Consulte o Manual de Recomendações do MS."
 6. Não faça diagnósticos nem prescrições — apenas forneça informação de protocolo.
 """
 
-# SYSTEM_PROMPT ativo — aponta para v1 (melhor resultado: faithfulness 0.586)
-SYSTEM_PROMPT = _SYSTEM_PROMPT_V1
+# Prompt v4 — few-shot (2 exemplos de comportamento, sem negações restritivas)
+# Hipótese: exemplos demonstram o padrão desejado sem desencadear efeito conservador
+# Nota: {context} NÃO está aqui — chega pelo user message (client.py)
+_SYSTEM_PROMPT_V4 = """\
+Você é um assistente especializado nos protocolos de ILTB (Infecção Latente por Tuberculose) \
+do Ministério da Saúde do Brasil. Seu público são enfermeiros da atenção básica.
+
+Responda com base nos trechos de protocolo fornecidos. \
+Cite o documento de origem quando possível. \
+Não faça diagnósticos — oriente sobre os protocolos.
+
+=== EXEMPLO 1 — informação presente no contexto ===
+Contexto: "A dose de isoniazida para adultos é de 5 a 10 mg/kg/dia, com dose máxima de \
+300 mg/dia. O tratamento deve durar 6 ou 9 meses (180 ou 270 doses)."
+Pergunta: "Qual a dose de isoniazida para adultos?"
+Resposta: A dose de isoniazida para adultos é de 5 a 10 mg/kg/dia, com dose máxima de \
+300 mg/dia. O tratamento pode durar 6 meses (180 doses) ou 9 meses (270 doses) \
+(Recomendações para o Controle da TB).
+
+=== EXEMPLO 2 — informação parcialmente ausente do contexto ===
+Contexto: "O esquema 3HP é composto por isoniazida + rifapentina, \
+administrado semanalmente por 12 semanas."
+Pergunta: "O 3HP pode ser usado em gestantes?"
+Resposta: Os trechos consultados descrevem o esquema 3HP (isoniazida + rifapentina semanal \
+por 12 semanas), mas não contêm informações específicas sobre o uso em gestantes. \
+Recomendo verificar diretamente o Manual de Recomendações do MS.
+
+=== FIM DOS EXEMPLOS ===
+"""
+
+# SYSTEM_PROMPT ativo — v4 (few-shot, sem negações)
+SYSTEM_PROMPT = _SYSTEM_PROMPT_V4

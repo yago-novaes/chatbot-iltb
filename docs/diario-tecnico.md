@@ -1327,16 +1327,60 @@ A primeira execução com v3 foi invalidada: TPD estava em 98.286/100.000 tokens
 
 ---
 
-#### Conclusão e próximos vetores
+#### Conclusão parcial (v1/v2/v3) e próximos vetores
 
-**Ativo restaurado:** `SYSTEM_PROMPT = _SYSTEM_PROMPT_V1` (5 regras simples, faithfulness 0.586).
+**Ativo atual:** `SYSTEM_PROMPT = _SYSTEM_PROMPT_V4` (few-shot, aguardando validação definitiva).
 
 Prompt engineering restriction-based está esgotado como vetor para este modelo. Próximas alternativas priorizadas:
 
-1. **Few-shot no prompt** — adicionar 1–2 exemplos de resposta fiel (par pergunta/resposta ideal) sem instruções restritivas. Hipótese: exemplos demonstram o comportamento sem desencadear o efeito conservador das negações.
-2. **Upgrade de modelo** — testar `gpt-4o-mini` como LLM de pipeline (já usado como juiz). Um modelo com melhor instruction-following pode seguir as regras v3 sem o efeito colateral dos fallbacks.
-3. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.66 → 0.75. Chunks mais precisos podem compensar alucinações que emergem de contexto ambíguo.
-4. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado; mais chunks podem fornecer cobertura suficiente para evitar fallbacks incorretos.
+1. **Few-shot no prompt** — ver seção abaixo (v4 implementado, aguardando RAGAS válido).
+2. **Upgrade de modelo** — testar `gpt-4o-mini` como LLM de pipeline (já usado como juiz).
+3. **Retrieval híbrido (dense + sparse)** — melhorar context_precision de 0.66 → 0.75.
+4. **Top_k=5/6 para perguntas específicas** — PE-06, DI-01, IT-05 têm contexto fragmentado.
+
+---
+
+#### Prompt v4 — few-shot (2 exemplos, sem negações) ⚠️ Aguardando validação
+
+**Data:** 2026-03-26/27
+
+**Hipótese:** exemplos de comportamento correto no system prompt demonstram o padrão desejado sem desencadear o efeito conservador das negações restritivas.
+
+**Arquitetura:** os exemplos ficam no system prompt (`_SYSTEM_PROMPT_V4`). O contexto real chega pelo user message (`client.py:_build_messages`) — não há `{context}` no system prompt.
+
+**Mudanças vs v1:**
+- Tom conversacional (sem "REGRAS OBRIGATÓRIAS" em caixa alta)
+- Exemplo 1: resposta direta com citação de fonte (demonstra comportamento desejado)
+- Exemplo 2: admissão parcial de lacuna sem fallback total (demonstra o meio-termo correto)
+- Zero negações ("NÃO", "NUNCA", "EXCLUSIVAMENTE")
+- ~300 tokens extras no prompt (~15% de aumento)
+
+**Teste manual (3 perguntas):**
+- ET-01: resposta direta, citação correta ("Recomendações para o Controle da Tuberculose") ✅
+- IM-01: citação específica de fonte (patch_interacoes_medicamentosas.md), sem síntese ✅
+- DI-01: fallback parcial correto — admite lacuna sem fallback total ✅
+
+**RAGAS:** Duas tentativas inválidas por TPD Groq esgotado.
+
+**Padrão de falha identificado — Groq TPD 100K/dia:**
+
+| Operação | Tokens aprox. |
+|---|---|
+| RAGAS completo v1/v2/v3 (38 × ~1.600) | ~60.800 |
+| RAGAS completo v4 (38 × ~1.900) | ~72.200 |
+| Teste manual (3 × ~1.900) | ~5.700 |
+| **Total máximo seguro** | **< 100.000** |
+
+O problema: qualquer RAGAS completo + testes manuais no mesmo dia excede o TPD. A v4 run de 2026-03-27T00:06Z começou antes da meia-noite UTC (com TPD ainda acumulado do v3 run de 12:57Z). ET-01 e ET-02 passaram; ET-03 em diante foram erros.
+
+**Restrição operacional confirmada:** o pipeline de avaliação completo (38 perguntas) deve ser a PRIMEIRA e ÚNICA operação Groq do dia. Qualquer chamada anterior (teste manual, re-run parcial) invalida a corrida.
+
+**Próximo passo:** re-rodar `python -m eval.run_ragas` como PRIMEIRA operação após reset do TPD (meia-noite UTC de 2026-03-27 → 2026-03-28). Prompt v4 permanece ativo.
+
+**Cenários esperados:**
+- Se faithfulness v4 > 0.586 → few-shot funciona, documentar como técnica preferida para LLMs open-source
+- Se faithfulness v4 ≈ 0.586 → few-shot neutro, teto do Llama confirmado, considerar upgrade de modelo
+- Se faithfulness v4 < 0.586 → few-shot prejudica, reverter para v1
 
 ### 2.20 Sanitização Estrutural via LLM (gpt-4o-mini) ❌ Descartado
 
