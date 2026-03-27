@@ -1468,6 +1468,112 @@ A queda de `context_recall` em 15 pontos é o sinal mais informativo: o retrieve
 
 ---
 
+### 2.22 Teste A/B e Teto Arquitetural (LGPD vs. Performance) 🔄
+
+**Data:** 2026-03-27
+
+**Contexto:** após 4 variantes de prompt e 2 experimentos de corpus, o faithfulness com Groq/Llama 3.3 70B estabilizou em ~0.586 (v1, top_k=4). Este experimento fecha a Fase 2 com dois testes finais:
+
+1. **Teste top_k=5 (Groq/Llama):** aumentar o contexto recuperado melhora context_recall e, indiretamente, faithfulness?
+2. **Teste A/B LLM (gpt-4o-mini):** qual é o teto do pipeline RAG quando a restrição de LGPD é removida?
+
+---
+
+#### 📌 Decisão Arquitetural: Groq/Llama como LLM de Produção (LGPD)
+
+O `llama-3.3-70b-versatile` via Groq será mantido como LLM de produção no piloto.
+
+**Motivação:** o chatbot opera em contexto clínico com dados de enfermeiras e potencialmente nomes de pacientes nas perguntas. Enviar queries para APIs proprietárias (OpenAI, Google) sem DPA/BAA assinado é incompatível com a LGPD e com as diretrizes éticas do CEP-UFES. O Groq processa em infraestrutura dedicada com termos de serviço mais favoráveis para dados sensíveis, mas a recomendação definitiva para produção institucional é Azure OpenAI ou AWS Bedrock com BAA/DPA firmado.
+
+**Implicação:** o faithfulness RAGAS de ~0.59 é o teto esperado em produção. Valores superiores com gpt-4o-mini documentados abaixo são referência para justificar eventual migração.
+
+---
+
+#### Nota Metodológica sobre o RAGAS e Faithfulness
+
+O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos chunks ("Segundo o Manual, Seção 4.4..."), (b) paráfrases clinicamente corretas que se afastam do verbatim dos chunks, (c) respostas de fallback parcial ("Os trechos descrevem X mas não Y") quando o contexto contém informação marginal sobre Y. O faithfulness de ~0.59 subestima a qualidade real — a validação manual (12/12 perguntas corretas, 0 alucinações) confirma viabilidade clínica para a POC.
+
+---
+
+#### Teste 1 — top_k=5, Groq/Llama ⚠️ PARCIAL (TPD esgotado)
+
+**Hipótese:** recuperar 5 chunks em vez de 4 aumenta context_recall (especialmente PE-06, DI-01, IT-05 com contexto fragmentado) e indiretamente reduz fallbacks incorretos.
+
+**Configuração:**
+- `RETRIEVER_TOP_K=5` no `.env`
+- `SYSTEM_PROMPT=_SYSTEM_PROMPT_V1`
+- LLM pipeline: Groq/llama-3.3-70b-versatile
+- LLM juiz: gpt-4o-mini
+- `--clear-cache` (top_k diferente → respostas diferentes)
+
+**Complicação operacional:** o TPD do Groq estava parcialmente consumido pelo run de validação da seção 2.19 (v4 few-shot). Apenas 10/38 respostas coletadas antes de 429 TPD. O checkpointing salvou as 10 respostas.
+
+**Scores com 10/38 amostras (NÃO representativo):**
+
+| Métrica | Valor | Observação |
+|---|---|---|
+| faithfulness | **0.816** | Apenas ET-01..ET-07 + MO-01..MO-03 — categorias mais fáceis |
+| answer_relevancy | 0.756 | Biased upward |
+| context_precision | **0.800** | Idem |
+| context_recall | 0.767 | Idem |
+
+**Nota:** scores inflados pois as 10 questões são as mais diretas do test set (esquemas terapêuticos numéricos + frequência de monitoramento). As categorias problemáticas (interações medicamentosas, populações especiais, diagnóstico) não foram avaliadas. **Pendente:** re-run completo após reset TPD.
+
+---
+
+#### Teste 2 — A/B: gpt-4o-mini como LLM de Pipeline, top_k=5 ✅ (38/38)
+
+**Objetivo:** documentar o teto do pipeline RAG sem a restrição de LGPD. Referência para a monografia e para justificar eventual migração para Azure OpenAI em produção institucional.
+
+**Configuração:**
+- `LLM_PROVIDER=openai`, `LLM_MODEL=gpt-4o-mini`, `LLM_BASE_URL=` (padrão OpenAI)
+- `RETRIEVER_TOP_K=5`
+- `SYSTEM_PROMPT=_SYSTEM_PROMPT_V1` (mesmo prompt — isolando variável LLM)
+- LLM juiz: gpt-4o-mini (mesmo modelo)
+- `--clear-cache`, variáveis de ambiente explícitas (ENV VAR de sistema sobrescrevia `.env`)
+- LLM revertido para Groq imediatamente após o teste
+
+**Complicação técnica:** variável de ambiente de sistema (`LLM_PROVIDER=groq`) sobrescrevia o `.env` via pydantic-settings. Primeira tentativa falhou — o script usou Groq inadvertidamente. Solução: passar env vars explicitamente no comando (`LLM_PROVIDER=openai ... python -m eval.run_ragas`). 38/38 respostas coletadas sem rate limit (gpt-4o-mini não tem TPD diário restritivo).
+
+**Resultados (38/38 amostras):**
+
+| Métrica | gpt-4o-mini | Groq/Llama v1, top_k=4 (ref) | Δ |
+|---|---|---|---|
+| faithfulness | 0.525 | **0.586** | –0.061 |
+| answer_relevancy | 0.524 | **0.534** | –0.010 |
+| context_precision | 0.657 | 0.656 | +0.001 |
+| context_recall | 0.583 | **0.608** | –0.025 |
+
+**Resultado surpresa:** gpt-4o-mini produziu faithfulness **menor** que Groq/Llama v1. Era esperado o oposto.
+
+**Análise:**
+1. **Auto-avaliação mais estrita:** quando LLM de pipeline e LLM juiz são o mesmo modelo (gpt-4o-mini), o juiz pode aplicar critério mais rígido por reconhecer os padrões de síntese do próprio modelo. Groq/Llama como pipeline + gpt-4o-mini como juiz = combinação mais favorável.
+2. **Maior capacidade de síntese:** gpt-4o-mini é mais capaz de combinar e elaborar informações de múltiplos chunks. Isso gera respostas mais completas para o usuário, mas o RAGAS penaliza qualquer afirmação além do verbatim dos chunks.
+3. **Prompt v1 foi calibrado para Llama:** as 5 regras do v1 ("SOMENTE com base nos trechos") funcionam melhor com o Llama 70B que tende a ser mais conservador. O gpt-4o-mini ignora parcialmente essa instrução por ter tendência natural a sintetizar.
+
+**Conclusão:** para o pipeline de avaliação RAGAS, Groq/Llama é o LLM de pipeline mais adequado com este corpus e prompt. O teto sem restrição de LGPD documentado aqui (0.525) é **menor** que o teto do Llama (0.586) — invertendo a hipótese original.
+
+**LLM revertido:** `.env` restaurado para `LLM_PROVIDER=groq` imediatamente após o teste.
+
+---
+
+#### Quadro Comparativo Final — Fase 2 (resultados disponíveis)
+
+| Config | n | faithfulness | answer_rel | ctx_prec | ctx_recall |
+|---|---|---|---|---|---|
+| baseline (pré-sanitização) | 38 | 0.375 | 0.310 | 0.548 | 0.382 |
+| v1, top_k=4, Groq (melhor completo) | 38 | **0.586** | **0.534** | 0.656 | **0.608** |
+| v1, top_k=5, Groq (PARCIAL — biased) | 10 | 0.816⚠️ | 0.756⚠️ | 0.800⚠️ | 0.767⚠️ |
+| v1, top_k=5, gpt-4o-mini (A/B teto) | 38 | 0.525 | 0.524 | **0.657** | 0.583 |
+
+⚠️ = sample biased (apenas ET+MO, categorias mais fáceis)
+
+**Resultado definitivo disponível:** top_k=4, Groq/Llama, v1 permanece o melhor resultado completo (38/38).
+
+**Pendência:** re-run Groq top_k=5 com 38/38 amostras (28 pendentes em cache) para comparação justa. Executar amanhã como PRIMEIRA operação após reset TPD.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
