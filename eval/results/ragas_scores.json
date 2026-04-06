@@ -159,5 +159,15 @@
     "answer_relevancy": 0.4211,
     "context_precision": 0.6396,
     "context_recall": 0.4595
+  },
+  {
+    "timestamp": "2026-04-06T01:42:56Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 1,
+    "note": "INVALIDO — TPD Groq esgotado. Chunker refatorado (fronteiras hierarquicas) + 898 chunks indexados. Apenas 1/38 resposta valida (ET-01). Re-run pendente apos reset TPD. Desconsiderar scores.",
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.9483,
+    "context_precision": 1.0,
+    "context_recall": 0.5
   }
 ]
