@@ -23,7 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.src.config import settings
-from app.src.llm.client import generate
+from app.src.llm.client import TPDExhaustedError, generate
 from app.src.rag.ingestion.indexer import collection_exists
 from app.src.rag.retriever import retrieve
 
@@ -35,7 +35,7 @@ TEST_SET = EVAL_DIR / "test_set.json"
 RESULTS_DIR = EVAL_DIR / "results"
 CACHE_PATH = RESULTS_DIR / "_ragas_cache.json"
 
-SLEEP_BETWEEN_CALLS = 15  # segundos — necessário para Groq TPM 6K tok/min com prompts de ~1500 tok
+SLEEP_BETWEEN_CALLS = 20  # segundos — Groq TPM 6K tok/min, prompts ~1700 tok: 3 req/min = ~5.1K tok/min
 
 
 # === Checkpointing ===
@@ -125,8 +125,14 @@ async def _collect_results(questions: list[dict]) -> list[dict]:
                 _save_cache(cache)
                 print("OK")
             else:
-                # Resposta inválida (rate limit, erro) — não cachear, exibir aviso
+                # Resposta inválida (erro genérico) — não cachear, exibir aviso
                 print(f"INVALIDO: {answer[:80]}")
+
+        except TPDExhaustedError as e:
+            # Limite diário esgotado — abortar imediatamente, cache já salvo até aqui
+            print(f"\nTPD ESGOTADO: {e}")
+            print("Aguarde o reset (~24h, meia-noite UTC) e rode sem --clear-cache para retomar.")
+            break
 
         except Exception as e:
             logger.error("Erro na pergunta %s: %s", qid, e)
