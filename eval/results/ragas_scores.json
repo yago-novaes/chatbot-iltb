@@ -114,5 +114,41 @@
     "answer_relevancy": 0.5244,
     "context_precision": 0.6572,
     "context_recall": 0.5833
+  },
+  {
+    "timestamp": "2026-04-02T20:54:01Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.567,
+    "answer_relevancy": 0.5497,
+    "context_precision": 0.7208,
+    "context_recall": 0.5202
+  },
+  {
+    "timestamp": "2026-04-02T21:03:43Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 28,
+    "faithfulness": 0.6583,
+    "answer_relevancy": 0.6594,
+    "context_precision": 0.7649,
+    "context_recall": 0.6464
+  },
+  {
+    "timestamp": "2026-04-03T03:48:57Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.5616,
+    "answer_relevancy": 0.5318,
+    "context_precision": 0.7083,
+    "context_recall": 0.5702
+  },
+  {
+    "timestamp": "2026-04-06T00:00:46Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.4614,
+    "answer_relevancy": 0.3758,
+    "context_precision": 0.5972,
+    "context_recall": 0.4079
   }
 ]

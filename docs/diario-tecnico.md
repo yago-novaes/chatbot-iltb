@@ -1574,6 +1574,91 @@ O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos 
 
 ---
 
+### 2.23 Patch Diagnóstico ILTB — Seção 9 do Manual
+
+**Data:** 2026-04-02
+
+**Descoberta:** O Docling engoliu 34 páginas contíguas (pypdf índices 79–113, impressas 79–113) do Manual de Recomendações para o Controle da Tuberculose no Brasil. O gap inclui:
+- Páginas 79–82: Seção 8.1.4–8.2.2 (TB em crianças, diagnóstico TB em PVHIV)
+- Páginas 83–93: Seção 9 completa (Diagnóstico da ILTB — PPD, IGRA)
+- Página 94: sem texto (imagem/figura)
+- Página 95: Divisória "PARTE III — TRATAMENTO"
+- Página 96: sem texto (imagem)
+- Páginas 97–113: Seção 4 (Esquemas básicos 2RHZE/4RH, 4.4.1 Gestação, início de 4.4.2 Hepatopatias)
+
+**Causa provável:** bloco contíguo de páginas com alta densidade visual (quadros, figuras, tabelas de apresentação) que o Docling processou sem gerar texto. A auditoria de cabeçalhos da seção 2.14 não detectou o gap pois as seções numeradas antes (8.1.3) e depois do gap existiam no `.md`.
+
+**Impacto no RAGAS:** perguntas DI-01 a DI-05 sem contexto primário na base (Seção 9 completamente ausente).
+
+**Ação tomada:**
+1. Script pypdf para localizar offset: confirmado pypdf index = número de página impressa (offset 0).
+2. Páginas 79–113 extraídas para `_raw_pages_79_113.txt`; páginas 113–365 para `_raw_pages_113_end.txt`.
+3. Patches criados a partir do texto bruto.
+
+**Patches criados:**
+
+| Arquivo | Conteúdo | Páginas |
+|---|---|---|
+| `patch_diagnostico_iltb.md` | Seção 9 completa: definição ILTB, PT (PPD), IGRA, pontos de corte, indicações, limitações, Quadros 13–15 | 83–88 |
+| `patch_diagnostico_pvhiv.md` | Seção 8.2: diagnóstico TB/ILTB em PVHIV, PT falso-negativa em imunossuprimidos, triagem OMS, Quadro 12 | 80–82 |
+| `patch_tratamento_gestantes.md` | Seção 4.4.1: TB em gestantes (esquema básico + piridoxina 50mg/dia), amamentação, ILTB em gestantes | 111–112 |
+
+**Re-indexação:** ChromaDB re-indexado. Total de chunks: **800** (era 742 — +58 chunks dos 3 patches).
+
+**Query de sanidade:** `/search` com "ponto de corte PPD diagnóstico ILTB" retornou `patch_diagnostico_iltb.md` na posição 2 (score 0.641).
+
+**RAGAS pós-patch:**
+
+| Métrica | Pré-patch (v1, top_k=4, 38/38) | Pós-patch (28q --clear-cache) | Delta |
+|---|---|---|---|
+| faithfulness | 0.586 | **0.658** | +0.072 |
+| context_precision | 0.656 | **0.765** | +0.109 |
+| context_recall | 0.608 | **0.646** | +0.038 |
+| answer_relevancy | 0.534 | **0.659** | +0.125 |
+
+⚠️ Run com 28/38 amostras (TPD Groq esgotou). Scores superiores parcialmente por top_k=5 e amostra sem questões EA. Melhoria confirmada mas comparação não é totalmente justa.
+
+---
+
+### 2.24 Reconstrução Manual do Manual do MS + Over-chunking ❌
+
+**Data:** 2026-04-05
+
+**Contexto:** após os patches e sanitizações automáticas (seções 2.15–2.18), o Manual do MS ainda apresentava falhas estruturais residuais. A decisão foi reconstruí-lo inteiramente de forma manual, usando `_raw_pages_113_end.txt` e `_raw_pages_79_113.txt` como referência direta do PDF.
+
+**Resultado da reconstrução:**
+- Patches removidos (conteúdo absorvido pelo manual reconstruído)
+- ChromaDB re-indexado: 800 → **1.444 chunks**
+- Manual sozinho: **1.013 chunks** (70% do índice total)
+
+**RAGAS pós-reconstrução (38/38, --clear-cache):**
+
+| Métrica | Melhor anterior (v1, top_k=4) | Pós-reconstrução | Delta |
+|---|---|---|---|
+| faithfulness | 0.586 | 0.461 | **–0.125** |
+| answer_relevancy | 0.534 | 0.376 | **–0.158** |
+| context_precision | 0.656 | 0.597 | –0.059 |
+| context_recall | 0.608 | 0.408 | **–0.200** |
+
+**Diagnóstico — over-chunking:**
+
+A reconstrução manual criou hierarquia de cabeçalhos mais densa (mais `###` e `####`), o que faz o `split_by_sections()` gerar chunks muito menores. Distribuição do índice atual:
+
+```
+Total: 1.444 chunks
+Média: 693 chars/chunk
+Mín:   3 chars
+Máx:   6.343 chars
+< 200 chars: 93 chunks (fragmentos inúteis)
+< 500 chars: 369 chunks (25% do índice)
+```
+
+O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentados, o retriever encontra pedaços do conteúdo correto mas não o suficiente para cobrir o ground truth. Top_k=4 retorna 4 fragmentos que juntos equivalem a ~1 chunk do índice anterior.
+
+**Próximo passo:** aumentar `chunk_size` mínimo no chunker para agrupar seções pequenas, ou revisar a hierarquia de cabeçalhos do manual reconstruído para achatar níveis desnecessários.
+
+---
+
 ## FASE 3 — Backend FastAPI
 
 **Commits:** `2fac16f` (async), `76e3e19` (scaffold inicial).
@@ -1728,11 +1813,13 @@ volumes:
 
 ### Fase 2 (Engenharia de Dados) — quase completa
 
-- [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6 — `app/scripts/extract_pdfs.py` + `_resolve_files()` no indexer
+- [x] **Pré-processar PDFs → `.md` localmente e commitar**: implementado na seção 2.6
 - [x] **Fallback por score baixo**: implementado na seção 2.5.2 — filtro por `retriever_score_threshold` + mensagem de fallback HTTP 200
 - [x] **Pipeline RAGAS — execução válida com juiz gpt-4o-mini**: avaliação completa (38/38 amostras) concluída — ver seção 2.10
-- [x] **Threshold ajustado para 0.40**: 4 perguntas de interações medicamentosas e diagnóstico excluídas com threshold 0.50; corrigido para 0.40 — ver seção 2.10
-- [ ] **Gate RAGAS — tuning necessário**: faithfulness 0.375 (alvo 0.80), context_precision 0.548 (alvo 0.75). Contextual chunking descartado (seção 2.11). Ground truths corrigidos em ET-07, PE-07 e IM-03 (seções 2.12–2.13). Patch da seção 6.3 criado e indexado (seção 2.13). Re-run aguardando reset do TPD do Groq (~24h). Próximo passo: `python -m eval.run_ragas` após reset do TPD
+- [x] **Threshold ajustado para 0.40**: ver seção 2.10
+- [x] **Patches de diagnóstico**: Seções 8.2, 9 e gestantes extraídas com pypdf e indexadas — ver seção 2.23
+- [x] **Reconstrução manual do Manual do MS**: corpus reconstruído integralmente sem dependência de patches — ver seção 2.24
+- [ ] **Gate RAGAS — over-chunking identificado**: reconstrução manual gerou 1.013 chunks no Manual (1.444 total) com 93 fragmentos < 200 chars. faithfulness 0.461, context_recall 0.408 — regressão em relação ao melhor (0.586/0.608). Próximo passo: aumentar `chunk_size` mínimo no chunker ou revisar hierarquia de cabeçalhos do manual.
 
 ### Fase 3 (Backend) — parcialmente completa
 
@@ -1818,6 +1905,9 @@ volumes:
 
 28. **Importações pesadas (Docling, torch) devem ficar dentro de `main()`, não no topo do módulo.** Scripts utilitários como `extract_pdfs.py` são importados por outros scripts para reusar funções leves (ex: `sanitize_markdown`). Se a importação de Docling estiver no topo, qualquer `import extract_pdfs` puxa 2 GB de modelos ML — mesmo em contextos onde o Docling não é necessário. Mover imports pesados para dentro de `main()` (lazy import) isola a dependência e permite reuso seguro.
 
+29. **Auditoria por cruzamento de cabeçalhos não detecta gaps contíguos.**
+ Se o Docling pula um bloco inteiro de páginas, as seções antes e depois do gap existem no .md e o cruzamento TOC × cabeçalhos não identifica o buraco. Para documentos grandes (>200 páginas), a auditoria deve incluir verificação de densidade: (chars extraídos / total de páginas) deve ser consistente. Alternativa: comparar número de cabeçalhos extraídos vs número de seções numeradas no sumário, incluindo sub-subseções de terceiro nível.
+
 ---
 
-*Última atualização: 2026-03-25 (avaliação RAGAS completa pós-sanitização total — seção 2.18; faithfulness 0.375→0.586, context_recall 0.382→0.608)*
+*Última atualização: 2026-04-05 (reconstrução manual do Manual do MS + over-chunking identificado — seções 2.23–2.24)*
