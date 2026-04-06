@@ -179,5 +179,15 @@
     "answer_relevancy": 0.7903,
     "context_precision": 0.8611,
     "context_recall": 0.8333
+  },
+  {
+    "timestamp": "2026-04-06T12:51:36Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 27,
+    "note": "PARCIAL — TPD Groq esgotado (99153/100000). Faltam DI-04, DI-05, IT-01..IT-05, EA-01..EA-04 (11 perguntas). Chunker fronteiras hierarquicas, 898 chunks, top_k=5. context_precision 0.781 ja passou o gate (>= 0.75). Cache preservado para retomada. Re-run pendente apos reset TPD (meia-noite UTC).",
+    "faithfulness": 0.5422,
+    "answer_relevancy": 0.4451,
+    "context_precision": 0.7809,
+    "context_recall": 0.516
   }
 ]
