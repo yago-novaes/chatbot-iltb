@@ -169,5 +169,15 @@
     "answer_relevancy": 0.9483,
     "context_precision": 1.0,
     "context_recall": 0.5
+  },
+  {
+    "timestamp": "2026-04-06T02:17:48Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 3,
+    "note": "INVALIDO — TPD Groq esgotado (99293/100000 tokens usados). Apenas ET-01..ET-03 coletadas (categorias mais faceis). Amostra biased. Cache preservado para retomada apos reset TPD. Desconsiderar.",
+    "faithfulness": 0.9333,
+    "answer_relevancy": 0.7903,
+    "context_precision": 0.8611,
+    "context_recall": 0.8333
   }
 ]
