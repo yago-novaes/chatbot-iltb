@@ -1910,4 +1910,71 @@ volumes:
 
 ---
 
-*Última atualização: 2026-04-05 (reconstrução manual do Manual do MS + over-chunking identificado — seções 2.23–2.24)*
+*Última atualização: 2026-04-06 (MIN_CHUNK_SIZE fix + RAGAS gate pós-reconstrução — seção 2.25)*
+
+---
+
+### 2.25 RAGAS Gate Pós-Reconstrução Manual — MIN_CHUNK_SIZE Fix ⚠️
+
+**Data:** 2026-04-06
+**Contexto:** Após reconstrução manual do Manual do MS (seção 2.24), o índice havia regredido para 1.444 chunks com context_precision 0.597 e faithfulness 0.461. Iniciou-se missão MLOps para diagnosticar e corrigir o over-chunking.
+
+#### ETAPA 1 — Refatoração do Chunker (MIN_CHUNK_SIZE = 400)
+
+O chunker original não tinha piso mínimo de buffer: qualquer seção nova gerava flush imediato, criando micro-fragmentos nas seções `####` do Manual reconstruído.
+
+**Correção implementada** em [app/src/rag/ingestion/chunker.py](../app/src/rag/ingestion/chunker.py):
+- `MIN_CHUNK_SIZE = 400` — buffer só descarregado quando acumulou ≥ 400 chars
+- Branch `elif len(buffer) < MIN_CHUNK_SIZE and len(section) <= max_size` — força acumulação de seções pequenas quando buffer ainda está abaixo do piso
+- Condicional `and len(section) <= max_size` é crítica: sem ela, seções grandes (> 800 chars) são force-acumuladas ao buffer, gerando mega-chunk de 99.860 chars (bug identificado na primeira versão do fix)
+
+**Diagnóstico pós-fix:** O regex `#{1,3}` não captura headings `####`. O Manual tem 132 headings `####` e apenas 41 `###`, portanto a maioria do conteúdo cai em seções grandes que são subdivididas por parágrafo. O MIN_CHUNK_SIZE não atua no sub-loop de parágrafos — resultado: 1.013 chunks para o Manual (70% do índice), distribuição 695 chars de média com 207 chunks abaixo de 400 chars.
+
+**Resultado da re-ingestão:** 1.442 chunks totais (vs 1.444 anterior) — melhora marginal.
+
+#### ETAPA 2 — Purge e Re-ingestão
+
+ChromaDB deletado fisicamente (`chroma_db/`), re-ingestão executada com `python -m app.scripts.ingest`. 1.442 chunks indexados.
+
+#### ETAPA 3 — Gate RAGAS
+
+**Configuração:** LLM pipeline = `groq/llama-3.3-70b-versatile`, `RETRIEVER_TOP_K=5`, RAGAS juiz = `gpt-4o-mini`, prompt v1, `--clear-cache`. 37/38 questões válidas (EA-04 rejeitada por Groq 429 rate limit — TPM excedido durante coleta).
+
+**Resultados:**
+
+| Métrica | Score | Alvo | Status |
+|---|---|---|---|
+| faithfulness | **0.496** | ≥ 0.80 | ❌ FAIL |
+| answer_relevancy | **0.421** | — | — |
+| context_precision | **0.640** | ≥ 0.75 | ❌ FAIL |
+| context_recall | **0.460** | — | — |
+
+**Comparação histórica (runs válidos, 38 questões):**
+
+| Data | Configuração | Faithfulness | Context Precision |
+|---|---|---|---|
+| 2026-03-25 | pós-sanitização, top_k=4 | 0.586 | 0.656 |
+| 2026-04-03 | pré-reconstrução, top_k=5 | 0.562 | 0.708 |
+| 2026-04-06 | pós-reconstrução, top_k=5 | 0.461 | 0.597 |
+| **2026-04-06** | **pós-fix chunker, top_k=5** | **0.496** | **0.640** |
+
+#### Diagnóstico da Regressão Pós-Reconstrução
+
+O MIN_CHUNK_SIZE fix melhorou levemente os scores (faithfulness +0.035, context_precision +0.043 vs run imediatamente anterior), mas **não recuperou o nível pré-reconstrução**. A causa raiz não é a fragmentação — é a **proporção do Manual no índice**:
+
+- Manual do MS: 1.013 chunks / 1.442 total = **70% do índice**
+- O Manual é um documento geral sobre TB que cobre ILTB como subseção
+- Com top_k=5, 5 chunks de 1.442 representa cobertura de 0,35% do índice
+- Perguntas ILTB-específicas competem com 1.013 chunks de conteúdo geral de TB
+
+**Hipótese:** o Manual está "contaminando" o espaço de recuperação — chunks sobre TB resistente, vigilância epidemiológica, diagnóstico laboratorial, etc. aparecem no top_k em vez das seções ILTB-específicas, pois têm embeddings mais próximos semanticamente.
+
+#### Próximos Passos
+
+O gate RAGAS ≥ 0.80 não foi atingido. Antes de avançar para Fase 4 (deploy piloto), as seguintes ações estão em análise:
+
+1. **Excluir o Manual do MS do índice** e avaliar se os outros 4 documentos ILTB-específicos (429 chunks) são suficientes para cobrir o test set → baseline mais limpo
+2. **Aumentar `max_size` de 800 → 1.500** para o Manual, reduzindo chunks de 1.013 para ~500
+3. **Expandir regex para `#{1,4}`** para capturar headings `####` e permitir que MIN_CHUNK_SIZE atue sobre eles
+
+Decisão pendente após análise de cobertura do test set pelos documentos sem o Manual.

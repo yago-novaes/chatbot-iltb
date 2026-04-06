@@ -150,5 +150,14 @@
     "answer_relevancy": 0.3758,
     "context_precision": 0.5972,
     "context_recall": 0.4079
+  },
+  {
+    "timestamp": "2026-04-06T00:45:05Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 37,
+    "faithfulness": 0.4956,
+    "answer_relevancy": 0.4211,
+    "context_precision": 0.6396,
+    "context_recall": 0.4595
   }
 ]
