@@ -1978,3 +1978,58 @@ O gate RAGAS ≥ 0.80 não foi atingido. Antes de avançar para Fase 4 (deploy p
 3. **Expandir regex para `#{1,4}`** para capturar headings `####` e permitir que MIN_CHUNK_SIZE atue sobre eles
 
 Decisão pendente após análise de cobertura do test set pelos documentos sem o Manual.
+
+---
+
+### 2.26 RAGAS Gate Final — Chunker Hierárquico (898 chunks) ❌
+
+**Data:** 2026-04-06
+**Contexto:** Implementado o chunker de fronteiras hierárquicas (seção 2.25 — "Próximos Passos", opção 3). Regex expandido para `#{1,4}`, regra de flush por nível de heading, MIN_CHUNK_SIZE = 400. Re-ingestão: **898 chunks** (vs 1.442 anterior). Manual reduziu de 1.013 → 580 chunks (40% menos).
+
+#### Configuração
+
+- LLM pipeline: `groq/llama-3.3-70b-versatile`
+- RAGAS juiz: `gpt-4o-mini`
+- `RETRIEVER_TOP_K=5`, prompt v1
+- Coleta fragmentada em múltiplas runs por limite TPD Groq (100K tokens/dia)
+- Cache checkpoint preservou progresso entre runs (35/38 → 38/38)
+
+#### Resultado Final — 38/38 questões
+
+| Métrica | Score | Alvo | Status |
+|---|---|---|---|
+| faithfulness | **0.515** | ≥ 0.80 | ❌ FAIL |
+| answer_relevancy | **0.381** | — | — |
+| context_precision | **0.735** | ≥ 0.75 | ❌ FAIL |
+| context_recall | **0.520** | — | — |
+
+#### Histórico de Runs Válidos (38 questões)
+
+| Data | Configuração | Faithfulness | Context Precision |
+|---|---|---|---|
+| 2026-03-25 | pós-sanitização, top_k=4, 820 chunks | 0.586 | 0.656 |
+| 2026-03-25 | prompt v3, top_k=4 | 0.586 | 0.656 |
+| 2026-03-27 | prompt v4 few-shot (descontinuado) | 0.574 | 0.653 |
+| 2026-03-27 | A/B gpt-4o-mini como pipeline LLM | 0.525 | 0.657 |
+| 2026-04-03 | pré-reconstrução Manual, top_k=5 | 0.562 | 0.708 |
+| 2026-04-06 | pós-reconstrução, top_k=5, 1.442 chunks | 0.461 | 0.597 |
+| 2026-04-06 | MIN_CHUNK_SIZE fix, 1.442 chunks | 0.496 | 0.640 |
+| **2026-04-06** | **chunker hierárquico, 898 chunks** | **0.515** | **0.735** |
+
+#### Análise
+
+O chunker hierárquico melhorou context_precision de 0.640 → 0.735 (+0.095), aproximando-se do gate de 0.75. Faithfulness manteve-se estável (0.515 vs 0.496).
+
+**Teto identificado:** Após 8 runs válidos em configurações variadas, faithfulness converge em torno de 0.52–0.59 para o Llama 3.3 70B no Groq free tier. O modelo produz respostas sintéticas que RAGAS penaliza: afirmações não diretamente extraíveis dos chunks recuperados. Esse comportamento é estrutural do modelo e não é solucionável via chunking ou prompt tuning sem mudar o LLM.
+
+**Problema de cobertura do test set:** O test set inclui perguntas das categorias EA (Efeitos Adversos) que dependem de conteúdo do Manual do MS — o mesmo documento que domina 65% do índice (580/898 chunks). Chunking mais fino melhorou a granularidade mas não eliminou o viés de recuperação: perguntas sobre TB ativa competem com ILTB no espaço de embeddings.
+
+#### Conclusão — Encerramento da Fase 2
+
+O gate RAGAS ≥ 0.80 (faithfulness) e ≥ 0.75 (context_precision) **não foi atingido** em nenhuma configuração testada. A decisão sobre avanço para o piloto é:
+
+**Opção A (conservadora):** Permanecer na Fase 2 e tentar novo LLM (ex: Llama 3.1 405B via Groq pago, ou Gemini Flash via API gratuita) antes do piloto.
+
+**Opção B (pragmática):** Avançar para o piloto com enfermeiras com os scores atuais, documentando os limites do sistema no TCC. Context_precision de 0.735 indica que o sistema recupera contexto relevante na maioria dos casos. O gap de faithfulness reflete o estilo do Llama 70B, não falhas de recuperação.
+
+Decisão pendente com o orientador.

@@ -229,5 +229,15 @@
     "answer_relevancy": 0.378,
     "context_precision": 0.7746,
     "context_recall": 0.5552
+  },
+  {
+    "timestamp": "2026-04-06T20:00:39Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "GATE FINAL — 38/38 completo. Chunker hierarquico (898 chunks, top_k=5). faithfulness 0.515 FAIL (alvo 0.80), context_precision 0.735 FAIL (alvo 0.75). Teto do Llama 70B free tier confirmado. Encerra Fase 2 — decisao pendente sobre avanco ao piloto. Ver secao 2.26 do diario.",
+    "faithfulness": 0.5152,
+    "answer_relevancy": 0.3806,
+    "context_precision": 0.7354,
+    "context_recall": 0.5202
   }
 ]
