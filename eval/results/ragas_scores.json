@@ -189,5 +189,15 @@
     "answer_relevancy": 0.4451,
     "context_precision": 0.7809,
     "context_recall": 0.516
+  },
+  {
+    "timestamp": "2026-04-06T15:34:13Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 32,
+    "note": "PARCIAL — TPD Groq esgotado (99341/100000). Faltam IT-04, IT-05, EA-01..EA-04 (6 perguntas). context_precision 0.769 PASS. Cache preservado. Re-run pendente apos reset TPD (meia-noite UTC).",
+    "faithfulness": 0.5226,
+    "answer_relevancy": 0.3946,
+    "context_precision": 0.7691,
+    "context_recall": 0.55
   }
 ]
