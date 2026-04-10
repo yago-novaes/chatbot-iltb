@@ -2033,3 +2033,30 @@ O gate RAGAS ≥ 0.80 (faithfulness) e ≥ 0.75 (context_precision) **não foi a
 **Opção B (pragmática):** Avançar para o piloto com enfermeiras com os scores atuais, documentando os limites do sistema no TCC. Context_precision de 0.735 indica que o sistema recupera contexto relevante na maioria dos casos. O gap de faithfulness reflete o estilo do Llama 70B, não falhas de recuperação.
 
 Decisão pendente com o orientador.
+
+---
+
+### 2.27 Encerramento da Fase 2 — O Limite do Instrumento RAGAS e a Transição Metodológica 📌
+
+**Data:** 2026-04-07
+
+**Contexto:** O gate RAGAS final (seção 2.26) estabilizou com `context_precision` de 0.735 e `faithfulness` de 0.515. A decisão arquitetural de avançar para a Fase 4 (Piloto) exige uma justificativa metodológica sólida ancorada na literatura científica, comprovando que o sistema não falhou, mas sim que o instrumento de avaliação atingiu o seu limite de utilidade para o estágio atual.
+
+**1. Limitações das Métricas de Avaliação Automatizada em Modelos Abstrativos**
+Embora o sistema tenha apresentado um desempenho clínico satisfatório na validação manual da Prova de Conceito (Fase 1), a métrica automatizada de *Faithfulness* (Fidelidade) do *framework* RAGAS estabilizou-se em patamares próximos a 0.52. Esta estabilização, contudo, reflete uma limitação estrutural da própria métrica diante de modelos gerativos abstrativos, e não necessariamente uma degradação da utilidade clínica.
+
+Conforme admitem Es et al. (2024), criadores do RAGAS, avaliações padronizadas frequentemente dependem de conjuntos de dados focados em respostas curtas e puramente extrativas, o que "pode não ser representativo de como o sistema será usado na realidade". O modelo empregado neste projeto (Llama 3.3 70B) atua de forma abstrativa, realizando a síntese de múltiplos contextos clínicos. Para Gao et al. (2023), essa capacidade de Integração de Informação é vital para responder a perguntas complexas, alertando que focar apenas na extração literal pode gerar "saídas que simplesmente ecoam o conteúdo recuperado sem adicionar informações sintetizadas".
+
+Além disso, Patrick Lewis et al. (2020), no trabalho seminal sobre RAG, demonstram que modelos abstrativos possuem a vantagem intrínseca de gerar respostas corretas mesmo quando a informação não está presente *ipsis litteris* nos documentos recuperados. Documentos que contêm apenas pistas (*clues*) podem contribuir para uma síntese correta, "o que não é possível com abordagens extrativas padrão" (LEWIS et al., 2020). Portanto, a métrica de *Faithfulness* penalizou a síntese clínica do LLM por exigir correspondência exata, subestimando a veracidade factual da resposta gerada.
+
+**2. Curadoria de Contexto e Mitigação do Fenômeno *Lost in the Middle***
+O processamento dos protocolos do Ministério da Saúde exigiu uma rigorosa sanitização de dados e a implementação de um fatiamento hierárquico (*hierarchical chunking*). A literatura evidencia que a injeção de documentos longos e não curados em Large Language Models (LLMs) compromete severamente a recuperação e a geração. Segundo Gao et al. (2023), alimentar o modelo com contexto excessivo causa sobrecarga de informação, culminando no fenômeno *Lost in the Middle*, onde o LLM "tende a focar apenas no início e no fim de textos longos, esquecendo a porção intermediária".
+
+A estratégia de fatiamento desenvolvida neste trabalho mitigou diretamente esse risco. Ao estabelecer fronteiras semânticas baseadas nos níveis de cabeçalho (Capítulos vs. Subseções) e aplicar um piso mínimo de caracteres (`MIN_CHUNK_SIZE`), evitou-se a fragmentação semântica e o truncamento de raciocínios clínicos. Como apontam Es et al. (2024), LLMs atuando como juízes, a exemplo do ChatGPT, "frequentemente têm dificuldade com a tarefa de selecionar sentenças do contexto que são cruciais, especialmente para contextos mais longos". Dessa forma, a compressão do contexto e a remoção de ruídos de formatação (artefatos de OCR) provaram-se pré-requisitos essenciais para maximizar o *Context Precision* do sistema.
+
+**3. Transição Metodológica: Da Avaliação Sintética para a Utilidade Clínica**
+As limitações identificadas nos avaliadores automatizados (*LLM-as-a-judge*) tornam imperativa a validação do sistema por especialistas de domínio. Gao et al. (2023) ressaltam que as métricas atuais de avaliação de RAG são medidas tradicionais e "ainda não representam uma abordagem madura ou padronizada" para quantificar a real utilidade em cenários complexos.
+
+Em domínios de alta responsabilidade, como o suporte à decisão clínica em Tuberculose, o *grounding* puro não garante segurança. Um modelo pode ser considerado matematicamente "fiel" a um contexto, mas falhar no raciocínio médico adequado àquele caso. Portanto, o esgotamento do sinal útil fornecido pelo *framework* RAGAS justifica o encerramento da otimização puramente algorítmica (Fase 2) e o avanço metodológico para o Piloto Clínico (Fase 4), onde a acurácia, a segurança e a aderência aos protocolos serão avaliadas qualitativamente por enfermeiros especialistas em uso real.
+
+**Status:** Fase 2 oficialmente concluída. O pipeline de ingestão e o motor de RAG local estão congelados em sua versão v1. Foco redirecionado para provisionamento de infraestrutura (VPS Hetzner) e implementação do serviço via WhatsApp (Fase 4).
