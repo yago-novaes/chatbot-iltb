@@ -3,11 +3,16 @@ Entrypoint FastAPI — Chatbot ILTB
 """
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.src.config import settings
 from app.src.api.routes import chat, health, ingest, search
+
+_STATIC_DIR = Path(__file__).parent.parent / "static"
 
 logging.basicConfig(level=settings.log_level)
 logger = logging.getLogger(__name__)
@@ -34,3 +39,10 @@ app.include_router(health.router)
 app.include_router(chat.router)
 app.include_router(ingest.router)
 app.include_router(search.router)
+
+app.mount("/static", StaticFiles(directory=_STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+async def ui():
+    return FileResponse(_STATIC_DIR / "index.html")
