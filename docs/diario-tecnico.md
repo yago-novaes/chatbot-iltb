@@ -2060,3 +2060,54 @@ As limitações identificadas nos avaliadores automatizados (*LLM-as-a-judge*) t
 Em domínios de alta responsabilidade, como o suporte à decisão clínica em Tuberculose, o *grounding* puro não garante segurança. Um modelo pode ser considerado matematicamente "fiel" a um contexto, mas falhar no raciocínio médico adequado àquele caso. Portanto, o esgotamento do sinal útil fornecido pelo *framework* RAGAS justifica o encerramento da otimização puramente algorítmica (Fase 2) e o avanço metodológico para o Piloto Clínico (Fase 4), onde a acurácia, a segurança e a aderência aos protocolos serão avaliadas qualitativamente por enfermeiros especialistas em uso real.
 
 **Status:** Fase 2 oficialmente concluída. O pipeline de ingestão e o motor de RAG local estão congelados em sua versão v1. Foco redirecionado para provisionamento de infraestrutura (VPS Hetzner) e implementação do serviço via WhatsApp (Fase 4).
+
+---
+
+## FASE 4 — Piloto
+
+### 4.1 Interface Web de Demo + Túnel ngrok ✅
+
+**Data:** 2026-04-15
+
+**Contexto:** Antes de provisionar a VPS e configurar o WhatsApp Business, foi necessário uma demonstração funcional para validação inicial com a enfermeira especialista do projeto pós-doc. A solução adotada foi uma interface web de chat servida pelo próprio FastAPI, exposta via túnel ngrok — sem custos e sem depender de infraestrutura externa.
+
+**O que foi implementado:**
+
+- `app/static/index.html` — página de chat responsiva, tema verde-MS, servida em `GET /`
+  - Cabeçalho com identidade visual (Assistente ILTB / Protocolos do MS)
+  - Aviso de ferramenta de apoio (não substitui julgamento clínico)
+  - Mensagem de boas-vindas contextualizada para ILTB
+  - Indicador de "digitando" durante requisições ao LLM
+  - Exibição de fontes com score de similaridade por resposta
+  - Enter envia, Shift+Enter quebra linha; textarea auto-resize
+  - Header `ngrok-skip-browser-warning: 1` nas requisições fetch — necessário para o ngrok free tier não interceptar chamadas de API do browser
+
+- `app/src/main.py` — adicionado `StaticFiles` e rota `GET /` para servir o HTML:
+  ```python
+  app.mount("/static", StaticFiles(directory=_STATIC_DIR), name="static")
+
+  @app.get("/", include_in_schema=False)
+  async def ui():
+      return FileResponse(_STATIC_DIR / "index.html")
+  ```
+
+- `app/requirements.txt` — adicionado `aiofiles>=23.0` (dependência do `StaticFiles`)
+
+**Infraestrutura de demo:**
+
+- ngrok v3.37.6 instalado via winget (versão 3.3.1 instalada pelo winget estava desatualizada — substituída manualmente pelo binário do site oficial, pois a conta free exige ≥ 3.20.0)
+- Túnel HTTPS gerado: `https://clustered-survival-snowcap.ngrok-free.dev`
+- Link enviado para a enfermeira especialista via mensagem para teste remoto
+
+**Como subir a demo localmente:**
+
+```bash
+# Terminal 1 — FastAPI
+source .venv/Scripts/activate
+uvicorn app.src.main:app --port 8000
+
+# Terminal 2 — túnel público
+ngrok http 8000
+```
+
+**Limitação:** o link muda a cada vez que o ngrok é reiniciado (free tier não permite domínio fixo). Para demo pontual é suficiente; para uso contínuo, a VPS com domínio próprio é necessária.
