@@ -1,6 +1,8 @@
 """
-Retriever vetorial — busca chunks relevantes no ChromaDB por similaridade coseno.
-Fase 3: evoluir para busca híbrida (Qdrant + RRF).
+Retriever — fachada que despacha entre busca densa (ChromaDB / BGE-M3) e
+híbrida (denso + BM25 com RRF, ver hybrid_retriever.py) via settings.retriever_mode.
+
+A função retrieve() é a interface estável usada por eval/run_ragas.py e pela API.
 """
 from dataclasses import dataclass
 from typing import List
@@ -19,8 +21,7 @@ class RetrievedChunk:
     score: float
 
 
-def retrieve(query: str, top_k: int | None = None) -> List[RetrievedChunk]:
-    k = top_k or settings.retriever_top_k
+def _retrieve_dense(query: str, k: int) -> List[RetrievedChunk]:
     collection = _get_client().get_collection(
         settings.chroma_collection, embedding_function=embedding_fn
     )
@@ -42,6 +43,25 @@ def retrieve(query: str, top_k: int | None = None) -> List[RetrievedChunk]:
         )
     ]
     return [c for c in chunks if c.score >= settings.retriever_score_threshold]
+
+
+def retrieve(query: str, top_k: int | None = None) -> List[RetrievedChunk]:
+    k = top_k or settings.retriever_top_k
+    mode = settings.retriever_mode
+
+    if mode == "hybrid_rerank":
+        from app.src.rag.hybrid_retriever import retrieve_hybrid
+        from app.src.rag.reranker import rerank
+        # 1) hybrid pega top reranker_fetch_k candidatos
+        candidates = retrieve_hybrid(query, top_k=settings.reranker_fetch_k)
+        # 2) cross-encoder reordena e seleciona top_k
+        return rerank(query, candidates, top_k=k)
+
+    if mode == "hybrid":
+        from app.src.rag.hybrid_retriever import retrieve_hybrid
+        return retrieve_hybrid(query, top_k=k)
+
+    return _retrieve_dense(query, k)
 
 
 def build_context(chunks: List[RetrievedChunk]) -> str:

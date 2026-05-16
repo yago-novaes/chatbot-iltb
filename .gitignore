@@ -6,6 +6,9 @@ __pycache__/
 *.pyc
 *.pyo
 chroma_db/
+chroma_db_*/
+.claude/
+ngrok.log
 server.log
 
 # PDFs do MS — não versionar documentos do Ministério da Saúde

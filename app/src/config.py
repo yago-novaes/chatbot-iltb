@@ -21,6 +21,15 @@ class Settings(BaseSettings):
     retriever_top_k: int = 4
     retriever_score_threshold: float = 0.40
 
+    # Hybrid retrieval (TF2 — busca híbrida BM25+denso com RRF)
+    retriever_mode: str = "dense"          # "dense" | "hybrid" | "hybrid_rerank"
+    retriever_fetch_k: int = 20             # candidatos por ranker antes do RRF
+    retriever_rrf_k: int = 60               # constante k do Reciprocal Rank Fusion
+
+    # Reranker cross-encoder (TF1 — mGTE)
+    reranker_model: str = "Alibaba-NLP/gte-multilingual-reranker-base"
+    reranker_fetch_k: int = 20              # candidatos vindos do hybrid antes do rerank
+
     # Session (Phase 2)
     session_max_messages: int = 10
     session_ttl_minutes: int = 30
