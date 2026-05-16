@@ -394,7 +394,8 @@ rifapentina + isoniazida semanal por três meses (3HP). A escolha entre esquemas
 considera idade, gravidez, função hepática, interações medicamentosas (notadamente
 com antirretrovirais em PVHIV) e tolerabilidade, e a literatura clínica
 internacional reconhece o 3HP como avanço operacional importante por reduzir o
-tempo total de tratamento e melhorar adesão \cite{who2018, who2023}.
+tempo total de tratamento e melhorar adesão \cite{who2018, who2020consolidatedTB,
+who2023}.
 
 A enfermagem desempenha papel central no manejo programático da ILTB no SUS, atuando
 no rastreamento ativo de contactantes, na realização da prova tuberculínica (PT) e
@@ -402,7 +403,7 @@ do \textit{Interferon-Gamma Release Assay} (IGRA), no acompanhamento mensal de
 adesão e na detecção precoce de reações adversas. Esse papel é reconhecido nas
 diretrizes da OMS, que identificam o desenvolvimento de recursos humanos e a entrega
 de serviços na atenção primária como ações estratégicas para ampliar o tratamento da
-ILTB \cite{who2018, who2023}.
+ILTB \cite{who2018, who2020consolidatedTB, who2023}.
 
 Em escala local, \citeauthor{artigo_perfil} \cite{artigo_perfil} caracterizam o
 perfil epidemiológico da TB no Espírito Santo entre 2015 e 2020: foram
@@ -500,9 +501,11 @@ modelos multilíngues genéricos como o mmBERT \cite{marone2025mmbert} superam a
 especializadas (BioBERTpt, BERTimbau) em reconhecimento de entidades, sugerindo que a
 capacidade representacional geral pesa mais que a adaptação de domínio estreita
 \cite{generalistEmbeddingsClinical2024}. Esses achados respaldam a estratégia de
-empregar um modelo generalista no presente projeto e, ao mesmo tempo, identificam a
-migração para um modelo de maior dimensionalidade como vetor natural de evolução
-(discutido como trabalho futuro no Capítulo~\ref{cap:conclusao}).
+empregar um modelo generalista multilíngue e motivaram a migração da configuração
+inicial para um modelo 1024D (\texttt{BAAI/bge-m3}) durante a fase de avaliação
+deste trabalho --- decisão documentada no Capítulo~\ref{cap:avaliacao}
+(Seção~\ref{sec:gate-pos-migracao}), com ganho de $+47{,}8\%$ em
+\textit{Faithfulness} sobre a configuração 384D.
 
 \section{Avaliação de Sistemas RAG}
 
@@ -650,10 +653,13 @@ A identificação do problema partiu de três fontes complementares.
 \textbf{Análise documental} dos protocolos vigentes evidenciou que o Manual de
 Recomendações do Ministério da Saúde \cite{brasil2022} é extenso, denso em tabelas
 e atualizado periodicamente, dificultando a consulta rápida durante o
-atendimento. As diretrizes da OMS \cite{who2018, who2023} complementam esse
-material e contêm recomendações ocasionalmente desatualizadas em relação às
-diretrizes nacionais, exigindo do profissional discernimento sobre qual fonte
-prevalece.
+atendimento. As diretrizes da OMS
+\cite{who2018, who2020consolidatedTB, who2023} complementam esse material e
+contêm recomendações ocasionalmente desatualizadas em relação às diretrizes
+nacionais, exigindo do profissional discernimento sobre qual fonte prevalece;
+notadamente, o \textit{Module 1} de \citeyear{who2020consolidatedTB} consolida
+os regimes preventivos curtos (3HP, 4R) que estão na fronteira de
+recomendação no relatório global de 2023.
 
 \textbf{Revisão da literatura} sobre RAG biomédico \cite{ocaf2024, lewis2021,
 gao2024} e sobre adoção de IA por profissionais de enfermagem \cite{nursingTAM2024}
@@ -729,10 +735,13 @@ reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão 
         multidimensional. & Replanejamento decorrente do reescopo do piloto;
         TAM-AIN é instrumento específico para enfermagem \cite{nursingTAM2024,
         ocaf2024}. \\ \hline
-  D11 & Busca híbrida (RRF + SPLADE ou ColBERT) registrada como trabalho futuro.
+  D11 & Busca híbrida BM25 + denso (RRF) com \textit{reranking}
+        \textit{cross-encoder} mGTE --- implementada no escopo deste trabalho
+        (Seções~\ref{sec:hybrid} e \ref{sec:rerank}).
       & \textit{Embedding} denso isolado limita \textit{recall} para termos
         técnicos específicos; literatura sustenta ganhos de busca híbrida
-        \cite{cormack2009, formal2021, khattab2020}. \\ \hline
+        \cite{cormack2009, formal2021, khattab2020, wang2024bestpractices,
+        zhang2024mgte}. \\ \hline
   D12 & Métricas mistas (acurácia vs. MS, severidade Likert, tríade RAG,
         TAM-AIN) em vez de Kappa de Cohen. & Kappa exige $\geq 2$ avaliadores;
         literatura recomenda métricas multidimensionais para validação com $N=1$
@@ -1420,7 +1429,13 @@ metodológico relevante: a avaliação automatizada por RAGAS deve ser
 \textbf{complementada} por avaliação humana estruturada, especialmente para
 sistemas em que síntese clinicamente correta é desejável --- princípio
 endossado também pela diretriz de relato \textit{TRIPOD-LLM}
-\cite{gallifant2025tripod}. Esse argumento motiva o desenho da avaliação com
+\cite{gallifant2025tripod}. A meta-análise de 30 estudos clínicos com RAG
+relatada por \citeauthor{ocaf2024} mostra divergência estatística entre as
+duas formas de avaliação: o ganho de utilidade percebido por humanos
+apresenta \textit{odds ratio} de $1{,}65$, enquanto métricas automáticas
+captam apenas $1{,}20$ --- sugerindo que o RAGAS \emph{subestima
+sistematicamente} a utilidade clínica real de sistemas RAG em saúde
+\cite{ocaf2024}. Esse argumento motiva o desenho da avaliação com
 especialista descrita na Seção~\ref{sec:sessao-expert}, que complementa as
 métricas automatizadas com uma rubrica clínica especializada e adiciona, em
 particular, sensibilidade ao \textit{trade-off} segurança-vs-cobertura que
@@ -1788,7 +1803,26 @@ pesquisa para fechar o gap residual final
         ganho esperado em fidelidade, ao risco de intensificar
         comportamento conservador do gerador (a história de prompts v2--v4
         descrita no Apêndice~\ref{ape:prompt} mostra que prompts mais
-        restritivos podem piorar a métrica RAGAS).
+        restritivos podem piorar a métrica RAGAS);
+  \item \textbf{LLM especializado em diretrizes brasileiras} --- avaliar a
+        adoção de um modelo \textit{fine-tuned} em PCDTs do SUS (e.g.,
+        Qwen2.5-14B-PCDT, \citeauthor{teachingLLMsBrazil2026},
+        \citeyear{teachingLLMsBrazil2026}) em substituição ao gerador
+        generalista atual. Estudos recentes em saúde pública brasileira
+        mostram que modelos com injeção de conhecimento dos PCDTs superam
+        \textit{RAG} \textit{web-grounded} em acurácia
+        (\textit{e.g.}, HealthBench-BR $83{,}9\%$); a contrapartida é o
+        custo de \textit{fine-tuning} e a perda de atualização em tempo
+        real \cite{teachingLLMsBrazil2026};
+  \item \textbf{Simplificação arquitetural do \textit{vector store}} ---
+        avaliar empiricamente se a substituição do ChromaDB por FAISS local
+        ou índice em memória (\textit{e.g.}, \texttt{numpy.array}) sobre
+        o corpus de 898 \textit{chunks} introduz regressão mensurável de
+        \textit{recall}/latência. A literatura sugere que, para corpora
+        pequenos ($< 10^4$ \textit{chunks}), a busca exaustiva
+        ($O(N)$) é computacionalmente equivalente ao HNSW logarítmico
+        \cite{ocaf2024}; eliminar a dependência do ChromaDB simplificaria
+        \textit{deploy} em \textit{hardware} restrito da APS.
 \end{enumerate}
 
 \textit{Já incorporadas no escopo deste trabalho:} migração de
@@ -1798,12 +1832,21 @@ busca híbrida BM25 + denso com RRF (Seção~\ref{sec:hybrid}) e
 
 \textbf{Frente metodológica:}
 
-\begin{enumerate}[label=\textbf{TF\arabic*}, start=4]
+\begin{enumerate}[label=\textbf{TF\arabic*}, start=6]
   \item \textbf{Piloto clínico com múltiplos profissionais de enfermagem} ---
         com aprovação de Comitê de Ética em Pesquisa (CEP), permitindo
         cálculo de concordância inter-avaliador (e.g., Kappa
         \cite{landis1977}) e validação populacional do instrumento TAM-AIN
         \cite{nursingTAM2024};
+  \item \textbf{Estudo das barreiras operacionais da enfermagem brasileira
+        no manejo da ILTB} --- a revisão bibliográfica conduzida nesta
+        pesquisa identificou lacuna de literatura específica sobre
+        barreiras operacionais (esquemas 6H/3HP/4R, rastreio em PVHIV,
+        contactantes domiciliares) sob a perspectiva da enfermagem da
+        atenção primária brasileira. Recomenda-se estudo qualitativo
+        dedicado (entrevistas semi-estruturadas em UBSs do ES, MG ou SP)
+        que complemente os dados gerais reportados pela OMS
+        \cite{who2018, who2020consolidatedTB, who2023};
   \item \textbf{Construção de \textit{benchmark} público em português} ---
         consolidação do \textit{dataset} de 38 questões com revisão por painel
         de especialistas, em formato compatível com avaliações futuras de
@@ -1812,7 +1855,7 @@ busca híbrida BM25 + denso com RRF (Seção~\ref{sec:hybrid}) e
 
 \textbf{Frente operacional:}
 
-\begin{enumerate}[label=\textbf{TF\arabic*}, start=6]
+\begin{enumerate}[label=\textbf{TF\arabic*}, start=9]
   \item \textbf{Implantação institucional} --- servidor dedicado com HTTPS,
         autenticação, \textit{logging} consciente de privacidade e Acordo de
         Tratamento de Dados (DPA) com o operador do LLM, conforme discutido na
