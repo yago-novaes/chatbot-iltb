@@ -1,5 +1,5 @@
-{
-  "ET-01": {
+[
+  {
     "id": "ET-01",
     "question": "Qual a dose de isoniazida no esquema 3HP para adultos?",
     "answer": "De acordo com o Trecho 1 — tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md, a dose de isoniazida no esquema 3HP para adultos (>14 anos, ≥30kg) é de 900mg/semana.",
@@ -12,7 +12,7 @@
     "ground_truth": "No esquema 3HP, adultos (>14 anos, ≥30kg) tomam 900mg de isoniazida por semana, uma vez por semana, durante 3 meses (12 doses). O esquema prevê ajuste de dose por peso corporal.",
     "category": "esquemas_terapeuticos"
   },
-  "ET-02": {
+  {
     "id": "ET-02",
     "question": "Qual a duração do esquema 3HP e quantas doses são necessárias?",
     "answer": "De acordo com o Trecho 1 — tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md, o tratamento com o 3HP estará completo quando ocorrer a tomada de 12 doses de isoniazida + rifapentina por 12 semanas, podendo ser prorrogado para 15 semanas.\n\nAlém disso, o Trecho 3 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, confirma que o esquema 3HP consiste em 3 meses de tratamento, com 12 doses semanais, que podem ser tomadas durante 12 a 15 semanas.\n\nPortanto, a duração do esquema 3HP é de 3 meses, com 12 doses semanais, totalizando 12 doses, podendo ser prorrogado para 15 semanas.",
@@ -25,7 +25,7 @@
     "ground_truth": "O tratamento 3HP estará completo quando ocorrer a tomada de 12 doses de isoniazida + rifapentina por 12 semanas. Dependendo do caso, esse prazo pode ser prorrogado para 15 semanas.",
     "category": "esquemas_terapeuticos"
   },
-  "ET-03": {
+  {
     "id": "ET-03",
     "question": "Qual a dose de rifampicina no esquema 4R para adultos e por quanto tempo?",
     "answer": "De acordo com o Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, a dose de rifampicina para adultos e adolescentes (> 10 anos de idade) é de 10 mg/kg/dia de peso até a dose máxima de 600 mg por dia. O tempo de tratamento é de 4 meses.\n\nAlém disso, o Trecho 3 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md também menciona o esquema 4R, indicando que a rifampicina (R) deve ser administrada diariamente por 4 meses, totalizando 120 doses, que podem ser completadas no período de 4 a 6 meses, conforme adesão ao tratamento.",
@@ -38,7 +38,7 @@
     "ground_truth": "Rifampicina 600 mg/dia, indicada para adultos ≥ 50 kg, administrada diariamente por 4 meses, totalizando 120 doses; que podem ser completadas no período de 4 a 6 meses, conforme adesão ao tratamento.",
     "category": "esquemas_terapeuticos"
   },
-  "ET-04": {
+  {
     "id": "ET-04",
     "question": "Qual a dose de isoniazida no esquema 6H para crianças?",
     "answer": "De acordo com o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, a dose de isoniazida para crianças (< 10 anos de idade) é de 10 mg/kg/dia de peso até dose máxima de 300mg/dia.\n\nNo entanto, é importante notar que o Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, apresenta uma faixa de dose recomendada para isoniazida em crianças, que é de 7-15 mg/kg/dia, com dose máxima de 300 mg/dia.\n\nJá o Trecho 4 — GEDIIB_TratamentoTuberculose.md, especifica a dose de isoniazida para crianças como 10 mg/kg/dia, com dose máxima de 300 mg/dia, no esquema de 6 meses.\n\nPortanto, considerando as informações disponíveis, a dose de isoniazida no esquema 6H para crianças é de 10 mg/kg/dia, com dose máxima de 300 mg/dia. (Trecho 2 e Trecho 4)",
@@ -51,7 +51,7 @@
     "ground_truth": "Esquemas pediátricos incluem isoniazida (10 mg/kg/dia; dose máxima: 300 mg/dia) administrada diariamente por 6 meses (totalizando 180 doses, a serem completadas em 6 a 9 meses).",
     "category": "esquemas_terapeuticos"
   },
-  "ET-05": {
+  {
     "id": "ET-05",
     "question": "Qual esquema é preferencial para hepatopatas e idosos acima de 50 anos?",
     "answer": "De acordo com o Trecho 1 e o Trecho 3 do Manual de Recomendações para o controle da Tuberculose no Brasil, o regime com rifampicina (R) é preferencial para hepatopatas e indivíduos com mais de 50 anos de idade. \n\nNo Trecho 3, está especificado que \"O regime com R é preferencial em indivíduos com mais de 50 anos de idade, crianças (< 10 anos de idade), hepatopatas...\". \n\nAlém disso, no Trecho 4, no Quadro 2, o Esquema: Rifampicina (R) é indicado para \"Indivíduos com mais de 50 anos, hepatopatias, contatos de pessoas com TB monorresistente à H e intolerância à H\". \n\nPortanto, o esquema preferencial para hepatopatas e idosos acima de 50 anos é o regime com rifampicina (R). (Seção 8.6 e Seção 2.2.1)",
@@ -64,7 +64,7 @@
     "ground_truth": "A rifampicina é o tratamento de escolha para hepatopatas e pessoas acima de 50 anos.",
     "category": "esquemas_terapeuticos"
   },
-  "ET-06": {
+  {
     "id": "ET-06",
     "question": "Qual a dose pediátrica de isoniazida no esquema 3HP para crianças de 10 a 15 kg?",
     "answer": "A dose pediátrica de isoniazida no esquema 3HP para crianças de 10 a 15 kg é de 300 mg/semana, conforme descrito no Trecho 1 — tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md.",
@@ -77,7 +77,7 @@
     "ground_truth": "No esquema 3HP pediátrico (crianças de 2 a 14 anos), a dose de isoniazida para crianças de 10 a 15 kg é de 300mg por semana. Para rifapentina, a dose é também 300mg por semana para esse peso.",
     "category": "esquemas_terapeuticos"
   },
-  "ET-07": {
+  {
     "id": "ET-07",
     "question": "Qual a dose de isoniazida para adultos no esquema 6H?",
     "answer": "A dose de isoniazida para adultos no esquema 6H é de 5 a 10 mg/kg de peso até a dose máxima de 300 mg/dia (Seção 8.6, Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md).",
@@ -90,7 +90,7 @@
     "ground_truth": "Para adultos, a dose de isoniazida nos esquemas 6H e 9H é de 5 a 10 mg/kg/dia, com dose máxima de 300 mg/dia. O esquema 6H contempla 180 doses (6 a 9 meses) e o 9H contempla 270 doses (9 a 12 meses). O esquema 9H protege mais que o 6H e deve ser preferido sempre que houver boa adesão.",
     "category": "esquemas_terapeuticos"
   },
-  "MO-01": {
+  {
     "id": "MO-01",
     "question": "Com que frequência devem ser realizadas as avaliações clínicas no esquema 3HP?",
     "answer": "De acordo com o [Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md], o acompanhamento clínico deverá ser mensal. No entanto, é importante notar que essa informação é específica para o tratamento em geral e não está diretamente relacionada ao esquema 3HP. \n\nPara o esquema 3HP, não há menção específica sobre a frequência das avaliações clínicas nos trechos fornecidos. Portanto, a resposta mais apropriada seria: \"Não encontrei essa informação nos protocolos indexados. Consulte o Manual de Recomendações do MS.\"",
@@ -103,7 +103,7 @@
     "ground_truth": "No esquema com isoniazida e rifapentina (3HP) estão indicadas avaliações mensais para avaliação clínica, seguimento da adesão ao tratamento e de eventos adversos.",
     "category": "monitoramento"
   },
-  "MO-02": {
+  {
     "id": "MO-02",
     "question": "Quando devo suspender o tratamento da ILTB por hepatotoxicidade?",
     "answer": "De acordo com o Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, o tratamento da ILTB deve ser suspenso por reação adversa, incluindo hepatotoxicidade, quando a pessoa apresentar reações adversas maiores, com necessidade de suspensão ou troca do tratamento. Além disso, o Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md menciona que a realização das provas de função hepática pode ser necessária, após avaliação médica, quando identificado alto risco de hepatotoxicidade, como no caso de alcoolistas, uso de outros medicamentos hepatotóxicos ou com infecção crônica por hepatite B ou C. \n\nPortanto, a suspensão do tratamento da ILTB por hepatotoxicidade deve ser feita com base na avaliação médica e na identificação de reações adversas maiores ou alto risco de hepatotoxicidade. (Seção 3.4.4 e 8.7)",
@@ -116,7 +116,7 @@
     "ground_truth": "Durante o tratamento da ILTB, a hepatite aguda medicamentosa (CID K71) é uma das causas de interesse para investigação e registro. O tratamento deve ser suspenso diante de sinais de hepatotoxicidade clinicamente significativa, como elevação de transaminases com sintomas.",
     "category": "monitoramento"
   },
-  "MO-03": {
+  {
     "id": "MO-03",
     "question": "O que considerar durante o acompanhamento do tratamento da ILTB além do tempo?",
     "answer": "De acordo com o Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, durante o tratamento para ILTB, deve ser considerado em conjunto o número de doses tomadas e o tempo de tratamento, e não somente o tempo de tratamento transcorrido.\n\nSeção de origem: Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md.",
@@ -129,7 +129,7 @@
     "ground_truth": "Durante o tratamento de TBi é importante levar em consideração o número de doses utilizadas e não apenas o tempo de tratamento.",
     "category": "monitoramento"
   },
-  "MO-04": {
+  {
     "id": "MO-04",
     "question": "Quais informações devem ser registradas ao final de cada consulta de acompanhamento?",
     "answer": "De acordo com o [Trecho 1 — 9789275728185_por.md], ao final de cada consulta de acompanhamento, devem ser registradas as informações sobre o que aconteceu durante a consulta.\n\nAlém disso, o [Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md] e o [Trecho 4 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md] destacam a importância de registrar a evolução dos casos de ILTB, incluindo as informações sobre o tratamento, reações adversas, e outros eventos relevantes.\n\nPortanto, as informações que devem ser registradas ao final de cada consulta de acompanhamento incluem:\n\n* O que aconteceu durante a consulta;\n* A evolução do tratamento;\n* Reações adversas ou eventos adversos;\n* Outras informações relevantes sobre o acompanhamento do paciente.\n\nEssas informações devem ser registradas no \"Livro de investigação e acompanhamento de pessoas em tratamento da ILTB\" ou em instrumento próprio do estado e/ou município, bem como na ficha de notificação e no sistema IL-TB. (Seção: [Trecho 1 — 9789275728185_por.md] e [Trecho 4 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md])",
@@ -142,7 +142,7 @@
     "ground_truth": "Ao final da consulta de seguimento, deve-se: agendar consulta de seguimento para monitorar o progresso do tratamento, providenciar uma forma de o paciente entrar em contato com um profissional de saúde caso surjam problemas, organizar consultas em grupo se houver, registrar o que aconteceu durante a consulta, e encaminhar para serviços sociais existentes.",
     "category": "monitoramento"
   },
-  "MO-05": {
+  {
     "id": "MO-05",
     "question": "Com que frequência pacientes com DII em uso de imunossupressor devem ser rastreados para ILTB?",
     "answer": "De acordo com o Trecho 2 — GEDIIB_TratamentoTuberculose.md, ## 4. Informações Adicionais, pacientes com DII em uso contínuo de terapia com ação imunossupressora devem realizar rastreio anual para TBi por meio do PPD e/ou IGRA.",
@@ -155,7 +155,7 @@
     "ground_truth": "Pacientes com DII em uso contínuo de terapia com ação imunossupressora devem realizar rastreio anual para TBi por meio do PPD e/ou IGRA. Além disso, o consenso recomendou que pacientes sem tratamento prévio de TB realizem exames para triagem de TBi anuais durante o período de 3 anos e, em caso de mudança da terapia, a triagem está recomendada por um período de mais 3 anos.",
     "category": "monitoramento"
   },
-  "IM-01": {
+  {
     "id": "IM-01",
     "question": "Rifampicina tem interação com contraceptivos orais?",
     "answer": "Sim, a Rifampicina tem interação com contraceptivos orais. De acordo com o Trecho 1 do Manual de Recomendações para o controle da Tuberculose no Brasil, o efeito da interação é: Reduz o nível sérico dos anticoncepcionais. A recomendação é: Evitar uso concomitante e considerar uso de outros métodos contraceptivos. (Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md)",
@@ -168,7 +168,7 @@
     "ground_truth": "A rifampicina interage com contraceptivos orais, reduzindo sua eficácia por indução enzimática. É recomendado utilizar método alternativo de contracepção durante o uso da rifampicina.",
     "category": "interacoes_medicamentosas"
   },
-  "IM-02": {
+  {
     "id": "IM-02",
     "question": "Qual a principal preocupação ao usar rifampicina em pessoas vivendo com HIV em uso de antirretrovirais?",
     "answer": "A principal preocupação ao usar rifampicina em pessoas vivendo com HIV em uso de antirretrovirais é a interação medicamentosa, especialmente com inibidores de protease ou dolutegravir, como mencionado no Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md. Nesses casos, a rifampicina está contraindicada devido às interações medicamentosas, e é recomendada a utilização de outras opções terapêuticas.\n\nSeção de origem da resposta: Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md.",
@@ -181,7 +181,7 @@
     "ground_truth": "A rifampicina é um potente indutor enzimático que pode reduzir significativamente os níveis plasmáticos de antirretrovirais, especialmente inibidores de protease e inibidores não nucleosídeos da transcriptase reversa. Deve-se verificar interações medicamentosas antes de iniciar rifampicina em PVHIV.",
     "category": "interacoes_medicamentosas"
   },
-  "IM-03": {
+  {
     "id": "IM-03",
     "question": "Isoniazida tem interação com fenitoína?",
     "answer": "Não encontrei essa informação nos protocolos indexados. Consulte o Manual de Recomendações do MS.",
@@ -194,7 +194,7 @@
     "ground_truth": "A isoniazida interage com fenilhidantoína (fenitoína), causando maior hepatotoxicidade. A recomendação do Ministério da Saúde é evitar o uso concomitante. Quando ambos os fármacos forem necessários, deve-se monitorar sintomas e enzimas hepáticas conforme indicado.",
     "category": "interacoes_medicamentosas"
   },
-  "IM-04": {
+  {
     "id": "IM-04",
     "question": "Quanto tempo antes do início de terapia imunossupressora deve ser iniciado o tratamento da ILTB?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, o MS recomenda que o tratamento da TBi seja iniciado 30 dias antes do uso da terapia imunossupressora. Além disso, é mencionado que o Consenso Europeu recomenda aguardar 4 semanas para início do tratamento imunossupressor, exceto em casos de maior urgência clínica após aconselhamento especializado. Portanto, o tratamento da ILTB deve ser iniciado 30 dias antes do início da terapia imunossupressora, de acordo com as recomendações do MS. (Trecho 1 — GEDIIB_TratamentoTuberculose.md)",
@@ -207,7 +207,7 @@
     "ground_truth": "O Ministério da Saúde recomenda que o tratamento da TBi seja iniciado 30 dias antes do uso da terapia imunossupressora.",
     "category": "interacoes_medicamentosas"
   },
-  "IM-05": {
+  {
     "id": "IM-05",
     "question": "Qual o prazo recomendado para aguardar antes de iniciar tratamento imunossupressor após diagnóstico de ILTB, segundo o consenso europeu?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, o Consenso Europeu recomenda aguardar 4 semanas para início do tratamento imunossupressor, exceto em casos de maior urgência clínica após aconselhamento especializado.",
@@ -220,7 +220,7 @@
     "ground_truth": "O Consenso Europeu que aborda infecções em DII recomenda aguardar 4 semanas para início do tratamento imunossupressor após o diagnóstico de ILTB, exceto em casos de maior urgência clínica após aconselhamento especializado.",
     "category": "interacoes_medicamentosas"
   },
-  "PE-01": {
+  {
     "id": "PE-01",
     "question": "Posso tratar ILTB em gestante HIV negativa?",
     "answer": "De acordo com o Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 8.5.1. Gestantes, recomenda-se postergar o tratamento da ILTB para após o parto. Portanto, não é recomendado tratar ILTB em gestante HIV negativa durante a gestação, a menos que haja uma indicação específica para isso, o que não está mencionado nos trechos fornecidos. (Seção 8.5.1. Gestantes)",
@@ -233,7 +233,7 @@
     "ground_truth": "Em gestantes HIV negativas, a recomendação é postergar o tratamento da ILTB para após o parto.",
     "category": "populacoes_especiais"
   },
-  "PE-02": {
+  {
     "id": "PE-02",
     "question": "Quando tratar ILTB em gestante HIV positiva?",
     "answer": "De acordo com o Trecho 1 e o Trecho 2, seção 8.5.1, recomenda-se tratar a ILTB em gestante com infecção pelo HIV após o terceiro mês de gestação. Além disso, é importante proceder com radiografia de tórax na gestante, com a devida proteção exigida para essa condição, a fim de afastar sinais de TB ativa antes do início do tratamento. (Trecho 1 e Trecho 2, seção 8.5.1)",
@@ -246,7 +246,7 @@
     "ground_truth": "Em gestantes HIV positivas, preconiza-se o tratamento após o 3º mês de gestação.",
     "category": "populacoes_especiais"
   },
-  "PE-03": {
+  {
     "id": "PE-03",
     "question": "Como manejar paciente em uso de anti-TNF com diagnóstico de ILTB?",
     "answer": "De acordo com o Trecho 3 — GEDIIB_TratamentoTuberculose.md, pacientes em uso de anti-TNF alfa devem receber tratamento para ILTB se tiverem PPD maior ou igual a 5 mm e IGRA positivo. Além disso, o Trecho 1 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, item 9, também destaca que indivíduos em uso de inibidores do TNF-α devem ser tratados se tiverem PT ≥ 5mm ou IGRA positivo. Portanto, o manejo desses pacientes deve seguir as diretrizes de tratamento da ILTB, considerando a indicação de tratamento com base nos resultados de PT e IGRA. (Seção: Trecho 3 — GEDIIB_TratamentoTuberculose.md e Trecho 1 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md)",
@@ -259,7 +259,7 @@
     "ground_truth": "Indivíduos com PPD ≥ 5mm e IGRA positivo que estejam em uso ou iniciarão terapia biológica com ação anti-TNF alfa têm indicação de tratamento para TBi. O tratamento deve ser iniciado 30 dias antes do uso da terapia imunossupressora. Após o diagnóstico durante o tratamento da DII, recomenda-se tratamento da TBi além de vigilância e monitoramento.",
     "category": "populacoes_especiais"
   },
-  "PE-04": {
+  {
     "id": "PE-04",
     "question": "Qual esquema de tratamento da ILTB deve ser evitado em gestantes?",
     "answer": "De acordo com o Trecho 1 — tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md, o esquema 3HP não deve ser utilizado em caso de gestantes. \n\nAlém disso, o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 8.5.1. Gestantes, também recomenda postergar o tratamento da ILTB para após o parto, exceto em gestantes com infecção pelo HIV, em que o tratamento da ILTB deve ser iniciado após o terceiro mês de gestação.\n\nPortanto, o esquema 3HP deve ser evitado em gestantes, de acordo com as recomendações dos Trechos 1 e 2.",
@@ -272,7 +272,7 @@
     "ground_truth": "O esquema 3HP (Rifapentina + Isoniazida) não está indicado para gestantes. As indicações do 3HP excluem gestantes entre as populações para as quais o esquema pode ser utilizado.",
     "category": "populacoes_especiais"
   },
-  "PE-05": {
+  {
     "id": "PE-05",
     "question": "Qual a dose de rifampicina para crianças no esquema 4R?",
     "answer": "A dose de rifampicina para crianças no esquema 4R é de 15 (10-20) mg/kg/dia de peso, com dose máxima de 600 mg por dia, conforme descrito no Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção **Regime com rifampicina (R):** e também no Trecho 4 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção **ANEXO VI – Tabela Posológica dos Medicamentos para Crianças (< 10 anos de idade) (Serializado por Fármaco)**. Além disso, o Trecho 3 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, seção **Esquema 4R**, fornece informações adicionais sobre o esquema 4R, incluindo o tempo de tratamento e o número de doses.",
@@ -285,7 +285,7 @@
     "ground_truth": "No esquema pediátrico 4R, a rifampicina é administrada na dose de 15 mg/kg/dia, com dose máxima de 600 mg/dia, administrada diariamente por 4 meses.",
     "category": "populacoes_especiais"
   },
-  "PE-06": {
+  {
     "id": "PE-06",
     "question": "Qual o risco aumentado de TB doença em pacientes com DII em uso de anti-TNF?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, o uso de anti-TNF aumentou o risco de TB doença em 3,93 vezes em pacientes com DII.",
@@ -298,7 +298,7 @@
     "ground_truth": "Estudo realizado em nosso meio demonstrou aumento significativo do risco de TB doença em pacientes com DII em tratamento. O uso de tiopurinas aumentou o risco em 5,85 vezes, anti-TNF em 3,93 vezes e a combinação azatioprina + anti-TNF em 9,03 vezes.",
     "category": "populacoes_especiais"
   },
-  "PE-07": {
+  {
     "id": "PE-07",
     "question": "Qual esquema usar para paciente com HIV?",
     "answer": "De acordo com o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, em caso de hepatopatia prévia, o esquema de multirresistência poderá ser utilizado sem a pirazinamida na sua composição. Além disso, o Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 7.8.5, menciona que o tratamento para a TB DR em pessoas que vivem com HIV é semelhante aos não infectados pelo HIV.\n\nNo entanto, para uma resposta mais específica sobre o esquema de tratamento para paciente com HIV, é importante considerar as diretrizes gerais para o tratamento da tuberculose em pessoas vivendo com HIV, que seguem o mesmo padrão do tratamento para a população em geral, conforme mencionado no Trecho 3.\n\nJá o Trecho 4 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 8.5.2, fornece indicações específicas para o tratamento da ILTB em pessoas vivendo com HIV, considerando a contagem de LT-CD4+ e outros fatores. \n\nPortanto, a escolha do esquema de tratamento para um paciente com HIV deve ser baseada em uma avaliação individualizada, considerando fatores como a presença de hepatopatia, a contagem de LT-CD4+, e outras condições de saúde específicas do paciente. \n\n(Seção 7.8.5 e 8.5.2 do Manual de Recomendações para o controle da Tuberculose no Brasil.md)",
@@ -311,7 +311,7 @@
     "ground_truth": "Para PVHIV, o esquema preferencial é a isoniazida (9H), pois o esquema 4R (rifampicina) está contraindicado em PVHIV em uso de inibidores de protease e integrase. O esquema 9H (270 doses, 9 a 12 meses) protege mais que o 6H. PVHIV com contagem de CD4 ≤ 350 células/µL têm indicação de tratamento para ILTB independentemente do resultado da PT ou IGRA.",
     "category": "populacoes_especiais"
   },
-  "DI-01": {
+  {
     "id": "DI-01",
     "question": "Qual o ponto de corte da prova tuberculínica para indicar tratamento da ILTB em pacientes em uso de anti-TNF?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, o ponto de corte da prova tuberculínica (PPD) para indicar tratamento da Infecção Latente por Tuberculose (ILTB) em pacientes em uso de anti-TNF alfa é maior ou igual a 5 mm, além de IGRA positivo. \n\nAlém disso, o Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, também menciona que indivíduos em uso de inibidores do TNF-α devem ser tratados se tiverem PPD ≥ 5mm ou IGRA positivo. \n\nPortanto, o ponto de corte é de 5 mm ou mais, combinado com um resultado positivo no IGRA. (Seção: Trecho 1 — GEDIIB_TratamentoTuberculose.md e Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md)",
@@ -324,7 +324,7 @@
     "ground_truth": "Devem receber tratamento para TBi indivíduos com PPD maior ou igual a 5 mm e IGRA positivo, que estejam em uso ou iniciarão terapia biológica com ação anti-TNF alfa ou uso de dose acima de 15 mg/dia de prednisona por período superior a um mês.",
     "category": "diagnostico"
   },
-  "DI-02": {
+  {
     "id": "DI-02",
     "question": "Qual exame é superior para diagnóstico da ILTB: IGRA ou PPD?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, \"Não há superioridade do IGRA sobre o PPD e vice-versa.\" Portanto, não há um exame considerado superior ao outro para o diagnóstico da ILTB. Cada um tem suas próprias vantagens e desvantagens, como descrito nos trechos subsequentes.",
@@ -337,7 +337,7 @@
     "ground_truth": "Não há superioridade do IGRA sobre o PPD e vice-versa. O PPD sofre influência da vacina BCG até dois anos depois de sua aplicação. No caso do IGRA, existe a possibilidade de resultado indeterminado, especialmente em condições de moradia em região endêmica, tratamento com corticoide ou imunossupressor, atividade de doença, idade avançada, baixos níveis de albumina, linfopenia e altos níveis de proteína C reativa.",
     "category": "diagnostico"
   },
-  "DI-03": {
+  {
     "id": "DI-03",
     "question": "O que deve ser feito antes de iniciar o tratamento da ILTB?",
     "answer": "Antes de iniciar o tratamento da ILTB, deve-se: (a) afastar definitivamente a tuberculose ativa e (b) realizar a notificação por meio da 'Ficha de notificação das pessoas em tratamento de ILTB' (Trecho 1 — recomendacoes-para-o-controle-da-tuberculose.md). Além disso, é importante investigar sinais e sintomas clínicos sugestivos de tuberculose ativa e, na presença de qualquer suspeita, investigar a tuberculose ativa e não tratar a ILTB nesse momento (Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md).",
@@ -350,7 +350,7 @@
     "ground_truth": "Antes de efetuar o tratamento da ILTB deve-se: (a) afastar definitivamente a tuberculose ativa e (b) realizar a notificação por meio da Ficha de notificação das pessoas em tratamento da ILTB. O diagnóstico de ILTB deve ser realizado por meio dos testes da PT ou do IGRA.",
     "category": "diagnostico"
   },
-  "DI-04": {
+  {
     "id": "DI-04",
     "question": "Quando o resultado do IGRA for indeterminado, o que fazer?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, quando o resultado do IGRA for indeterminado, o exame deve ser repetido o mais breve possível, e se o resultado for mantido, é recomendado considerar o tratamento de TBi.\n\nAlém disso, o Trecho 4 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, também menciona que, em caso de resultado indeterminado, o teste deve ser repetido. \n\nPortanto, a recomendação é repetir o teste IGRA quando o resultado for indeterminado.",
@@ -363,7 +363,7 @@
     "ground_truth": "Quando o resultado do IGRA for indeterminado, o exame deve ser repetido o mais breve possível. Se o resultado for mantido, é recomendado considerar o tratamento de TBi.",
     "category": "diagnostico"
   },
-  "DI-05": {
+  {
     "id": "DI-05",
     "question": "Qual a conduta para excluir TB ativa antes de tratar ILTB?",
     "answer": "De acordo com o [Trecho 2 — tratamento_infeccao_latente_tuberculose_rifapentina_eletronico.md], antes de efetuar o tratamento da ILTB, deve-se afastar definitivamente a TB ativa. No entanto, os passos específicos para excluir a TB ativa não são detalhados nesse trecho. \n\nNo [Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md], para um paciente assintomático com PT ≥ 5 mm, a conduta é realizar Rx de tórax. Se o Rx de tórax for alterado, a conduta é consultar para continuar investigação e excluir TB ativa. \n\nJá no [Trecho 4 — recomendacoes-para-o-controle-da-tuberculose.md], é mencionado que antes de efetuar o tratamento da ILTB, deve-se afastar definitivamente a tuberculose ativa, mas não são fornecidos detalhes sobre como realizar essa exclusão.\n\nPortanto, com base nas informações fornecidas, a conduta para excluir TB ativa antes de tratar ILTB envolve a realização de Rx de tórax para pacientes assintomáticos com PT ≥ 5 mm e investigação adicional se o Rx for alterado, mas os passos exatos para afastar a TB ativa não são especificados nos trechos fornecidos.",
@@ -376,7 +376,7 @@
     "ground_truth": "Para excluir TB ativa antes de tratar ILTB, deve-se realizar: anamnese, exame clínico, laboratorial e radiografia de tórax (por vezes tomografia computadorizada de tórax). É importante excluir todas as formas clínicas da doença (pulmonar/laríngea e extrapulmonar), além de considerar vínculos epidemiológicos e exames bacteriológicos.",
     "category": "diagnostico"
   },
-  "IT-01": {
+  {
     "id": "IT-01",
     "question": "Quem deve receber tratamento da ILTB independente do resultado da PT ou IGRA?",
     "answer": "De acordo com o Trecho 1 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, as PVHIV que são contatos de pessoas com TB ativa (pulmonar ou laríngea) e as PVHIV com contagem de CD4 ≤ 350 células/µL devem realizar o tratamento para ILTB, independentemente do resultado da prova tuberculínica (PT) ou do IGRA.\n\nAlém disso, o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, especifica que as PVHIV com radiografia de tórax normal e contagem de LT-CD4+ ≤ a 350 céls/mm³, ou com contato intradomiciliar ou institucional de pacientes com TB pulmonar ou laríngea, também devem receber tratamento da ILTB independentemente do resultado da PT ou IGRA.\n\nPortanto, os grupos que devem receber tratamento da ILTB independente do resultado da PT ou IGRA incluem:\n- PVHIV que são contatos de pessoas com TB ativa (pulmonar ou laríngea)\n- PVHIV com contagem de CD4 ≤ 350 células/µL\n- PVHIV com radiografia de tórax normal e contagem de LT-CD4+ ≤ a 350 céls/mm³\n- PVHIV com radiografia de tórax normal e contato intradomiciliar ou institucional de pacientes com TB pulmonar ou laríngea.",
@@ -389,7 +389,7 @@
     "ground_truth": "Alguns grupos devem ser tratados sem PT e sem IGRA, como contatos de alto risco com TB bacilífera. O Quadro 1 do Protocolo de Vigilância da ILTB especifica as indicações de tratamento, incluindo grupos que devem tratar sem PT/IGRA, grupos que tratam com PT ≥ 5mm ou IGRA positivo, e grupos que tratam com PT ≥ 10mm ou IGRA positivo.",
     "category": "indicacoes_tratamento"
   },
-  "IT-02": {
+  {
     "id": "IT-02",
     "question": "Quando é indicado tratar ILTB em pessoa com alteração radiológica fibrótica pulmonar?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, o tratamento para ILTB é indicado para indivíduos com PPD maior ou igual a 5 mm e IGRA positivo que tenham alterações radiológicas pulmonares fibróticas sugestivas de sequelas de TB, independentemente de ter alguma doença ou estar em tratamento.\n\nAlém disso, o Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, item 8, também menciona que deve-se tratar se houver alterações radiológicas fibróticas sugestivas de sequela de TB, desde que o PPD seja maior ou igual a 5mm ou o IGRA seja positivo.\n\nPortanto, o tratamento é indicado quando há alteração radiológica fibrótica pulmonar e o PPD é maior ou igual a 5 mm ou o IGRA é positivo. (Trecho 1 e Trecho 2)",
@@ -402,7 +402,7 @@
     "ground_truth": "Todos os indivíduos com PPD maior ou igual a 5mm e IGRA positivo e que tenham alterações radiológicas pulmonares fibróticas sugestivas de sequelas de TB, independe de ter alguma doença ou estar em tratamento, também têm indicação de tratamento da TBi.",
     "category": "indicacoes_tratamento"
   },
-  "IT-03": {
+  {
     "id": "IT-03",
     "question": "Qual a indicação de tratamento da ILTB em paciente em pré-transplante?",
     "answer": "A indicação de tratamento da ILTB em paciente em pré-transplante é para aqueles que estão em uso de terapia imunossupressora, conforme descrito no Trecho 1 — GEDIIB_TratamentoTuberculose.md e Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md, item 10. Além disso, o Trecho 2 também menciona que devem ser tratados se tiverem PPD ≥ 5mm ou IGRA positivo. (Seção: Trecho 1 — GEDIIB_TratamentoTuberculose.md e Trecho 2 — af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md)",
@@ -415,7 +415,7 @@
     "ground_truth": "Estão incluídos na indicação de tratamento da TBi os pacientes com PPD maior ou igual a 5mm ou IGRA positivo em pré-transplante em uso de terapia imunossupressora.",
     "category": "indicacoes_tratamento"
   },
-  "IT-04": {
+  {
     "id": "IT-04",
     "question": "Quando tratar ILTB em paciente com prednisona?",
     "answer": "De acordo com o Trecho 1 — GEDIIB_TratamentoTuberculose.md, os indivíduos que devem receber tratamento para TBi incluem aqueles que estejam em uso ou iniciarão terapia biológica com ação anti-TNF alfa ou uso de dose acima de 15 mg/dia de prednisona por período superior a um mês, com PPD maior ou igual a 5 mm e IGRA positivo. \n\nPortanto, o tratamento da ILTB deve ser considerado em pacientes que estejam usando prednisona acima de 15 mg/dia por mais de um mês, com PPD ≥ 5 mm e IGRA positivo. (Trecho 1 — GEDIIB_TratamentoTuberculose.md)",
@@ -428,7 +428,7 @@
     "ground_truth": "Devem receber tratamento para TBi indivíduos com PPD maior ou igual a 5mm e IGRA positivo, que estejam em uso ou iniciarão terapia com dose acima de 15 mg/dia de prednisona por período superior a um mês.",
     "category": "indicacoes_tratamento"
   },
-  "IT-05": {
+  {
     "id": "IT-05",
     "question": "Quando é indicado tratar ILTB em pessoas em contato com TB?",
     "answer": "De acordo com o Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, específicamente na seção 8.5.2. Pessoas vivendo com HIV, é indicado tratar a ILTB em pessoas vivendo com HIV (PVHIV) que estejam em contato intradomiciliar ou institucional com pacientes com TB pulmonar ou laríngea, independentemente do resultado da prova tuberculínica (PT) ou do Interferon-Gamma Release Assays (IGRA). Além disso, o Trecho 1 — recomendacoes-para-o-controle-da-tuberculose.md, na seção 2.2 Tratamento da Infecção Latente pelo Mycobacterium tuberculosis (ILTB), menciona que o tratamento da ILTB é recomendado para pessoas infectadas que apresentam risco de desenvolver TB, o que inclui contatos de casos de TB.",
@@ -441,7 +441,7 @@
     "ground_truth": "Recomenda-se o tratamento da infecção latente pelo M. tuberculosis (ILTB) para pessoas infectadas, identificadas por meio da prova tuberculínica (PT) ou Interferon-Gamma Release Assays (IGRA), quando apresentam risco de desenvolver TB. Antes do tratamento deve-se afastar definitivamente a tuberculose ativa.",
     "category": "indicacoes_tratamento"
   },
-  "EA-01": {
+  {
     "id": "EA-01",
     "question": "Quais são os principais efeitos adversos da isoniazida?",
     "answer": "De acordo com o Trecho 1 — recomendacoes-para-o-controle-da-tuberculose.md, os principais efeitos adversos da isoniazida incluem:\n\n* Intolerância digestiva (náusea e vômito) e epigastralgia\n* Prurido e exantema leve\n* Dor articular\n* Neuropatia periférica\n* Cefaleia e mudança de comportamento (euforia, insônia, depressão leve, ansiedade e sonolência)\n* Febre\n\nAlém disso, de acordo com o Trecho 2 — recomendacoes-para-o-controle-da-tuberculose.md, a isoniazida também pode causar:\n* Exantema ou hipersensibilidade de moderada a grave\n* Psicose, crise convulsiva, encefalopatia tóxica ou coma\n* Hepatotoxicidade\n\nJá no Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, são mencionados outros efeitos adversos associados ao uso concomitante de isoniazida com antirretrovirais, incluindo:\n* Neuropatia periférica\n* Confusão mental, insônia, pesadelos, tonturas\n* Depressão\n* Cefaleia\n* Náuseas e vômitos\n* Hepatotoxicidade\n\nE no Trecho 4 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, são mencionadas interações entre a isoniazida e outros fármacos, que podem aumentar o risco de efeitos adversos, como:\n* Indução de toxicidade neurológica com carbamazepina\n* Maior neurotoxicidade com cicloserina/terizidona\n* Maior metabolismo da isoniazida com corticoides\n* Inibição da MAO com queijos e vinhos.",
@@ -454,7 +454,7 @@
     "ground_truth": "Os principais efeitos adversos da isoniazida incluem: hepatotoxicidade (hepatite aguda medicamentosa), neuropatia periférica (pode ser prevenida com piridoxina), reações de hipersensibilidade. A hepatotoxicidade é a reação adversa mais grave e requer monitoramento das transaminases.",
     "category": "efeitos_adversos"
   },
-  "EA-02": {
+  {
     "id": "EA-02",
     "question": "Como prevenir a neuropatia periférica causada pela isoniazida?",
     "answer": "De acordo com o [Trecho 2 — recomendacoes-para-o-controle-da-tuberculose.md], a conduta para prevenir a neuropatia periférica causada pela isoniazida é medicar com piridoxina (vitamina B6) na dosagem de 50mg/dia e avaliar a evolução. \n\nAlém disso, no [Trecho 1 — Manual de Recomendações para o controle da Tuberculose no Brasil.md] é mencionado que, no caso de reação adversa de neuropatia periférica, a conduta preconizada é: Anti-inflamatórios não esteroides podem aliviar os sintomas. Considerar aumento de dose da piridoxina até dose máxima de 200 mg/dia. Iniciar tratamento com antidepressivo tricíclico (amitriptilina). Reduzir a dose ou, caso não haja controle dos sintomas, suspender o medicamento e substituí-lo pela melhor opção. \n\nJá no [Trecho 3 — Manual de Recomendações para o controle da Tuberculose no Brasil.md], é mencionado que, no caso de reação adversa de neuropatia periférica associada ao uso do antirretroviral AZT com os fármacos anti-TB Aminoglicosídeos, Etambutol, Etionamida, Isoniazida, Linezolida ou Terizidona, a conduta e observação são: Utilizar piridoxina até 200 mg/dia. Avaliar uso de amitriptilina, analgésicos e anti-inflamatório não esteroide.",
@@ -467,7 +467,7 @@
     "ground_truth": "A neuropatia periférica causada pela isoniazida pode ser prevenida com a suplementação de piridoxina (vitamina B6). Em gestantes HIV negativas com indicação de tratamento, a isoniazida deve ser acompanhada de suplementação de piridoxina.",
     "category": "efeitos_adversos"
   },
-  "EA-03": {
+  {
     "id": "EA-03",
     "question": "Quais doenças hepáticas são causas de encerramento do tratamento por efeito adverso?",
     "answer": "De acordo com o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 6.1, as reações adversas maiores incluem hepatotoxicidade, que é uma causa de encerramento do tratamento por efeito adverso. Além disso, no Trecho 4 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, seção 7.8.4, é mencionado que os medicamentos de primeira linha que podem causar dano hepático são, por ordem de toxicidade: pirazinamida, isoniazida e rifampicina. Já os medicamentos de segunda linha que podem causar hepatotoxicidade incluem etionamida, protionamida e PAS.\n\nPortanto, as doenças hepáticas que podem ser causas de encerramento do tratamento por efeito adverso incluem:\n\n- Hepatotoxicidade\n- Hepatopatia prévia\n- Dano hepático causado por medicamentos como pirazinamida, isoniazida, rifampicina, etionamida, protionamida e PAS.\n\n(Seção 6.1 e 7.8.4)",
@@ -480,7 +480,7 @@
     "ground_truth": "As causas básicas potencialmente relacionadas à hepatotoxicidade de interesse para investigação e registro no IL-TB incluem: Tuberculose (CID A15 a A19), Complicações do HIV (CID B22, B22.7, B23, B23.8), Hepatite aguda medicamentosa (CID K71) e Doença hepática aguda viral (CID B17).",
     "category": "efeitos_adversos"
   },
-  "EA-04": {
+  {
     "id": "EA-04",
     "question": "O que acontece com o tratamento da ILTB quando a paciente engravida durante o tratamento?",
     "answer": "De acordo com o Trecho 1 — recomendacoes-para-o-controle-da-tuberculose.md, \"Postergar o tratamento da ILTB para depois do parto. Em gestante com infecção pelo HIV, tratar a ILTB após o terceiro mês de gestação.\" \n\nAlém disso, o Trecho 2 — Manual de Recomendações para o controle da Tuberculose no Brasil.md, na seção 8.5.1. Gestantes, reforça que \"Recomenda-se postergar o tratamento da ILTB para após o parto. Em gestante com infecção pelo HIV, tratar a ILTB após o terceiro mês de gestação.\"\n\nPortanto, o tratamento da ILTB deve ser postergado para após o parto, exceto em casos de gestantes com infecção pelo HIV, que devem iniciar o tratamento após o terceiro mês de gestação. (Seção 8.5.1. Gestantes, Trecho 2)",
@@ -493,4 +493,4 @@
     "ground_truth": "O diagnóstico de gravidez no decorrer do tratamento é uma causa de descontinuidade do tratamento. A paciente deverá iniciar um novo tratamento para ILTB após o parto. Para o novo tratamento, cada caso necessitará ser avaliado individualmente, considerando o número de doses tomadas até a interrupção do tratamento.",
     "category": "efeitos_adversos"
   }
-}
+]

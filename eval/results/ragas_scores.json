@@ -239,5 +239,149 @@
     "answer_relevancy": 0.3806,
     "context_precision": 0.7354,
     "context_recall": 0.5202
+  },
+  {
+    "timestamp": "2026-05-15T20:41:23Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "RETRATADO — esta entrada foi inicialmente rotulada como 'openai/gpt-4o' (ablação 2.31), mas a inspeção do estilo das respostas em _ragas_cache_gpt4o.json revelou que era Llama 3.3 70B (mesmo template 'De acordo com o Trecho 1...'). Causa: env vars de sistema (LLM_PROVIDER/MODEL/KEY/BASE_URL) sobrescrevem .env via pydantic-settings; minhas edições do .env não tiveram efeito. A REAL ablação GPT-4o foi feita às 2026-05-16T00:39:09Z com env override inline. Faithfulness 0.544 aqui é variância do Llama+MiniLM (vs 0.515 do gate final). Cache em _ragas_cache_gpt4o.json (NOME ENGANOSO — é Llama). Ver seção 2.31 corrigida.",
+    "faithfulness": 0.5442,
+    "answer_relevancy": 0.3081,
+    "context_precision": 0.7398,
+    "context_recall": 0.5596
+  },
+  {
+    "timestamp": "2026-05-15T23:55:13Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 13,
+    "note": "PARCIAL — BGE-M3 + Llama 3.3 70B, TPD Groq esgotou em q14. Amostra biased: apenas categorias ET-01..07, MO-01..05, IM-01 (mais fáceis). Score não representativo do test set 38q. Cache em _ragas_cache_bgem3_llama_partial.json. Re-run pendente após reset TPD para completar 38/38.",
+    "faithfulness": 0.5925,
+    "answer_relevancy": 0.7442,
+    "context_precision": 0.8932,
+    "context_recall": 0.7385
+  },
+  {
+    "timestamp": "2026-05-16T00:00:49Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 4,
+    "note": "INVÁLIDO — re-tentativa BGE-M3 + Llama com --clear-cache, TPD Groq ainda esgotado (98333/100000). Apenas ET-01..04 coletadas. Amostra muito pequena e biased. Desconsiderar.",
+    "faithfulness": 0.7917,
+    "answer_relevancy": 0.9262,
+    "context_precision": 0.9583,
+    "context_recall": 0.875
+  },
+  {
+    "timestamp": "2026-05-16T00:39:09Z",
+    "llm": "openai/gpt-4o",
+    "n_questions": 38,
+    "note": "RE-ABLAÇÃO LLM (correta após bug 20:41) — GPT-4o real + MiniLM 384D, mesmo pipeline do gate final. Env vars inline override (LLM_PROVIDER/MODEL/KEY/BASE_URL na linha de comando). Cache em _ragas_cache_gpt4o_minilm.json. Estilo da resposta confirmado: fallback puro literal 'Não encontrei essa informação nos protocolos indexados. Consulte o Manual de Recomendações do MS.' GPT-4o segue prompt v1 à risca → faithfulness 0.383 < Llama 0.515. Ver seção 2.31 corrigida e 2.32 do diário.",
+    "faithfulness": 0.3827,
+    "answer_relevancy": 0.3148,
+    "context_precision": 0.761,
+    "context_recall": 0.5333
+  },
+  {
+    "timestamp": "2026-05-16T00:50:13Z",
+    "llm": "openai/gpt-4o",
+    "n_questions": 38,
+    "note": "MIGRAÇÃO EMBEDDING (controle GPT-4o, 38/38) — GPT-4o real + BGE-M3 1024D. Env vars inline override. Cache em _ragas_cache_gpt4o_bgem3.json. Comparação direta com 00:39:09 isola efeito do embedding: faithfulness 0.383 → 0.600 (+56.7%), answer_relevancy 0.315 → 0.618 (+96.2%), context_precision 0.761 → 0.907 (PASS), context_recall 0.533 → 0.796 (+49.3%). Salto massivo. Ver seção 2.32 do diário.",
+    "faithfulness": 0.6,
+    "answer_relevancy": 0.6175,
+    "context_precision": 0.9072,
+    "context_recall": 0.7965
+  },
+  {
+    "timestamp": "2026-05-16T00:55:47Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 13,
+    "faithfulness": 0.6227,
+    "answer_relevancy": 0.7341,
+    "context_precision": 0.9017,
+    "context_recall": 0.7513
+  },
+  {
+    "timestamp": "2026-05-16T02:41:15Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 14,
+    "faithfulness": 0.5995,
+    "answer_relevancy": 0.7603,
+    "context_precision": 0.9266,
+    "context_recall": 0.7571
+  },
+  {
+    "timestamp": "2026-05-16T03:01:19Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 15,
+    "faithfulness": 0.6037,
+    "answer_relevancy": 0.7085,
+    "context_precision": 0.9148,
+    "context_recall": 0.7622
+  },
+  {
+    "timestamp": "2026-05-16T09:14:13Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 23,
+    "faithfulness": 0.6582,
+    "answer_relevancy": 0.7087,
+    "context_precision": 0.9444,
+    "context_recall": 0.7507
+  },
+  {
+    "timestamp": "2026-05-16T13:29:16Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 25,
+    "faithfulness": 0.6441,
+    "answer_relevancy": 0.7137,
+    "context_precision": 0.9356,
+    "context_recall": 0.812
+  },
+  {
+    "timestamp": "2026-05-16T13:57:39Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 26,
+    "faithfulness": 0.6736,
+    "answer_relevancy": 0.6897,
+    "context_precision": 0.9316,
+    "context_recall": 0.7731
+  },
+  {
+    "timestamp": "2026-05-16T14:25:06Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "GATE FINAL pós-migração — Llama 3.3 70B + BGE-M3 1024D, 38/38 completo após upgrade Groq Dev Tier (TPD destravado). Mesmo test_set, mesmo chunker hierárquico (898 chunks 1024D), top_k=5, juiz gpt-4o-mini. Cache em _ragas_cache_llama_bgem3_full.json. Comparação com gate MiniLM 384D (2026-04-06): faithfulness 0.515 → 0.675 (+31%); answer_relevancy 0.381 → 0.686 (+80%); context_precision 0.735 → 0.949 (+29%, PASS robusto); context_recall 0.520 → 0.740 (+42%). Fecha a 4ª célula da grade 2×2 (LLM × Embedding). Ver seção 2.32 do diário.",
+    "faithfulness": 0.6751,
+    "answer_relevancy": 0.6857,
+    "context_precision": 0.9488,
+    "context_recall": 0.7395
+  },
+  {
+    "timestamp": "2026-05-16T15:52:34Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "TF2 BUSCA HÍBRIDA — Llama 3.3 70B + BGE-M3 1024D + BM25 sidecar com RRF (k=60, fetch_k=20). 38/38 completo. vs gate dense (0.675/0.686/0.949/0.740): faithfulness +0.014 (+2.1%); answer_relevancy +0.051 (+7.4%); context_precision -0.037 (-3.9% — esperado tradeoff); context_recall +0.086 (+11.6%). Faithfulness ainda FAIL mas melhor. Fallback out-of-scope agora com scores RRF 0.029-0.033 (era 0.4-0.8 dense) — melhoria sólida de segurança. Cache em _ragas_cache_llama_bgem3_hybrid.json. Ver seção 2.34 do diário.",
+    "faithfulness": 0.6888,
+    "answer_relevancy": 0.7371,
+    "context_precision": 0.9123,
+    "context_recall": 0.8263
+  },
+  {
+    "timestamp": "2026-05-16T16:50:00Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "TF1+TF2 HYBRID+RERANK — Llama 3.3 70B + BGE-M3 + BM25 (RRF k=60, fetch_k=20) + mGTE cross-encoder reranker (Alibaba-NLP/gte-multilingual-reranker-base, fetch_k=20 → top_k=5). 38/38 completo. vs gate dense (0.675/0.686/0.949/0.740): faithfulness +0.086 (+12.7%) — exatamente no envelope previsto +5-10pp (wang2024bestpractices); answer_relevancy +0.034 (+5%); context_precision +0.015 (+1.6%, agora 0.964 PASS robusto); context_recall +0.063 (+8.5%). vs hybrid sem rerank: faithfulness +0.072. Faithfulness 0.761 a apenas 0.039 do gate 0.80. Cache em _ragas_cache_llama_bgem3_hybrid_rerank.json. Ver seção 2.35 do diário.",
+    "faithfulness": 0.7609,
+    "answer_relevancy": 0.72,
+    "context_precision": 0.9635,
+    "context_recall": 0.8026
+  },
+  {
+    "timestamp": "2026-05-16T18:03:51Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "note": "B.4 CHUNK_SIZE=500 TEST — Llama+BGE-M3+hybrid_rerank com chunk_size reduzido de 800 para 500. Re-ingestão produziu 898 chunks (mesmo número, distribuição apenas marginalmente diferente: mediana 674 chars). vs gate hybrid_rerank chunk=800: faithfulness -0.005 (sem efeito); answer_relevancy -0.037 (-5.1%, regressão); context_precision -0.013 (marginal); context_recall +0.008. B.4 NÃO ajudou — chunk_size=800 mantido como gate final. Cache em _ragas_cache_chunk500_test.json. Ver seção 2.36 do diário.",
+    "faithfulness": 0.7557,
+    "answer_relevancy": 0.6834,
+    "context_precision": 0.951,
+    "context_recall": 0.8114
   }
 ]
