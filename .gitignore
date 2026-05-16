@@ -17,6 +17,10 @@ docs/protocolos/*.pdf
 # Resultados de avaliação RAGAS — ragas_detailed.json é grande/gerado; scores são versionados
 eval/results/ragas_detailed.json
 
+# Outputs gerados pelo notebook de análise da sessão expert (PNGs/tabelas/sumário)
+# Versionar quando dados reais da sessão forem produzidos; por padrão, gerar localmente.
+eval/results/expert_session/
+
 # Documentos da monografia
 Documentos para a Monografia/
 
