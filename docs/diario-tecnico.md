@@ -3028,3 +3028,129 @@ Gate Fase 2 (2026-04-06)
 Salto cumulativo Gate Fase 2 → Gate Final: **faithfulness +0,246 (+47,8\%)**; **context_precision +0,229 (de FAIL marginal a PASS robusto)**.
 
 ---
+
+## 2.37 — Revisão Bibliográfica D1, D3-D9, D11 via NotebookLM (lote 2)
+
+**Data:** 2026-05-16
+**Escopo:** completar a revisão por decisão metodológica iniciada em 2.28 (lote 1, D2/D7/D10/D12/D13). Cobrindo as 8 decisões restantes do framework D1–D13: D1 (RAG vs fine-tuning), D3 (vector store), D4 (LLM), D5 (chunking), D6 (RAGAS), D8 (DSRM), D9 (epidemiologia ILTB), D11 (busca híbrida).
+
+### Workflow
+
+Diferente de 2.28 (lote 1, executado manualmente pelo autor via web), o lote 2 foi automatizado via CLI [`notebooklm-py 0.4.1`](https://pypi.org/project/notebooklm-py/) com [`scripts/lote2_notebooklm.py`](../scripts/lote2_notebooklm.py). Pré-requisitos:
+- `pip install notebooklm-py playwright` + `playwright install chromium`
+- `notebooklm login` (OAuth Google interativo)
+- 36 fontes do TCC já carregadas no notebook `ea0a3b0f-95f0-4c30-8f79-aea59a2fbc84` (mesmo da sessão lote 1, conversation_id `10219a1c-4f7d-4fb5-8b2c-29422ebd7e16`)
+
+Total: 24 prompts (8 decisões × 3 perguntas: validação / lacuna / reconsiderar), tempo médio ~40s por prompt, ~17 min de execução. Duas retentativas necessárias (D6.Validação saiu truncada com apenas o reasoning interno; D9.Lacuna deu timeout) — ambas resolvidas em segunda tentativa.
+
+Saída em `docs/notebooklm_respostas/D{1,3,4,5,6,8,9,11}.md` no mesmo formato do lote 1.
+
+### Síntese por decisão e classificação
+
+#### D1 — Arquitetura RAG vs fine-tuning · **[VALIDADA]**
+
+As fontes sustentam **fortemente** a escolha de RAG sobre fine-tuning para protocolos clínicos de baixa frequência terminológica. Argumentos centrais: (i) LLMs lutam para memorizar conhecimento raro \[Gao 2024\]; (ii) RAG permite atualização em tempo real (fine-tuning é estático); (iii) rastreabilidade obrigatória em saúde \[Liu et al. 2025\]; (iv) modelos genéricos têm desempenho "insatisfatório" em PCDTs brasileiros \[Abonizio et al. 2026\].
+
+**Atenção:** Abonizio et al. 2026 mostra que um modelo Qwen2.5-14B com fine-tuning especializado **supera RAG web-grounded** em HealthBench-BR (83,9%) e PCDT-QA (85,4%). Não invalida o RAG para nosso corpus (1.219 docs vs nossos 898 chunks), mas registra a alternativa para trabalho futuro. RAFT também mencionado como caminho híbrido, com a ressalva de que custo de fine-tuning não compensa para POC acadêmica.
+
+#### D3 — Vector Store: ChromaDB (HNSW) · **[REVISITAR]**
+
+HNSW está bem fundamentado (complexidade logarítmica, recall robusto, conectividade global), porém **para 898 chunks a indexação em memória pura (Numpy array) seria suficiente** — citação direta de Andrej Karpathy nas fontes: "as pessoas buscam coisas muito mais sofisticadas rápido demais hoje em dia". Latência de busca exaustiva em 10K sentenças é ~10ms; em 898 chunks é imperceptível.
+
+Não há comparação empírica direta ChromaDB vs FAISS/Qdrant/Pinecone nas fontes; FAISS e Chroma aparecem como os mais frequentes em RAG clínico (Liu et al. 2025).
+
+**Não justifica trocar agora** — ChromaDB já está em produção, com hybrid+rerank implementado, e a migração para FAISS seria neutra em performance para nosso N. Anotar como nota de over-engineering no capítulo de Discussão da monografia.
+
+#### D4 — LLM: Llama 3.3 70B via Groq · **[VALIDADA]** (com nota crítica)
+
+Llama 3.3 70B avaliado em pt e medicina; comparações com GPT-4 e Claude em benchmarks clínicos disponíveis nas fontes \[Dubey 2024, Bang 2023\]. Sabiá-2-Medium e modelos médicos PT mencionados como alternativas, mas **a ablação 2×2 de 2.32 já mostrou empiricamente** que GPT-4o piora faithfulness no nosso pipeline (paradoxo prompt-adherence). Llama tecnicamente justificado.
+
+**Nota da literatura confirmada:** o teto de faithfulness é descrito como propriedade de **modelos abstrativos** (que parafraseiam contexto), não defeito do modelo específico — exatamente o que observamos em 2.32 e fundamentamos em \[`lewis2021`, `gao2024`, `es2024`\].
+
+#### D5 — Chunking Semântico por Cabeçalhos · **[VALIDADA]**
+
+Meta-análise mostra **diferença não significativa** entre chunking estruturado e por tamanho fixo (OR 1,30 vs 1,36, p > 0,05) — confirma que o ganho real vem do *retriever*, não do chunker. Bossenz et al. 2025 reporta pico de 92,3% Top-10 com chunk 800/1000 chars + embedding 1024D — exatamente nossa configuração após 2.32.
+
+O experimento de chunking contextual com prefixo de cabeçalhos (que reduziu RAGAS no projeto) é atribuído pela literatura ao **embedding de baixa dimensionalidade**, ratificando a decisão de migrar primeiro o embedding (D2) — feito em 2.32. **B.4 chunk_size=500 já testado em 2.36** e descartado pelo mesmo motivo (chunker hierárquico dominado por fronteiras de Markdown).
+
+#### D6 — Framework de Avaliação: RAGAS · **[REVISITAR PARCIALMENTE]**
+
+Críticas metodológicas substanciais à RAGAS encontradas: (i) divergência humano vs automático (OR 1,65 vs 1,20) — RAGAS **subestima** utilidade clínica; (ii) dificuldade na métrica de Relevância de Contexto reconhecida pelo próprio paper original; (iii) vieses de prompt e ordem do LLM-juiz; (iv) não considerado padrão maduro \[Liu et al. 2025\].
+
+Alternativas citadas: TruLens (tríade), ARES, RGB (robustez a ruído), RECALL (resistência contrafactual), BEIR (retrieval isolado), PCDT-QA / HealthBench-BR (específicos para SUS).
+
+**Recomendação consolidada:** RAGAS como **instrumento de diagnóstico técnico**, expert humano como **validador primário** — exatamente o desenho da sessão expert preparada em 2026-05-16 (instrumentos I1-I4 do `questionario_tam_ain.md`). Decisão já alinhada à literatura.
+
+#### D8 — Metodologia DSRM · **[VALIDADA]**
+
+DSRM consolidada como padrão para TCCs com artefato computacional, 6 fases bem documentadas. Para a mudança de piloto multi-rater para expert único, as fontes recomendam descrever a Fase de Demonstração como **Estudo de Caso** ou **Simulação de Instâncias Clínicas** validadas por expert — caminho já adotado. GUIDE-RAG mencionado como possível "instanciação" do DSRM com critérios específicos de RAG; opcional.
+
+ADR (Action Design Research) e variantes pós-2015 mencionadas mas **sem ganho aparente** para o escopo de POC acadêmica.
+
+#### D9 — Contexto Epidemiológico ILTB/TB · **[GAP CONFIRMADO]**
+
+Dados de incidência, mortalidade e cobertura no Brasil são **suficientes para a Justificativa**. Porém **não há nas fontes literatura específica sobre barreiras operacionais da enfermagem brasileira no manejo da ILTB** — gap real. Mitigação: usar barreiras gerais OMS aplicáveis ao Brasil (escassez de TST, logística de raio-X, baixa cobertura de contatos = 10% global).
+
+**Atualizações de protocolo identificadas:**
+- `who2018-ltbi-guidelines.pdf` está **superado** pela WHO Consolidated Guidelines Module 1 (2020) — citar a versão 2020 na monografia.
+- Regimes curtos (1HP, 3HP, 3HR) são tendência de expansão global; nosso corpus tem 3HP e 4R cobertos, ok.
+- Para TB ativa: BPaLM 6 meses (não é nosso escopo).
+
+**Ação:** adicionar `WHO Consolidated Guidelines on Tuberculosis Module 1 (2020)` à bib. Trabalho futuro: buscar lit específica sobre enfermagem brasileira + ILTB via Scielo/Google Scholar.
+
+#### D11 — Busca Híbrida como Trabalho Futuro · **[VALIDADA RETROATIVAMENTE]**
+
+Literatura sustenta **fortemente** busca híbrida BM25+denso para corpora com terminologia técnica de baixa frequência (siglas, dosagens). RRF é a recomendação pragmática (zero-shot, +4-5% sobre melhor sistema individual). Para Português Médico/SUS/POC, RRF + BM25 + retriever denso é a configuração recomendada.
+
+**Decisão revisada:** o lote 2 confirma retroativamente a decisão de **antecipar a implementação no escopo do TCC** (feita em 2.34, TF2). A literatura corrobora exatamente isso: "implementar busca híbrida agora é o que a literatura de IA em saúde recomenda para garantir segurança e factualidade literal". O resultado experimental (faithfulness +12,7% combinada com TF1 reranker, ver 2.35) valida empiricamente a recomendação.
+
+### Classificação consolidada — lote 2
+
+| Decisão | Status | Implicação |
+|---|---|---|
+| D1 — RAG vs fine-tuning | **[VALIDADA]** | Manter; registrar Abonizio 2026 + RAFT como linha futura |
+| D3 — ChromaDB (HNSW) | **[REVISITAR]** | Funciona; Numpy seria suficiente para N=898; nota no capítulo Discussão |
+| D4 — Llama 3.3 70B | **[VALIDADA]** | Comportamento abstrativo confirmado pela literatura; nossa ablação 2.32 documentou empiricamente |
+| D5 — Chunking semântico | **[VALIDADA]** | Decisão neutra; ganho vem do retriever (já feito em 2.32) |
+| D6 — RAGAS | **[REVISITAR PARCIALMENTE]** | Reposicionar como diagnóstico técnico; expert como validador primário (alinhado a `sec:sessao-expert`) |
+| D8 — DSRM | **[VALIDADA]** | Manter; descrever Demonstração como Estudo de Caso |
+| D9 — Epidemiologia ILTB | **[GAP CONFIRMADO]** | Atualizar WHO 2018 → 2020 + buscar lit enfermagem BR |
+| D11 — Busca híbrida | **[VALIDADA RETROATIVAMENTE]** | Implementação antecipada (2.34/TF2) confirmada pela literatura |
+
+**Resumo:** 5 [VALIDADA], 2 [REVISITAR], 1 [GAP CONFIRMADO].
+
+### Ações imediatas decorrentes
+
+1. **Atualizar bibliografia:** adicionar `who2020consolidatedTB` (Module 1 Prevention) substituindo/complementando `who2018`.
+2. **Capítulo de Discussão da monografia:** incorporar nota sobre over-engineering do ChromaDB para corpus pequeno (D3); registrar que RAGAS é diagnóstico e expert é validador (D6); citar Abonizio 2026 como alternativa fine-tuning especializado (D1).
+3. **Capítulo de Trabalhos Futuros:** acrescentar (a) avaliação de FAISS em memória pura como simplificação de arquitetura; (b) avaliação de modelo brasileiro especializado tipo Qwen2.5-14B-PCDT como alternativa ao RAG generalista; (c) busca por literatura específica sobre barreiras operacionais ILTB em enfermagem brasileira (Scielo, Google Scholar).
+4. **D11 já endereçada empiricamente** em 2.34/2.35 — atualizar texto de "trabalho futuro" para "implementado neste TCC" no capítulo de Conclusão da monografia.
+
+### Comparação lote 1 (2.28) vs lote 2 (2.37)
+
+| Aspecto | Lote 1 (D2, D7, D10, D12, D13) | Lote 2 (D1, D3-D9, D11) |
+|---|---|---|
+| Execução | Manual via web UI | Automatizada via CLI |
+| Tempo | ~3-4h espalhadas em dias | ~17 min de execução |
+| Erros | Não documentados | 2 retentativas (D6.Validação truncada, D9.Lacuna timeout) |
+| Output | Markdown editado a mão | Markdown gerado por script + edição manual nas retentativas |
+| Cobertura | 5 decisões | 8 decisões |
+| Status final | 3 VALIDADA, 1 GAP, 1 REVISITAR | 5 VALIDADA, 1 GAP, 2 REVISITAR |
+
+### Estado das 13 decisões pós-lote 2
+
+| Status | Decisões | Total |
+|---|---|---|
+| **[VALIDADA]** | D1, D2, D4, D5, D7, D8, D11, D13 | 8 |
+| **[REVISITAR]** | D3, D6, D10, D12 | 4 |
+| **[GAP CONFIRMADO]** | D9 | 1 |
+
+Todas as 13 decisões agora têm fundamentação bibliográfica explícita registrada. As 4 decisões em [REVISITAR] não exigem mudança de arquitetura, mas notas explicativas no texto da monografia (especialmente capítulos de Avaliação e Discussão).
+
+### Próximos passos
+
+1. **Imediato:** commitar os 8 arquivos D*.md novos + script `lote2_notebooklm.py` + esta seção 2.37.
+2. **Bibliográfico:** adicionar `who2020consolidatedTB` à bib (D9).
+3. **Monografia:** incorporar notas das 4 decisões [REVISITAR] e da [GAP CONFIRMADO] nos capítulos correspondentes (próxima sessão de redação).
+
+---
