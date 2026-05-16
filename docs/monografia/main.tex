@@ -1,0 +1,1916 @@
+% ─────────────────────────────────────────────────────────────────────────────
+%  Monografia de TCC — Chatbot de Apoio Clínico para Manejo da ILTB
+%  Autor      : Yago Novaes Neves
+%  Orientador : <preencher>
+%  LabPEC / DTI / UFES
+%  Classe     : abnTeX2 (monografia, 12pt, ABNT NBR 14724)
+%  Citações   : ABNT NBR 6023 (sistema autor-data, ALF)
+% ─────────────────────────────────────────────────────────────────────────────
+
+\documentclass[
+  12pt,
+  oneside,
+  a4paper,
+  english,
+  brazil
+]{abntex2}
+
+% ─── Codificação e fonte ─────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}           % Times New Roman
+
+% ─── Pacotes essenciais ───────────────────────────────────────────────────────
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor,colortbl}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage[singlelinecheck=false]{caption}
+\usepackage{subcaption}
+\usepackage{threeparttable}
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[
+  name={Quadro},
+  listname={Lista de Quadros},
+  placement=htbp
+]{quadro}
+% ─── Citações ABNT ───────────────────────────────────────────────────────────
+\usepackage[alf,
+  abnt-full-initials=no,
+  abnt-emphasize=bf,
+  abnt-and-type=e,
+  abnt-url-package=url,
+  abnt-repeated-author-omit=yes,
+  abnt-etal-cite=3,
+  abnt-etal-list=3
+]{abntex2cite}
+
+\newcommand{\bibtextitlecommand}[2]{%
+\ifthenelse{\equal{#1}{inproceedings}}{\normalfont{\textbf{#2} $[\ldots]$}}{}}
+
+\usepackage{url6023}
+
+% ─── Hyperlinks (abntex2 já carrega hyperref — não recarregar) ───────────────
+\hypersetup{
+  hidelinks,
+  pdfsubject={Monografia de TCC — Chatbot RAG para Apoio ao Manejo da ILTB},
+  pdfcreator={LaTeX with abnTeX2},
+  pdfkeywords={RAG}{LLM}{ILTB}{tuberculose latente}{enfermagem}{LGPD},
+  bookmarksdepth=4
+}
+
+% ─── Marcadores de revisão (implementação leve — sem TikZ/todonotes) ─────────
+% \aluno{} aparece em verde no rascunho; para a versão final, comente as duas
+% linhas abaixo e descomente as duas seguintes (que tornam os marcadores invisíveis).
+\newcommand{\aluno}[1]{{\color{olive!80!black}\textbf{[\,}{\small\itshape PREENCHER: #1}\textbf{\,]}}}
+\newcommand{\professor}[1]{{\color{red!70!black}\textbf{[\,}{\small\itshape PROF: #1}\textbf{\,]}}}
+% Versão final (sem marcadores visíveis) — descomentar e comentar as linhas acima:
+% \newcommand{\aluno}[1]{}
+% \newcommand{\professor}[1]{}
+
+% ─── Informações da monografia ──────────────────────────────────────────────
+% ATENÇÃO: \titulo, \orientador, \instituicao e \preambulo são usados dentro
+% de boxes na capa/folha de rosto. Não usar \aluno{} aqui — substitua os
+% textos em MAIÚSCULAS pelos valores reais antes de compilar para entrega.
+\titulo{Chatbot de Apoio Clínico para o Manejo da Infecção Latente por
+  \textit{Mycobacterium tuberculosis} (ILTB): uma abordagem baseada em
+  Recuperação com Geração Aumentada (RAG)}
+\autor{Yago Novaes Neves}
+\local{Vitória}
+\data{2026}
+\orientador{NOME DO ORIENTADOR}
+\instituicao{%
+  Universidade Federal do Espírito Santo -- UFES \\
+  NOME DO CENTRO / DEPARTAMENTO}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+\preambulo{Trabalho de Conclusão de Curso apresentado ao NOME DO CURSO
+  da Universidade Federal do Espírito Santo como requisito parcial para
+  obtenção do grau de Bacharel em NOME DO CURSO.}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\begin{document}
+\selectlanguage{brazil}
+\frenchspacing
+
+% ═════════════════════════════════════════════════════════════════════════════
+% ELEMENTOS PRÉ-TEXTUAIS
+% ═════════════════════════════════════════════════════════════════════════════
+\pretextual
+
+% ─── Capa ────────────────────────────────────────────────────────────────────
+\imprimircapa
+
+% ─── Folha de rosto ──────────────────────────────────────────────────────────
+\imprimirfolhaderosto
+
+% ─── Folha de aprovação ──────────────────────────────────────────────────────
+\begin{folhadeaprovacao}
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+
+    {\ABNTEXchapterfont\bfseries\Large\imprimirtitulo}
+
+    \vspace*{\fill}
+
+    \imprimirpreambulo
+
+    \vspace*{\fill}
+
+    Vitória, \_\_\_\_ de \_\_\_\_\_\_\_\_\_\_ de 2026.
+
+    \vspace*{\fill}
+
+    \assinatura{\textbf{\imprimirorientador} \\ Orientador --- UFES}
+    \assinatura{\textbf{NOME DO MEMBRO 2} \\ INSTITUIÇÃO}
+    \assinatura{\textbf{NOME DO MEMBRO 3} \\ INSTITUIÇÃO}
+
+    \vspace*{\fill}
+  \end{center}
+\end{folhadeaprovacao}
+
+% ─── Dedicatória (opcional) ──────────────────────────────────────────────────
+% \begin{dedicatoria}
+%   \vspace*{\fill}
+%   \centering\noindent
+%   \aluno{Texto de dedicatória.}
+% \end{dedicatoria}
+
+% ─── Agradecimentos (opcional) ───────────────────────────────────────────────
+% \begin{agradecimentos}
+%   \aluno{Texto de agradecimentos.}
+% \end{agradecimentos}
+
+% ─── Resumo em português ─────────────────────────────────────────────────────
+\begin{resumo}
+
+\aluno{Escrever resumo informativo (150--500 palavras): contextualização, justificativa,
+objetivo, metodologia (DSRM), principais resultados (RAGAS gate final:
+faithfulness 0,761, context\_precision 0,964), avaliação expert e conclusão.}
+
+A Infecção Latente por \textit{Mycobacterium tuberculosis} (ILTB) representa um
+desafio persistente para a saúde pública, com risco de progressão para tuberculose
+ativa em grupos vulneráveis. Profissionais de enfermagem atuam na linha de frente do
+rastreamento e tratamento da ILTB, mas frequentemente enfrentam lacunas no acesso a
+informações clínicas atualizadas durante o atendimento. Este trabalho propõe,
+desenvolve e avalia um chatbot de apoio clínico baseado na arquitetura de
+Recuperação com Geração Aumentada (RAG), capaz de responder a perguntas sobre o
+manejo da ILTB a partir de documentos oficiais do Ministério da Saúde e da
+Organização Mundial da Saúde. Seguindo a \textit{Design Science Research
+Methodology} (DSRM), o artefato foi construído com FastAPI, ChromaDB, embedding
+multilíngue \texttt{BAAI/bge-m3} (1024D), busca híbrida BM25+denso com
+\textit{Reciprocal Rank Fusion}, \textit{reranking} \textit{cross-encoder} mGTE
+e o modelo de linguagem Llama~3.3~70B via API Groq. A avaliação automatizada
+com o \textit{framework} RAGAS, conduzida sobre 38 questões clínicas, obteve no
+gate final \textit{faithfulness} de 0{,}761 e \textit{context precision} de
+0{,}964 (PASS sobre a meta de 0{,}75), salto de $+47{,}8\%$ em
+\textit{faithfulness} frente ao \textit{baseline} pré-otimização.
+\aluno{Completar com resultado da avaliação expert e conclusão principal.}
+
+\vspace{\onelineskip}
+\noindent\textbf{Palavras-chave:} tuberculose latente; ILTB; chatbot clínico;
+recuperação com geração aumentada; RAG; grandes modelos de linguagem; enfermagem;
+LGPD.
+\end{resumo}
+
+% ─── Abstract (em inglês) ────────────────────────────────────────────────────
+\begin{resumo}[Abstract]
+\begin{otherlanguage*}{english}
+
+\aluno{Traduzir resumo para inglês após versão portuguesa finalizada.}
+
+\vspace{\onelineskip}
+\noindent\textbf{Keywords:} latent tuberculosis infection; LTBI; clinical chatbot;
+retrieval-augmented generation; RAG; large language models; nursing; data privacy.
+\end{otherlanguage*}
+\end{resumo}
+
+% ─── Lista de figuras ────────────────────────────────────────────────────────
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+% ─── Lista de quadros ────────────────────────────────────────────────────────
+\pdfbookmark[0]{Lista de Quadros}{loq}
+\listof{quadro}{Lista de Quadros}
+\cleardoublepage
+
+% ─── Lista de tabelas ────────────────────────────────────────────────────────
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+% ─── Lista de abreviaturas e siglas ──────────────────────────────────────────
+\begin{siglas}
+  \item[ABNT]   Associação Brasileira de Normas Técnicas
+  \item[ANN]    Approximate Nearest Neighbor (busca por vizinhos aproximados)
+  \item[API]    Application Programming Interface
+  \item[BERT]   Bidirectional Encoder Representations from Transformers
+  \item[CEP]    Comitê de Ética em Pesquisa
+  \item[DSRM]   \textit{Design Science Research Methodology}
+  \item[HNSW]   Hierarchical Navigable Small World
+  \item[IGRA]   Interferon-Gamma Release Assay
+  \item[ILTB]   Infecção Latente por \textit{Mycobacterium tuberculosis}
+  \item[LLM]    \textit{Large Language Model} (grande modelo de linguagem)
+  \item[LGPD]   Lei Geral de Proteção de Dados Pessoais
+  \item[MS]     Ministério da Saúde
+  \item[NLP]    \textit{Natural Language Processing} (processamento de linguagem natural)
+  \item[OMS]    Organização Mundial da Saúde
+  \item[PPD]    Derivado Proteico Purificado (Teste Tuberculínico)
+  \item[PT]     Prova Tuberculínica
+  \item[PVHIV]  Pessoas Vivendo com HIV
+  \item[RAG]    \textit{Retrieval-Augmented Generation}
+  \item[RAGAS]  \textit{Retrieval Augmented Generation Assessment}
+  \item[REST]   \textit{Representational State Transfer}
+  \item[SBERT]  Sentence-BERT
+  \item[SUS]    \textit{System Usability Scale}
+  \item[TB]     Tuberculose
+  \item[UFES]   Universidade Federal do Espírito Santo
+\end{siglas}
+
+% ─── Sumário ─────────────────────────────────────────────────────────────────
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ═════════════════════════════════════════════════════════════════════════════
+% ELEMENTOS TEXTUAIS
+% ═════════════════════════════════════════════════════════════════════════════
+\textual
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Introdução}
+\label{cap:introducao}
+% ─────────────────────────────────────────────────────────────────────────────
+
+A tuberculose (TB) permanece como um dos maiores desafios de saúde pública no
+mundo. Em 2022, a Organização Mundial da Saúde estimou 10,6 milhões de novos casos
+de TB ativa, com o Brasil figurando entre os 30 países com maior carga da doença
+\cite{who2023}. A forma latente da infecção --- denominada ILTB --- caracteriza-se
+pela presença de \textit{Mycobacterium tuberculosis} no organismo sem manifestação
+de doença ativa, mas com risco de progressão para TB ativa ao longo da vida,
+sobretudo em indivíduos imunossuprimidos \cite{who2018}. O controle da ILTB é,
+portanto, estratégico para a eliminação da TB como problema de saúde pública.
+
+Nesse cenário, profissionais de enfermagem desempenham papel central no rastreamento,
+na testagem e no acompanhamento de pacientes com ILTB. Contudo, os protocolos
+clínicos são extensos, frequentemente atualizados e nem sempre de fácil consulta
+durante o atendimento. Ferramentas de apoio à decisão clínica baseadas em
+inteligência artificial (IA) surgem como alternativa promissora para reduzir essa
+lacuna \cite{SHTI2023}.
+
+Os grandes modelos de linguagem (\textit{Large Language Models} --- LLMs)
+demonstraram capacidade notável de compreensão e geração de texto em domínios
+especializados \cite{brown2020}. No entanto, modelos sem acesso a bases de
+conhecimento atualizadas tendem a produzir respostas incorretas ou fabricadas ---
+fenômeno conhecido como alucinação \cite{bang2023}. A arquitetura RAG
+(\textit{Retrieval-Augmented Generation}) mitiga esse problema ao recuperar trechos
+relevantes de documentos específicos antes de gerar a resposta \cite{lewis2021,
+gao2024}.
+
+\section{Problema e Motivação}
+
+Apesar do avanço dos LLMs e da arquitetura RAG, três lacunas convergem para
+caracterizar o problema enfrentado neste trabalho. A primeira é \textbf{linguística e
+de domínio}: poucos trabalhos abordam aplicações de RAG em português do Brasil para
+doenças infecciosas, e benchmarks como o PROPOR/ENAMED mostram que LLMs apresentam
+desempenho inferior em consultas ao protocolo clínico brasileiro quando comparados
+ao desempenho em corpora em inglês \cite{teachingLLMsBrazil2026,
+adaptingLLMsPortuguese2024, llmsMedicalExam2026}.
+
+A segunda é \textbf{regulatória e ética}: a Lei Geral de Proteção de Dados Pessoais
+(LGPD) classifica dados de saúde como sensíveis e impõe restrições ao tratamento por
+operadores terceirizados, o que problematiza arquiteturas RAG que dependem de APIs
+externas para embeddings ou inferência \cite{lgpdSaude2023, lgpdEnfermagem2022,
+sokPrivacyLLM2026, privacyRAGHealthcare2025}. Soluções voltadas à atenção primária do
+SUS precisam reconciliar capacidade clínica com conformidade legal.
+
+A terceira é \textbf{operacional}: a adoção de ferramentas de apoio à decisão
+clínica por profissionais de enfermagem está condicionada a fatores de utilidade
+percebida, alinhamento ético e prontidão organizacional --- aspectos modelados pelo
+TAM-AIN (\textit{Technology Acceptance Model for AI in Nursing})
+\cite{nursingTAM2024}. A ausência de instrumentação que cubra simultaneamente
+acurácia técnica e essas dimensões de adoção é uma lacuna metodológica relevante
+para o cenário brasileiro.
+
+Este trabalho atende essas três lacunas ao desenvolver e avaliar um artefato RAG
+para ILTB com corpus em português, pipeline de embeddings local (sem envio de
+consultas a terceiros antes da busca) e protocolo de avaliação que combina métricas
+RAGAS automáticas, rubrica clínica multidimensional e TAM-AIN.
+
+\section{Objetivo Geral}
+
+Desenvolver e avaliar um chatbot de apoio clínico ao manejo da ILTB baseado na
+arquitetura RAG, com corpus em língua portuguesa, respeitando boas práticas de
+privacidade de dados e avaliado com métricas objetivas de qualidade de resposta.
+
+\section{Objetivos Específicos}
+
+\begin{enumerate}[label=\textbf{OE\arabic*}]
+  \item Construir e indexar um corpus de documentos clínicos sobre ILTB em
+        português, provenientes de fontes oficiais;
+  \item Implementar um pipeline RAG com embeddings multilíngues e LLM integrado
+        via API;
+  \item Avaliar o sistema com o \textit{framework} RAGAS em termos de
+        \textit{faithfulness}, \textit{answer relevancy}, \textit{context precision}
+        e \textit{context recall};
+  \item Conduzir avaliação qualitativa com especialista em ILTB para verificar
+        utilidade clínica e aderência aos protocolos vigentes.
+\end{enumerate}
+
+\section{Contribuições}
+
+As contribuições deste trabalho são:
+
+\begin{enumerate}[label=\textbf{C\arabic*}]
+  \item \textbf{Artefato RAG aberto para ILTB em português:} pipeline RAG
+        funcional, indexando documentos oficiais do MS e da OMS, com código-fonte
+        disponível para reprodução e adaptação.
+  \item \textbf{Dataset de avaliação clínica:} 38 questões clínicas em português
+        sobre ILTB, organizadas em seis categorias (esquemas terapêuticos,
+        monitoramento, populações especiais, diagnóstico, interações medicamentosas
+        e efeitos adversos), com \textit{ground truths} extraídos literalmente dos
+        protocolos indexados, utilizáveis como \textit{benchmark} por trabalhos
+        subsequentes em RAG clínico em PT-BR.
+  \item \textbf{Análise empírica do \textit{trade-off} LGPD vs. desempenho:}
+        documentação das escolhas arquiteturais que viabilizam conformidade com a
+        LGPD em uma POC acadêmica de saúde, e discussão das mitigações adicionais
+        necessárias para implantação institucional.
+  \item \textbf{Protocolo de avaliação multidimensional para RAG clínico com
+        $N=1$:} adaptação metodológica que combina avaliação RAGAS automatizada
+        com rubrica clínica multidimensional e TAM-AIN, oferecendo alternativa a
+        instrumentos inadequados a amostra reduzida (e.g., Kappa de Cohen).
+\end{enumerate}
+
+\section{Estrutura da Monografia}
+
+Esta monografia está organizada da seguinte forma. O
+Capítulo~\ref{cap:referencial} apresenta o referencial teórico. O
+Capítulo~\ref{cap:metodologia} descreve a metodologia DSRM adotada. O
+Capítulo~\ref{cap:desenvolvimento} detalha o desenvolvimento do artefato. O
+Capítulo~\ref{cap:avaliacao} apresenta a avaliação e os resultados. O
+Capítulo~\ref{cap:discussao} discute as implicações dos resultados. O
+Capítulo~\ref{cap:conclusao} conclui o trabalho com contribuições e trabalhos
+futuros.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Referencial Teórico}
+\label{cap:referencial}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\section{Tuberculose e Infecção Latente (ILTB)}
+
+A ILTB é definida pela OMS como um estado de resposta imune persistente à
+estimulação por antígenos de \textit{Mycobacterium tuberculosis}, sem evidência de
+TB ativa clinicamente manifesta \cite{who2018}. Estima-se que aproximadamente um
+quarto da população mundial tenha sido infectada, com risco de progressão para TB
+ativa de 5--10\% ao longo da vida em imunocompetentes \cite{who2023}. No Brasil, o
+Ministério da Saúde define os critérios de rastreamento, diagnóstico e tratamento
+por meio de seu Manual de Recomendações \cite{brasil2022}.
+
+Determinados grupos apresentam risco aumentado de progressão para TB ativa e
+constituem público prioritário para rastreamento e tratamento da ILTB. Entre eles
+destacam-se pessoas vivendo com HIV (PVHIV), receptores de transplante de órgãos
+sólidos ou medula, pacientes em uso de imunobiológicos (especialmente
+anti-TNF$\alpha$), contactantes domiciliares de casos bacilíferos, profissionais de
+saúde com exposição ocupacional, pacientes em diálise e gestantes em populações de
+alta prevalência \cite{who2018, brasil2022}.
+
+O Brasil adota três esquemas terapêuticos prioritários para a ILTB, conforme o
+Manual de Recomendações do Ministério da Saúde \cite{brasil2022}: isoniazida diária
+por seis ou nove meses (6H ou 9H), rifampicina diária por quatro meses (4R) e
+rifapentina + isoniazida semanal por três meses (3HP). A escolha entre esquemas
+considera idade, gravidez, função hepática, interações medicamentosas (notadamente
+com antirretrovirais em PVHIV) e tolerabilidade, e a literatura clínica
+internacional reconhece o 3HP como avanço operacional importante por reduzir o
+tempo total de tratamento e melhorar adesão \cite{who2018, who2023}.
+
+A enfermagem desempenha papel central no manejo programático da ILTB no SUS, atuando
+no rastreamento ativo de contactantes, na realização da prova tuberculínica (PT) e
+do \textit{Interferon-Gamma Release Assay} (IGRA), no acompanhamento mensal de
+adesão e na detecção precoce de reações adversas. Esse papel é reconhecido nas
+diretrizes da OMS, que identificam o desenvolvimento de recursos humanos e a entrega
+de serviços na atenção primária como ações estratégicas para ampliar o tratamento da
+ILTB \cite{who2018, who2023}.
+
+Em escala local, \citeauthor{artigo_perfil} \cite{artigo_perfil} caracterizam o
+perfil epidemiológico da TB no Espírito Santo entre 2015 e 2020: foram
+notificados 8.687 casos no estado no período, com predominância do sexo
+masculino (71,06\%) e maior concentração de incidência na faixa etária de 29
+a~39 anos. Os municípios da Região Metropolitana de Vitória apresentaram taxas
+de incidência substancialmente superiores às do restante do estado, padrão
+correlacionado a fatores como tabagismo, etilismo e densidade populacional. Esse
+recorte local sustenta a relevância de ferramentas de apoio operacional para os
+profissionais da atenção primária do SUS atuantes nesses municípios.
+
+\section{Grandes Modelos de Linguagem (LLMs)}
+
+Os LLMs são modelos de linguagem pré-treinados em corpora massivos, capazes de
+realizar diversas tarefas de processamento de linguagem natural com poucos exemplos
+\cite{brown2020}. A arquitetura Transformer permite capturar dependências de longo
+alcance por meio do mecanismo de atenção.
+
+Para o português, iniciativas como Sabiá-2 \cite{sabia2_2024} e estudos de
+adaptação de modelos para o contexto médico brasileiro \cite{adaptingLLMsPortuguese2024,
+teachingLLMsBrazil2026} avançaram o estado da arte. Avaliações em exames médicos
+brasileiros demonstram desempenho variável entre os modelos disponíveis
+\cite{llmsMedicalExam2026}.
+
+Modelos \textit{open-weight} --- com pesos publicamente liberados, ainda que sob
+licenças que podem restringir uso comercial --- têm papel particular em contextos
+regulatórios estritos. A família Llama, descrita por \citeauthor{dubey2024}
+\cite{dubey2024}, exemplifica essa categoria: o release Llama~3 incluiu modelos de
+8B a 405B parâmetros, treinados com dados multilíngues e otimizados para
+\textit{Grouped Query Attention} (GQA), o que viabiliza inferência eficiente em
+\textit{hardware} acessível. O Llama~3.3 70B, refresh subsequente da mesma família
+adotado neste trabalho, mantém a capacidade de raciocínio do 405B com fração do
+custo computacional, segundo a documentação técnica da Meta.
+
+A relevância prática do paradigma \textit{open-weight} para projetos de saúde em
+contextos regulatórios estritos é dupla: \textbf{(i)} permite, em princípio, a
+inferência local em servidor institucional, eliminando a transferência de prompts
+clínicos a operadores externos --- caminho aderente à LGPD e à recomendação técnica
+de evitar envio de dados sensíveis a APIs proprietárias \cite{lgpdSaude2023,
+privacyRAGHealthcare2025}; \textbf{(ii)} desacopla a evolução da aplicação do
+\textit{roadmap} comercial dos provedores fechados, reduzindo risco de
+descontinuidade. No presente projeto, a inferência local não foi adotada por
+limitação de \textit{hardware}; a alternativa escolhida foi acessar o Llama~3.3 70B
+via API Groq, que não armazena prompts segundo sua política declarada. A discussão
+das implicações dessa escolha para implantação institucional consta no
+Capítulo~\ref{cap:discussao}.
+
+\section{Retrieval-Augmented Generation (RAG)}
+
+A arquitetura RAG \cite{lewis2021} combina um componente de recuperação de informação
+com um LLM generativo. Em vez de depender apenas do conhecimento paramétrico do
+modelo, o RAG recupera trechos de uma base de documentos externa e os inclui no
+contexto da geração. Isso reduz alucinações e permite atualizar o corpus sem
+retreinamento.
+
+\citeauthor{gao2024} \cite{gao2024} categorizam variantes de RAG em básico,
+avançado e modular. Estratégias de \textit{chunking} influenciam diretamente a
+qualidade da recuperação \cite{advancedChunkingRAG2025}. Técnicas de busca híbrida,
+como RRF \cite{cormack2009}, combinam recuperação esparsa (BM25, SPLADE
+\cite{formal2021}) com recuperação densa para melhorar o \textit{recall}.
+
+No domínio de saúde, aplicações RAG precisam considerar privacidade e conformidade
+regulatória \cite{privacyRAGHealthcare2025, privacyEHRLLMs2025}.
+
+\section{Embeddings e Busca Semântica}
+
+Embeddings são representações vetoriais densas que capturam significado semântico
+de textos \cite{boykis2024}. Modelos como Sentence-BERT \cite{reimers2019} permitem
+calcular similaridade semântica com eficiência. A busca por vizinhos aproximados
+(ANN) com índice HNSW \cite{malkov2016} viabiliza a recuperação em grandes bases.
+
+Para o português clínico, o BioBERTpt \cite{biobertpt2020} foi um dos primeiros
+modelos especializados em NLP biomédico, com bons resultados em reconhecimento de
+entidades clínicas \cite{clinicalNERPortuguese2026}. O benchmark MMTEB
+\cite{mmteb2025} e estudos sobre embeddings para busca clínica
+\cite{generalistEmbeddingsClinical2024} fornecem panorama comparativo dos modelos
+disponíveis.
+
+Neste trabalho adotou-se o modelo \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+(384 dimensões), descendente distilado da família SBERT \cite{reimers2019} treinado
+para similaridade semântica multilíngue em mais de 50 idiomas, incluindo o português.
+A escolha foi orientada por três critérios: (i) execução local sem dependência de APIs
+externas, requisito da política de privacidade do projeto (Seção~\ref{sec:lgpd-ref});
+(ii) baixo \textit{footprint} de memória e latência de inferência compatíveis com a
+infraestrutura disponível; e (iii) ampla adoção do modelo em sistemas RAG biomédicos
+recentes \cite{ocaf2024}.
+
+A literatura, contudo, revela uma tensão entre conveniência operacional e desempenho de
+recuperação. Avaliações em corpora hospitalares mostram que modelos de 1024 dimensões,
+como \texttt{multilingual-e5-large} e \texttt{BGE-M3}, atingem acurácia
+\textit{Top}-10 superior a 90\%, enquanto variantes da família MiniLM permanecem abaixo
+de 40\% nos mesmos cenários \cite{SHTI2023, mmteb2025}. Para o português clínico
+especificamente, o benchmark SemClinBr \cite{clinicalNERPortuguese2026} indica que
+modelos multilíngues genéricos como o mmBERT \cite{marone2025mmbert} superam alternativas monolíngues
+especializadas (BioBERTpt, BERTimbau) em reconhecimento de entidades, sugerindo que a
+capacidade representacional geral pesa mais que a adaptação de domínio estreita
+\cite{generalistEmbeddingsClinical2024}. Esses achados respaldam a estratégia de
+empregar um modelo generalista no presente projeto e, ao mesmo tempo, identificam a
+migração para um modelo de maior dimensionalidade como vetor natural de evolução
+(discutido como trabalho futuro no Capítulo~\ref{cap:conclusao}).
+
+\section{Avaliação de Sistemas RAG}
+
+O \textit{framework} RAGAS \cite{es2024} propõe métricas automáticas para avaliar
+sistemas RAG sem anotação humana extensiva:
+
+\begin{itemize}
+  \item \textbf{\textit{Faithfulness}}: proporção de afirmações na resposta
+        suportadas pelo contexto recuperado;
+  \item \textbf{\textit{Answer Relevancy}}: relevância da resposta à pergunta
+        original;
+  \item \textbf{\textit{Context Precision}}: proporção de trechos recuperados
+        úteis para a resposta;
+  \item \textbf{\textit{Context Recall}}: cobertura do \textit{ground-truth}
+        pelo contexto recuperado.
+\end{itemize}
+
+O RAGAS apresenta limitações conhecidas que devem ser ponderadas na interpretação dos
+resultados. Em primeiro lugar, todas as métricas dependem de um LLM-juiz para decompor
+respostas em afirmações atômicas e verificar suporte no contexto, o que introduz
+variabilidade entre execuções e sensibilidade ao modelo avaliador escolhido
+\cite{es2024}. Em segundo lugar, a métrica de \textit{Faithfulness} privilegia
+respostas extrativas: sínteses parafraseadas, ainda que clinicamente corretas, tendem a
+ser penalizadas porque o juiz não consegue mapear cada afirmação literalmente ao
+contexto recuperado \cite{bang2023}.
+
+A literatura sobre alucinação em LLMs clínicos diferencia categorias relevantes para a
+análise diagnóstica desses scores: alucinações \textit{intrínsecas} (saída contradiz a
+fonte), alucinações \textit{extrínsecas} (saída não verificável a partir da fonte) e
+alucinações de \textit{citação} (referências inventadas) \cite{ocaf2024}. Cada classe
+exige instrumentos de medida distintos, e revisões sistemáticas recentes recomendam
+tratar a acurácia de citação como métrica separada da fidelidade ao contexto, sob pena
+de subestimar erros graves de proveniência \cite{privacyRAGHealthcare2025}. Por essas
+razões, este trabalho complementa a avaliação automática RAGAS com uma sessão
+estruturada de avaliação humana com especialista (Capítulo~\ref{cap:avaliacao}),
+seguindo a recomendação de combinar métricas automáticas e humanas em RAG biomédico
+\cite{ocaf2024}.
+
+\section{Privacidade de Dados e LGPD}
+\label{sec:lgpd-ref}
+
+A LGPD (Lei n\textordmasculine\ 13.709/2018) classifica dados de saúde como sensíveis,
+sujeitos a requisitos mais rigorosos de consentimento e segurança \cite{lgpdSaude2023,
+lgpdEnfermagem2022}. No contexto de LLMs, riscos de vazamento por memorização de
+dados de treinamento ou \textit{prompt injection} são documentados
+\cite{sokPrivacyLLM2026, privacyEHRLLMs2025}. A literatura específica sobre RAG em
+saúde aprofunda esse cenário, identificando que prompts clínicos transmitidos a APIs
+de terceiros configuram texto simples no nó de serviço, vulneráveis a inversão de
+caixa-preta a partir de ativações intermediárias e à retenção em logs de longo prazo
+\cite{privacyRAGHealthcare2025}.
+
+A enfermagem está submetida a obrigações específicas de sigilo profissional. A
+Resolução COFEN n\textordmasculine\ 564/2017 (Código de Ética) e a Resolução COFEN
+n\textordmasculine\ 429/2012 (registros em prontuário) impõem dever de cautela no
+manuseio de dados sensíveis de pacientes, e o descumprimento da LGPD pode ensejar
+responsabilização ética e civil \cite{lgpdEnfermagem2022}. No plano regulatório
+brasileiro mais amplo, a Autoridade Nacional de Proteção de Dados (Resolução ANPD
+n\textordmasculine\ 4/2023) e a Estratégia de Saúde Digital 2020--2028 do Ministério
+da Saúde, instituída pelo Decreto n\textordmasculine\ 11.358/2023, balizam o
+tratamento de dados em sistemas digitais de saúde \cite{lgpdSaude2023}.
+
+A literatura técnica documenta um conjunto de técnicas para mitigação dos riscos de
+vazamento via prompt: \textit{Privacy Span Removal} (substituição seletiva de trechos
+sensíveis), \textit{Instance Obfuscation} (\textit{hashing} dinâmico por sessão),
+\textit{scrubbing} assistido por modelos de desidentificação e mecanismos de
+\textit{Adaptive Differential Privacy} aplicados em nível de \textit{span}
+\cite{sokPrivacyLLM2026, privacyRAGHealthcare2025}. Tais técnicas tornam-se
+indispensáveis quando o pipeline envia queries clínicas a serviços externos.
+
+No presente projeto, optou-se por uma estratégia conservadora que dispensa essas
+mitigações em tempo de execução: (i) o corpus é composto exclusivamente por documentos
+públicos do Ministério da Saúde e da OMS, sem dados de paciente; (ii) o pipeline de
+embeddings executa-se 100\% local, de modo que queries clínicas não transitam por APIs
+de terceiros antes da busca vetorial; (iii) o LLM é acessado via API Groq apenas para
+geração da resposta final, sem armazenamento de conversas pelo provedor; e (iv)
+nenhuma informação identificável de paciente é inserida nas perguntas de avaliação.
+Para a sessão estruturada com o especialista (Capítulo~\ref{cap:avaliacao}), serão
+adotados Termo de Consentimento Livre e Esclarecido, política de retenção zero do
+histórico de conversa e \textit{logging} mínimo, conforme recomendado pela literatura
+para provas de conceito acadêmicas em saúde \cite{privacyRAGHealthcare2025}.
+
+\section{Adoção de IA por Profissionais de Saúde}
+\label{sec:adocao-ref}
+
+O Modelo de Aceitação de Tecnologia (TAM) é amplamente usado para explicar a adoção
+de sistemas de TI por profissionais de saúde \cite{nursingTAM2024}. Fatores como
+utilidade percebida, facilidade de uso e confiança no sistema são determinantes
+para a adoção de chatbots clínicos por enfermeiros.
+
+Estudos recentes propõem o TAM-AIN (\textit{Technology Acceptance Model for AI in
+Nursing}) como extensão específica para a categoria, incorporando quatro dimensões
+ausentes do TAM clássico: (i) \textit{alinhamento ético}, que avalia a compatibilidade
+da ferramenta com os valores da profissão e o sigilo do paciente; (ii) \textit{prontidão
+organizacional}, que examina o apoio da liderança e a infraestrutura local;
+(iii) \textit{preservação da identidade profissional}, relacionada à percepção de
+ameaça ou reforço à autonomia clínica e ao componente humano do cuidado; e
+(iv) \textit{capacidade de infraestrutura técnica}, que considera as restrições
+materiais do ambiente assistencial \cite{nursingTAM2024}. Essa especialização é
+particularmente relevante para o SUS, onde a heterogeneidade de infraestrutura entre
+unidades de atenção primária pode invalidar premissas de modelos genéricos derivados
+de contextos hospitalares de alta complexidade.
+
+A literatura sobre percepção de enfermeiros frente à IA indica padrão consistente de
+``otimismo cauteloso'': cerca de 85\% dos profissionais reconhecem benefícios para a
+precisão diagnóstica e a redução de erros, mas aproximadamente 70\% mantêm reservas
+quanto à preservação do componente humano do cuidado e à segurança dos dados
+\cite{nursingTAM2024}. As barreiras mais reportadas incluem infraestrutura tecnológica
+obsoleta, sobrecarga de trabalho, ceticismo sobre a capacidade da IA de replicar o
+julgamento clínico e, sobretudo entre profissionais com mais tempo de prática, receio
+de desqualificação. Esses achados orientam a estrutura da sessão de avaliação com o
+especialista (Capítulo~\ref{cap:avaliacao}), que combina rubrica clínica
+multidimensional com instrumento TAM-AIN para capturar tanto a acurácia técnica quanto
+as dimensões éticas e organizacionais da aceitação.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Metodologia}
+\label{cap:metodologia}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Este trabalho adota a \textit{Design Science Research Methodology} (DSRM)
+\cite{peffers2007}, metodologia consagrada para pesquisa em sistemas de informação
+orientada à construção de artefatos. O DSRM estrutura a pesquisa em seis atividades
+iterativas, conforme a Figura~\ref{fig:dsrm}.
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}{0.9\textwidth}
+    \caption{Processo DSRM aplicado ao desenvolvimento do chatbot ILTB}
+    \label{fig:dsrm}
+    % \includegraphics[width=\textwidth]{fig/dsrm}
+    \aluno{Inserir diagrama DSRM com 6 etapas e iterações}
+    \caption*{Fonte: Adaptado de \citeauthor{peffers2007} (\citeyear{peffers2007}).}
+  \end{minipage}
+\end{figure}
+
+\section{Identificação do Problema e Motivação}
+
+O problema central identificado é a dificuldade de acesso rápido a informações
+clínicas padronizadas sobre ILTB por profissionais de enfermagem durante o
+atendimento. A solução proposta é um chatbot de apoio à decisão clínica baseado em
+RAG.
+
+A identificação do problema partiu de três fontes complementares.
+
+\textbf{Análise documental} dos protocolos vigentes evidenciou que o Manual de
+Recomendações do Ministério da Saúde \cite{brasil2022} é extenso, denso em tabelas
+e atualizado periodicamente, dificultando a consulta rápida durante o
+atendimento. As diretrizes da OMS \cite{who2018, who2023} complementam esse
+material e contêm recomendações ocasionalmente desatualizadas em relação às
+diretrizes nacionais, exigindo do profissional discernimento sobre qual fonte
+prevalece.
+
+\textbf{Revisão da literatura} sobre RAG biomédico \cite{ocaf2024, lewis2021,
+gao2024} e sobre adoção de IA por profissionais de enfermagem \cite{nursingTAM2024}
+confirmou que ferramentas de apoio à decisão clínica em domínio específico ainda
+são pouco exploradas para o português brasileiro, configurando lacuna acadêmica
+relevante.
+
+\textbf{Diálogo inicial com profissionais e pesquisadores} da área de
+\textit{tuberculose} no contexto de saúde pública --- ainda que tenha tido escopo
+reduzido em função das alterações descritas no Capítulo~\ref{cap:introducao} ---
+corroborou a percepção de que enfermeiros da atenção primária constituem público
+prioritário para uma ferramenta dessa natureza.
+
+A partir dessas três fontes definiu-se a tese central deste trabalho: um chatbot
+RAG capaz de responder a perguntas sobre o manejo da ILTB, baseado exclusivamente
+em documentos oficiais, em português, com pipeline conforme à LGPD, pode oferecer
+apoio operacional relevante a profissionais de enfermagem.
+
+\section{Definição dos Objetivos da Solução}
+
+Os objetivos de design foram definidos com base nos requisitos funcionais e
+não funcionais do sistema, derivados da análise do problema. O
+Quadro~\ref{quad:decisoes} sintetiza as treze decisões arquiteturais e
+metodológicas (D1--D13), com a justificativa bibliográfica de cada uma. Decisões
+revisadas no decorrer do projeto --- particularmente D10 e D12, em função do
+reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão final.
+
+\begin{quadro}[h]
+  \centering
+  \caption{Decisões de design do chatbot ILTB (D1--D13)}
+  \label{quad:decisoes}
+  \begin{tabularx}{\textwidth}{|c|X|X|}
+  \hline
+  \rowcolor{gray!25}
+  \textbf{ID} & \textbf{Decisão} & \textbf{Justificativa} \\ \hline
+  D1  & Adoção da arquitetura RAG (recuperação + geração) em vez de LLM puro ou
+        \textit{fine-tuning}. & Reduz alucinação em domínio específico ao ancorar
+        a geração em documentos oficiais \cite{lewis2021, gao2024, ocaf2024}.
+        \\ \hline
+  D2  & Embedding multilíngue \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+        (384D), executado localmente. & Equilíbrio entre latência,
+        \textit{footprint} e requisito LGPD; limitações de dimensionalidade
+        documentadas como trabalho futuro \cite{reimers2019, mmteb2025, SHTI2023}.
+        \\ \hline
+  D3  & \textit{Vector store} ChromaDB com índice HNSW e persistência em disco.
+      & Execução embarcada sem servidor dedicado; HNSW provê busca aproximada
+        com complexidade logarítmica \cite{malkov2016}. \\ \hline
+  D4  & LLM Llama~3.3~70B via API Groq como gerador. & Modelo \textit{open-weight}
+        competitivo sem retenção de \textit{prompts} pelo provedor
+        \cite{dubey2024}; modelos generalistas grandes superam especializados em
+        busca clínica curta \cite{ocaf2024}. \\ \hline
+  D5  & \textit{Chunking} semântico por cabeçalhos Markdown, com
+        \textit{buffering} de seções pequenas. & Preserva integridade lógica dos
+        protocolos; alinhado a recomendações de chunking estrutural
+        \cite{gao2024, advancedChunkingRAG2025}. \\ \hline
+  D6  & Avaliação automatizada com RAGAS (\textit{faithfulness},
+        \textit{answer relevancy}, \textit{context precision/recall}). &
+        \textit{Framework reference-free} padrão em RAG biomédico
+        \cite{es2024, ocaf2024}. \\ \hline
+  D7  & \textit{Pipeline} de embeddings 100\% local; LLM acessado sem
+        armazenamento de \textit{prompts}. & Conformidade com LGPD (dados de
+        saúde como sensíveis); literatura recomenda evitar APIs externas para
+        dados clínicos \cite{lgpdSaude2023, lgpdEnfermagem2022,
+        privacyRAGHealthcare2025, sokPrivacyLLM2026}. \\ \hline
+  D8  & Adoção da metodologia DSRM como \textit{framework} de pesquisa. & Padrão
+        consolidado para pesquisa em sistemas de informação com construção de
+        artefato \cite{peffers2007}. \\ \hline
+  D9  & Foco em ILTB como problema clínico, com corpus de documentos oficiais
+        do MS e OMS. & Doença com alta prevalência global e brasileira; controle
+        da ILTB é estratégico para eliminação da TB \cite{who2018, who2023,
+        brasil2022}. \\ \hline
+  D10 & Avaliação com 1 especialista em ILTB usando TAM-AIN + rubrica clínica
+        multidimensional. & Replanejamento decorrente do reescopo do piloto;
+        TAM-AIN é instrumento específico para enfermagem \cite{nursingTAM2024,
+        ocaf2024}. \\ \hline
+  D11 & Busca híbrida (RRF + SPLADE ou ColBERT) registrada como trabalho futuro.
+      & \textit{Embedding} denso isolado limita \textit{recall} para termos
+        técnicos específicos; literatura sustenta ganhos de busca híbrida
+        \cite{cormack2009, formal2021, khattab2020}. \\ \hline
+  D12 & Métricas mistas (acurácia vs. MS, severidade Likert, tríade RAG,
+        TAM-AIN) em vez de Kappa de Cohen. & Kappa exige $\geq 2$ avaliadores;
+        literatura recomenda métricas multidimensionais para validação com $N=1$
+        \cite{ocaf2024, es2024}. \\ \hline
+  D13 & Documentação explícita da taxa de alucinação como propriedade conhecida
+        do LLM, com ablação contra modelo de referência registrada como
+        trabalho futuro. & Tipologia e taxas de alucinação reportadas em
+        literatura sustentam o teto observado de \textit{faithfulness} no
+        Llama~3.3~70B \cite{bang2023, ocaf2024, llmsMedicalExam2026}. \\ \hline
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{quadro}
+
+\section{Design e Desenvolvimento}
+
+O artefato é um sistema RAG composto pelos seguintes componentes principais:
+\textbf{(a)} corpus de documentos clínicos públicos sobre ILTB em português;
+\textbf{(b)} pipeline de ingestão (extração, \textit{chunking}, embeddings);
+\textbf{(c)} banco de vetores ChromaDB com índice HNSW;
+\textbf{(d)} LLM Llama~3.3~70B via API Groq;
+\textbf{(e)} API REST (FastAPI) e interface web de demonstração.
+
+\section{Demonstração}
+
+O artefato foi demonstrado via interface web de chat, servida pelo FastAPI e
+acessível por meio de túnel ngrok. A demonstração incluiu 38 questões clínicas
+sobre ILTB formuladas pelo autor com base nos documentos do corpus.
+
+\section{Avaliação}
+
+A avaliação foi estruturada em duas etapas complementares:
+
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+  \item \textbf{Avaliação automatizada (RAGAS):} 38 questões clínicas com
+        \textit{ground-truths} extraídos dos documentos indexados, usando
+        \textit{faithfulness}, \textit{answer relevancy}, \textit{context
+        precision} e \textit{context recall} \cite{es2024};
+  \item \textbf{Avaliação qualitativa com especialista:} sessão estruturada com
+        profissional especialista em ILTB, avaliando amostras de respostas do
+        chatbot em termos de acurácia clínica e aderência aos protocolos vigentes.
+\end{enumerate}
+
+A descrição completa do protocolo da sessão com o especialista, incluindo perfil
+do avaliador, etapas, instrumentos e rubrica multidimensional, é apresentada na
+Seção~\ref{sec:sessao-expert} do Capítulo~\ref{cap:avaliacao}, evitando duplicação.
+
+\section{Comunicação}
+
+Os resultados são comunicados por meio desta monografia e disponibilizados em
+repositório público acessível em \url{https://github.com/yago-novaes/chatbot-iltb}.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Desenvolvimento do Artefato}
+\label{cap:desenvolvimento}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\section{Arquitetura do Sistema}
+
+O chatbot ILTB é implementado como uma aplicação web com \textit{backend} em
+Python (FastAPI) e banco de vetores ChromaDB \cite{chroma2024}. A
+Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}{0.9\textwidth}
+    \caption{Arquitetura do chatbot ILTB baseado em RAG}
+    \label{fig:arquitetura}
+    % \includegraphics[width=\textwidth]{fig/arquitetura}
+    \aluno{Inserir diagrama: usuário → interface web → FastAPI → retriever →
+    ChromaDB / LLM via Groq}
+    \caption*{Fonte: Produção do próprio autor.}
+  \end{minipage}
+\end{figure}
+
+\section{Corpus e Pré-processamento}
+
+O corpus indexado é composto por seis documentos públicos sobre o manejo da
+tuberculose e da ILTB, com total de 551~páginas, conforme detalhado na
+Tabela~\ref{tab:corpus}. A seleção integra três fontes ministeriais brasileiras
+(MS), uma da OPAS/OMS em português e uma de sociedade médica nacional (GEDIIB),
+garantindo: (i) cobertura completa do protocolo brasileiro vigente; (ii)
+alinhamento com recomendações internacionais; e (iii) domínio público ---
+requisito para a estratégia de privacidade adotada (Seção~\ref{sec:lgpd-ref}). A
+sustentação teórica do referencial clínico (Seção~\ref{cap:referencial}) apoia-se
+adicionalmente nos documentos canônicos da OMS \cite{who2018, who2023} e no
+\textit{Manual de Recomendações para o Controle da Tuberculose no Brasil}
+\cite{brasil2022}.
+
+\begin{table}[h]
+  \centering
+  \caption{Documentos indexados no corpus do chatbot ILTB}
+  \label{tab:corpus}
+  \begin{tabularx}{\textwidth}{@{}lXrr@{}}
+  \toprule
+  \textbf{Identificador} & \textbf{Título} & \textbf{Ano} & \textbf{Pág.} \\
+  \midrule
+  \textsc{ms-manual}       & Manual de Recomendações para o Controle da
+                             Tuberculose no Brasil (MS, 2ª ed.\ atualizada) &
+                             2019 & 366 \\
+  \textsc{ms-guia}         & Recomendações para o Controle da Tuberculose ---
+                             Guia Rápido para Profissionais de Saúde (MS, 2ª
+                             ed.) & 2021 & 50 \\
+  \textsc{ms-vig-iltb}     & Protocolo de Vigilância da Infecção Latente pelo
+                             \textit{M.\,tuberculosis} no Brasil (MS, 2ª ed.) &
+                             2022 & 38 \\
+  \textsc{ms-3hp}          & Tratamento da Infecção Latente com Rifapentina +
+                             Isoniazida (3HP) --- MS/SVS & 2021 & 2 \\
+  \textsc{opas-mod4}       & Manual Operacional de Tuberculose da OMS ---
+                             Módulo 4: Tratamento (OPAS/OMS, versão em
+                             português) & 2020 & 84 \\
+  \textsc{gediib-tb}       & Tratamento da Tuberculose Infecção: Posicionamentos
+                             Científicos do GEDIIB & 2024 & 11 \\
+  \midrule
+  \multicolumn{3}{l}{\textbf{Total}} & \textbf{551} \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{table}
+
+O \textit{pipeline} de ingestão extrai texto e estrutura dos PDFs em duas etapas:
+extração inicial com \texttt{pypdf}, seguida por sanitização e reorganização em
+Markdown estruturado por cabeçalhos (\texttt{\#}~a~\texttt{\#\#\#\#}). Durante a
+extração foram identificados desafios típicos de PDFs governamentais
+brasileiros, com destaque para a desconfiguração de tabelas (esquemas
+terapêuticos, doses por faixa etária) e uma falha de \textit{parsing} que produzia
+\textit{gap} de 34 páginas no Manual do MS. Esse defeito foi diagnosticado e
+corrigido por meio de \textit{patches} pontuais no \textit{stream} extraído,
+documentados no diário técnico do projeto.
+
+A sanitização Markdown padroniza unidades, doses e nomes de fármacos, removendo
+artefatos de \textit{OCR} e normalizando hierarquia de seções. O produto final
+é um conjunto de arquivos \texttt{.md} estruturados, prontos para a etapa de
+\textit{chunking}.
+
+O conjunto totaliza 551~páginas (Tabela~\ref{tab:corpus}), e após a sanitização
+e o \textit{chunking} (Seção~\ref{cap:desenvolvimento}) é convertido em 898
+\textit{chunks} indexados, distribuídos majoritariamente entre o
+\textsc{ms-manual} (que concentra a maior densidade de protocolo clínico) e o
+\textsc{opas-mod4}.
+
+\section{Segmentação (\textit{Chunking}) e Indexação}
+
+A estratégia de \textit{chunking} adotada é hierárquica e dirigida por estrutura:
+o documento é segmentado nas fronteiras de cabeçalho Markdown
+(\texttt{\#} a \texttt{\#\#\#\#}), reproduzindo a hierarquia conceitual dos
+protocolos. Essa abordagem alinha-se às recomendações de \citeauthor{gao2024}
+\cite{gao2024} de privilegiar fronteiras semânticas naturais sobre janelas fixas,
+e às evidências quantitativas reportadas para \textit{chunking} estrutural em
+domínios técnicos \cite{advancedChunkingRAG2025}.
+
+Para evitar fragmentação excessiva de seções curtas, o \textit{chunker} aplica
+\textit{buffering}: seções abaixo de um tamanho mínimo
+(\texttt{MIN\_CHUNK\_SIZE}~$=400$ caracteres) são agregadas à seção subsequente do
+mesmo nível hierárquico. Seções acima do limite superior são subdivididas por
+parágrafos, preservando coerência sintática. A regex de detecção de cabeçalho é
+\texttt{\textasciicircum\#\{1,4\}\textbackslash s} para capturar os quatro níveis
+relevantes no corpus.
+
+O processo de \textit{chunking} foi iterado ao longo da Fase~2 do desenvolvimento,
+com avaliações RAGAS sucessivas para calibrar o parâmetro \texttt{MIN\_CHUNK\_SIZE}.
+A configuração final produziu \textbf{898 \textit{chunks}} a partir dos três
+documentos indexados, distribuídos majoritariamente entre o Manual do MS
+\cite{brasil2022} e as diretrizes da OMS \cite{who2018}. Esses \textit{chunks}
+são persistidos no ChromaDB com seus respectivos vetores e metadados de origem
+(arquivo, hierarquia de cabeçalhos, posição relativa).
+
+\section{Modelo de Embeddings}
+
+O modelo de \textit{embeddings} adotado é o
+\texttt{paraphrase-multilingual-MiniLM-L12-v2}, da família SBERT
+\cite{reimers2019}, com 384 dimensões e suporte a mais de 50 idiomas. Foi carregado
+via biblioteca \texttt{sentence-transformers} e executado localmente, sem requisição
+a APIs externas, como descrito conceitualmente na
+Seção~\ref{cap:referencial} e no item D2 do Quadro~\ref{quad:decisoes}.
+
+A escolha foi orientada por três critérios operacionais já discutidos: (i)
+conformidade com a política LGPD do projeto (Seção~\ref{sec:lgpd-ref}); (ii)
+\textit{footprint} compatível com a infraestrutura disponível; (iii) ampla
+adoção em RAG biomédico \cite{ocaf2024}. O modelo gera vetores de 384 dimensões
+que são indexados no ChromaDB com métrica de similaridade cossenoidal.
+
+\textbf{Limitação observada empiricamente.} Um experimento conduzido durante o
+desenvolvimento adicionou contexto hierárquico explícito a cada \textit{chunk}
+(prefixo com a cadeia de cabeçalhos), prática conhecida como
+\textit{contextual chunking}. Essa modificação \textit{piorou} os resultados
+RAGAS em todas as métricas, comportamento consistente com a literatura
+\cite{SHTI2023}: modelos de baixa dimensionalidade (384D) misturam semântica
+estrutural com semântica clínica no vetor resultante, degradando a precisão.
+Modelos de maior dimensionalidade ($\geq 1024$D) absorvem melhor essa
+informação adicional, o que reforça a indicação de migração para um modelo
+1024D (e.g., \texttt{multilingual-e5-large}, \texttt{BGE-M3}) como trabalho
+futuro prioritário (Capítulo~\ref{cap:conclusao}).
+
+\section{Módulo de Recuperação}
+
+O módulo de recuperação utiliza busca por similaridade cossenoidal sobre o índice
+HNSW do ChromaDB. Dado um \textit{query} do usuário, os $k$ trechos mais similares
+são recuperados e concatenados como contexto para o LLM.
+
+Após calibração experimental por meio de execuções RAGAS, o parâmetro $k$ foi
+fixado em \textbf{5}. Valores menores ($k=3, 4$) excluíam, com frequência,
+trechos relevantes em consultas envolvendo populações especiais ou interações
+medicamentosas; valores maiores ($k \geq 7$) introduziam ruído sem ganho de
+\textit{recall}.
+
+Adicionalmente, foi adotado um \textbf{limiar de similaridade cossenoidal de
+$0{,}40$}. Consultas cujo \textit{top-1} apresenta \textit{score} abaixo desse
+limiar acionam um \textit{fallback} que orienta o modelo a responder
+explicitamente que a informação não foi encontrada no corpus, em lugar de
+sintetizar uma resposta apoiada em fragmentos pouco relevantes. Essa salvaguarda
+mitiga o risco de alucinação extrínseca em consultas fora do escopo dos
+protocolos indexados.
+
+O limiar foi definido empiricamente a partir da distribuição de \textit{scores}
+nas 38 questões de avaliação: valores acima de $0{,}40$ correlacionaram-se com
+\textit{ground truths} extraíveis dos \textit{chunks} recuperados, enquanto
+valores abaixo coincidiam, em sua maioria, com tópicos fora do corpus.
+
+\section{Módulo de Geração}
+
+O modelo Llama~3.3~70B \cite{dubey2024} é acessado via API Groq. O \textit{prompt
+system} instrui o modelo a responder exclusivamente com base no contexto recuperado,
+em português do Brasil, e a indicar quando a informação não está disponível no
+corpus.
+
+O \textit{system prompt} de produção (versão~v1) instrui o modelo a: (i)
+responder \textbf{exclusivamente} com base no contexto recuperado; (ii) usar
+português brasileiro com terminologia clínica adequada à enfermagem; (iii)
+declarar explicitamente quando a informação não estiver no contexto
+(comportamento alinhado ao \textit{fallback} descrito na seção anterior);
+(iv) preservar números, doses e unidades exatamente como no protocolo
+original; e (v) anexar referência à fonte (documento de origem) quando
+disponível nos metadados. O texto integral do \textit{prompt} está reproduzido
+no Apêndice~\ref{ape:prompt}.
+
+\section{Interface de Demonstração}
+
+A interface de demonstração é uma aplicação web responsiva (HTML/CSS/JavaScript)
+servida pelo FastAPI e acessível via túnel ngrok. A interface inclui aviso explícito
+de que a ferramenta é de apoio e não substitui o julgamento clínico profissional.
+
+\aluno{Inserir screenshot da interface de chat.}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Avaliação e Resultados}
+\label{cap:avaliacao}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\section{Dataset de Avaliação}
+
+O \textit{dataset} de avaliação RAGAS foi construído pelo autor a partir do corpus
+indexado, totalizando \textbf{42 questões clínicas} sobre o manejo da ILTB, das
+quais \textbf{38} são \textit{in-scope} (utilizadas no cálculo das métricas) e
+\textbf{4} são \textit{out-of-scope}, destinadas exclusivamente ao teste do
+\textit{fallback} de similaridade descrito na Seção~\ref{cap:desenvolvimento}.
+
+As 38 questões \textit{in-scope} estão organizadas em sete categorias temáticas
+(Tabela~\ref{tab:dataset-cat}), que cobrem os principais eixos de consulta
+esperados em uso real.
+
+\begin{table}[h]
+  \centering
+  \caption{Distribuição do \textit{dataset} de avaliação por categoria}
+  \label{tab:dataset-cat}
+  \begin{tabular}{@{}clc@{}}
+  \toprule
+  \textbf{Sigla} & \textbf{Categoria} & \textbf{N} \\
+  \midrule
+  ET   & Esquemas terapêuticos (6H, 9H, 4R, 3HP)            & 7 \\
+  IND  & Indicações de tratamento                            & 5 \\
+  PE   & Populações especiais (PVHIV, gestantes, crianças)   & 7 \\
+  DI   & Diagnóstico (PT, IGRA, exclusão de TB ativa)        & 5 \\
+  MO   & Monitoramento clínico e laboratorial                & 5 \\
+  IT   & Interações medicamentosas                           & 5 \\
+  EA   & Efeitos adversos                                    & 4 \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Total \textit{in-scope}}}        & \textbf{38} \\
+  FE   & Fora do escopo (apenas para teste do \textit{fallback}) & 4 \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Total geral}}                     & \textbf{42} \\
+  \bottomrule
+  \end{tabular}
+  \caption*{Fonte: Produção do próprio autor. Dataset completo no
+            Apêndice~\ref{ape:dataset}.}
+\end{table}
+
+Os \textit{ground truths} foram extraídos \textbf{literalmente} dos arquivos
+Markdown indexados, preservando trechos verbatim do MS ou da OMS. Essa decisão
+metodológica fortalece a interpretação das métricas RAGAS: como o \textit{ground
+truth} é, por construção, recuperável do corpus, eventuais falhas no
+\textit{Context Recall} indicam problemas reais de recuperação --- não ausência
+de informação na base.
+
+Quatro questões originalmente incluídas tratavam de tópicos \textbf{fora do
+escopo} (\textit{out-of-scope}), destinadas a testar o \textit{fallback} de
+similaridade descrito na Seção~\ref{cap:desenvolvimento}; elas são excluídas dos
+cálculos RAGAS, totalizando $36$--$38$ amostras válidas por execução conforme
+disponibilidade do LLM-juiz.
+
+O LLM-juiz adotado para a avaliação foi o \texttt{gpt-4o-mini} (OpenAI),
+escolhido por três motivos: (i) suporte a $n>1$ \textit{completions}, necessário
+para o cálculo correto de \textit{Faithfulness}; (ii) ausência de limite TPM
+restritivo que inviabilize execuções completas; (iii) custo aproximado de
+US\$\,$0{,}05$ por execução de 38 questões. Importante notar que o
+\textit{gpt-4o-mini} foi usado \textbf{exclusivamente como avaliador},
+permanecendo o Llama~3.3~70B via Groq como o gerador no \textit{pipeline} de
+produção.
+
+\section{Avaliação Automatizada (RAGAS)}
+
+A Tabela~\ref{tab:ragas} apresenta a evolução dos resultados ao longo das principais
+configurações testadas.
+
+\begin{table}[ht]
+  \caption{Evolução dos resultados RAGAS do chatbot ILTB}
+  \label{tab:ragas}
+  \begin{tabularx}{\textwidth}{@{}Xcccc@{}}
+  \toprule
+  \textbf{Configuração} &
+  \textbf{Faith.} &
+  \textbf{Ans. Rel.} &
+  \textbf{Ctx. Prec.} &
+  \textbf{Ctx. Rec.} \\
+  \midrule
+  Baseline (pré-sanitização, top\_k=4) & 0{,}375 & 0{,}310 & 0{,}548 & 0{,}382 \\
+  Pós-sanitização, prompt v1, top\_k=4 & 0{,}586 & 0{,}534 & 0{,}656 & 0{,}608 \\
+  A/B gpt-4o-mini como pipeline LLM     & 0{,}525 & 0{,}524 & 0{,}657 & 0{,}583 \\
+  \textbf{Chunker hierárquico, top\_k=5 (final)} &
+    \textbf{0{,}515} & \textbf{0{,}381} & \textbf{0{,}735} & \textbf{0{,}520} \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{table}
+
+A Tabela~\ref{tab:ragas} sintetiza quatro pontos da trajetória de otimização, dos
+quais decorrem as seguintes leituras:
+
+\textbf{Linha 1 (\textit{baseline}).} Configuração inicial sem sanitização de
+\textit{chunks} e com $k=4$. Os \textit{scores} baixos em todas as métricas
+indicam principalmente falhas de recuperação: \textit{Context Precision} de
+$0{,}548$ confirma que aproximadamente metade dos \textit{chunks} recuperados
+não eram relevantes para a pergunta, propagando essa falha para
+\textit{Faithfulness} e \textit{Answer Relevancy}.
+
+\textbf{Linha 2 (pós-sanitização, \textit{prompt} v1).} A introdução de
+sanitização Markdown (Seção~\ref{cap:desenvolvimento}) e a primeira versão
+estável do \textit{system prompt} elevaram \textit{Faithfulness} a $0{,}586$,
+patamar próximo ao observado em revisões de RAG biomédico \cite{ocaf2024}, e
+duplicaram o \textit{Answer Relevancy}. Esse foi o salto qualitativo principal
+do projeto.
+
+\textbf{Linha 3 (\textit{gpt-4o-mini} no \textit{pipeline}).} Teste A/B
+substituindo o Llama~3.3~70B pelo \texttt{gpt-4o-mini} também como gerador
+(não apenas como juiz). Os resultados \textit{não} mostraram superioridade
+relevante, e a opção foi descartada, mantendo o Llama por razões de custo e
+licença \textit{open-weight}.
+
+\textbf{Linha 4 (encerramento da Fase 2).} Adoção do \textit{chunker} hierárquico
+descrito na Seção~\ref{cap:desenvolvimento} e $k=5$. O \textit{Context Precision}
+alcançou $0{,}735$ --- próximo à meta de $0{,}75$ ---, indicando que a recuperação
+estabilizou em torno de um patamar útil. O \textit{Faithfulness}, em contrapartida,
+permaneceu em $0{,}515$, abrindo a questão diagnóstica investigada pela ablação
+$2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}.
+
+\subsection{Ablação 2×2: Gerador e Embedding}
+\label{sec:ablacao-2x2}
+
+O patamar de \textit{Faithfulness} observado ao fim da Fase 2 admitia duas
+explicações concorrentes: (i) limitação do \textbf{gerador} --- o Llama~3.3~70B
+seria intrinsecamente insuficiente para sintetizar respostas fiéis ao contexto
+no domínio ILTB; ou (ii) limitação do \textit{pipeline} \textbf{RAG} ---
+\textit{retriever}/\textit{embedding} insuficientes para entregar contexto rico,
+forçando o gerador a respostas pobres. A literatura de RAG clínico recomenda,
+exatamente nessa situação, uma ablação cruzada isolando cada variável
+\cite{ocaf2024, wang2024bestpractices}.
+
+Realizou-se, portanto, uma ablação $2 \times 2$ sobre o mesmo conjunto de 38
+questões \textit{in-scope} (Seção anterior), variando dois fatores enquanto
+mantendo o restante do \textit{pipeline} inalterado: o \textbf{gerador}
+(Llama~3.3~70B vs GPT-4o) e o \textbf{\textit{embedding}}
+(\texttt{paraphrase-multilingual-MiniLM-L12-v2} 384D vs \texttt{BAAI/bge-m3}
+1024D). Quatro corridas independentes foram executadas, cada uma com a coleta
+das respostas e o cálculo das métricas RAGAS pelo mesmo juiz LLM
+(\texttt{gpt-4o-mini}). A Tabela~\ref{tab:ablacao-2x2} apresenta os resultados.
+
+\begin{table}[ht]
+  \caption{Ablação $2 \times 2$: Gerador × \textit{Embedding} (38 questões; juiz
+           RAGAS \texttt{gpt-4o-mini})}
+  \label{tab:ablacao-2x2}
+  \begin{tabularx}{\textwidth}{@{}lXcccc@{}}
+  \toprule
+  \textbf{Gerador} & \textbf{\textit{Embedding}} &
+  \textbf{Faith.} & \textbf{Ans. Rel.} & \textbf{Ctx. Prec.} & \textbf{Ctx. Rec.} \\
+  \midrule
+  Llama~3.3~70B & MiniLM 384D (gate Fase 2)              & 0{,}515 & 0{,}381 & 0{,}735 & 0{,}520 \\
+  GPT-4o        & MiniLM 384D                            & 0{,}383 & 0{,}315 & 0{,}761 & 0{,}533 \\
+  GPT-4o        & BGE-M3 1024D                           & 0{,}600 & 0{,}618 & 0{,}907 & 0{,}796 \\
+  \textbf{Llama~3.3~70B} & \textbf{BGE-M3 1024D (gate atual)}
+                                                        & \textbf{0{,}675} & \textbf{0{,}686} & \textbf{0{,}949} & \textbf{0{,}740} \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{table}
+
+\textbf{Efeito do \textit{embedding} (linhas pareadas, gerador fixo).}
+Mantendo o gerador GPT-4o constante, a substituição MiniLM 384D → BGE-M3 1024D
+produziu ganhos de $+56{,}7\%$ em \textit{Faithfulness} ($0{,}383 \to 0{,}600$),
+$+96{,}2\%$ em \textit{Answer Relevancy} ($0{,}315 \to 0{,}618$), $+19{,}2\%$ em
+\textit{Context Precision} ($0{,}761 \to 0{,}907$, ultrapassando confortavelmente
+a meta de $0{,}75$) e $+49{,}3\%$ em \textit{Context Recall}
+($0{,}533 \to 0{,}796$). Mantendo o gerador Llama constante, a mesma substituição
+produziu ganhos de $+31\%$, $+80\%$, $+29\%$ e $+42\%$, respectivamente. Em ambos
+os geradores, portanto, a migração de \textit{embedding} produz salto material em
+todas as métricas --- direção e magnitude consistentes com os \textit{benchmarks}
+multilíngues \cite{SHTI2023, mmteb2025, marone2025mmbert} e com a revisão
+sistemática de \citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha
+de \textit{embedding} como o principal lever de qualidade em \textit{pipelines}
+RAG clínicos.
+
+\textbf{Efeito do gerador (colunas pareadas, \textit{embedding} fixo).}
+Surpreendentemente, substituir o Llama pelo GPT-4o \emph{piora} a
+\textit{Faithfulness} em ambos os \textit{embeddings}: $0{,}515 \to 0{,}383$ no
+MiniLM ($-25{,}6\%$) e $0{,}675 \to 0{,}600$ no BGE-M3 ($-11{,}1\%$). O
+\textit{Context Precision} permanece estatisticamente equivalente entre os dois
+geradores (esperado --- essa métrica depende do \textit{retriever}, não do
+gerador). \textit{Answer Relevancy} também cai com GPT-4o em ambos os
+\textit{embeddings}. A inspeção direta das respostas geradas revelou a causa:
+o GPT-4o segue mais estritamente as instruções do \textit{system prompt}
+(Apêndice~\ref{ape:prompt}) e produz, com maior frequência, a resposta de
+\textit{fallback} literal --- ``Não encontrei essa informação nos protocolos
+indexados.'' --- mesmo em casos em que o conteúdo está presente nos
+\textit{chunks} recuperados. O Llama, em contraste, sintetiza a partir dos
+\textit{chunks} mesmo quando o protocolo de origem é parcial, comportamento que
+o RAGAS pontua como mais fiel porque há \textit{claims} verificáveis na resposta.
+
+Esse efeito --- modelo mais alinhado a instruções pontuando \emph{pior} em
+métricas automatizadas --- é convergente com observações independentes em RAG
+clínico: \citeauthor{zakka2024almanac} \cite{zakka2024almanac}, no sistema
+Almanac (NEJM AI), relata que modelos de fronteira frequentemente recusam
+responder em contextos clínicos e exigem engenharia específica para liberar a
+síntese quando segura. A literatura de mitigação de alucinação em LLMs
+\cite{huang2023halucination, ocaf2024} descreve esse padrão como ``abstenção
+excessiva'' --- evitar alucinação ao custo de cobertura. O paper original do
+RAGAS \cite{es2024} reconhece, igualmente, que sua métrica de
+\textit{Faithfulness} pode penalizar respostas seguras-por-recusa em cenários
+de síntese.
+
+\subsection{Configuração Pós-Migração (Intermediária)}
+\label{sec:gate-pos-migracao}
+
+A célula \textbf{Llama~3.3~70B + BGE-M3 1024D} (Tabela~\ref{tab:ablacao-2x2},
+linha 4) constituiu o gate intermediário do artefato após a migração de
+\textit{embedding}. A comparação direta com o gate da Fase 2 mostra ganhos
+uniformes em todas as métricas: \textit{Faithfulness} $0{,}515 \to 0{,}675$
+($+31\%$); \textit{Answer Relevancy} $0{,}381 \to 0{,}686$ ($+80\%$);
+\textit{Context Precision} $0{,}735 \to 0{,}949$ ($+29\%$, agora PASS robusto
+sobre a meta $\geq 0{,}75$); \textit{Context Recall} $0{,}520 \to 0{,}740$
+($+42\%$).
+
+A \textit{Faithfulness} de $0{,}675$ permanece abaixo da meta original de
+$0{,}80$, mas o \textbf{diagnóstico do gap} se alterou substancialmente. Com
+\textit{Context Precision} em $0{,}949$, o problema deixou de ser de
+\textbf{recuperação} e tornou-se de \textbf{geração}: o \textit{retriever}
+entrega \textit{chunks} relevantes, mas o gerador ainda produz, em parte das
+questões, afirmações que o juiz RAGAS classifica como não estritamente
+derivadas do contexto. Esse diagnóstico motivou três intervenções
+pós-recuperação subsequentes, descritas nas Seções~\ref{sec:hybrid}
+(busca híbrida com BM25), \ref{sec:rerank} (\textit{reranking}
+\textit{cross-encoder}) e \ref{sec:chunk-test} (tuning de \textit{chunk\_size}),
+fechando a iteração experimental do trabalho.
+
+\subsection{Iteração 1: Busca Híbrida com BM25 e RRF}
+\label{sec:hybrid}
+
+A primeira intervenção pós-recuperação adotou busca híbrida combinando o
+\textit{retriever} denso BGE-M3 já em produção com um índice esparso BM25
+(\citeauthor{cormack2009}, \citeyear{cormack2009}; \citeauthor{formal2021},
+\citeyear{formal2021}), fundindo os dois \textit{rankings} via
+\textit{Reciprocal Rank Fusion} (RRF). A hipótese é que termos clínicos exatos
+(siglas como ``PVHIV'' e ``3HP'', dosagens, nomes de fármacos) e construções
+com negação respondem melhor a casamento lexical, complementando o
+\textit{retriever} densamente codificado.
+
+O índice BM25 é construído como \textit{sidecar} do ChromaDB --- compartilha
+os mesmos 898 \textit{chunks} indexados, sem duplicação. Cada consulta gera
+20 candidatos de cada \textit{ranker}, e o RRF (constante $k = 60$, conforme
+\citeauthor{cormack2009}) computa o \textit{score} final
+$\sum_{r} 1 / (k + \text{rank}_r(d))$, do qual se selecionam os $k = 5$
+\textit{chunks} de maior \textit{rank} fundido.
+
+A Tabela~\ref{tab:hybrid-rerank} (linha 2) apresenta o resultado da avaliação
+RAGAS sobre as mesmas 38 questões. Os ganhos materiais foram em
+\textit{Context Recall} ($+11{,}6\%$) e \textit{Answer Relevancy} ($+7{,}4\%$):
+o BM25 captura \textit{chunks} com termos exatos que o BGE-M3 não recuperava,
+e o gerador, com cobertura maior, produz respostas mais on-topic. O ganho em
+\textit{Faithfulness} foi modesto ($+2{,}1\%$, $0{,}675 \to 0{,}689$), abaixo
+do envelope esperado pela literatura
+($+3$ a $+7$\,pp, \citeauthor{wang2024bestpractices}, \citeyear{wang2024bestpractices})
+--- explicado pelo BGE-M3 já ser muito forte em multilíngue
+(\textit{state-of-the-art} no MMTEB, conforme \cite{mmteb2025}), o que reduz
+a informação nova trazida pelo BM25. Um efeito secundário relevante foi a
+melhoria do comportamento de \textit{fallback} em consultas \textit{out-of-scope}:
+\textit{scores} RRF nessas consultas caíram para 0{,}03 (vs. $\sim 0{,}87$
+no \textit{retrieval} denso puro), facilitando rejeição segura por
+limiar simples.
+
+\subsection{Iteração 2: \textit{Reranking} \textit{Cross-encoder} (mGTE)}
+\label{sec:rerank}
+
+Sobre o \textit{pipeline} híbrido da Seção anterior, adicionou-se uma etapa
+de \textit{reranking} com o \textit{cross-encoder} multilíngue
+\texttt{Alibaba-NLP/gte-multilingual-reranker-base} (\citeauthor{zhang2024mgte},
+\citeyear{zhang2024mgte}). \textit{Cross-encoders} processam o par
+(\textit{query}, \textit{chunk}) conjuntamente, capturando relevância
+fine-grained que \textit{bi-encoders} densos como o BGE-M3 e modelos esparsos
+como o BM25 não capturam isoladamente.
+
+O fluxo final é: busca densa top-20 $\cup$ BM25 top-20 $\to$ fusão RRF $\to$
+\textit{cross-encoder} reordena $\to$ top-5 enviado ao gerador. O custo
+computacional é aceitável (\textasciitilde{}200\,ms adicionais por consulta
+em CPU), sem necessidade de GPU dedicada.
+
+A Tabela~\ref{tab:hybrid-rerank} (linha 3) sumariza o resultado. O
+\textit{reranking} produziu o salto mais expressivo da iteração:
+\textit{Faithfulness} $0{,}689 \to 0{,}761$ ($+10{,}4\%$ sobre o híbrido sem
+\textit{rerank}; $+12{,}7\%$ sobre o gate intermediário). Esse ganho recai
+exatamente no envelope previsto por
+\citeauthor{wang2024bestpractices} ($+5$ a $+10$\,pp). \textit{Context
+Precision} também melhorou ($0{,}912 \to 0{,}964$, $+5{,}7\%$) ---
+o \textit{cross-encoder} filtra os \textit{chunks} lexicalmente similares mas
+semanticamente periféricos que o BM25 ocasionalmente promove. As pequenas
+regressões em \textit{Answer Relevancy} ($-2{,}3\%$) e \textit{Context Recall}
+($-2{,}8\%$) refletem o comportamento mais conservador do
+\textit{reranker}: descarta candidatos marginais que ampliariam a cobertura
+mas introduziriam ruído.
+
+\begin{table}[ht]
+  \caption{Iterações pós-recuperação aplicadas sobre Llama~3.3~70B + BGE-M3 1024D}
+  \label{tab:hybrid-rerank}
+  \begin{tabularx}{\textwidth}{@{}Xcccc@{}}
+  \toprule
+  \textbf{Configuração} & \textbf{Faith.} & \textbf{Ans. Rel.} &
+  \textbf{Ctx. Prec.} & \textbf{Ctx. Rec.} \\
+  \midrule
+  Pós-migração (denso BGE-M3 apenas)         & 0{,}675 & 0{,}686 & 0{,}949 & 0{,}740 \\
+  + Busca híbrida (BGE-M3 + BM25, RRF)       & 0{,}689 & 0{,}737 & 0{,}912 & 0{,}826 \\
+  \textbf{+ \textit{Reranker} mGTE (gate final)}
+                                             & \textbf{0{,}761} & \textbf{0{,}720} & \textbf{0{,}964} & \textbf{0{,}803} \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor. 38 questões \textit{in-scope};
+            juiz RAGAS \texttt{gpt-4o-mini}.}
+\end{table}
+
+\subsection{Iteração 3: Teste de \textit{chunk\_size}}
+\label{sec:chunk-test}
+
+A literatura \cite{wang2024bestpractices} sugere que \textit{chunks} menores
+(300--500 \textit{tokens}) otimizam o trade-off entre fidelidade e cobertura
+em domínios técnicos. Avaliou-se, portanto, a re-ingestão do corpus com
+\texttt{CHUNK\_SIZE = 500} caracteres (vs. 800 da configuração padrão), sobre
+o \textit{pipeline} \textit{hybrid+rerank} já estabilizado. Resultados sobre
+as mesmas 38 questões: \textit{Faithfulness} $0{,}761 \to 0{,}756$ ($-0{,}005$,
+ruído de juiz); \textit{Answer Relevancy} $0{,}720 \to 0{,}683$ ($-5{,}1\%$,
+regressão material); \textit{Context Precision} $0{,}964 \to 0{,}951$
+($-1{,}3\%$); \textit{Context Recall} $0{,}803 \to 0{,}811$ ($+1{,}0\%$).
+
+Diagnóstico do efeito nulo: o \textit{chunker} hierárquico do
+\textit{pipeline} (descrito na Seção~\ref{cap:desenvolvimento}) é guiado
+pelas fronteiras de cabeçalho do \textit{Markdown} sanitizado e por um piso
+\texttt{MIN\_CHUNK\_SIZE = 400} \textit{chars}. Reduzir o teto de 800 para
+500 \textit{chars} alterou apenas marginalmente a distribuição de tamanhos
+(mediana de \textasciitilde{}800 para \textasciitilde{}674 \textit{chars}),
+preservando a maior parte da granularidade original. Para um teste estrito
+do efeito descrito por \citeauthor{wang2024bestpractices} seria necessário
+substituir o \textit{chunker} por uma estratégia baseada em \textit{tokens}
+do modelo (\textit{e.g.}, \textit{Small-to-Big} \cite{advancedChunkingRAG2025}),
+mudança fora do escopo desta iteração. O \texttt{CHUNK\_SIZE = 800} foi,
+portanto, mantido.
+
+\subsection{Configuração Final do Artefato}
+\label{sec:gate-final}
+
+A combinação Llama~3.3~70B + BGE-M3 1024D + busca híbrida (BM25 + denso, RRF
+$k = 60$) + \textit{reranker} mGTE foi adotada como \textbf{gate operacional
+final do artefato}. A Tabela~\ref{tab:gate-final} consolida os
+\textit{scores} comparados ao gate da Fase 2.
+
+\begin{table}[ht]
+  \caption{Gate operacional final vs. gate da Fase 2 (\textit{baseline} pré-migração)}
+  \label{tab:gate-final}
+  \begin{tabularx}{\textwidth}{@{}Xcccc@{}}
+  \toprule
+  \textbf{Configuração} &
+  \textbf{Faith.} & \textbf{Ans. Rel.} &
+  \textbf{Ctx. Prec.} & \textbf{Ctx. Rec.} \\
+  \midrule
+  Gate Fase 2 (\textit{baseline}, MiniLM 384D + denso) & 0{,}515 & 0{,}381 & 0{,}735 & 0{,}520 \\
+  \textbf{Gate Final} (BGE-M3 + híbrido + \textit{rerank}) &
+    \textbf{0{,}761} & \textbf{0{,}720} & \textbf{0{,}964} & \textbf{0{,}803} \\
+  \midrule
+  \textit{$\Delta$ absoluto} &
+    $+0{,}246$ & $+0{,}339$ & $+0{,}229$ & $+0{,}283$ \\
+  \textit{$\Delta$ relativo} &
+    $+47{,}8\%$ & $+89{,}0\%$ & $+31{,}2\%$ & $+54{,}4\%$ \\
+  \textit{Gate (faith $\geq 0{,}80$; ctx\_prec $\geq 0{,}75$)} &
+    FAIL / FAIL & — & \textbf{FAIL / PASS} & — \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{table}
+
+\textit{Context Precision} ultrapassa confortavelmente a meta de $0{,}75$
+($+0{,}214$ sobre o alvo), indicando que o \textit{retrieval} convergiu para
+um patamar maduro. \textit{Faithfulness} de $0{,}761$ está a $0{,}039$ da
+meta original de $0{,}80$ --- gap residual interpretado na
+Seção~\ref{sec:interp-faith} e endereçado, como linha de pesquisa imediata,
+no Capítulo~\ref{cap:conclusao}.
+
+\subsection{Interpretação da Métrica de \textit{Faithfulness}}
+\label{sec:interp-faith}
+
+O patamar de \textit{Faithfulness} no gate final do artefato, $0{,}761$
+(Tabela~\ref{tab:gate-final}), está acima do que a literatura de RAG clínico
+reporta como teto comum sem intervenções de \textit{self-reflection}: a
+revisão sistemática de \citeauthor{ocaf2024} \cite{ocaf2024}, combinando 30
+estudos do domínio, indica que valores acima de $0{,}75$ raramente são
+atingidos sem mecanismos adicionais sobre o esquema
+\textit{retrieve-then-generate} básico. As três iterações pós-recuperação
+descritas nas Seções \ref{sec:hybrid}--\ref{sec:gate-final} (busca híbrida,
+\textit{reranking} \textit{cross-encoder} e teste de \textit{chunk\_size})
+fecharam aproximadamente $86\%$ do gap original que separava o gate da
+Fase 2 ($0{,}515$) da meta de $0{,}80$.
+
+O gap residual de $0{,}039$ tem três fatores complementares descritos na
+literatura, ainda presentes no \textit{pipeline} mesmo após as intervenções.
+
+\textbf{Comportamento abstrativo do gerador.} Modelos generativos como o
+Llama~3.3~70B foram caracterizados desde \citeauthor{lewis2021}
+\cite{lewis2021} como abstrativos: o decodificador sintetiza informação dos
+\textit{chunks} em vez de reproduzi-los literalmente. Essa síntese é, conforme
+o próprio paper seminal aponta, \textit{vantagem} para tarefas de
+pergunta-resposta abertas, mas a métrica \textit{Faithfulness} do RAGAS
+\cite{es2024} mede correspondência literal entre afirmações e contexto ---
+penalizando o que pode ser paráfrase clinicamente correta. A ablação $2 \times 2$
+(Seção~\ref{sec:ablacao-2x2}) já evidenciara esse efeito: substituir o Llama
+por GPT-4o, com seu comportamento mais prompt-adherent, piorou
+\textit{Faithfulness} em vez de melhorá-la.
+
+\textbf{Granularidade do \textit{chunk}.} \citeauthor{gao2024} \cite{gao2024}
+identifica o tamanho do \textit{chunk} como um dos principais determinantes
+do \textit{trade-off} entre fidelidade literal e qualidade da resposta.
+\citeauthor{wang2024bestpractices} \cite{wang2024bestpractices} sustenta
+empiricamente que \textit{chunks} de 300--500 \textit{tokens}, combinados com
+\textit{reranking}, otimizam esse trade-off em domínios técnicos. O teste
+descrito na Seção~\ref{sec:chunk-test} reduziu o \texttt{CHUNK\_SIZE} de 800
+para 500 \textit{chars} e não produziu ganho mensurável, porque o
+\textit{chunker} hierárquico do \textit{pipeline} é dominado por fronteiras
+de cabeçalho do \textit{Markdown} e pelo piso \texttt{MIN\_CHUNK\_SIZE = 400}.
+Para ativar o efeito previsto pela literatura seria necessária a substituição
+do \textit{chunker} por uma estratégia baseada em \textit{tokens} do modelo
+(\textit{e.g.}, \textit{Small-to-Big} \cite{advancedChunkingRAG2025}), tarefa
+registrada como trabalho futuro.
+
+\textbf{Negação e nuances clínicas.} O domínio ILTB tem alta densidade de
+regras condicionais (``tratar se X, exceto se Y'') e termos com semântica
+oposta próxima (``elegível / contraindicado''), que \textit{retrievers}
+densos atuais não capturam tão bem quanto modelos esparsos
+\cite{cormack2009, formal2021}. A introdução de BM25 e do \textit{reranker}
+mGTE (Seções~\ref{sec:hybrid} e \ref{sec:rerank}) mitigou parcialmente esse
+limite, mas \textit{bi-encoders} dense permanecem suscetíveis a confundir
+afirmações negadas e suas contrapartes afirmativas
+\cite{huang2023halucination}.
+
+A combinação desses três fatores residuais explica por que o \textit{pipeline}
+estabiliza em $0{,}761$ em vez de atingir $0{,}80$. A próxima intervenção
+prevista pela literatura --- \textit{self-reflection} sobre a resposta gerada
+\cite{jeong2024selfbiorag} --- exige reformulação arquitetural com custo
+desproporcional ao gap residual ($+8$ a $+15$\,pp esperados, ao preço de
+dobrar as chamadas ao gerador), e está registrada como linha de pesquisa
+prioritária no Capítulo~\ref{cap:conclusao}.
+
+A revisão de \citeauthor{ocaf2024} \cite{ocaf2024} reforça ainda um ponto
+metodológico relevante: a avaliação automatizada por RAGAS deve ser
+\textbf{complementada} por avaliação humana estruturada, especialmente para
+sistemas em que síntese clinicamente correta é desejável --- princípio
+endossado também pela diretriz de relato \textit{TRIPOD-LLM}
+\cite{gallifant2025tripod}. Esse argumento motiva o desenho da avaliação com
+especialista descrita na Seção~\ref{sec:sessao-expert}, que complementa as
+métricas automatizadas com uma rubrica clínica especializada e adiciona, em
+particular, sensibilidade ao \textit{trade-off} segurança-vs-cobertura que
+o RAGAS por si só não captura.
+
+\section{Avaliação com Especialista}
+\label{sec:sessao-expert}
+
+A avaliação automatizada RAGAS, por suas limitações intrínsecas
+(Seção~\ref{cap:referencial}), foi complementada por uma sessão estruturada com
+especialista em ILTB. O delineamento dessa etapa segue as recomendações da literatura
+de RAG biomédico, que reporta número médio de quatro avaliadores em estudos do
+domínio --- variando de um a dez --- e enfatiza que avaliações com $N$ reduzido devem
+ser estruturadas em torno de instrumentos multidimensionais, transformando o
+especialista em consultor de validação técnica em lugar de sujeito estatístico
+\cite{ocaf2024}.
+
+\subsection{Perfil do Especialista}
+
+\aluno{Caracterizar o expert: área de atuação (enfermagem em saúde pública, atenção
+primária), tempo de experiência no manejo da ILTB, vínculo institucional (anonimizar
+se necessário), formação. Incluir Termo de Consentimento Livre e Esclarecido
+assinado.}
+
+\subsection{Protocolo da Sessão}
+
+A sessão foi estruturada em quatro etapas, alinhadas às atividades de
+\textit{Demonstração} e \textit{Avaliação} do DSRM \cite{peffers2007}:
+
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+  \item \textbf{Abertura e consentimento:} assinatura do TCLE, apresentação dos
+        objetivos do chatbot, do escopo do corpus e dos limites declarados da
+        ferramenta (apoio à decisão, não substituição do julgamento clínico).
+  \item \textbf{Demonstração funcional:} apresentação das principais funcionalidades
+        da interface, com exemplos previamente preparados, para que o especialista
+        compreenda o fluxo de interação antes da fase avaliativa.
+  \item \textbf{Interação com cenários clínicos:} o especialista submete consultas
+        ao chatbot com base em perguntas reais que recebe na prática
+        (rastreamento de PVHIV, esquemas terapêuticos, populações especiais,
+        interações medicamentosas). Em paralelo, são apresentadas amostras das 38
+        questões já avaliadas pelo RAGAS para revisão dirigida.
+  \item \textbf{\textit{Debriefing} estruturado:} entrevista semi-estruturada
+        orientada por instrumentos validados, descritos a seguir.
+\end{enumerate}
+
+Em conformidade com a política de privacidade descrita na
+Seção~\ref{sec:lgpd-ref}, a sessão adota retenção zero do histórico de conversa,
+\textit{logging} mínimo e ausência de dados identificáveis nas consultas.
+
+\subsection{Instrumentos de Avaliação}
+
+A avaliação combina quatro instrumentos, conforme recomendado para validação
+multidimensional de chatbots clínicos com avaliador único \cite{ocaf2024}:
+
+\begin{enumerate}[label=\textbf{I\arabic*}]
+  \item \textbf{Acurácia técnica contra \textit{ground truth} do Ministério da Saúde:}
+        o especialista classifica cada resposta como \textit{correta},
+        \textit{parcialmente correta} ou \textit{incorreta} em relação ao protocolo
+        oficial \cite{brasil2022}, indicando o trecho conflitante quando aplicável.
+  \item \textbf{Classificação ordinal de severidade do erro:} escala Likert de cinco
+        pontos (sem risco, risco baixo, risco moderado, risco alto, conduta
+        perigosa) aplicada a cada resposta incorreta ou parcialmente correta,
+        permitindo análise de segurança independente da acurácia bruta.
+  \item \textbf{Tríade de qualidade RAG (rubrica qualitativa):} para cada resposta, o
+        especialista avalia separadamente \textit{fidelidade} (a resposta deriva do
+        contexto recuperado?), \textit{relevância da resposta} (responde à pergunta?)
+        e \textit{relevância do contexto} (o trecho recuperado é o correto do
+        protocolo?), seguindo a estrutura proposta por \citeauthor{es2024}
+        \cite{es2024}.
+  \item \textbf{TAM-AIN:} questionário fechado das quatro dimensões do
+        \textit{Technology Acceptance Model for AI in Nursing}
+        \cite{nursingTAM2024} --- alinhamento ético, prontidão organizacional,
+        preservação da identidade profissional e capacidade de infraestrutura ---
+        complementado por entrevista qualitativa sobre barreiras e facilitadores
+        percebidos para adoção no SUS.
+\end{enumerate}
+
+A escolha por um instrumental multimétrico em detrimento de estatísticas tradicionais
+de concordância inter-avaliador (e.g., coeficiente Kappa \cite{landis1977}) decorre
+da natureza da amostra: com $N=1$, instrumentos como Kappa de Cohen perdem aderência
+metodológica, pois exigem ao menos dois avaliadores para o cálculo da concordância
+acima do acaso. A literatura defende, nesses cenários, o deslocamento do esforço
+analítico para validade de conteúdo e segurança clínica \cite{ocaf2024}.
+
+\subsection{Resultados e Análise da Sessão}
+
+\aluno{Apresentar: número de questões avaliadas, distribuição de respostas por
+categoria (correta / parcialmente correta / incorreta), severidade média dos erros,
+scores TAM-AIN por dimensão, exemplos representativos de respostas avaliadas
+positiva e negativamente, observações qualitativas do especialista.}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Discussão}
+\label{cap:discussao}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\section{Interpretação dos Resultados}
+
+Os resultados consolidados da avaliação RAGAS, à luz da ablação $2 \times 2$
+descrita na Seção~\ref{sec:ablacao-2x2} e da configuração final pós-migração
+da Seção~\ref{sec:gate-pos-migracao}, comportam três leituras complementares.
+
+\textbf{Primeira: o \textit{embedding} era o gargalo dominante.} A migração de
+\texttt{paraphrase-multilingual-MiniLM-L12-v2} (384 dimensões) para
+\texttt{BAAI/bge-m3} (1024 dimensões) produziu salto material em todas as
+métricas para os dois geradores avaliados (Tabela~\ref{tab:ablacao-2x2}). Esse
+achado é convergente com os \textit{benchmarks} multilíngues
+\cite{SHTI2023, mmteb2025, marone2025mmbert} e com a revisão sistemática de
+\citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha do
+\textit{embedding} como o principal lever de qualidade em RAG clínico. O
+patamar atingido de \textit{Context Precision} ($0{,}949$ na configuração
+final) ultrapassa confortavelmente a meta de $0{,}75$, validando empiricamente
+a hipótese predita pela literatura para o contexto deste trabalho.
+
+\textbf{Segunda: modelo maior não dissolve o gap.} A substituição do
+Llama~3.3~70B pelo GPT-4o, mantendo o restante do \textit{pipeline} constante,
+\emph{piorou} a \textit{Faithfulness} em ambas as configurações de
+\textit{embedding} ($0{,}515 \to 0{,}383$ no MiniLM; $0{,}675 \to 0{,}600$ no
+BGE-M3). O GPT-4o adere mais estritamente às instruções do \textit{system
+prompt} e produz respostas de \textit{fallback} (recusa) com maior frequência,
+comportamento que o RAGAS pontua como menos fiel por ausência de \textit{claims}
+verificáveis. Achados análogos em RAG clínico são descritos por
+\citeauthor{zakka2024almanac} \cite{zakka2024almanac} no sistema Almanac
+(NEJM AI). Este paradoxo tem duas implicações: (i) a escolha do Llama~3.3~70B
+como gerador do artefato é tecnicamente justificada pelos próprios números, não
+apenas por considerações de custo (Groq oferece o modelo a custo zero no
+\textit{free tier}); (ii) métricas automatizadas como o RAGAS exigem
+complementação por avaliação humana \cite{ocaf2024, gallifant2025tripod}, pois
+podem penalizar comportamento desejável do ponto de vista de segurança
+clínica.
+
+\textbf{Terceira: intervenções pós-recuperação fecharam $\sim 86\%$ do gap
+residual de \textit{Faithfulness}.} A ablação $2 \times 2$ identificou que o
+\textit{retriever} era o gargalo dominante, mas a migração para BGE-M3 ainda
+deixou \textit{Faithfulness} em $0{,}675$. Três iterações subsequentes,
+fundamentadas na literatura específica e descritas nas
+Seções~\ref{sec:hybrid}--\ref{sec:gate-final}, elevaram esse patamar para
+$0{,}761$: (i) busca híbrida BM25 + denso com \textit{Reciprocal Rank Fusion}
+\cite{cormack2009, formal2021, khattab2020}, contribuição $+0{,}014$ na
+\textit{Faithfulness} e $+0{,}087$ na \textit{Context Recall};
+(ii) \textit{reranking} \textit{cross-encoder} mGTE
+\cite{zhang2024mgte, wang2024bestpractices}, contribuição $+0{,}072$ na
+\textit{Faithfulness} e recuperação completa de \textit{Context Precision}
+(para $0{,}964$); (iii) teste de \textit{chunk\_size} reduzido sem efeito
+mensurável (Seção~\ref{sec:chunk-test}), limitado pela estrutura hierárquica
+do \textit{chunker}. O gap residual final de $0{,}039$ converge ao patamar
+descrito por \citeauthor{ocaf2024} \cite{ocaf2024} como teto típico antes de
+intervenções de \textit{self-reflection} \cite{jeong2024selfbiorag}, registrada
+como linha de pesquisa imediata no Capítulo~\ref{cap:conclusao}.
+
+A leitura conjunta dos quatro \textit{scores} é coerente com o cenário previsto
+pela revisão sistemática de \citeauthor{ocaf2024} \cite{ocaf2024}: sistemas
+RAG biomédicos obtêm ganho médio de $1{,}35\times$ em eficácia clínica sobre
+LLMs sem recuperação, mas atingem um teto comportamental quando a métrica
+exige fidelidade verbatim a um modelo abstrativo. A resposta metodológica
+adequada não é forçar o LLM a respostas extrativas (que diminuiria a utilidade
+clínica em consultas que exigem síntese), mas combinar duas estratégias
+complementares: (i) avançar tecnicamente via intervenções pós-recuperação
+referenciadas acima; (ii) complementar a avaliação com instrumento humano
+estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
+
+\section{Limitações}
+
+\begin{enumerate}[label=\textbf{L\arabic*}]
+  \item Corpus limitado a documentos públicos --- nenhum dado clínico real de
+        pacientes foi utilizado;
+  \item Ausência de \textit{dataset} clínico anotado em PT-BR para validação
+        RAGAS independente;
+  \item Avaliação qualitativa com amostra reduzida (1 expert);
+  \item Dependência de API externa para o LLM (Groq) --- a operação do
+        \textit{free tier} (limite de 100K tokens diários, TPD) restringe
+        ciclos experimentais; o presente trabalho recorreu ao plano
+        \textit{Dev Tier} pago para concluir a célula Llama+BGE-M3 da
+        ablação $2 \times 2$ (Seção~\ref{sec:ablacao-2x2});
+  \item \textit{Pipeline} atual incorpora busca híbrida BM25+denso e
+        \textit{reranking} \textit{cross-encoder} mGTE (Seções
+        \ref{sec:hybrid} e \ref{sec:rerank}), mas não inclui
+        \textit{self-reflection} sobre a resposta gerada
+        \cite{jeong2024selfbiorag}. Essa intervenção, com expectativa
+        documentada de $+8$ a $+15$\,pp em \textit{Faithfulness}, é a próxima
+        linha de pesquisa para fechar o gap residual de $0{,}039$ até a meta
+        de $0{,}80$ (Capítulo~\ref{cap:conclusao}). \textit{Chunking} baseado
+        em \textit{tokens} (\textit{e.g.}, \textit{Small-to-Big}) é
+        intervenção complementar potencial não testada
+        \cite{advancedChunkingRAG2025}.
+\end{enumerate}
+
+\section{Conformidade com a LGPD}
+
+O sistema não processa dados pessoais de pacientes: o corpus é composto
+exclusivamente de documentos públicos e as interações com o chatbot não são
+armazenadas. O modelo de embedding é executado localmente, sem envio de
+\textit{queries} a APIs externas antes da geração \cite{lgpdSaude2023,
+sokPrivacyLLM2026}.
+
+A configuração adotada para esta prova de conceito é, contudo, uma escolha
+deliberadamente conservadora. Em cenários de implantação institucional --- ainda fora
+do escopo deste trabalho, mas previstos como continuidade natural ---, três pontos
+de atenção emergem da literatura.
+
+O primeiro é a \textbf{entrada de dados identificáveis pelo usuário final}. Mesmo com
+corpus público e API sem armazenamento, o conteúdo das consultas formuladas pelo
+profissional pode trazer informações clinicamente identificáveis (descrição de caso,
+data, comorbidades, identificadores indiretos). \citeauthor{privacyRAGHealthcare2025}
+\cite{privacyRAGHealthcare2025} categorizam o pesquisador e o profissional clínico
+como \textit{adversários internos acidentais}: agentes legítimos cujo fluxo de
+trabalho pode causar vazamento inadvertido. Para mitigar esse risco, recomenda-se
+implementar \textit{scrubbing} ex-ante no \textit{frontend} --- redação automática de
+identificadores antes do envio ao retriever --- e exibir aviso explícito ao usuário
+sobre a política de tratamento de dados sensíveis.
+
+O segundo é a \textbf{rastreabilidade auditável}. Sistemas de IA em saúde sob a LGPD
+demandam \textit{logging} compatível com auditoria sem violar a finalidade declarada
+do tratamento \cite{lgpdSaude2023, sokPrivacyLLM2026}. Em produção, isso implica
+registrar metadados de uso (timestamps, tipo de consulta, presença de
+\textit{disclaimer}, identificador de sessão pseudonimizado) sem reter o conteúdo das
+consultas, mecanismo descrito como \textit{logging consciente de privacidade}
+\cite{privacyRAGHealthcare2025}. A retenção zero adotada nesta POC não escala para um
+serviço institucional, que precisa demonstrar rastreabilidade frente a eventuais
+incidentes.
+
+O terceiro é a \textbf{relação jurídica com o provedor do LLM}. O modelo Llama~3.3
+70B foi acessado neste trabalho via API Groq, sem armazenamento declarado de prompts;
+em ambiente institucional, contudo, recomenda-se a celebração de Acordo de
+Tratamento de Dados (DPA, na sigla em inglês) com o operador, em conformidade com os
+artigos 39 e 47 da LGPD, ou o emprego de \textit{inference} local em GPU dedicada
+para eliminar a transferência. A literatura específica sobre RAG biomédico endossa
+essa estratégia, observando que adversários do lado da nuvem podem reconstruir
+trechos sensíveis a partir de ativações intermediárias mesmo quando o provedor não
+armazena prompts explicitamente \cite{privacyRAGHealthcare2025, sokPrivacyLLM2026}.
+
+Em síntese, o desenho atual atende à LGPD por exclusão de dados sensíveis, e não por
+mecanismos ativos de proteção. Esses mecanismos são pré-requisito de qualquer
+implantação real e estão contemplados como linha de pesquisa subsequente
+(Capítulo~\ref{cap:conclusao}).
+
+\section{Implicações para Adoção}
+
+A adoção efetiva de chatbots clínicos como o desenvolvido neste trabalho depende de
+fatores que ultrapassam a qualidade técnica do artefato. O modelo TAM-AIN
+\cite{nursingTAM2024}, adotado como referência para a avaliação com especialista
+(Seção~\ref{sec:sessao-expert}), aponta quatro dimensões críticas que devem ser
+ponderadas em qualquer estratégia de implantação no SUS.
+
+\textbf{Alinhamento ético e confiança.} A literatura indica padrão de
+\textit{otimismo cauteloso} entre profissionais de enfermagem frente à IA: cerca de
+85\% reconhecem benefícios potenciais para precisão diagnóstica e redução de erro
+humano, mas aproximadamente 70\% mantêm reservas quanto ao componente humano do
+cuidado e à segurança dos dados \cite{nursingTAM2024}. Para o chatbot ILTB, isso
+implica investir em comunicação clara dos limites da ferramenta e da política de
+privacidade --- sob pena de minar a base de confiança necessária para uso continuado.
+
+\textbf{Preservação da identidade profissional.} O TAM-AIN distingue ``ferramenta de
+apoio'' de ``substituto da decisão clínica'', dimensão particularmente sensível
+entre profissionais com mais tempo de prática, que tendem a manifestar receio de
+desqualificação. A interface da POC já incorpora \textit{disclaimer} explícito de
+não substituição do julgamento profissional, mas a literatura sugere que a aderência
+de longo prazo exige que o sistema demonstre, no fluxo da interação, capacidade de
+reforçar o protagonismo do enfermeiro --- por exemplo, citando fonte e contexto a
+cada resposta para que o profissional valide ativamente as informações.
+
+\textbf{Prontidão organizacional e infraestrutura.} A heterogeneidade do parque
+tecnológico das unidades de atenção primária do SUS configura barreira
+infraestrutural concreta: conexões intermitentes, navegadores desatualizados, falta
+de dispositivos dedicados \cite{nursingTAM2024}. A arquitetura web atual, leve e
+sem dependência de instalação local no \textit{client}, é compatível com esse cenário,
+mas estudos futuros precisarão verificar latência percebida em redes de menor
+qualidade e estratégias de \textit{caching} para uso \textit{offline} parcial.
+
+\textbf{Carga de trabalho e usabilidade percebida.} Entre as barreiras mais
+reportadas pela literatura estão a sobrecarga e o ceticismo sobre o tempo
+adicional exigido para incorporar novas ferramentas ao fluxo. Avaliações
+subsequentes deverão medir, além da acurácia clínica das respostas, o ganho líquido
+de tempo na consulta a protocolos --- métrica operacional que sustenta o argumento
+de utilidade frente ao gestor da unidade.
+
+Esses fatores indicam que a transição da POC para implantação institucional não
+constitui apenas tarefa de engenharia (resolvendo as questões discutidas na
+Seção~\ref{cap:discussao}), mas também tarefa organizacional, dependente de adesão
+da liderança local e de capacitação dos profissionais.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\chapter{Conclusão}
+\label{cap:conclusao}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Este trabalho desenvolveu e avaliou um chatbot de apoio clínico ao manejo da
+Infecção Latente por \textit{Mycobacterium tuberculosis}, implementado com a
+arquitetura RAG e documentos oficiais em língua portuguesa, seguindo a
+metodologia DSRM \cite{peffers2007}. O artefato é composto por um \textit{pipeline}
+local de \textit{embeddings} multilíngues, um \textit{vector store} ChromaDB com
+indexação HNSW e o modelo Llama~3.3~70B acessado via API Groq como gerador, e
+foi disponibilizado por meio de uma interface web servida pelo FastAPI.
+
+A avaliação automatizada com o \textit{framework} RAGAS sobre 38 questões
+clínicas foi conduzida em três etapas. A configuração inicial, com
+\textit{embedding} 384D e o Llama~3.3~70B como gerador, atingiu
+\textit{Context Precision} de $0{,}735$ e \textit{Faithfulness} de $0{,}515$
+--- patamar consistente com a literatura de RAG biomédico, mas insuficiente
+para a meta de $0{,}80$. Uma ablação $2 \times 2$ cruzando gerador (Llama vs
+GPT-4o) e \textit{embedding} (MiniLM 384D vs BGE-M3 1024D) isolou o
+\textit{embedding} como gargalo dominante; a migração para
+\texttt{BAAI/bge-m3} elevou todas as métricas a um patamar intermediário com
+\textit{Faithfulness} de $0{,}675$. Três iterações pós-recuperação
+subsequentes --- busca híbrida BM25 + denso com \textit{Reciprocal Rank
+Fusion}, \textit{reranking} \textit{cross-encoder} mGTE e teste de
+\textit{chunk\_size} reduzido --- consolidaram o gate operacional final do
+artefato em \textit{Faithfulness} $0{,}761$ (a $0{,}039$ da meta original),
+\textit{Context Precision} $0{,}964$ (PASS robusto), \textit{Answer
+Relevancy} $0{,}720$ e \textit{Context Recall} $0{,}803$, um salto cumulativo
+de $+47{,}8\%$ na \textit{Faithfulness} desde o \textit{baseline} da Fase 2.
+Adicionalmente, a substituição do Llama pelo GPT-4o piorou a
+\textit{Faithfulness} em ambos os \textit{embeddings} ($0{,}515 \to 0{,}383$
+no MiniLM; $0{,}675 \to 0{,}600$ no BGE-M3), achado convergente com
+observações independentes em RAG clínico \cite{zakka2024almanac} e que
+justifica tecnicamente a escolha do Llama como gerador do artefato.
+\aluno{Completar com 2--3 frases sobre o resultado da sessão estruturada
+com o especialista (acurácia clínica média, \textit{scores} TAM-AIN,
+principais observações qualitativas) após a execução da
+Seção~\ref{sec:sessao-expert}.}
+
+As principais contribuições são o artefato aberto, o \textit{dataset} de 38
+questões clínicas em português sobre ILTB com \textit{ground truths} extraídos
+verbatim dos protocolos, a análise empírica do \textit{trade-off} LGPD vs.
+desempenho e a proposta de protocolo de avaliação multidimensional com $N=1$
+combinando RAGAS, rubrica clínica e TAM-AIN. \aluno{Ao finalizar, ajustar este
+parágrafo se a sessão com expert produzir contribuição empírica adicional.}
+
+\section{Trabalhos Futuros}
+\label{sec:trabalhos-futuros}
+
+A avaliação experimental e a revisão bibliográfica conduzidas no escopo deste
+trabalho identificaram um conjunto de direções de evolução, agrupadas em
+três frentes. A frente técnica foi parcialmente endereçada no próprio
+desenvolvimento do artefato (Seções \ref{sec:hybrid} e \ref{sec:rerank}, com
+ganho cumulativo de $+0{,}086$ em \textit{Faithfulness}); restam linhas de
+pesquisa para fechar o gap residual final
+($0{,}761 \to \geq 0{,}80$).
+
+\textbf{Frente técnica:}
+
+\begin{enumerate}[label=\textbf{TF\arabic*}]
+  \item \textbf{Self-RAG / \textit{self-reflection}} --- após gerar a
+        resposta, um \textit{critic step} avalia se está suportada pelos
+        \textit{chunks} e dispara nova recuperação ou refinamento quando
+        necessário. \citeauthor{jeong2024selfbiorag} \cite{jeong2024selfbiorag}
+        reportam ganho de $+8$ a $+15$ pontos em \textit{Faithfulness} em
+        QA biomédico \textit{long-form}, ao custo de aproximadamente dobrar
+        o número de chamadas ao LLM por consulta. Esta é a intervenção mais
+        promissora para fechar o gap residual final de $0{,}039$ até a meta
+        de $0{,}80$;
+  \item \textbf{\textit{Chunking} estrito por \textit{tokens} do modelo} ---
+        substituir o \textit{chunker} hierárquico atual (guiado por
+        cabeçalhos do \textit{Markdown}) por estratégia tipo
+        \textit{Small-to-Big}, \textit{Sliding Window} ou proposições
+        atômicas (DenseX) \cite{advancedChunkingRAG2025, gao2024},
+        permitindo o efeito de \textit{chunks} de 300--500 \textit{tokens}
+        previsto por \citeauthor{wang2024bestpractices}
+        \cite{wang2024bestpractices} mas não capturado no teste descrito na
+        Seção~\ref{sec:chunk-test};
+  \item \textbf{Prompt v5 com citação granular de \textit{span}} ---
+        instruir o gerador a citar não apenas o documento, mas o trecho
+        literal de cada \textit{claim}. \citeauthor{zakka2024almanac}
+        \cite{zakka2024almanac} usa essa estratégia no sistema Almanac;
+        ganho esperado em fidelidade, ao risco de intensificar
+        comportamento conservador do gerador (a história de prompts v2--v4
+        descrita no Apêndice~\ref{ape:prompt} mostra que prompts mais
+        restritivos podem piorar a métrica RAGAS).
+\end{enumerate}
+
+\textit{Já incorporadas no escopo deste trabalho:} migração de
+\textit{embedding} para BGE-M3 1024D (Seção~\ref{sec:gate-pos-migracao}),
+busca híbrida BM25 + denso com RRF (Seção~\ref{sec:hybrid}) e
+\textit{reranking} \textit{cross-encoder} mGTE (Seção~\ref{sec:rerank}).
+
+\textbf{Frente metodológica:}
+
+\begin{enumerate}[label=\textbf{TF\arabic*}, start=4]
+  \item \textbf{Piloto clínico com múltiplos profissionais de enfermagem} ---
+        com aprovação de Comitê de Ética em Pesquisa (CEP), permitindo
+        cálculo de concordância inter-avaliador (e.g., Kappa
+        \cite{landis1977}) e validação populacional do instrumento TAM-AIN
+        \cite{nursingTAM2024};
+  \item \textbf{Construção de \textit{benchmark} público em português} ---
+        consolidação do \textit{dataset} de 38 questões com revisão por painel
+        de especialistas, em formato compatível com avaliações futuras de
+        outros sistemas RAG clínicos em PT-BR.
+\end{enumerate}
+
+\textbf{Frente operacional:}
+
+\begin{enumerate}[label=\textbf{TF\arabic*}, start=6]
+  \item \textbf{Implantação institucional} --- servidor dedicado com HTTPS,
+        autenticação, \textit{logging} consciente de privacidade e Acordo de
+        Tratamento de Dados (DPA) com o operador do LLM, conforme discutido na
+        Seção~\ref{cap:discussao};
+  \item \textbf{Canais de acesso ampliados} --- integração com sistemas
+        existentes do SUS (e.g., e-SUS APS) e canal via WhatsApp Business API,
+        aderente à expectativa de uso real por enfermeiros em campo;
+  \item \textbf{Inferência local em \textit{hardware} dedicado} --- migração do
+        gerador para servidor com GPU própria, eliminando a transferência de
+        \textit{prompts} a operador externo e fechando integralmente o
+        \textit{loop} de conformidade LGPD descrito no
+        Capítulo~\ref{cap:discussao}.
+\end{enumerate}
+
+% ═════════════════════════════════════════════════════════════════════════════
+% ELEMENTOS PÓS-TEXTUAIS
+% ═════════════════════════════════════════════════════════════════════════════
+\postextual
+
+\bibliography{referencias}
+
+% ─── Apêndice A — System Prompt ──────────────────────────────────────────────
+\begin{apendicesenv}
+
+\partapendices
+
+\chapter{System Prompt de Produção (v1)}
+\label{ape:prompt}
+
+A versão~v1 do \textit{system prompt} foi a que produziu o melhor resultado de
+\textit{Faithfulness} entre as quatro testadas
+(v1~$=0{,}586$; v4~$=0{,}574$; v3~$=0{,}457$; v2~$=0{,}429$), e foi mantida como
+configuração de produção. As versões alternativas v2 e v3 introduziam restrições
+fortes (``EXCLUSIVAMENTE'', limite de quatro frases, citação obrigatória de
+documento e seção) que paradoxalmente reduziram a métrica RAGAS, pois levavam o
+modelo a fazer \textit{fallbacks} desnecessários ou a incluir referências
+explícitas a fontes que não constavam dos \textit{chunks} recuperados. A versão
+v4, baseada em \textit{few-shot} com dois exemplos autocontidos, ficou ligeiramente
+abaixo de v1. A análise detalhada dessas iterações consta no diário técnico do
+projeto.
+
+\begin{quote}
+\begin{small}
+\begin{verbatim}
+Você é um assistente clínico especializado nos protocolos do
+Ministério da Saúde para Infecção Latente pelo Mycobacterium
+tuberculosis (ILTB).
+
+Regras obrigatórias:
+1. Responda SOMENTE com base nos trechos de protocolo fornecidos
+   no contexto.
+2. Se a informação não estiver no contexto, diga: "Não encontrei
+   essa informação nos protocolos indexados. Consulte o Manual
+   de Recomendações do MS."
+3. Cite sempre a seção de origem da resposta.
+4. Não faça diagnósticos nem prescrições — apenas forneça
+   informação de protocolo.
+5. Use linguagem técnica adequada para enfermeiros.
+\end{verbatim}
+\end{small}
+\end{quote}
+
+O contexto recuperado pelo \textit{retriever} é injetado pelo \textit{user
+message}, não pelo \textit{system prompt}, conforme implementação em
+\texttt{app/src/llm/client.py}. Os \textit{chunks} são apresentados ao modelo na
+ordem decrescente de similaridade cossenoidal, com identificador de fonte
+(documento e cadeia de cabeçalhos) anexado a cada um.
+de demonstração.}
+
+% ─── Apêndice B — Dataset de Avaliação ───────────────────────────────────────
+\chapter{Dataset de Avaliação RAGAS}
+\label{ape:dataset}
+
+O \textit{dataset} de avaliação contém 42 questões (38 \textit{in-scope} + 4
+\textit{out-of-scope}), com \textit{ground truths} extraídos verbatim dos
+arquivos Markdown indexados a partir dos protocolos do MS e da OMS. A tabela
+abaixo lista todas as questões, agrupadas por categoria
+(ET, IND, PE, DI, MO, IT, EA, FE).
+
+{\footnotesize
+\begin{longtable}{@{}p{1.4cm}@{\hspace{1mm}}p{0.7cm}@{\hspace{1mm}}p{4.5cm}p{6.5cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Cat.} & \textbf{Pergunta} & \textbf{\textit{Ground truth}} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\textit{(continuação da Tabela do Apêndice~\ref{ape:dataset})}} \\
+\toprule
+\textbf{ID} & \textbf{Cat.} & \textbf{Pergunta} & \textbf{\textit{Ground truth}} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{Continua na próxima página}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\input{_dataset_rows.tex}
+\end{longtable}
+}
+
+\end{apendicesenv}
+
+\end{document}

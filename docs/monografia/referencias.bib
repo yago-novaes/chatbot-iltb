@@ -1,0 +1,540 @@
+% ─────────────────────────────────────────────────────────────────────────────
+%  Referências bibliográficas — TCC Chatbot ILTB
+%  Yago Novaes Neves / LabPEC / UFES
+%  Última atualização: maio 2026
+% ─────────────────────────────────────────────────────────────────────────────
+
+% ─── RAG ─────────────────────────────────────────────────────────────────────
+
+@inproceedings{lewis2021,
+  author    = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and
+               Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and
+               K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and
+               Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
+  title     = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2021},
+  volume    = {34},
+  note      = {arXiv:2005.11401}
+}
+
+@article{gao2024,
+  author  = {Gao, Yunfan and Xiong, Yun and Gao, Xinyu and Jia, Kangxiang and
+             Pan, Jinliu and Bi, Yuxi and Dai, Yi and Sun, Jiawei and
+             Wang, Meng and Wang, Haofen},
+  title   = {Retrieval-Augmented Generation for Large Language Models: A Survey},
+  journal = {arXiv preprint},
+  year    = {2024},
+  note    = {arXiv:2312.10997v5}
+}
+
+@article{advancedChunkingRAG2025,
+  author  = {Yepes, Antonio Jimeno and You, Yiwen and Slaughter, Jan and
+             Tyagi, Ashok},
+  title   = {Financial Report Chunking for Effective Retrieval Augmented
+             Generation},
+  journal = {arXiv preprint},
+  year    = {2025},
+  note    = {arXiv:2504.19754. Avaliação de estratégias avançadas de chunking
+             para RAG.}
+}
+
+% ─── Avaliação RAG ───────────────────────────────────────────────────────────
+
+@inproceedings{es2024,
+  author    = {Es, Shahul and James, Jithin and Espinosa-Anke, Luis and
+               Schockaert, Steven},
+  title     = {{RAGAS}: Automated Evaluation of Retrieval Augmented Generation},
+  booktitle = {Proceedings of the 18th Conference of the European Chapter of
+               the Association for Computational Linguistics (EACL)},
+  year      = {2024},
+  note      = {arXiv:2309.15217}
+}
+
+@inproceedings{lin2022truthfulqa,
+  author    = {Lin, Stephanie and Hilton, Jacob and Evans, Owain},
+  title     = {{TruthfulQA}: Measuring How Models Mimic Human Falsehoods},
+  booktitle = {Proceedings of the 60th Annual Meeting of the Association for
+               Computational Linguistics (ACL)},
+  year      = {2022},
+  pages     = {3214--3252},
+  note      = {arXiv:2109.07958. Benchmark de veracidade com 817 quest{\~o}es
+               em 38 categorias (sa{\'u}de, direito, finan{\c c}as, pol{\'i}tica);
+               GPT-3 acerta apenas 58\% contra 94\% humano.}
+}
+
+@article{gallifant2025tripod,
+  author  = {Gallifant, Jack and Afshar, Majid and Ameen, Saleem and
+             Aphinyanaphongs, Yindalon and Chen, Shan and others},
+  title   = {The {TRIPOD-LLM} reporting guideline for studies using large
+             language models},
+  journal = {Nature Medicine},
+  year    = {2025},
+  note    = {DOI: 10.1038/s41591-024-03425-5. Extens{\~a}o do TRIPOD para
+             estudos cl{\'i}nicos com LLMs; cobre relato de avalia{\c c}{\~a}o,
+             abla{\c c}{\~o}es, vi{\'e}s e seguran{\c c}a.}
+}
+
+@article{zakka2024almanac,
+  author  = {Zakka, Cyril and Shad, Rohan and Chaurasia, Akash and
+             Dalal, Alex R. and Kim, Jennifer L. and others},
+  title   = {Almanac --- Retrieval-Augmented Language Models for
+             Clinical Medicine},
+  journal = {NEJM AI},
+  year    = {2024},
+  note    = {DOI: 10.1056/aioa2300068. Sistema RAG cl{\'i}nico com
+             salvaguardas de seguran{\c c}a e cita{\c c}{\~o}es expl{\'i}citas;
+             demonstra ganhos em accuracy/factuality vs LLM puro em
+             quest{\~o}es cl{\'i}nicas reais.}
+}
+
+@inproceedings{wang2024bestpractices,
+  author    = {Wang, Xiaohua and Wang, Zhenhua and Gao, Xuan and
+               Zhang, Feiran and Wu, Yixin and Xu, Zhibo and Shi, Tianyuan
+               and Wang, Zhengyuan and Li, Shizheng and Qian, Qi and
+               Yin, Ruicheng and Lv, Changze and Zheng, Xiaoqing and
+               Huang, Xuanjing},
+  title     = {Searching for Best Practices in Retrieval-Augmented Generation},
+  booktitle = {Proceedings of the 2024 Conference on Empirical Methods in
+               Natural Language Processing (EMNLP)},
+  year      = {2024},
+  note      = {DOI: 10.18653/v1/2024.emnlp-main.981. Estudo emp{\'i}rico
+               sistem{\'a}tico de pr{\'a}ticas em RAG --- avalia chunk size,
+               busca h{\'i}brida (BM25+dense), \textit{reranking}
+               cross-encoder e fus{\~a}o de evid{\^e}ncias; recomenda
+               pipeline reorganizado para maximizar precis{\~a}o.}
+}
+
+@article{jeong2024selfbiorag,
+  author  = {Jeong, Minbyul and Sohn, Jiwoong and Sung, Mujeen and
+             Kang, Jaewoo},
+  title   = {Improving medical reasoning through retrieval and self-reflection
+             with retrieval-augmented large language models},
+  journal = {Bioinformatics},
+  year    = {2024},
+  note    = {DOI: 10.1093/bioinformatics/btae238. Self-BioRAG ---
+             aplica\c c\~ao do paradigma Self-RAG ao dom{\'i}nio biom{\'e}dico,
+             com critic step que decide quando recuperar e quando recusar.
+             Reduz alucina{\c c}{\~o}es em \textit{long-form} biom{\'e}dico.}
+}
+
+@article{huang2023halucination,
+  author  = {Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Wei-Hong
+             and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and
+             Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
+  title   = {A Survey on Hallucination in Large Language Models: Principles,
+             Taxonomy, Challenges, and Open Questions},
+  journal = {arXiv preprint},
+  year    = {2023},
+  note    = {arXiv:2311.05232. Taxonomia abrangente de alucina\c c\~oes em
+             LLMs: distin\c c\~ao entre alucina\c c\~ao intr{\'i}nseca e
+             extr{\'i}nseca, modos de falha em \textit{retrieval-augmented}, e
+             cat{\'a}logo de t{\'e}cnicas de mitiga\c c\~ao.}
+}
+
+@inproceedings{zhang2024mgte,
+  author    = {Zhang, Xin and Zhang, Yanzhao and Long, Dingkun and
+               Xie, Wen and Dai, Ziqi and Tang, Jialong and Lin, Huan and
+               Yang, Baosong and Xie, Pengjun and Huang, Fei and
+               Zhang, Meishan and Li, Wenjie and Zhang, Min},
+  title     = {{mGTE}: Generalized Long-Context Text Representation and
+               Reranking Models for Multilingual Text Retrieval},
+  booktitle = {Proceedings of the 2024 Conference on Empirical Methods
+               in Natural Language Processing: Industry Track (EMNLP-Industry)},
+  year      = {2024},
+  note      = {DOI: 10.18653/v1/2024.emnlp-industry.103. Cross-encoder
+               multil{\'i}ngue para \textit{reranking} de candidatos densos;
+               compat{\'i}vel com retrievers tipo BGE-M3 em pipelines
+               de duas etapas (\textit{retrieve} $\rightarrow$ \textit{rerank}).}
+}
+
+% ─── Embeddings ──────────────────────────────────────────────────────────────
+
+@inproceedings{reimers2019,
+  author    = {Reimers, Nils and Gurevych, Iryna},
+  title     = {Sentence-{BERT}: Sentence Embeddings using Siamese
+               {BERT}-Networks},
+  booktitle = {Proceedings of the 2019 Conference on Empirical Methods in
+               Natural Language Processing (EMNLP)},
+  year      = {2019},
+  note      = {arXiv:1908.10084}
+}
+
+@misc{boykis2024,
+  author = {Boykis, Vicki},
+  title  = {What are embeddings},
+  year   = {2024},
+  note   = {Survey sobre fundamentos de embeddings em aprendizado de m{\'a}quina}
+}
+
+@article{mmteb2025,
+  author  = {Enevoldsen, Kenneth and others},
+  title   = {{MMTEB}: Massive Multilingual Text Embedding Benchmark},
+  journal = {arXiv preprint},
+  year    = {2025},
+  note    = {arXiv:2502.13595}
+}
+
+@article{marone2025mmbert,
+  author  = {Marone, Marc and Weller, Orion and Fleshman, William and
+             Yang, Eugene and Lawrie, Dawn},
+  title   = {{mmBERT}: A Modern Multilingual Encoder with Annealed Language
+             Learning},
+  journal = {arXiv preprint},
+  year    = {2025},
+  note    = {arXiv:2509.06888. Encoder multilingue pr{\'e}-treinado em 3T
+             tokens cobrindo 1800+ idiomas; estado da arte em portugu{\^e}s
+             para tarefas de NER cl{\'i}nico segundo {\textit{benchmark}}
+             SemClinBr.}
+}
+
+@article{generalistEmbeddingsClinical2024,
+  author  = {Sivarajkumar, Sonish and Kelley, Mark and Samolyk-Mazzanti, Alyssa
+             and Visweswaran, Shyam and Wang, Yanshan},
+  title   = {An Empirical Evaluation of Prompting Strategies for Large Language
+             Models in Zero-Shot Clinical Natural Language Processing:
+             {ChatGPT} and Beyond},
+  journal = {arXiv preprint},
+  year    = {2024},
+  note    = {arXiv:2401.01943. Avalia embeddings generalistas para busca
+             sem{\^a}ntica cl{\'i}nica.}
+}
+
+% ─── NLP Cl{\'i}nico Portugu{\^e}s ──────────────────────────────────────────
+
+@inproceedings{biobertpt2020,
+  author    = {Schneider, Elisa Terumi Rubel and de Souza, Jo{\~a}o Vitor Andrioli
+               and Knafou, Julien and de Lima, Jo{\~a}o Ricardo Nickenig and
+               Rodrigues, Lucas Emanuel Silva and de Oliveira, Lucas Ferro
+               Antunes and Copara, Jenny and Lopes, C{\'e}sar Teixeira and
+               Kern, Roman and Nunes, Maria das Gra{\c c}as Volpe and
+               Teodoro, Douglas},
+  title     = {{BioBERTpt} --- A Portuguese Neural Language Model for Clinical
+               Named Entity Recognition},
+  booktitle = {Proceedings of the 3rd Clinical Natural Language Processing
+               Workshop (ClinicalNLP 2020)},
+  year      = {2020},
+  pages     = {65--72},
+  note      = {Modelo BERT treinado em corpus biom{\'e}dico portugu{\^e}s}
+}
+
+@article{clinicalNERPortuguese2026,
+  author  = {Pissarra, Gustavo and others},
+  title   = {A Benchmark for Clinical Named Entity Recognition in Portuguese},
+  journal = {arXiv preprint},
+  year    = {2026},
+  note    = {arXiv:2603.26510}
+}
+
+% ─── LLMs Portugu{\^e}s / Sa{\'u}de Brasileira ───────────────────────────────
+
+@article{sabia2_2024,
+  author  = {Pires, Ramon and Abonizio, Hugo and Almeida, Thales Sales and
+             Nogueira, Rodrigo},
+  title   = {Sabi{\'a}-2: A New Generation of {P}ortuguese Large Language Models},
+  journal = {arXiv preprint},
+  year    = {2024},
+  note    = {arXiv:2403.09887}
+}
+
+@article{adaptingLLMsPortuguese2024,
+  author  = {Pires, Ramon and Fonseca, Erick and Moniz, Helena and
+             Nogueira, Rodrigo},
+  title   = {Adapting Large Language Models for {B}razilian Medical Text},
+  journal = {arXiv preprint},
+  year    = {2024},
+  note    = {arXiv:2410.00163}
+}
+
+@article{teachingLLMsBrazil2026,
+  author  = {Almeida, Thales Sales and others},
+  title   = {Teaching Large Language Models to Reason in {B}razilian Healthcare},
+  journal = {arXiv preprint},
+  year    = {2026},
+  note    = {arXiv:2605.01077}
+}
+
+@inproceedings{llmsMedicalExam2026,
+  author    = {Correia, Jo{\~a}o Vitor Mariano and de Castro, Pedro Henrique Alves
+               and Garcia, Gabriel Lino and Paiola, Pedro Henrique and
+               Papa, Jo{\~a}o Paulo},
+  title     = {Class of {LLMs}: Benchmarking Large Language Models on the
+               {B}razilian National Medical Examination},
+  booktitle = {Proceedings of the 17th International Conference on Computational
+               Processing of Portuguese (PROPOR 2026), Volume 2},
+  year      = {2026},
+  pages     = {101--111},
+  note      = {ACL Anthology ID: 2026.propor-2.17}
+}
+
+% ─── LLMs gerais ─────────────────────────────────────────────────────────────
+
+@article{dubey2024,
+  author  = {Dubey, Abhimanyu and others},
+  title   = {The {Llama} 3 Herd of Models},
+  journal = {arXiv preprint},
+  year    = {2024},
+  note    = {arXiv:2407.21783}
+}
+
+@article{brown2020,
+  author  = {Brown, Tom and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie
+             and Kaplan, Jared D. and Dhariwal, Prafulla and Neelakantan, Arvind
+             and Shyam, Pranav and Sastry, Girish and Askell, Amanda and others},
+  title   = {Language Models are Few-Shot Learners},
+  journal = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year    = {2020},
+  volume  = {33},
+  pages   = {1877--1901},
+  note    = {arXiv:2005.14165}
+}
+
+@article{bang2023,
+  author  = {Bang, Yejin and Cahyawijaya, Samuel and Lee, Nayeon and
+             Dai, Wenliang and Su, Dan and Wilie, Bryan and Lovenia, Holy and
+             Ji, Ziwei and Yu, Tiezheng and Chung, Willy and Do, Quyet V. and
+             Xu, Yan and Fung, Pascale},
+  title   = {A Multitask, Multilingual, Multimodal Evaluation of {ChatGPT}
+             on Reasoning, Hallucination, and Interactivity},
+  journal = {arXiv preprint},
+  year    = {2023},
+  note    = {arXiv:2302.04023}
+}
+
+% ─── Privacidade / LGPD ──────────────────────────────────────────────────────
+
+@article{privacyRAGHealthcare2025,
+  author  = {Ayub, Mohsin and Adekoya, Adewale and Williams, LaRon},
+  title   = {Privacy-Preserving Retrieval-Augmented Generation with Differential
+             Privacy in Healthcare Chatbots},
+  journal = {arXiv preprint},
+  year    = {2025},
+  note    = {arXiv:2511.11347}
+}
+
+@article{sokPrivacyLLM2026,
+  author  = {Pal, Ananya and Gupta, Abhishek and others},
+  title   = {{SoK}: Privacy and Security Risks in Large Language Models
+             for Healthcare Applications},
+  journal = {arXiv preprint},
+  year    = {2026},
+  note    = {arXiv:2601.10004}
+}
+
+@article{privacyEHRLLMs2025,
+  author  = {Sallam, Malik and Barakat, Mohammad and Sallam, Mohammed},
+  title   = {Privacy, Ethics and Governance of Large Language Models in
+             Electronic Health Record Research: A Narrative Review},
+  journal = {npj Digital Medicine},
+  year    = {2025},
+  note    = {Nature npj Digital Medicine. Ver arquivo 2025-nature-npj-privacy-ehr-llms.pdf.}
+}
+
+@article{lgpdSaude2023,
+  author  = {Gon{\c c}alo, Wemerson and de Souza, Maria Clara and
+             dos Santos, Wellington Pinheiro and
+             de Oliveira, F{\'a}bio Henrique Cavalcanti},
+  title   = {Abordagens regulat{\'o}rias na prote{\c c}{\~a}o de dados em
+             sa{\'u}de: uma revis{\~a}o integrativa de 2018 a 2023},
+  journal = {Physis: Revista de Sa{\'u}de Coletiva},
+  year    = {2025},
+  volume  = {35},
+  number  = {01},
+  pages   = {e350113},
+  note    = {DOI: 10.1590/S0103-73312025350113pt. Chave \texttt{lgpdSaude2023}
+             mantida por compatibilidade; ano correto da publica{\c c}{\~a}o
+             {\'e} 2025.}
+}
+
+@article{lgpdEnfermagem2022,
+  author  = {Weston, Fernanda Cirne Lima and
+             Paglioli, Ana Carolina Ballesteiros and
+             Mesquita, M{\^o}nica Weston},
+  title   = {General Law on Personal Data Protection and applicability to
+             Nursing},
+  journal = {Revista Brasileira de Enfermagem (REBEn)},
+  year    = {2023},
+  volume  = {76},
+  number  = {Suppl 3},
+  pages   = {e20230126},
+  note    = {DOI: 10.1590/0034-7167-2023-0126. Chave \texttt{lgpdEnfermagem2022}
+             mantida por compatibilidade; ano correto da publica{\c c}{\~a}o
+             {\'e} 2023.}
+}
+
+% ─── Adoção de IA em Sa{\'u}de (TAM) ─────────────────────────────────────────
+
+@article{nursingTAM2024,
+  author  = {Yilmaz, Filiz Kantek and Guner, Ceren Kaya},
+  title   = {Nurses' Acceptance of Artificial Intelligence-Based Applications:
+             A Pilot Study Using the Technology Acceptance Model},
+  journal = {BMC Nursing},
+  year    = {2024},
+  note    = {Ver arquivo 2024-bmc-nursing-ai-adoption-tam-nurses.pdf.}
+}
+
+% ─── Sistemas de Apoio à Decis{\~a}o Cl{\'i}nica / Inform{\'a}tica em Sa{\'u}de
+
+@inproceedings{SHTI2023,
+  author    = {Bossenz, Jan and G{\"u}nzl, Carlo and Berns, Fabian and
+               Weise, Annemarie and J{\"a}ger, Christian and Kirchhoff, Jan and
+               Christoph, Jan and Demus, Christoph},
+  title     = {Evaluation of Chunking and Embedding Strategies for Local
+               Document Retrieval Using an Open-Source {LLM} in a Hospital},
+  booktitle = {German Medical Data Sciences 2025: GMDS Illuminates Health
+               (Studies in Health Technology and Informatics)},
+  publisher = {IOS Press},
+  year      = {2025},
+  volume    = {331},
+  pages     = {91--100},
+  note      = {DOI: 10.3233/SHTI251383. Chave \texttt{SHTI2023} mantida por
+               compatibilidade; ano correto {\'e} 2025.}
+}
+
+@article{ocaf2024,
+  author  = {Liu, Siru and McCoy, Allison B. and Wright, Adam},
+  title   = {Improving large language model applications in biomedicine with
+             retrieval-augmented generation: a systematic review, meta-analysis,
+             and clinical development guidelines},
+  journal = {Journal of the American Medical Informatics Association (JAMIA)},
+  year    = {2025},
+  volume  = {32},
+  number  = {4},
+  pages   = {605--615},
+  note    = {DOI: 10.1093/jamia/ocaf008. Chave \texttt{ocaf2024} mantida por
+             compatibilidade; ano correto {\'e} 2025.}
+}
+
+% ─── Busca h{\'i}brida ────────────────────────────────────────────────────────
+
+@inproceedings{cormack2009,
+  author    = {Cormack, Gordon V. and Clarke, Charles L. A. and
+               B{\"u}ttcher, Stefan},
+  title     = {Reciprocal Rank Fusion Outperforms {Condorcet} and Individual
+               Rank Learning Methods},
+  booktitle = {Proceedings of the 32nd International ACM SIGIR Conference},
+  year      = {2009},
+  pages     = {758--759}
+}
+
+@inproceedings{formal2021,
+  author    = {Formal, Thibault and Piwowarski, Benjamin and
+               Clinchant, St{\'e}phane},
+  title     = {{SPLADE}: Sparse Lexical and Expansion Model for First Stage
+               Ranking},
+  booktitle = {Proceedings of the 44th International ACM SIGIR Conference},
+  year      = {2021},
+  note      = {arXiv:2107.05720}
+}
+
+@inproceedings{khattab2020,
+  author    = {Khattab, Omar and Zaharia, Matei},
+  title     = {{ColBERT}: Efficient and Effective Passage Search via
+               Contextualized Late Interaction over {BERT}},
+  booktitle = {Proceedings of the 43rd International ACM SIGIR Conference},
+  year      = {2020},
+  note      = {arXiv:2004.12832}
+}
+
+% ─── Vector Store ─────────────────────────────────────────────────────────────
+
+@article{malkov2016,
+  author  = {Malkov, Yu A. and Yashunin, D. A.},
+  title   = {Efficient and robust approximate nearest neighbor search using
+             Hierarchical Navigable Small World graphs},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year    = {2018},
+  volume  = {42},
+  number  = {4},
+  pages   = {824--836},
+  note    = {arXiv:1603.09320}
+}
+
+@misc{chroma2024,
+  author       = {{Chroma}},
+  title        = {Chroma: The {AI}-Native Open-Source Embedding Database},
+  year         = {2024},
+  howpublished = {\url{https://github.com/chroma-core/chroma}},
+  note         = {Vers{\~a}o 1.0+ utilizada no projeto. Banco vetorial
+                  \textit{open-source} com {\'i}ndice HNSW embarcado,
+                  persist{\^e}ncia em disco e API Python nativa.}
+}
+
+% ─── Metodologia ─────────────────────────────────────────────────────────────
+
+@article{peffers2007,
+  author  = {Peffers, Ken and Tuunanen, Tuure and Rothenberger, Marcus A. and
+             Chatterjee, Samir},
+  title   = {A Design Science Research Methodology for Information Systems
+             Research},
+  journal = {Journal of Management Information Systems},
+  year    = {2007},
+  volume  = {24},
+  number  = {3},
+  pages   = {45--77}
+}
+
+% ─── Avalia{\c c}{\~a}o de usabilidade ──────────────────────────────────────
+
+@incollection{brooke1996,
+  author    = {Brooke, John},
+  title     = {{SUS}: A quick and dirty usability scale},
+  booktitle = {Usability Evaluation in Industry},
+  editor    = {Jordan, Patrick W. and Thomas, B. and Weerdmeester, Bernard A.
+               and McClelland, Ian},
+  publisher = {Taylor \& Francis},
+  year      = {1996},
+  pages     = {189--194}
+}
+
+@article{landis1977,
+  author  = {Landis, J. Richard and Koch, Gary G.},
+  title   = {The Measurement of Observer Agreement for Categorical Data},
+  journal = {Biometrics},
+  year    = {1977},
+  volume  = {33},
+  number  = {1},
+  pages   = {159--174}
+}
+
+% ─── Epidemiologia TB/ILTB ───────────────────────────────────────────────────
+
+@techreport{who2023,
+  author      = {{World Health Organization}},
+  title       = {Global Tuberculosis Report 2023},
+  institution = {WHO},
+  year        = {2023},
+  address     = {Gen{\`e}ve}
+}
+
+@techreport{who2018,
+  author      = {{World Health Organization}},
+  title       = {Latent Tuberculosis Infection: Updated and Consolidated
+                 Guidelines for Programmatic Management},
+  institution = {WHO},
+  year        = {2018},
+  address     = {Gen{\`e}ve}
+}
+
+@techreport{brasil2022,
+  author      = {{Minist{\'e}rio da Sa{\'u}de do Brasil}},
+  title       = {Manual de Recomenda{\c c}{\~o}es para o Controle da
+                 Tuberculose no Brasil},
+  institution = {Secretaria de Vigil{\^a}ncia em Sa{\'u}de},
+  year        = {2022},
+  address     = {Bras{\'i}lia}
+}
+
+@article{artigo_perfil,
+  author  = {Mello, Iler Oliveira de and Faria, Napoliana Vagmaker and
+             de Souza, Anelise Andrade and Gradella, D{\'e}bora Barreto Teresa},
+  title   = {Perfil de incid{\^e}ncia de tuberculose nos munic{\'i}pios do estado
+             do Esp{\'i}rito Santo, Brasil, 2015--2020},
+  journal = {Health and Biosciences},
+  year    = {2023},
+  volume  = {4},
+  number  = {1},
+  pages   = {18--42},
+  note    = {DOI: 10.47456/hb.v4i1.39936. UFES --- Universidade Federal do
+             Esp{\'i}rito Santo.}
+}
