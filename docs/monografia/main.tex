@@ -37,6 +37,8 @@
 \usepackage{threeparttable}
 \usepackage{enumitem}
 \usepackage{xspace}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
 \usepackage{newfloat}
 \DeclareFloatingEnvironment[
   name={Quadro},
@@ -155,40 +157,50 @@
 % ─── Resumo em português ─────────────────────────────────────────────────────
 \begin{resumo}
 
-\aluno{Escrever resumo informativo (150--500 palavras): contextualização, justificativa,
-objetivo, metodologia (DSRM), principais resultados (RAGAS gate final:
-\emph{context precision} 0,964 PASS robusto; \emph{faithfulness} 0,761,
-interpretada à luz do paradoxo abstrativo-vs-conservador observado na ablação
-$2\times2$), avaliação expert e conclusão.}
-
-A Infecção Latente por \textit{Mycobacterium tuberculosis} (ILTB) representa um
-desafio persistente para a saúde pública, com risco de progressão para tuberculose
-ativa em grupos vulneráveis. Profissionais de enfermagem atuam na linha de frente do
-rastreamento e tratamento da ILTB, mas frequentemente enfrentam lacunas no acesso a
-informações clínicas atualizadas durante o atendimento. Este trabalho propõe,
-desenvolve e avalia um chatbot de apoio clínico baseado na arquitetura de
-Recuperação com Geração Aumentada (RAG), capaz de responder a perguntas sobre o
-manejo da ILTB a partir de documentos oficiais do Ministério da Saúde e da
-Organização Mundial da Saúde. Seguindo a \textit{Design Science Research
-Methodology} (DSRM), o artefato foi construído com FastAPI, ChromaDB, embedding
-multilíngue \texttt{BAAI/bge-m3} (1024D), busca híbrida BM25+denso com
-\textit{Reciprocal Rank Fusion}, reranking cross-encoder mGTE
-e o modelo de linguagem Llama~3.3~70B via API Groq. A avaliação automatizada
-com o framework RAGAS, conduzida sobre 38 questões clínicas, obteve no
-gate final \textit{context precision} de $0{,}956 \pm 0{,}009$ (3 seeds) ---
-\emph{PASS robusto} sobre a meta de $0{,}75$ e principal indicador de qualidade
-da etapa de recuperação. A métrica de \textit{faithfulness} atingiu
-$0{,}752 \pm 0{,}004$ (a $\sim 0{,}048$ da meta original de $0{,}80$),
-interpretada à luz do achado paradoxal de que
-modelos mais conservadores (e.g., GPT-4o) pontuam \emph{pior} nessa métrica
-por aderirem mais à instrução de fallback --- limitação intrínseca do
-RAGAS para o cenário clínico, discutida no Capítulo~\ref{cap:discussao}.
-\textbf{A avaliação qualitativa com especialista (OE4) está protocolada
-(Capítulo~\ref{cap:avaliacao}, Apêndice de TCLE) e prevista para execução
-no período de defesa; seus resultados serão integrados em versão
-pós-defesa.}
-\aluno{Completar com resultado da avaliação expert e conclusão principal
-após a execução da Seção~\ref{sec:sessao-expert}.}
+A Infecção Latente por \textit{Mycobacterium tuberculosis} (ILTB) é um
+desafio persistente para a saúde pública: cerca de um quarto da população
+mundial está infectada, e o controle da progressão para tuberculose ativa
+em grupos vulneráveis é estratégico para a eliminação da TB como problema
+sanitário. Profissionais de enfermagem atuam na linha de frente do
+rastreamento e tratamento da ILTB, mas enfrentam protocolos extensos e
+periodicamente atualizados, nem sempre de fácil consulta durante o
+atendimento. Este trabalho propõe, desenvolve e avalia um \textit{chatbot}
+de apoio clínico baseado na arquitetura de Recuperação com Geração
+Aumentada (RAG), capaz de responder a perguntas sobre o manejo da ILTB a
+partir de documentos oficiais do Ministério da Saúde e da Organização
+Mundial da Saúde, em português brasileiro. Seguindo a metodologia
+\textit{Design Science Research Methodology} (DSRM), o artefato foi
+construído como aplicação \texttt{FastAPI} com banco de vetores
+\texttt{ChromaDB}, \textit{embedding} multilíngue \texttt{BAAI/bge-m3}
+(1024 dimensões), busca híbrida BM25+denso com \textit{Reciprocal Rank
+Fusion}, reranking \textit{cross-encoder} mGTE e modelo gerador Llama 3.3
+70B acessado via API Groq sem retenção de \textit{prompts}. A avaliação
+automatizada com o \textit{framework} RAGAS foi conduzida sobre 38
+questões clínicas em sete categorias temáticas, replicada em três
+\textit{seeds} independentes por configuração. O gate final atingiu
+\textit{context precision} de $0{,}956 \pm 0{,}009$ (PASS robusto sobre a
+meta de $0{,}75$, com margem absoluta de $+0{,}206$) e
+\textit{faithfulness} de $0{,}752 \pm 0{,}004$, próximo do teto comum
+reportado pela literatura de RAG clínico ($\sim 0{,}75$). Uma ablação
+$2 \times 2$ cruzando gerador (Llama \textit{vs.} GPT-4o) e
+\textit{embedding} (MiniLM 384D \textit{vs.} BGE-M3 1024D) identificou o
+\textit{embedding} como variável dominante e revelou um achado paradoxal:
+modelos mais aderentes a instruções de \textit{fallback} (GPT-4o) pontuam
+\emph{pior} em \textit{faithfulness}, indicando que a métrica RAGAS
+penaliza abstenção cautelosa --- comportamento desejável em apoio
+clínico. Por essa razão, adota-se \textit{Context Precision} como
+indicador-síntese do gate final, e \textit{Faithfulness} como métrica
+auxiliar lida em conjunto com a discussão do paradoxo. \textbf{A
+avaliação qualitativa com especialista (OE4) está protocolada e prevista
+para execução no período de defesa; seus resultados serão integrados em
+versão pós-defesa.} As principais contribuições do trabalho são: (i) um
+artefato RAG aberto para ILTB em português, com código-fonte disponível;
+(ii) um \textit{dataset} de avaliação clínica de 38 questões com
+\textit{ground truths} extraídos verbatim dos protocolos; (iii) análise
+empírica do \textit{trade-off} entre conformidade com a LGPD e desempenho
+de recuperação; e (iv) um protocolo de avaliação multidimensional para
+RAG clínico com $N$ reduzido de avaliadores, combinando RAGAS, rubrica
+clínica e entrevista pelas dimensões do TAM-AIN.
 
 \vspace{\onelineskip}
 \noindent\textbf{Palavras-chave:} tuberculose latente; ILTB; chatbot clínico;
@@ -200,7 +212,48 @@ LGPD.
 \begin{resumo}[Abstract]
 \begin{otherlanguage*}{english}
 
-\aluno{Traduzir resumo para inglês após versão portuguesa finalizada.}
+Latent tuberculosis infection (LTBI) is a persistent public-health
+challenge: about one quarter of the global population is infected, and
+preventing progression to active TB in vulnerable groups is strategic for
+disease elimination. Nursing professionals lead LTBI screening and
+treatment, yet must navigate long, periodically updated protocols that
+are not always easy to consult bedside. This work proposes, develops, and
+evaluates a clinical support chatbot based on Retrieval-Augmented
+Generation (RAG) for LTBI management, grounded in official documents
+from the Brazilian Ministry of Health and the World Health Organization,
+in Brazilian Portuguese. Following the Design Science Research
+Methodology (DSRM), the artifact was built as a \texttt{FastAPI} web
+application with a \texttt{ChromaDB} vector store, multilingual
+\texttt{BAAI/bge-m3} embeddings (1024 dimensions), hybrid BM25+dense
+retrieval with Reciprocal Rank Fusion, mGTE cross-encoder reranking, and
+the Llama 3.3 70B language model accessed via the Groq API under a
+no-prompt-retention policy. Automated evaluation using the RAGAS
+framework was performed over 38 clinical questions in seven thematic
+categories, replicated across three independent seeds per configuration.
+The final gate achieved \textit{context precision} of $0.956 \pm 0.009$
+(robust PASS over the $0.75$ target, absolute margin of $+0.206$) and
+\textit{faithfulness} of $0.752 \pm 0.004$, near the common ceiling
+reported for clinical RAG without self-reflection ($\sim 0.75$). A
+$2 \times 2$ ablation crossing generator (Llama \textit{vs.} GPT-4o) and
+embedding (MiniLM 384D \textit{vs.} BGE-M3 1024D) identified the
+embedding as the dominant variable and revealed a paradoxical finding:
+models more compliant with instructions to \textit{fallback} (GPT-4o)
+score \emph{worse} on faithfulness, indicating that RAGAS penalizes
+cautious abstention --- a desirable behaviour in clinical support. For
+this reason, \textit{Context Precision} is adopted as the headline
+indicator of the final gate, while \textit{Faithfulness} is read jointly
+with the discussion of the paradox. \textbf{Qualitative evaluation with a
+domain specialist (specific objective OE4) is protocolled and scheduled
+for the defence period; results will be integrated in a post-defence
+version of this monograph.} The main contributions are: (i) an open RAG
+artifact for LTBI in Portuguese, with public source code; (ii) a clinical
+evaluation \textit{dataset} of 38 questions with ground truths extracted
+verbatim from official protocols; (iii) an empirical analysis of the
+trade-off between Brazilian data-protection compliance and retrieval
+performance; and (iv) a multidimensional evaluation protocol for
+clinical RAG with small evaluator samples, combining RAGAS, a clinical
+rubric, and a semi-structured interview organized along the TAM-AIN
+dimensions.
 
 \vspace{\onelineskip}
 \noindent\textbf{Keywords:} latent tuberculosis infection; LTBI; clinical chatbot;
@@ -655,15 +708,61 @@ Este trabalho adota a \textit{Design Science Research Methodology} (DSRM)
 orientada à construção de artefatos. O DSRM estrutura a pesquisa em seis atividades
 iterativas, conforme a Figura~\ref{fig:dsrm}.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \centering
-  \begin{minipage}{0.9\textwidth}
-    \caption{Processo DSRM aplicado ao desenvolvimento do chatbot ILTB}
-    \label{fig:dsrm}
-    % \includegraphics[width=\textwidth]{fig/dsrm}
-    \aluno{Inserir diagrama DSRM com 6 etapas e iterações}
-    \caption*{Fonte: Adaptado de \citeauthor{peffers2007} (\citeyear{peffers2007}).}
-  \end{minipage}
+  \caption{Processo DSRM aplicado ao desenvolvimento do chatbot ILTB}
+  \label{fig:dsrm}
+  \vspace{0.3em}
+  \begin{tikzpicture}[
+    node distance=0.6cm and 0.7cm,
+    every node/.style={font=\footnotesize},
+    stage/.style={
+      rectangle, rounded corners=4pt, draw=black!75, thick,
+      fill=blue!5, minimum width=2.6cm, minimum height=1.1cm,
+      align=center, inner sep=4pt,
+    },
+    output/.style={
+      rectangle, draw=black!50, dashed, fill=gray!5,
+      minimum width=2.6cm, minimum height=0.7cm,
+      align=center, inner sep=3pt, font=\scriptsize\itshape,
+    },
+    arrow/.style={-{Latex[length=2.2mm]}, thick, black!70},
+    feedback/.style={-{Latex[length=2.2mm]}, thick, black!50, dashed},
+  ]
+    % Linha 1: etapas 1, 2, 3
+    \node[stage] (s1) {1. Identificação\\do Problema\\e Motivação};
+    \node[stage, right=of s1] (s2) {2. Definição\\dos Objetivos\\da Solução};
+    \node[stage, right=of s2] (s3) {3. Design e\\Desenvolvimento\\do Artefato};
+
+    % Linha 2: etapas 6, 5, 4 (invertida para retorno em U)
+    \node[stage, below=1.4cm of s3] (s4) {4. Demonstração\\do Artefato};
+    \node[stage, left=of s4] (s5) {5. Avaliação\\(RAGAS + Expert)};
+    \node[stage, left=of s5] (s6) {6. Comunicação\\(Monografia +\\Repositório)};
+
+    % Setas principais (fluxo)
+    \draw[arrow] (s1) -- (s2);
+    \draw[arrow] (s2) -- (s3);
+    \draw[arrow] (s3) -- (s4);
+    \draw[arrow] (s4) -- (s5);
+    \draw[arrow] (s5) -- (s6);
+
+    % Iteração: avaliação volta para design
+    \draw[feedback]
+      (s5.north) ++(0,0.15)
+      -- ++(0,0.4)
+      -| node[pos=0.25, above, font=\scriptsize\itshape] {iteração (C3--C5)}
+      ($(s3.south) + (0.6,0)$);
+
+    % Iteração menor: avaliação refina objetivos (lições do paradoxo)
+    \draw[feedback]
+      (s5.north west) ++(-0.05,0.05)
+      -- ++(0,0.9)
+      -| ($(s2.south) + (-0.4,0)$);
+  \end{tikzpicture}
+  \caption*{Fonte: Adaptado de \citeauthor{peffers2007} (\citeyear{peffers2007}).
+            Setas sólidas indicam o fluxo principal; setas tracejadas
+            indicam ciclos de iteração observados neste trabalho
+            (Quadro~\ref{quad:ciclos-dsrm}).}
 \end{figure}
 
 O Quadro~\ref{quad:ciclos-dsrm} sintetiza os ciclos iterativos executados no
@@ -948,16 +1047,74 @@ O chatbot ILTB é implementado como uma aplicação web com \textit{backend} em
 Python (FastAPI) e banco de vetores ChromaDB \cite{chroma2024}. A
 Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
   \centering
-  \begin{minipage}{0.9\textwidth}
-    \caption{Arquitetura do chatbot ILTB baseado em RAG}
-    \label{fig:arquitetura}
-    % \includegraphics[width=\textwidth]{fig/arquitetura}
-    \aluno{Inserir diagrama: usuário → interface web → FastAPI → retriever →
-    ChromaDB / LLM via Groq}
-    \caption*{Fonte: Produção do próprio autor.}
-  \end{minipage}
+  \caption{Arquitetura do chatbot ILTB baseado em RAG}
+  \label{fig:arquitetura}
+  \vspace{0.3em}
+  \begin{tikzpicture}[
+    every node/.style={font=\scriptsize, align=center},
+    actor/.style={
+      rectangle, rounded corners=2pt, draw=black!75, thick,
+      fill=orange!10, minimum width=1.9cm, minimum height=0.7cm,
+      inner sep=3pt,
+    },
+    component/.style={
+      rectangle, rounded corners=2pt, draw=black!75, thick,
+      fill=blue!8, minimum width=2.1cm, minimum height=0.7cm,
+      inner sep=3pt,
+    },
+    storage/.style={
+      cylinder, shape border rotate=90, draw=black!75, thick,
+      fill=green!8, minimum width=1.8cm, minimum height=0.9cm,
+      aspect=0.25, inner sep=2pt,
+    },
+    external/.style={
+      rectangle, rounded corners=2pt, draw=black!75, thick, dashed,
+      fill=red!6, minimum width=2.1cm, minimum height=0.7cm,
+      inner sep=3pt,
+    },
+    flow/.style={-{Latex[length=1.8mm]}, thick, black!70},
+    flowback/.style={-{Latex[length=1.8mm]}, thick, black!50},
+    group/.style={
+      rectangle, rounded corners=4pt, draw=black!30,
+      dashed, inner sep=6pt,
+    },
+  ]
+    % Coluna 1: usuário e front
+    \node[actor] (user) {Enfermeiro\\(usuário)};
+    \node[component, right=1.0cm of user] (web) {Interface Web\\(HTML/JS)};
+    \node[component, right=1.0cm of web] (api) {FastAPI\\(\texttt{/chat})};
+
+    % Coluna 2 (linha 2): pipeline RAG
+    \node[component, below=1.3cm of api] (retr) {Retriever\\(hybrid + rerank)};
+    \node[component, left=0.7cm of retr] (emb) {Embedding\\BGE-M3 1024D\\(local)};
+    \node[storage, left=0.7cm of emb] (chroma) {ChromaDB\\898 chunks};
+    \node[component, below=0.7cm of retr] (bm25) {BM25\\\textit{sidecar}};
+    \node[component, right=0.7cm of retr] (rer) {Reranker\\mGTE (CPU)};
+
+    % LLM externo
+    \node[external, above=0.5cm of rer, xshift=1.4cm] (llm) {Llama 3.3 70B\\via API Groq\\(sem retenção)};
+
+    % Setas
+    \draw[flow] (user) -- node[above, font=\tiny] {pergunta} (web);
+    \draw[flow] (web) -- (api);
+    \draw[flow] (api) -- ++(0,-0.65) -| node[pos=0.25, above, font=\tiny] {\texttt{query}} (retr);
+    \draw[flow] (retr) -- (emb);
+    \draw[flow] (emb) -- (chroma);
+    \draw[flow] (chroma.south) |- ([yshift=-0.4cm]bm25.west) -- (bm25.west);
+    \draw[flow] (bm25.east) -- ([xshift=0.4cm]bm25.east) |- (rer.south);
+    \draw[flow] (rer.north) -- ++(0,0.25) -| (llm.south);
+    \draw[flowback] (llm.west) -| node[pos=0.75, right, font=\tiny] {resposta} (api.east);
+    \draw[flowback] (api) -- node[above, font=\tiny] {resposta} (web);
+    \draw[flowback] (web) -- (user);
+  \end{tikzpicture}
+  \caption*{Fonte: Produção do próprio autor. Componentes em azul: backend
+            local. Cilindro verde: persistência (ChromaDB com índice HNSW).
+            Caixa tracejada vermelha: serviço externo (LLM via Groq, sem
+            armazenamento de \textit{prompts}). Setas sólidas pretas
+            representam o fluxo da consulta; setas mais claras, o retorno
+            da resposta.}
 \end{figure}
 
 \section{Corpus e Pré-processamento}
@@ -2376,12 +2533,10 @@ abaixo lista todas as questões, agrupadas por categoria
 \midrule
 \multicolumn{4}{r}{\textit{Continua na próxima página}} \\
 \endfoot
-\bottomrule
 \endlastfoot
 \input{_dataset_rows.tex}
 \end{longtable}
 }
-\vspace{-1\baselineskip}
 
 % ─── Apêndice C — Breakdown por categoria ────────────────────────────────────
 \chapter{Breakdown por Categoria do Gate Final}
@@ -2529,6 +2684,8 @@ parcialmente preenchida, mapeando os principais itens da diretriz ao
 texto da monografia. O preenchimento completo segue como recomendação
 metodológica para versões pós-defesa do trabalho ou para publicação
 derivada.
+
+\bigskip
 
 \setlength{\LTpre}{0pt}
 \setlength{\LTpost}{0pt}

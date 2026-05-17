@@ -48,10 +48,14 @@ def main():
         qid = q["id"]
         text = esc(q["question"])
         gt = esc(q["ground_truth"])
-        # Última linha não inclui \hline: o \bottomrule do \endlastfoot
-        # da longtable já fecha a tabela visualmente. Inserir \hline
-        # antes do \bottomrule produz linha dupla e pode forçar overflow.
-        line_end = "\\\\ \\hline" if i < last_idx else "\\\\"
+        # Última linha usa \bottomrule (em vez de \hline) para fechar a
+        # tabela visualmente DENTRO da última linha tabular válida — evita
+        # que \endlastfoot reserve espaço próprio e produza "página
+        # fantasma" só com cabeçalho de continuação + bottomrule.
+        if i < last_idx:
+            line_end = "\\\\ \\hline"
+        else:
+            line_end = "\\\\ \\bottomrule"
         lines.append(
             f"\\texttt{{{qid}}} & {sig} & {text} & {gt} {line_end}"
         )
