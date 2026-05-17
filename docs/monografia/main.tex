@@ -39,16 +39,14 @@
 \usepackage{xspace}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
-\usepackage{newfloat}
-\DeclareFloatingEnvironment[
-  name={Quadro},
-  listname={Lista de Quadros},
-  placement=htbp
-]{quadro}
-% O newfloat por si só não garante que o \caption{} dentro do ambiente
-% renderize "Quadro X" — em algumas distribuições TeX o caption herda o
-% name padrão "Figura". Forçar explicitamente via captionsetup:
-\captionsetup[quadro]{name=Quadro}
+% Definição do ambiente "Quadro" via \DeclareCaptionType do pacote caption
+% (já carregado acima). Esta abordagem integra nativamente com \caption,
+% \label e \listof{}, ao contrário do newfloat que em algumas distribuições
+% TeX deixa o \caption herdar o name padrão "Figura".
+\DeclareCaptionType[fileext=loq,
+                    name=Quadro,
+                    listname={Lista de Quadros},
+                    placement={!htbp}]{quadro}
 % ─── Citações ABNT ───────────────────────────────────────────────────────────
 \usepackage[alf,
   abnt-full-initials=no,
@@ -271,10 +269,9 @@ retrieval-augmented generation; RAG; large language models; nursing; data privac
 \cleardoublepage
 
 % ─── Lista de quadros ────────────────────────────────────────────────────────
-% O pacote newfloat (carregado no preâmbulo) cria automaticamente
-% \listofquadros com o título "Lista de Quadros" (definido em listname).
-% Usar \listof{quadro}{Lista de Quadros} é sintaxe do pacote `float` e
-% gera o bug "quadroLista de Quadros" no PDF.
+% \DeclareCaptionType{quadro} (no preâmbulo) cria automaticamente o
+% comando \listofquadros, que lê o arquivo .loq e renderiza a lista
+% com os captions corretos ("Quadro X — ...").
 \pdfbookmark[0]{Lista de Quadros}{loq}
 \listofquadros
 \cleardoublepage
