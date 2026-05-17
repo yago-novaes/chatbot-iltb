@@ -1104,8 +1104,8 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
                     inner sep=2pt]north west:Pipeline RAG (local)}] (rag) {};
     \end{scope}
 
-    % ─── LLM externo (lado direito) ──────────────────────────────
-    \node[external, right=1.4cm of rer] (llm)
+    % ─── LLM externo (alinhado com a caixa RAG, à direita) ──────
+    \node[external, right=2.0cm of rag.east, yshift=0pt] (llm)
         {Llama 3.3 70B\\\scriptsize via API Groq\\\scriptsize(sem retenção)};
 
     % ─── Setas: fluxo da consulta ────────────────────────────────
@@ -1116,11 +1116,14 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     \draw[flow] (emb) -- (chroma);
     \draw[flow] (retr) -- (bm25);
     \draw[flow] (bm25.east) -| ([yshift=-0.2cm]rer.south) -- (rer.south);
-    \draw[flow] (rer.north) |- node[edgelabel, pos=0.75] {(3) top-5} (llm.west);
+    % (3) top-5: sai do reranker pela direita, atravessa a borda da
+    % caixa RAG, vai até o LLM externo (horizontal direto)
+    \draw[flow] (rer.east) -- node[edgelabel] {(3) top-5} (llm.west);
 
     % ─── Setas: retorno da resposta ──────────────────────────────
-    \draw[flowback] (llm.north) |- ([yshift=0.4cm]api.east) -- (api.east)
-        node[edgelabel, pos=0.6] {(4) resposta};
+    % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG
+    \draw[flowback] (llm.north) |- ([yshift=0.3cm]api.east)
+        node[edgelabel, pos=0.85] {(4) resposta} -- (api.east);
     \draw[flowback] (api) to[bend right=10] (web);
     \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
