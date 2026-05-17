@@ -1087,8 +1087,8 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
   ]
     % ─── Linha 1: front-end (horizontal) ─────────────────────────
     \node[actor] (user) {Enfermeiro\\\scriptsize(usuário)};
-    \node[component, right=0.8cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
-    \node[component, right=0.8cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
+    \node[component, right=1.6cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
+    \node[component, right=1.6cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
 
     % ─── Linha 2: pipeline de recuperação (caixa agrupadora) ────
     \node[component, below=2.0cm of api] (retr) {Retriever\\\scriptsize(hybrid\,+\,rerank)};
@@ -1109,7 +1109,9 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
         {Llama 3.3 70B\\\scriptsize via API Groq\\\scriptsize(sem retenção)};
 
     % ─── Setas: fluxo da consulta ────────────────────────────────
-    \draw[flow] (user) -- node[edgelabel] {(1) pergunta} (web);
+    % Labels posicionados ABAIXO das setas horizontais do topo para
+    % nao colidirem com os blocos.
+    \draw[flow] (user) -- node[edgelabel, below=1pt] {(1) pergunta} (web);
     \draw[flow] (web) -- (api);
     \draw[flow] (api) -- node[edgelabel] {(2) query} (retr);
     \draw[flow] (retr) -- (emb);
@@ -1121,9 +1123,10 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     \draw[flow] (rer.east) -- node[edgelabel] {(3) top-5} (llm.west);
 
     % ─── Setas: retorno da resposta ──────────────────────────────
-    % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG
-    \draw[flowback] (llm.north) |- ([yshift=0.3cm]api.east)
-        node[edgelabel, pos=0.85] {(4) resposta} -- (api.east);
+    % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG.
+    % Label posicionado proximo do FastAPI para nao colidir com a Web.
+    \draw[flowback] (llm.north) |- ([yshift=0.5cm]api.east)
+        node[edgelabel, pos=0.95, left=2pt] {(4) resposta} -- (api.east);
     \draw[flowback] (api) to[bend right=10] (web);
     \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
