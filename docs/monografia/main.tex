@@ -1057,23 +1057,23 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     every node/.style={font=\scriptsize, align=center},
     actor/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick,
-      fill=orange!10, minimum width=2.0cm, minimum height=0.8cm,
-      inner sep=3pt,
+      fill=orange!10, minimum width=1.7cm, minimum height=0.8cm,
+      inner sep=2pt,
     },
     component/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick,
-      fill=blue!8, minimum width=2.4cm, minimum height=0.8cm,
-      inner sep=3pt,
+      fill=blue!8, minimum width=2.0cm, minimum height=0.8cm,
+      inner sep=2pt,
     },
     storage/.style={
       cylinder, shape border rotate=90, draw=black!75, thick,
-      fill=green!8, minimum width=1.9cm, minimum height=1.0cm,
+      fill=green!8, minimum width=1.7cm, minimum height=1.0cm,
       aspect=0.25, inner sep=2pt,
     },
     external/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick, dashed,
-      fill=red!6, minimum width=2.4cm, minimum height=0.8cm,
-      inner sep=3pt,
+      fill=red!6, minimum width=2.0cm, minimum height=0.8cm,
+      inner sep=2pt,
     },
     groupbox/.style={
       rectangle, rounded corners=4pt, draw=black!35, thick,
@@ -1087,15 +1087,15 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
   ]
     % ─── Linha 1: front-end (horizontal) ─────────────────────────
     \node[actor] (user) {Enfermeiro\\\scriptsize(usuário)};
-    \node[component, right=1.6cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
-    \node[component, right=1.6cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
+    \node[component, right=1.4cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
+    \node[component, right=1.4cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
 
     % ─── Linha 2: pipeline de recuperação (caixa agrupadora) ────
     \node[component, below=2.0cm of api] (retr) {Retriever\\\scriptsize(hybrid\,+\,rerank)};
-    \node[component, left=0.7cm of retr] (emb) {Embedding\\BGE-M3 1024D};
-    \node[storage, left=0.7cm of emb] (chroma) {ChromaDB\\\scriptsize 898 chunks};
+    \node[component, left=0.5cm of retr] (emb) {Embedding\\BGE-M3 1024D};
+    \node[storage, left=0.5cm of emb] (chroma) {ChromaDB\\\scriptsize 898 chunks};
     \node[component, below=0.6cm of retr] (bm25) {BM25 \emph{sidecar}};
-    \node[component, right=0.7cm of retr] (rer) {Reranker\\mGTE (CPU)};
+    \node[component, right=0.5cm of retr] (rer) {Reranker\\mGTE (CPU)};
 
     % Caixa agrupadora "pipeline RAG"
     \begin{scope}[on background layer]
@@ -1105,7 +1105,7 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     \end{scope}
 
     % ─── LLM externo (alinhado com a caixa RAG, à direita) ──────
-    \node[external, right=2.0cm of rag.east, yshift=0pt] (llm)
+    \node[external, right=1.2cm of rag.east, yshift=0pt] (llm)
         {Llama 3.3 70B\\\scriptsize via API Groq\\\scriptsize(sem retenção)};
 
     % ─── Setas: fluxo da consulta ────────────────────────────────
@@ -1124,9 +1124,10 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
 
     % ─── Setas: retorno da resposta ──────────────────────────────
     % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG.
-    % Label posicionado proximo do FastAPI para nao colidir com a Web.
-    \draw[flowback] (llm.north) |- ([yshift=0.5cm]api.east)
-        node[edgelabel, pos=0.95, left=2pt] {(4) resposta} -- (api.east);
+    % Label posicionado no meio do trecho HORIZONTAL alto (entre o topo do
+    % LLM e o ponto onde a seta desce ao FastAPI), longe de qualquer bloco.
+    \draw[flowback] (llm.north) -- ++(0, 0.5)
+        -| node[edgelabel, pos=0.25] {(4) resposta} (api.north);
     \draw[flowback] (api) to[bend right=10] (web);
     \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
