@@ -1,0 +1,306 @@
+[
+  {
+    "id": "ET-01",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.9221299027490663,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-02",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8253032568088571,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-03",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.9749344017540871,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-04",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.8384431651037575,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-05",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.15384615384615385,
+    "answer_relevancy": 0.8250482697029858,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-06",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9986629303430533,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-07",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.7247536418816742,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "MO-01",
+    "category": "monitoramento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.8055555555287036,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-02",
+    "category": "monitoramento",
+    "faithfulness": 0.7,
+    "answer_relevancy": 0.9821866951129552,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "MO-03",
+    "category": "monitoramento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8597513623800493,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-04",
+    "category": "monitoramento",
+    "faithfulness": 0.8333333333333334,
+    "answer_relevancy": 0.6880045824567093,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-05",
+    "category": "monitoramento",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.7906567027862356,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "IM-01",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.9704662056171025,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IM-02",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.9953596020293004,
+    "context_precision": 0.8333333332916666,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IM-03",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.99999999995,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "IM-04",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.7707759227329621,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IM-05",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.722916407674402,
+    "context_precision": 0.9999999999,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-01",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.9166666666361111,
+    "context_recall": 0.0
+  },
+  {
+    "id": "PE-02",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.8982668446245655,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-03",
+    "category": "populacoes_especiais",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8247456458419475,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.3333333333333333
+  },
+  {
+    "id": "PE-04",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.5751943724400396,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-05",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.3333333333333333,
+    "answer_relevancy": 0.9993084457509944,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-06",
+    "category": "populacoes_especiais",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8725574755656843,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-07",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.42857142857142855,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "DI-01",
+    "category": "diagnostico",
+    "faithfulness": 0.5714285714285714,
+    "answer_relevancy": 0.6882070263759562,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-02",
+    "category": "diagnostico",
+    "faithfulness": 0.7142857142857143,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-03",
+    "category": "diagnostico",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.955208917270007,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "DI-04",
+    "category": "diagnostico",
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.9669191333616366,
+    "context_precision": 0.9166666666361111,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-05",
+    "category": "diagnostico",
+    "faithfulness": 0.6,
+    "answer_relevancy": 0.7671100462795644,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.0
+  },
+  {
+    "id": "IT-01",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9007645045176874,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "IT-02",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.7466005404441886,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-03",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.9949317592500182,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-04",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5564962706220565,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-05",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.7142857142857143,
+    "answer_relevancy": 0.6349511497413681,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "EA-01",
+    "category": "efeitos_adversos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9951969661036072,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 0.5
+  },
+  {
+    "id": "EA-02",
+    "category": "efeitos_adversos",
+    "faithfulness": 0.7777777777777778,
+    "answer_relevancy": 0.9466424772998124,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 0.5
+  },
+  {
+    "id": "EA-03",
+    "category": "efeitos_adversos",
+    "faithfulness": 0.8571428571428571,
+    "answer_relevancy": 0.6861364739304344,
+    "context_precision": 0.49999999995,
+    "context_recall": 1.0
+  },
+  {
+    "id": "EA-04",
+    "category": "efeitos_adversos",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.8467296771560062,
+    "context_precision": 0.9166666666361111,
+    "context_recall": 0.6666666666666666
+  }
+]

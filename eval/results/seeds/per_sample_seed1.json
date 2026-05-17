@@ -1,0 +1,306 @@
+[
+  {
+    "id": "ET-01",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.9221299027490663,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-02",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.801269375086053,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-03",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.625,
+    "answer_relevancy": 0.9752180631626018,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-04",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.25,
+    "answer_relevancy": 0.8014954927820078,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-05",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.8143750691484856,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-06",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.9986629303430533,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "ET-07",
+    "category": "esquemas_terapeuticos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7489499501553221,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "MO-01",
+    "category": "monitoramento",
+    "faithfulness": 0.3333333333333333,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.4166666666458333,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-02",
+    "category": "monitoramento",
+    "faithfulness": 0.8333333333333334,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "MO-03",
+    "category": "monitoramento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.8544744288454497,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-04",
+    "category": "monitoramento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7100795073575163,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "MO-05",
+    "category": "monitoramento",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.7906567027862356,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "IM-01",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9424496579196543,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IM-02",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.4,
+    "answer_relevancy": 0.9953596020293004,
+    "context_precision": 0.8333333332916666,
+    "context_recall": 0.5
+  },
+  {
+    "id": "IM-03",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.9,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.99999999995,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "IM-04",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.7632121940516172,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IM-05",
+    "category": "interacoes_medicamentosas",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7308353320201585,
+    "context_precision": 0.9999999999,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-01",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.6,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.0
+  },
+  {
+    "id": "PE-02",
+    "category": "populacoes_especiais",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9047459199002986,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-03",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.828282257033473,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.3333333333333333
+  },
+  {
+    "id": "PE-04",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.6357367035585625,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-05",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.3333333333333333,
+    "answer_relevancy": 0.9993084457509945,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-06",
+    "category": "populacoes_especiais",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9485803474810762,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "PE-07",
+    "category": "populacoes_especiais",
+    "faithfulness": 0.5,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.6666666666666666
+  },
+  {
+    "id": "DI-01",
+    "category": "diagnostico",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9685412717944825,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-02",
+    "category": "diagnostico",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.0,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-03",
+    "category": "diagnostico",
+    "faithfulness": 0.7142857142857143,
+    "answer_relevancy": 0.955208917270007,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "DI-04",
+    "category": "diagnostico",
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.9669191333616364,
+    "context_precision": 0.9166666666361111,
+    "context_recall": 1.0
+  },
+  {
+    "id": "DI-05",
+    "category": "diagnostico",
+    "faithfulness": 0.8,
+    "answer_relevancy": 0.7878338607239292,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.0
+  },
+  {
+    "id": "IT-01",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6971473818020354,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.5
+  },
+  {
+    "id": "IT-02",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.8333333333333334,
+    "answer_relevancy": 0.7425544417307509,
+    "context_precision": 0.99999999995,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-03",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.9949317592500183,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-04",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 0.75,
+    "answer_relevancy": 0.56346036137677,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "IT-05",
+    "category": "indicacoes_tratamento",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6349511497413679,
+    "context_precision": 0.999999999975,
+    "context_recall": 1.0
+  },
+  {
+    "id": "EA-01",
+    "category": "efeitos_adversos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9521553143690006,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 0.5
+  },
+  {
+    "id": "EA-02",
+    "category": "efeitos_adversos",
+    "faithfulness": 0.6,
+    "answer_relevancy": 0.9683425576679617,
+    "context_precision": 0.9999999999666667,
+    "context_recall": 0.5
+  },
+  {
+    "id": "EA-03",
+    "category": "efeitos_adversos",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.6020625592562127,
+    "context_precision": 0.49999999995,
+    "context_recall": 1.0
+  },
+  {
+    "id": "EA-04",
+    "category": "efeitos_adversos",
+    "faithfulness": 0.6666666666666666,
+    "answer_relevancy": 0.8467296771560062,
+    "context_precision": 0.999999999975,
+    "context_recall": 0.6666666666666666
+  }
+]

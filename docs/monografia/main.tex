@@ -517,11 +517,12 @@ A literatura, contudo, revela uma tensão entre conveniência operacional e dese
 recuperação. Avaliações em corpora hospitalares mostram que modelos de 1024 dimensões,
 como \texttt{multilingual-e5-large} e \texttt{BGE-M3}, atingem acurácia
 \textit{Top}-10 superior a 90\%, enquanto variantes da família MiniLM permanecem abaixo
-de 40\% nos mesmos cenários \cite{SHTI2023, mmteb2025}. Para o português clínico
-especificamente, o benchmark SemClinBr \cite{clinicalNERPortuguese2026} indica que
-modelos multilíngues genéricos como o mmBERT \cite{marone2025mmbert} superam alternativas monolíngues
-especializadas (BioBERTpt, BERTimbau) em reconhecimento de entidades, sugerindo que a
-capacidade representacional geral pesa mais que a adaptação de domínio estreita
+de 40\% nos mesmos cenários \cite{SHTI2023, mmteb2025}. Para o português clínico especificamente, o benchmark SemClinBr
+\cite{clinicalNERPortuguese2026} indica que o mmBERT
+\cite{marone2025mmbert} supera BioBERTpt e BERTimbau em reconhecimento
+de entidades --- achado consistente com a tendência, em domínios
+técnicos especializados, de \textit{embeddings} generalistas superarem
+modelos de adaptação de domínio estreita
 \cite{generalistEmbeddingsClinical2024}. Esses achados respaldam a estratégia de
 empregar um modelo generalista multilíngue e motivaram a migração da configuração
 inicial para um modelo 1024D (\texttt{BAAI/bge-m3}) durante a fase de avaliação
@@ -702,7 +703,7 @@ multilíngue 384D (\texttt{MiniLM}) por um modelo 1024D
 $0{,}90$ --- patamar inatingível pela MiniLM independentemente do modelo
 gerador adotado.} Essa proposição é diretamente testada pela ablação
 $2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}: a falsificação
-ocorreria se o BGE-M3 não produzisse ganho material em \textit{Context
+ocorreria se o BGE-M3 não produzisse ganho mensurável em \textit{Context
 Precision} sobre a MiniLM, ou se a MiniLM atingisse $\geq 0{,}90$.
 
 \textbf{Tese 2 (avaliativa).} \emph{A métrica de \emph{Faithfulness} do
@@ -1046,8 +1047,8 @@ corpus.
 O \textit{system prompt} de produção (versão~v1) instrui o modelo a: (i)
 responder \textbf{exclusivamente} com base no contexto recuperado; (ii) usar
 português brasileiro com terminologia clínica adequada à enfermagem; (iii)
-declarar explicitamente quando a informação não estiver no contexto
-(comportamento alinhado ao fallback descrito na seção anterior);
+declarar explicitamente quando a informação não estiver no contexto,
+acionando o \textit{fallback} de similaridade descrito na seção anterior;
 (iv) preservar números, doses e unidades exatamente como no protocolo
 original; e (v) anexar referência à fonte (documento de origem) quando
 disponível nos metadados. O texto integral do prompt está reproduzido
@@ -1076,7 +1077,16 @@ fallback de similaridade descrito na Seção~\ref{cap:desenvolvimento}.
 
 As 38 questões \textit{in-scope} estão organizadas em sete categorias temáticas
 (Tabela~\ref{tab:dataset-cat}), que cobrem os principais eixos de consulta
-esperados em uso real.
+esperados em uso real. A categorização serve a dois propósitos:
+\textbf{(i)} garantir cobertura balanceada do escopo clínico durante a
+construção do \textit{dataset} e \textbf{(ii)} permitir leitura descritiva
+da decomposição das métricas RAGAS por subdomínio --- breakdown reportado
+no Apêndice~\ref{ape:per-category}, com a ressalva metodológica de que
+$N=4$ a $7$ questões por categoria não autoriza inferências estatísticas
+comparativas entre elas. Os achados qualitativos desse breakdown (notadamente
+a concentração de \textit{Faithfulness} baixa em categorias com alta
+densidade numérica) são integrados à interpretação do paradoxo
+abstrativo--vs--conservador na Seção~\ref{sec:interp-faith}.
 
 \begin{table}[h]
   \centering
@@ -1166,10 +1176,11 @@ não eram relevantes para a pergunta, propagando essa falha para
 
 \textbf{Linha 2 (pós-sanitização, prompt v1).} A introdução de
 sanitização Markdown (Seção~\ref{cap:desenvolvimento}) e a primeira versão
-estável do \textit{system prompt} elevaram \textit{Faithfulness} a $0{,}586$,
-patamar próximo ao observado em revisões de RAG biomédico \cite{ocaf2024}, e
-duplicaram o \textit{Answer Relevancy}. Esse foi o salto qualitativo principal
-do projeto.
+estável do \textit{system prompt} elevaram \textit{Faithfulness} de
+$0{,}375$ para $0{,}586$ ($+56\%$) e duplicaram o \textit{Answer Relevancy}
+($0{,}310 \to 0{,}534$). Esse salto absorveu, em uma única iteração, as
+duas correções de maior impacto da Fase 2: a remoção de artefatos de
+extração do PDF e a estabilização do \textit{prompt} de produção.
 
 \textbf{Linha 3 (\textit{gpt-4o-mini} no pipeline).} Teste A/B
 substituindo o Llama~3.3~70B pelo \texttt{gpt-4o-mini} também como gerador
@@ -1264,7 +1275,7 @@ razão $\approx 6{,}5$); a interpretação aqui é de \emph{tamanho de efeito
 relativo à variância observada}, não de teste de hipótese formal --- que
 exigiria $N$ maior do que 3 seeds. A direção e magnitude observadas são
 consistentes com os \textit{benchmarks} multilíngues
-\cite{SHTI2023, mmteb2025, marone2025mmbert} e com a revisão sistemática de
+\cite{SHTI2023, mmteb2025} e com a revisão sistemática de
 \citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha de embedding
 como o principal lever de qualidade em \textit{pipelines} RAG clínicos.
 
@@ -1544,7 +1555,14 @@ aproximadamente $85\%$ do gap original que separava a célula Llama+MiniLM
 da ablação ($0{,}486$) da meta de $0{,}80$.
 
 O gap residual de $\sim 0{,}048$ tem três fatores complementares descritos na
-literatura, ainda presentes no pipeline mesmo após as intervenções.
+literatura, ainda presentes no pipeline mesmo após as intervenções. O
+breakdown por categoria do gate final (Apêndice~\ref{ape:per-category})
+fornece evidência empírica direta de que o gap se concentra nas categorias
+com alta densidade numérica do \textit{dataset} (esquemas terapêuticos,
+populações especiais, interações medicamentosas) --- exatamente onde o
+gerador é forçado a sintetizar dose, duração e regimes em vez de reproduzir
+o texto literal do protocolo, perdendo correspondência verbatim que o RAGAS
+exige.
 
 \textbf{Comportamento abstrativo do gerador.} Modelos generativos como o
 Llama~3.3~70B foram caracterizados desde \citeauthor{lewis2021}
@@ -1726,10 +1744,12 @@ da Seção~\ref{sec:gate-pos-migracao}, comportam três leituras complementares.
 
 \textbf{Primeira: o embedding era o gargalo dominante.} A migração de
 \texttt{paraphrase-multilingual-MiniLM-L12-v2} (384 dimensões) para
-\texttt{BAAI/bge-m3} (1024 dimensões) produziu salto material em todas as
-métricas para os dois geradores avaliados (Tabela~\ref{tab:ablacao-2x2}). Esse
+\texttt{BAAI/bge-m3} (1024 dimensões) produziu ganhos de $+25$ a $+45$\,pp
+em todas as métricas para os dois geradores avaliados, com magnitudes
+várias vezes superiores ao DP inter-seed
+(Tabela~\ref{tab:ablacao-2x2}). Esse
 achado é convergente com os \textit{benchmarks} multilíngues
-\cite{SHTI2023, mmteb2025, marone2025mmbert} e com a revisão sistemática de
+\cite{SHTI2023, mmteb2025} e com a revisão sistemática de
 \citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha do
 embedding como o principal lever de qualidade em RAG clínico. O
 patamar atingido de \textit{Context Precision} ($0{,}956 \pm 0{,}009$ na
@@ -2272,6 +2292,64 @@ abaixo lista todas as questões, agrupadas por categoria
 \input{_dataset_rows.tex}
 \end{longtable}
 }
+
+% ─── Apêndice C — Breakdown por categoria ────────────────────────────────────
+\chapter{Breakdown por Categoria do Gate Final}
+\label{ape:per-category}
+
+Esta tabela apresenta a decomposição das métricas RAGAS do gate final por
+categoria temática do \textit{dataset} (Apêndice~\ref{ape:dataset}). Cada
+linha agrega 3 seeds independentes sobre as $N$ questões da categoria; a
+média e o desvio padrão são calculados sobre as médias intra-categoria de
+cada seed.
+
+\textbf{Leitura descritiva apenas.} Com $N=4$ a $7$ questões por categoria,
+nenhum intervalo de confiança formal é defensável; valores devem ser lidos
+como indicação de tendência intra-categoria, não como métrica comparativa
+entre categorias. A tabela serve para identificar padrões qualitativos
+úteis à interpretação do paradoxo abstrativo--vs--conservador da
+Seção~\ref{sec:interp-faith}, não para sustentar inferências estatísticas.
+
+\begin{table}[ht]
+  \caption{Breakdown por categoria do gate final (3 seeds; média~$\pm$~DP;
+           leitura descritiva apenas devido a $N$ pequeno por categoria)}
+  \label{tab:per-category}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}Xcccccc@{}}
+  \toprule
+  \textbf{Categoria} & \textbf{N} &
+  \textbf{Faith.} & \textbf{Ans. Rel.} & \textbf{Ctx. Prec.} & \textbf{Ctx. Rec.} \\
+  \midrule
+  Esquemas terapêuticos (ET)      & 7 & $0{,}644 \pm 0{,}004$ & $0{,}883 \pm 0{,}024$ & $1{,}000 \pm 0{,}000$ & $0{,}952 \pm 0{,}000$ \\
+  Populações especiais (PE)       & 7 & $0{,}661 \pm 0{,}031$ & $0{,}647 \pm 0{,}071$ & $0{,}996 \pm 0{,}007$ & $0{,}762 \pm 0{,}082$ \\
+  Interações medicamentosas (IT)  & 5 & $0{,}677 \pm 0{,}106$ & $0{,}687 \pm 0{,}004$ & $0{,}967 \pm 0{,}000$ & $0{,}900 \pm 0{,}058$ \\
+  Monitoramento (MO)              & 5 & $0{,}720 \pm 0{,}093$ & $0{,}543 \pm 0{,}106$ & $0{,}935 \pm 0{,}045$ & $0{,}789 \pm 0{,}019$ \\
+  Diagnóstico (DI)                & 5 & $0{,}764 \pm 0{,}077$ & $0{,}707 \pm 0{,}030$ & $0{,}983 \pm 0{,}000$ & $0{,}700 \pm 0{,}000$ \\
+  Indicações de tratamento (IND)  & 5 & $0{,}820 \pm 0{,}067$ & $0{,}768 \pm 0{,}042$ & $1{,}000 \pm 0{,}000$ & $0{,}900 \pm 0{,}000$ \\
+  Efeitos adversos (EA)           & 4 & $0{,}836 \pm 0{,}063$ & $0{,}844 \pm 0{,}024$ & $0{,}868 \pm 0{,}012$ & $0{,}667 \pm 0{,}000$ \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor. Categorias ordenadas por
+            \textit{Faithfulness} crescente.}
+\end{table}
+
+\textbf{Leitura qualitativa.} A decomposição revela um padrão consistente
+com o paradoxo discutido na Seção~\ref{sec:interp-faith}: categorias com
+\textbf{alta densidade numérica} --- esquemas terapêuticos (doses, durações,
+regimes), populações especiais (restrições e ajustes por subgrupo) e
+interações medicamentosas (combinações e mecanismos) --- concentram os
+três menores valores de \textit{Faithfulness} ($0{,}644$ a $0{,}677$),
+\textbf{mesmo quando a Context Precision é próxima de $1{,}000$}.
+Categorias com texto mais livre e menos quantitativo --- efeitos adversos
+e indicações de tratamento --- apresentam \textit{Faithfulness} mais alta
+($0{,}820$ a $0{,}836$). Em conjunto, esses dados sustentam empiricamente
+a hipótese de que o RAGAS penaliza síntese/cálculo sobre números: o
+gerador, ao agregar dose e duração de regimes em uma frase, perde
+correspondência verbatim que a métrica exige, ainda que o conteúdo
+clínico esteja correto. Esse achado fortalece a recomendação metodológica
+do trabalho: \textit{Context Precision} como indicador-síntese e
+\textit{Faithfulness} como métrica auxiliar lida em conjunto com a
+distribuição categoria-por-categoria.
 
 \end{apendicesenv}
 
