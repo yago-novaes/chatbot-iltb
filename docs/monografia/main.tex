@@ -1080,7 +1080,7 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
       inner sep=8pt,
     },
     flow/.style={-{Latex[length=2mm]}, thick, black!75},
-    flowback/.style={-{Latex[length=2mm]}, thick, black!45, dashed},
+    flowback/.style={-{Latex[length=3mm,width=2.5mm]}, thick, black!70, dashed},
     edgelabel/.style={
       midway, fill=white, inner sep=1pt, font=\tiny,
     },
@@ -1124,10 +1124,11 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
 
     % ─── Setas: retorno da resposta ──────────────────────────────
     % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG.
-    % Label posicionado no meio do trecho HORIZONTAL alto (entre o topo do
-    % LLM e o ponto onde a seta desce ao FastAPI), longe de qualquer bloco.
-    \draw[flowback] (llm.north) -- ++(0, 0.5)
-        -| node[edgelabel, pos=0.25] {(4) resposta} (api.north);
+    % Seta tracejada mais escura/grossa (style flowback) para ficar
+    % visualmente evidente que chega no FastAPI; passa BEM acima do api
+    % (yshift de saida do llm = 0.8cm) e desce ate api.north.
+    \draw[flowback] (llm.north) -- ++(0, 0.8)
+        -| node[edgelabel, pos=0.5] {(4) resposta} (api.north);
     \draw[flowback] (api) to[bend right=10] (web);
     \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
