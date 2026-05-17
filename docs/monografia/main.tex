@@ -183,7 +183,12 @@ interpretada à luz do achado paradoxal de que
 modelos mais conservadores (e.g., GPT-4o) pontuam \emph{pior} nessa métrica
 por aderirem mais à instrução de fallback --- limitação intrínseca do
 RAGAS para o cenário clínico, discutida no Capítulo~\ref{cap:discussao}.
-\aluno{Completar com resultado da avaliação expert e conclusão principal.}
+\textbf{A avaliação qualitativa com especialista (OE4) está protocolada
+(Capítulo~\ref{cap:avaliacao}, Apêndice de TCLE) e prevista para execução
+no período de defesa; seus resultados serão integrados em versão
+pós-defesa.}
+\aluno{Completar com resultado da avaliação expert e conclusão principal
+após a execução da Seção~\ref{sec:sessao-expert}.}
 
 \vspace{\onelineskip}
 \noindent\textbf{Palavras-chave:} tuberculose latente; ILTB; chatbot clínico;
@@ -667,7 +672,7 @@ clínicas padronizadas sobre ILTB por profissionais de enfermagem durante o
 atendimento. A solução proposta é um chatbot de apoio à decisão clínica baseado em
 RAG.
 
-A identificação do problema partiu de três fontes complementares.
+A identificação do problema partiu de duas fontes complementares.
 
 \textbf{Análise documental} dos protocolos vigentes evidenciou que o Manual de
 Recomendações do Ministério da Saúde \cite{brasil2022} é extenso, denso em tabelas
@@ -686,16 +691,34 @@ confirmou que ferramentas de apoio à decisão clínica em domínio específico 
 são pouco exploradas para o português brasileiro, configurando lacuna acadêmica
 relevante.
 
-\textbf{Diálogo inicial com profissionais e pesquisadores} da área de
-\textit{tuberculose} no contexto de saúde pública --- ainda que tenha tido escopo
-reduzido em função das alterações descritas no Capítulo~\ref{cap:introducao} ---
-corroborou a percepção de que enfermeiros da atenção primária constituem público
-prioritário para uma ferramenta dessa natureza.
+A partir dessas duas fontes formularam-se as duas proposições falsificáveis
+que organizam a investigação empírica deste trabalho.
 
-A partir dessas três fontes definiu-se a tese central deste trabalho: um chatbot
-RAG capaz de responder a perguntas sobre o manejo da ILTB, baseado exclusivamente
-em documentos oficiais, em português, com pipeline conforme à LGPD, pode oferecer
-apoio operacional relevante a profissionais de enfermagem.
+\textbf{Tese 1 (técnica).} \emph{No domínio ILTB em português, sobre corpus
+oficial do MS e da OMS, a escolha do modelo de \emph{embedding} é variável
+dominante de qualidade de recuperação: a substituição de um \emph{embedding}
+multilíngue 384D (\texttt{MiniLM}) por um modelo 1024D
+(\texttt{BAAI/bge-m3}) eleva a \emph{Context Precision} acima de
+$0{,}90$ --- patamar inatingível pela MiniLM independentemente do modelo
+gerador adotado.} Essa proposição é diretamente testada pela ablação
+$2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}: a falsificação
+ocorreria se o BGE-M3 não produzisse ganho material em \textit{Context
+Precision} sobre a MiniLM, ou se a MiniLM atingisse $\geq 0{,}90$.
+
+\textbf{Tese 2 (avaliativa).} \emph{A métrica de \emph{Faithfulness} do
+\emph{framework} RAGAS, na sua formulação atual, é assimétrica em relação ao
+\emph{trade-off} segurança--cobertura: penaliza geradores que se abstêm
+quando o contexto é parcial, mesmo quando a abstenção é clinicamente
+preferível.} Essa proposição é testada pela comparação cruzada
+gerador~$\times$~\emph{embedding} da mesma ablação: a falsificação ocorreria
+se a substituição do Llama por um modelo mais aderente a instruções de
+\textit{fallback} (GPT-4o) preservasse ou elevasse a \emph{Faithfulness} ---
+o oposto do que se observou.
+
+A confirmação ou refutação das duas teses orienta, em conjunto, a definição
+do gate operacional do artefato e a escolha do indicador-síntese para o
+trabalho (\emph{Context Precision} sobre \emph{Faithfulness}), conforme
+desenvolvido no Capítulo~\ref{cap:avaliacao}.
 
 \section{Definição dos Objetivos da Solução}
 
@@ -1152,7 +1175,11 @@ do projeto.
 substituindo o Llama~3.3~70B pelo \texttt{gpt-4o-mini} também como gerador
 (não apenas como juiz). Os resultados \textit{não} mostraram superioridade
 relevante, e a opção foi descartada, mantendo o Llama por razões de custo e
-licença open-weight.
+licença open-weight. Esta linha não substitui a ablação $2 \times 2$ da
+Seção~\ref{sec:ablacao-2x2}, que testa o GPT-4o (modelo maior, não o
+\texttt{gpt-4o-mini}) em design fatorial cruzado com a dimensão
+\emph{embedding} (MiniLM 384D vs BGE-M3 1024D) --- comparação que esta
+linha 3 não isolava.
 
 \textbf{Linha 4 (encerramento da Fase 2).} Adoção do \textit{chunker} hierárquico
 descrito na Seção~\ref{cap:desenvolvimento} e $k=5$. O \textit{Context Precision}
@@ -1160,6 +1187,20 @@ alcançou $0{,}735$ --- próximo à meta de $0{,}75$ ---, indicando que a recupe
 estabilizou em torno de um patamar útil. O \textit{Faithfulness}, em contrapartida,
 permaneceu em $0{,}515$, abrindo a questão diagnóstica investigada pela ablação
 $2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}.
+
+\textbf{Nota sobre comparabilidade com a Tabela~\ref{tab:ablacao-2x2}.} A linha
+4 desta tabela registra a corrida única histórica do encerramento da Fase 2
+(\textit{Faithfulness} $0{,}515$; \textit{Context Precision} $0{,}735$). A
+Tabela~\ref{tab:ablacao-2x2} reporta, na sua primeira célula, a mesma
+configuração técnica (Llama~+~MiniLM~+~denso) sob replicação multi-seed
+posterior, com média $0{,}486 \pm 0{,}030$ / $0{,}736 \pm 0{,}007$ (3 seeds).
+A diferença em \textit{Faithfulness} ($-0{,}029$) está dentro de 1~DP da
+medição replicada e é compatível com a variância inter-seed do juiz LLM que
+motivou a replicação. \textbf{Para toda análise comparativa e inferência de
+efeitos (Capítulo~\ref{cap:avaliacao} a partir da
+Seção~\ref{sec:ablacao-2x2}), adota-se a Tabela~\ref{tab:ablacao-2x2} como
+\emph{baseline} canônico do trabalho}; a Tabela~\ref{tab:ragas} permanece
+como registro cronológico do desenvolvimento.
 
 \subsection{Ablação 2×2: Gerador e Embedding}
 \label{sec:ablacao-2x2}
@@ -1214,10 +1255,14 @@ produziu ganhos de $+56{,}8\%$ em \textit{Faithfulness}
 e $+39{,}8\%$ em \textit{Context Recall} ($0{,}555 \to 0{,}776$). Mantendo
 o gerador Llama constante, a mesma substituição produziu ganhos de
 $+39{,}7\%$, $+101{,}2\%$, $+25{,}4\%$ e $+45{,}9\%$, respectivamente. Em
-ambos os geradores, portanto, a migração de embedding produz salto material
-em todas as métricas, com magnitudes muito superiores aos desvios padrão
-inter-seed reportados na Tabela~\ref{tab:ablacao-2x2}, garantindo
-significância estatística do efeito. A direção e magnitude observadas são
+ambos os geradores, portanto, a migração de embedding produz ganho
+expressivo em todas as métricas, com magnitudes várias vezes superiores
+ao envelope de incerteza inter-seed reportado na
+Tabela~\ref{tab:ablacao-2x2} (e.g., $\Delta \approx 0{,}19$ em
+\textit{Faithfulness} para o gerador Llama contra DP máximo de $\pm 0{,}030$,
+razão $\approx 6{,}5$); a interpretação aqui é de \emph{tamanho de efeito
+relativo à variância observada}, não de teste de hipótese formal --- que
+exigiria $N$ maior do que 3 seeds. A direção e magnitude observadas são
 consistentes com os \textit{benchmarks} multilíngues
 \cite{SHTI2023, mmteb2025, marone2025mmbert} e com a revisão sistemática de
 \citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha de embedding
@@ -1226,11 +1271,12 @@ como o principal lever de qualidade em \textit{pipelines} RAG clínicos.
 \textbf{Efeito do gerador (colunas pareadas, embedding fixo).}
 Surpreendentemente, substituir o Llama pelo GPT-4o \emph{piora} a
 \textit{Faithfulness} em ambos os embeddings: $0{,}486 \to 0{,}395$ no
-MiniLM ($-18{,}7\%$, com SDs $\pm 0{,}030$ e $\pm 0{,}004$) e
-$0{,}679 \to 0{,}620$ no BGE-M3 ($-8{,}7\%$, com SDs $\pm 0{,}004$ e
-$\pm 0{,}011$). Em ambas as comparações pareadas, a diferença supera 2~DPs
-da maior incerteza inter-seed, sustentando o efeito como real e não como
-artefato de variância. O \textit{Context Precision} permanece
+MiniLM ($-18{,}7\%$, com DPs $\pm 0{,}030$ e $\pm 0{,}004$) e
+$0{,}679 \to 0{,}620$ no BGE-M3 ($-8{,}7\%$, com DPs $\pm 0{,}004$ e
+$\pm 0{,}011$). Em ambas as comparações pareadas, a magnitude do efeito
+($\Delta = 0{,}091$ e $0{,}059$, respectivamente) é várias vezes superior
+ao DP inter-seed máximo de cada par, padrão que indica efeito direcional
+robusto ainda que sem teste de hipótese formal. O \textit{Context Precision} permanece
 estatisticamente equivalente entre os dois geradores (esperado --- essa
 métrica depende do retriever, não do gerador). \textit{Answer Relevancy}
 também cai com GPT-4o em ambos os embeddings. A inspeção direta das respostas geradas revelou a causa:
@@ -1253,6 +1299,24 @@ excessiva'' --- evitar alucinação ao custo de cobertura. O paper original do
 RAGAS \cite{es2024} reconhece, igualmente, que sua métrica de
 \textit{Faithfulness} pode penalizar respostas seguras-por-recusa em cenários
 de síntese.
+
+\textbf{Limitação do juiz adotado.} O paradoxo descrito acima é robusto sob
+replicação multi-seed (Tabela~\ref{tab:ablacao-2x2}), mas o juiz RAGAS
+utilizado --- \texttt{gpt-4o-mini} --- pertence à mesma família comercial
+(OpenAI) que um dos geradores candidatos da ablação (GPT-4o). Há, portanto,
+risco residual de \textbf{viés de avaliador intra-família}: o juiz pode
+sistematicamente penalizar ou favorecer respostas produzidas por modelos da
+mesma família por afinidade estilística (e.g., tendência a tratar o
+\emph{fallback} literal do GPT-4o como falta de \emph{claims} verificáveis,
+quando um juiz de outra família poderia ler como abstenção apropriada). Esse
+risco não foi controlado neste trabalho: a comparação Llama \emph{vs.}
+GPT-4o no juízo de \texttt{gpt-4o-mini} não foi replicada com avaliador
+independente (e.g., Claude, Gemini, ou \textit{ensemble} de juízes). A
+direção do efeito (Llama $>$ GPT-4o em \textit{Faithfulness}) é convergente
+com a literatura de RAG clínico citada acima, o que reduz --- mas não
+elimina --- a possibilidade de o paradoxo ser parcialmente artefato do
+juiz. Replicação com juiz de família independente está registrada em
+Trabalhos Futuros como TF de avaliação metodológica.
 
 \subsection{Configuração Pós-Migração (Intermediária)}
 \label{sec:gate-pos-migracao}
@@ -1302,8 +1366,9 @@ chunks de maior rank fundido.
 A Tabela~\ref{tab:hybrid-rerank} (linha 2) apresenta o resultado da avaliação
 RAGAS sobre as mesmas 38 questões, agregada sobre 3 seeds independentes. O
 ganho mais expressivo foi em \textbf{\textit{Faithfulness}}
-($0{,}679 \pm 0{,}004 \to 0{,}740 \pm 0{,}017$, $+9{,}0\%$, mais de 3~DPs da
-maior incerteza), seguido por \textit{Answer Relevancy}
+($0{,}679 \pm 0{,}004 \to 0{,}740 \pm 0{,}017$, $+9{,}0\%$; $\Delta = 0{,}061$,
+magnitude $\approx 3{,}6\times$ o DP máximo do par), seguido por
+\textit{Answer Relevancy}
 ($0{,}660 \pm 0{,}019 \to 0{,}707 \pm 0{,}036$, $+7{,}1\%$) e
 \textit{Context Recall} ($0{,}751 \pm 0{,}020 \to 0{,}815 \pm 0{,}025$,
 $+8{,}5\%$): o BM25 captura chunks com termos exatos (siglas como ``3HP'',
@@ -1411,13 +1476,26 @@ portanto, mantido.
 A combinação Llama~3.3~70B + BGE-M3 1024D + busca híbrida (BM25 + denso, RRF
 $k = 60$) + reranker mGTE foi adotada como \textbf{gate operacional
 final do artefato}. A Tabela~\ref{tab:gate-final} consolida os
-scores comparados ao gate da Fase 2.
+scores comparados à célula Llama~+~MiniLM da ablação --- adotada
+como \textit{baseline} canônico (Seção~\ref{sec:ablacao-2x2}, primeira
+célula). Esta escolha substitui o \textit{baseline} de corrida única
+historicamente registrado na Tabela~\ref{tab:ragas} (linha 4,
+\textit{Faithfulness} $0{,}515$) por uma medição replicada da mesma
+configuração técnica em 3 seeds independentes ($0{,}486 \pm 0{,}030$):
+ambas medem o mesmo \textit{pipeline} (Llama~+~MiniLM~+~denso), mas a
+forma replicada é a comparação metodologicamente apropriada para
+quantificar o ganho do gate final. \textbf{Os deltas relativos desta
+tabela e os da Tabela~\ref{tab:ragas} \emph{não são intercambiáveis}}:
+deslocar o \textit{baseline} de $0{,}515$ (corrida única) para
+$0{,}486 \pm 0{,}030$ (3 seeds) eleva o ganho relativo de
+\textit{Faithfulness} de $+47{,}8\%$ para $+54{,}7\%$; ambos refletem a
+mesma magnitude absoluta ($\Delta \approx +0{,}24$ a $+0{,}27$) sob
+referenciais diferentes.
 
 \begin{table}[ht]
   \caption{Gate operacional final vs. célula Llama+MiniLM da ablação
-           (\textit{proxy} do gate da Fase 2). Gate final: 3 seeds, média~$\pm$~DP.
-           Célula Llama+MiniLM: 3 seeds da ablação $2 \times 2$
-           (Tabela~\ref{tab:ablacao-2x2}). Deltas calculados sobre médias.}
+           (\textit{baseline} canônico, 3 seeds da Tabela~\ref{tab:ablacao-2x2}).
+           Gate final: 3 seeds, média~$\pm$~DP. Deltas calculados sobre médias.}
   \label{tab:gate-final}
   \begin{tabularx}{\textwidth}{@{}Xcccc@{}}
   \toprule
@@ -1441,11 +1519,11 @@ scores comparados ao gate da Fase 2.
   \caption*{Fonte: Produção do próprio autor.}
 \end{table}
 
-\textit{Context Precision} de $0{,}956 \pm 0{,}009$ ultrapassa confortavelmente
-a meta de $0{,}75$ (margem de $+0{,}206$ sobre o alvo, $>22$~DPs), e o limite
-inferior do intervalo (mean $-$ 2~DP $= 0{,}938$) permanece muito acima da meta,
-sustentando a leitura de \textbf{PASS robusto} como indicador-síntese do
-gate final. \textit{Faithfulness} de $0{,}752 \pm 0{,}004$ está a $\sim 0{,}048$
+\textit{Context Precision} de $0{,}956 \pm 0{,}009$ ultrapassa
+confortavelmente a meta de $0{,}75$ (margem absoluta de $+0{,}206$ sobre o
+alvo). O intervalo observado entre as 3 seeds, $[0{,}949;\, 0{,}966]$,
+permanece integralmente acima da meta, sustentando a leitura de
+\textbf{PASS robusto} como indicador-síntese do gate final. \textit{Faithfulness} de $0{,}752 \pm 0{,}004$ está a $\sim 0{,}048$
 da meta original de $0{,}80$ --- gap residual interpretado na
 Seção~\ref{sec:interp-faith} e endereçado, como linha de pesquisa imediata,
 no Capítulo~\ref{cap:conclusao}.
@@ -1686,8 +1764,9 @@ $0{,}752 \pm 0{,}004$. A reanálise com 3 seeds revelou que a divisão de
 contribuição entre as iterações é diferente do reportado em corridas únicas:
 (i) busca híbrida BM25 + denso com \textit{Reciprocal Rank Fusion}
 \cite{cormack2009, formal2021, khattab2020} produziu o \textbf{salto dominante
-em \textit{Faithfulness}} ($+0{,}061$, $+9{,}0\%$, $>3$~DPs), além de
-$+0{,}064$ em \textit{Context Recall};
+em \textit{Faithfulness}} ($\Delta = +0{,}061$, $+9{,}0\%$, magnitude
+$\approx 3{,}6\times$ o DP máximo do par), além de $+0{,}064$ em
+\textit{Context Recall};
 (ii) reranking cross-encoder mGTE
 \cite{zhang2024mgte, wang2024bestpractices} contribuiu modestamente em
 \textit{Faithfulness} ($+0{,}012$, $+1{,}6\%$, dentro do envelope de
@@ -1730,11 +1809,14 @@ estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
         reranking cross-encoder mGTE (Seções
         \ref{sec:hybrid} e \ref{sec:rerank}), mas não inclui
         self-reflection sobre a resposta gerada
-        \cite{jeong2024selfbiorag}. Essa intervenção, com expectativa
-        documentada de $+8$ a $+15$\,pp em \textit{Faithfulness}, é a próxima
-        linha de pesquisa para fechar o gap residual de $\sim 0{,}048$ até a meta
-        de $0{,}80$ (Capítulo~\ref{cap:conclusao}). Chunking baseado
-        em tokens (\textit{e.g.}, Small-to-Big) é
+        \cite{jeong2024selfbiorag}. A literatura reporta ganho típico de
+        $+8$ a $+15$\,pp em \textit{Faithfulness} para essa intervenção, mas
+        o achado paradoxal da Seção~\ref{sec:ablacao-2x2} (modelos mais
+        cautelosos pontuam pior em \textit{Faithfulness} no RAGAS) torna
+        essa expectativa condicional: \textit{self-reflection} pode
+        regredir a métrica apesar de melhorar a segurança clínica real,
+        exigindo co-design com revisão da métrica de avaliação (TF1).
+        \textit{Chunking} baseado em tokens (\textit{e.g.}, Small-to-Big) é
         intervenção complementar potencial não testada
         \cite{advancedChunkingRAG2025};
   \item \textbf{Viés de construção do \textit{dataset} de avaliação.}
@@ -1946,9 +2028,11 @@ acima de $0{,}95$ e por reduzir variância inter-seed) --- consolidaram o
 gate operacional final do artefato (também avaliado em 3 seeds). O principal
 indicador de qualidade alcançado é a
 \textbf{\textit{Context Precision} de $0{,}956 \pm 0{,}009$}, que representa
-\emph{PASS robusto} sobre a meta de $0{,}75$ (margem de $+0{,}206$ sobre o
-alvo, $>22$~DPs) e ultrapassa em $+30\%$ a célula Llama+MiniLM da ablação,
-evidenciando que a etapa de recuperação convergiu para um patamar maduro.
+\emph{PASS robusto} sobre a meta de $0{,}75$ (margem absoluta de $+0{,}206$
+sobre o alvo; intervalo observado entre as 3 seeds, $[0{,}949;\, 0{,}966]$,
+permanece integralmente acima da meta) e ultrapassa em $+30\%$ a célula
+Llama+MiniLM da ablação, evidenciando que a etapa de recuperação convergiu
+para um patamar maduro.
 \textit{Answer Relevancy} $0{,}725 \pm 0{,}020$ e \textit{Context Recall}
 $0{,}814 \pm 0{,}003$ completam o quadro. A métrica de \textit{Faithfulness}
 atingiu $0{,}752 \pm 0{,}004$ --- a $\sim 0{,}048$ da meta original de
@@ -1991,15 +2075,26 @@ Llama+BGE-M3 denso); restam linhas de pesquisa para fechar o gap residual final
 \textbf{Frente técnica:}
 
 \begin{enumerate}[label=\textbf{TF\arabic*}]
-  \item \textbf{Self-RAG / self-reflection} --- após gerar a
-        resposta, um \textit{critic step} avalia se está suportada pelos
-        chunks e dispara nova recuperação ou refinamento quando
-        necessário. \citeauthor{jeong2024selfbiorag} \cite{jeong2024selfbiorag}
-        reportam ganho de $+8$ a $+15$ pontos em \textit{Faithfulness} em
-        QA biomédico long-form, ao custo de aproximadamente dobrar
-        o número de chamadas ao LLM por consulta. Esta é a intervenção mais
-        promissora para fechar o gap residual final de $\sim 0{,}048$ até a meta
-        de $0{,}80$ (gap calculado sobre o gate final $0{,}752 \pm 0{,}004$);
+  \item \textbf{Self-RAG / self-reflection com reformulação da métrica de
+        avaliação.} A literatura reporta ganho de $+8$ a $+15$ pontos em
+        \textit{Faithfulness} em QA biomédico \textit{long-form} com
+        \textit{self-reflection} \cite{jeong2024selfbiorag}, ao custo de
+        aproximadamente dobrar o número de chamadas ao LLM por consulta.
+        Esta seria, em princípio, a intervenção mais promissora para fechar
+        o gap residual de $\sim 0{,}048$ até a meta de $0{,}80$ (calculado
+        sobre o gate final $0{,}752 \pm 0{,}004$). \textbf{Contudo, o
+        achado paradoxal da Seção~\ref{sec:ablacao-2x2} indica uma tensão
+        não trivial}: substituir o Llama por GPT-4o (mais aderente a
+        instruções de \textit{fallback}, comportamento próximo ao que
+        \textit{self-reflection} induz) \emph{piora} a
+        \textit{Faithfulness} no RAGAS. Se um \textit{critic step} torna o
+        gerador mais cauteloso --- e \textit{Self-RAG} é exatamente isso ---
+        é plausível que a métrica RAGAS \emph{regrida} apesar de a
+        segurança clínica real melhorar. Portanto, esta linha de pesquisa
+        deve ser conduzida em \textbf{co-design com a revisão da métrica de
+        avaliação} (e.g., \textit{Faithfulness} ponderada por relevância
+        clínica, ou substituição por rubrica multidimensional avaliada por
+        especialista), e não como substituição plug-and-play do gate atual;
   \item \textbf{Chunking estrito por tokens do modelo} ---
         substituir o \textit{chunker} hierárquico atual (guiado por
         cabeçalhos do \textit{Markdown}) por estratégia tipo
