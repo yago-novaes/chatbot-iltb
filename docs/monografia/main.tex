@@ -45,6 +45,10 @@
   listname={Lista de Quadros},
   placement=htbp
 ]{quadro}
+% O newfloat por si só não garante que o \caption{} dentro do ambiente
+% renderize "Quadro X" — em algumas distribuições TeX o caption herda o
+% name padrão "Figura". Forçar explicitamente via captionsetup:
+\captionsetup[quadro]{name=Quadro}
 % ─── Citações ABNT ───────────────────────────────────────────────────────────
 \usepackage[alf,
   abnt-full-initials=no,
