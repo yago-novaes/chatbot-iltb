@@ -1,0 +1,78 @@
+{
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "timestamp": "2026-05-17T01:19:41Z",
+      "llm": "groq/llama-3.3-70b-versatile",
+      "n_questions": 38,
+      "faithfulness": 0.7548,
+      "answer_relevancy": 0.7048,
+      "context_precision": 0.9532,
+      "context_recall": 0.8114
+    },
+    {
+      "timestamp": "2026-05-17T01:40:17Z",
+      "llm": "groq/llama-3.3-70b-versatile",
+      "n_questions": 38,
+      "faithfulness": 0.7541,
+      "answer_relevancy": 0.7273,
+      "context_precision": 0.9488,
+      "context_recall": 0.8158
+    },
+    {
+      "timestamp": "2026-05-17T02:01:39Z",
+      "llm": "groq/llama-3.3-70b-versatile",
+      "n_questions": 38,
+      "faithfulness": 0.7484,
+      "answer_relevancy": 0.7442,
+      "context_precision": 0.9664,
+      "context_recall": 0.8158
+    }
+  ],
+  "aggregate": {
+    "faithfulness": {
+      "mean": 0.7524,
+      "sd": 0.0035,
+      "min": 0.7484,
+      "max": 0.7548,
+      "values": [
+        0.7548,
+        0.7541,
+        0.7484
+      ]
+    },
+    "answer_relevancy": {
+      "mean": 0.7254,
+      "sd": 0.0198,
+      "min": 0.7048,
+      "max": 0.7442,
+      "values": [
+        0.7048,
+        0.7273,
+        0.7442
+      ]
+    },
+    "context_precision": {
+      "mean": 0.9561,
+      "sd": 0.0092,
+      "min": 0.9488,
+      "max": 0.9664,
+      "values": [
+        0.9532,
+        0.9488,
+        0.9664
+      ]
+    },
+    "context_recall": {
+      "mean": 0.8143,
+      "sd": 0.0025,
+      "min": 0.8114,
+      "max": 0.8158,
+      "values": [
+        0.8114,
+        0.8158,
+        0.8158
+      ]
+    }
+  }
+}

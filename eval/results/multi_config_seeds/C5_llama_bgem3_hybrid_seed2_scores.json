@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-05-17T12:40:13Z",
+  "llm": "groq/llama-3.3-70b-versatile",
+  "n_questions": 38,
+  "faithfulness": 0.7582,
+  "answer_relevancy": 0.7057,
+  "context_precision": 0.9247,
+  "context_recall": 0.8439,
+  "_config_id": "C5_llama_bgem3_hybrid",
+  "_config_label": "Llama 3.3 70B + BGE-M3 1024D + hybrid (sem rerank)",
+  "_seed": 2
+}

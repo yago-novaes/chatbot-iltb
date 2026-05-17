@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-05-17T04:34:44Z",
+  "llm": "openai/gpt-4o",
+  "n_questions": 38,
+  "faithfulness": 0.6123,
+  "answer_relevancy": 0.6381,
+  "context_precision": 0.924,
+  "context_recall": 0.7658,
+  "_config_id": "C3_gpt4o_bgem3_dense",
+  "_config_label": "GPT-4o + BGE-M3 1024D + dense",
+  "_seed": 3
+}

@@ -1,0 +1,434 @@
+{
+  "C1_llama_minilm_dense": {
+    "label": "Llama 3.3 70B + MiniLM 384D + dense",
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "timestamp": "2026-05-17T02:19:42Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.5192,
+        "answer_relevancy": 0.3231,
+        "context_precision": 0.7288,
+        "context_recall": 0.5596,
+        "_config_id": "C1_llama_minilm_dense",
+        "_config_label": "Llama 3.3 70B + MiniLM 384D + dense",
+        "_seed": 1
+      },
+      {
+        "timestamp": "2026-05-17T02:36:46Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.4592,
+        "answer_relevancy": 0.3014,
+        "context_precision": 0.7361,
+        "context_recall": 0.5553,
+        "_config_id": "C1_llama_minilm_dense",
+        "_config_label": "Llama 3.3 70B + MiniLM 384D + dense",
+        "_seed": 2
+      },
+      {
+        "timestamp": "2026-05-17T02:53:41Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.4802,
+        "answer_relevancy": 0.3602,
+        "context_precision": 0.7427,
+        "context_recall": 0.4307,
+        "_config_id": "C1_llama_minilm_dense",
+        "_config_label": "Llama 3.3 70B + MiniLM 384D + dense",
+        "_seed": 3
+      }
+    ],
+    "aggregate": {
+      "faithfulness": {
+        "mean": 0.4862,
+        "sd": 0.0304,
+        "min": 0.4592,
+        "max": 0.5192,
+        "values": [
+          0.5192,
+          0.4592,
+          0.4802
+        ]
+      },
+      "answer_relevancy": {
+        "mean": 0.3282,
+        "sd": 0.0297,
+        "min": 0.3014,
+        "max": 0.3602,
+        "values": [
+          0.3231,
+          0.3014,
+          0.3602
+        ]
+      },
+      "context_precision": {
+        "mean": 0.7359,
+        "sd": 0.007,
+        "min": 0.7288,
+        "max": 0.7427,
+        "values": [
+          0.7288,
+          0.7361,
+          0.7427
+        ]
+      },
+      "context_recall": {
+        "mean": 0.5152,
+        "sd": 0.0732,
+        "min": 0.4307,
+        "max": 0.5596,
+        "values": [
+          0.5596,
+          0.5553,
+          0.4307
+        ]
+      }
+    }
+  },
+  "C2_gpt4o_minilm_dense": {
+    "label": "GPT-4o + MiniLM 384D + dense",
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "timestamp": "2026-05-17T03:10:38Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.3947,
+        "answer_relevancy": 0.3132,
+        "context_precision": 0.769,
+        "context_recall": 0.5684,
+        "_config_id": "C2_gpt4o_minilm_dense",
+        "_config_label": "GPT-4o + MiniLM 384D + dense",
+        "_seed": 1
+      },
+      {
+        "timestamp": "2026-05-17T03:27:16Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.3991,
+        "answer_relevancy": 0.2863,
+        "context_precision": 0.7434,
+        "context_recall": 0.5684,
+        "_config_id": "C2_gpt4o_minilm_dense",
+        "_config_label": "GPT-4o + MiniLM 384D + dense",
+        "_seed": 2
+      },
+      {
+        "timestamp": "2026-05-17T03:43:45Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.3904,
+        "answer_relevancy": 0.2911,
+        "context_precision": 0.742,
+        "context_recall": 0.5289,
+        "_config_id": "C2_gpt4o_minilm_dense",
+        "_config_label": "GPT-4o + MiniLM 384D + dense",
+        "_seed": 3
+      }
+    ],
+    "aggregate": {
+      "faithfulness": {
+        "mean": 0.3947,
+        "sd": 0.0044,
+        "min": 0.3904,
+        "max": 0.3991,
+        "values": [
+          0.3947,
+          0.3991,
+          0.3904
+        ]
+      },
+      "answer_relevancy": {
+        "mean": 0.2969,
+        "sd": 0.0143,
+        "min": 0.2863,
+        "max": 0.3132,
+        "values": [
+          0.3132,
+          0.2863,
+          0.2911
+        ]
+      },
+      "context_precision": {
+        "mean": 0.7515,
+        "sd": 0.0152,
+        "min": 0.742,
+        "max": 0.769,
+        "values": [
+          0.769,
+          0.7434,
+          0.742
+        ]
+      },
+      "context_recall": {
+        "mean": 0.5552,
+        "sd": 0.0228,
+        "min": 0.5289,
+        "max": 0.5684,
+        "values": [
+          0.5684,
+          0.5684,
+          0.5289
+        ]
+      }
+    }
+  },
+  "C3_gpt4o_bgem3_dense": {
+    "label": "GPT-4o + BGE-M3 1024D + dense",
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "timestamp": "2026-05-17T04:01:06Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.632,
+        "answer_relevancy": 0.6205,
+        "context_precision": 0.9437,
+        "context_recall": 0.7702,
+        "_config_id": "C3_gpt4o_bgem3_dense",
+        "_config_label": "GPT-4o + BGE-M3 1024D + dense",
+        "_seed": 1
+      },
+      {
+        "timestamp": "2026-05-17T04:17:55Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.6154,
+        "answer_relevancy": 0.6176,
+        "context_precision": 0.9415,
+        "context_recall": 0.7921,
+        "_config_id": "C3_gpt4o_bgem3_dense",
+        "_config_label": "GPT-4o + BGE-M3 1024D + dense",
+        "_seed": 2
+      },
+      {
+        "timestamp": "2026-05-17T04:34:44Z",
+        "llm": "openai/gpt-4o",
+        "n_questions": 38,
+        "faithfulness": 0.6123,
+        "answer_relevancy": 0.6381,
+        "context_precision": 0.924,
+        "context_recall": 0.7658,
+        "_config_id": "C3_gpt4o_bgem3_dense",
+        "_config_label": "GPT-4o + BGE-M3 1024D + dense",
+        "_seed": 3
+      }
+    ],
+    "aggregate": {
+      "faithfulness": {
+        "mean": 0.6199,
+        "sd": 0.0106,
+        "min": 0.6123,
+        "max": 0.632,
+        "values": [
+          0.632,
+          0.6154,
+          0.6123
+        ]
+      },
+      "answer_relevancy": {
+        "mean": 0.6254,
+        "sd": 0.0111,
+        "min": 0.6176,
+        "max": 0.6381,
+        "values": [
+          0.6205,
+          0.6176,
+          0.6381
+        ]
+      },
+      "context_precision": {
+        "mean": 0.9364,
+        "sd": 0.0108,
+        "min": 0.924,
+        "max": 0.9437,
+        "values": [
+          0.9437,
+          0.9415,
+          0.924
+        ]
+      },
+      "context_recall": {
+        "mean": 0.776,
+        "sd": 0.0141,
+        "min": 0.7658,
+        "max": 0.7921,
+        "values": [
+          0.7702,
+          0.7921,
+          0.7658
+        ]
+      }
+    }
+  },
+  "C4_llama_bgem3_dense": {
+    "label": "Llama 3.3 70B + BGE-M3 1024D + dense (pos-migracao)",
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "timestamp": "2026-05-17T04:51:53Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.6758,
+        "answer_relevancy": 0.6461,
+        "context_precision": 0.9247,
+        "context_recall": 0.7658,
+        "_config_id": "C4_llama_bgem3_dense",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + dense (pos-migracao)",
+        "_seed": 1
+      },
+      {
+        "timestamp": "2026-05-17T05:12:22Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.6821,
+        "answer_relevancy": 0.673,
+        "context_precision": 0.9206,
+        "context_recall": 0.7369,
+        "_config_id": "C4_llama_bgem3_dense",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + dense (pos-migracao)",
+        "_seed": 2
+      },
+      {
+        "timestamp": "2026-05-17T05:30:19Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "_config_id": "C4_llama_bgem3_dense",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + dense (pos-migracao)",
+        "_seed": 3
+      }
+    ],
+    "aggregate": {
+      "faithfulness": {
+        "mean": 0.6789,
+        "sd": 0.0045,
+        "min": 0.6758,
+        "max": 0.6821,
+        "values": [
+          0.6758,
+          0.6821
+        ]
+      },
+      "answer_relevancy": {
+        "mean": 0.6596,
+        "sd": 0.019,
+        "min": 0.6461,
+        "max": 0.673,
+        "values": [
+          0.6461,
+          0.673
+        ]
+      },
+      "context_precision": {
+        "mean": 0.9226,
+        "sd": 0.0029,
+        "min": 0.9206,
+        "max": 0.9247,
+        "values": [
+          0.9247,
+          0.9206
+        ]
+      },
+      "context_recall": {
+        "mean": 0.7513,
+        "sd": 0.0204,
+        "min": 0.7369,
+        "max": 0.7658,
+        "values": [
+          0.7658,
+          0.7369
+        ]
+      }
+    }
+  },
+  "C5_llama_bgem3_hybrid": {
+    "label": "Llama 3.3 70B + BGE-M3 1024D + hybrid (sem rerank)",
+    "n_seeds": 3,
+    "per_seed": [
+      {
+        "timestamp": "2026-05-17T12:35:32Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.7368,
+        "answer_relevancy": 0.7439,
+        "context_precision": 0.9108,
+        "context_recall": 0.8009,
+        "_config_id": "C5_llama_bgem3_hybrid",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + hybrid (sem rerank)",
+        "_seed": 1
+      },
+      {
+        "timestamp": "2026-05-17T12:40:13Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.7582,
+        "answer_relevancy": 0.7057,
+        "context_precision": 0.9247,
+        "context_recall": 0.8439,
+        "_config_id": "C5_llama_bgem3_hybrid",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + hybrid (sem rerank)",
+        "_seed": 2
+      },
+      {
+        "timestamp": "2026-05-17T12:45:04Z",
+        "llm": "groq/llama-3.3-70b-versatile",
+        "n_questions": 38,
+        "faithfulness": 0.7241,
+        "answer_relevancy": 0.6727,
+        "context_precision": 0.9108,
+        "context_recall": 0.7991,
+        "_config_id": "C5_llama_bgem3_hybrid",
+        "_config_label": "Llama 3.3 70B + BGE-M3 1024D + hybrid (sem rerank)",
+        "_seed": 3
+      }
+    ],
+    "aggregate": {
+      "faithfulness": {
+        "mean": 0.7397,
+        "sd": 0.0172,
+        "min": 0.7241,
+        "max": 0.7582,
+        "values": [
+          0.7368,
+          0.7582,
+          0.7241
+        ]
+      },
+      "answer_relevancy": {
+        "mean": 0.7074,
+        "sd": 0.0356,
+        "min": 0.6727,
+        "max": 0.7439,
+        "values": [
+          0.7439,
+          0.7057,
+          0.6727
+        ]
+      },
+      "context_precision": {
+        "mean": 0.9154,
+        "sd": 0.008,
+        "min": 0.9108,
+        "max": 0.9247,
+        "values": [
+          0.9108,
+          0.9247,
+          0.9108
+        ]
+      },
+      "context_recall": {
+        "mean": 0.8146,
+        "sd": 0.0254,
+        "min": 0.7991,
+        "max": 0.8439,
+        "values": [
+          0.8009,
+          0.8439,
+          0.7991
+        ]
+      }
+    }
+  }
+}

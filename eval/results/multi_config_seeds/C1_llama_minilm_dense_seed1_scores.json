@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-05-17T02:19:42Z",
+  "llm": "groq/llama-3.3-70b-versatile",
+  "n_questions": 38,
+  "faithfulness": 0.5192,
+  "answer_relevancy": 0.3231,
+  "context_precision": 0.7288,
+  "context_recall": 0.5596,
+  "_config_id": "C1_llama_minilm_dense",
+  "_config_label": "Llama 3.3 70B + MiniLM 384D + dense",
+  "_seed": 1
+}

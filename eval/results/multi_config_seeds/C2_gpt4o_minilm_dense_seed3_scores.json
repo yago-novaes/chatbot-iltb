@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-05-17T03:43:45Z",
+  "llm": "openai/gpt-4o",
+  "n_questions": 38,
+  "faithfulness": 0.3904,
+  "answer_relevancy": 0.2911,
+  "context_precision": 0.742,
+  "context_recall": 0.5289,
+  "_config_id": "C2_gpt4o_minilm_dense",
+  "_config_label": "GPT-4o + MiniLM 384D + dense",
+  "_seed": 3
+}

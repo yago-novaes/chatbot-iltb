@@ -16,6 +16,9 @@ docs/protocolos/*.pdf
 
 # Resultados de avaliação RAGAS — ragas_detailed.json é grande/gerado; scores são versionados
 eval/results/ragas_detailed.json
+# Backups temporários gerados pelos scripts de replicação multi-seed
+eval/results/*.bak_*
+eval/results/*.json.bak_*
 
 # Outputs gerados pelo notebook de análise da sessão expert (PNGs/tabelas/sumário)
 # Versionar quando dados reais da sessão forem produzidos; por padrão, gerar localmente.

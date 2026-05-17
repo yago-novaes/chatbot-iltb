@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-05-17T04:51:53Z",
+  "llm": "groq/llama-3.3-70b-versatile",
+  "n_questions": 38,
+  "faithfulness": 0.6758,
+  "answer_relevancy": 0.6461,
+  "context_precision": 0.9247,
+  "context_recall": 0.7658,
+  "_config_id": "C4_llama_bgem3_dense",
+  "_config_label": "Llama 3.3 70B + BGE-M3 1024D + dense (pos-migracao)",
+  "_seed": 1
+}
