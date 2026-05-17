@@ -42,13 +42,18 @@ def main():
     order = ["ET", "IND", "PE", "DI", "MO", "IT", "EA", "FE"]
     ds.sort(key=lambda q: (order.index(CAT_MAP.get(q["category"], "FE")), q["id"]))
     lines = []
-    for q in ds:
+    last_idx = len(ds) - 1
+    for i, q in enumerate(ds):
         sig = CAT_MAP.get(q["category"], "??")
         qid = q["id"]
         text = esc(q["question"])
         gt = esc(q["ground_truth"])
+        # Última linha não inclui \hline: o \bottomrule do \endlastfoot
+        # da longtable já fecha a tabela visualmente. Inserir \hline
+        # antes do \bottomrule produz linha dupla e pode forçar overflow.
+        line_end = "\\\\ \\hline" if i < last_idx else "\\\\"
         lines.append(
-            f"\\texttt{{{qid}}} & {sig} & {text} & {gt} \\\\ \\hline"
+            f"\\texttt{{{qid}}} & {sig} & {text} & {gt} {line_end}"
         )
     output = "\n".join(lines)
     (here / "_dataset_rows.tex").write_text(output, encoding="utf-8")

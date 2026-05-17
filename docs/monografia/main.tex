@@ -1835,11 +1835,11 @@ Os resultados consolidados da avaliação RAGAS, à luz da ablação $2 \times 2
 descrita na Seção~\ref{sec:ablacao-2x2} e da configuração final pós-migração
 da Seção~\ref{sec:gate-pos-migracao}, comportam três leituras complementares.
 
-\textbf{Primeira: o embedding era o gargalo dominante.} A migração de
-\texttt{paraphrase-multilingual-MiniLM-L12-v2} (384 dimensões) para
-\texttt{BAAI/bge-m3} (1024 dimensões) produziu ganhos de $+25$ a $+45$\,pp
-em todas as métricas para os dois geradores avaliados, com magnitudes
-várias vezes superiores ao DP inter-seed
+\textbf{Primeira: o embedding era o gargalo dominante.} A migração do
+embedding inicial de 384 dimensões (MiniLM, da família SBERT
+\cite{reimers2019}) para o BGE-M3 1024D produziu ganhos de $+25$ a
+$+45$\,pp em todas as métricas para os dois geradores avaliados, com
+magnitudes várias vezes superiores ao DP inter-seed
 (Tabela~\ref{tab:ablacao-2x2}). Esse
 achado é convergente com os \textit{benchmarks} multilíngues
 \cite{SHTI2023, mmteb2025} e com a revisão sistemática de
@@ -2360,11 +2360,6 @@ arquivos Markdown indexados a partir dos protocolos do MS e da OMS. A tabela
 abaixo lista todas as questões, agrupadas por categoria
 (ET, IND, PE, DI, MO, IT, EA, FE).
 
-% Reduz o espaço após a longtable e evita que o \bottomrule órfão
-% (do \endlastfoot) vá sozinho para uma página nova. Como cada linha do
-% _dataset_rows.tex já termina com `\\ \hline`, a última linha fornece
-% a borda inferior visualmente; \endlastfoot fica vazio para evitar
-% conflito.
 \setlength{\LTpre}{0pt}
 \setlength{\LTpost}{0pt}
 {\footnotesize
@@ -2381,10 +2376,12 @@ abaixo lista todas as questões, agrupadas por categoria
 \midrule
 \multicolumn{4}{r}{\textit{Continua na próxima página}} \\
 \endfoot
+\bottomrule
 \endlastfoot
 \input{_dataset_rows.tex}
 \end{longtable}
 }
+\vspace{-1\baselineskip}
 
 % ─── Apêndice C — Breakdown por categoria ────────────────────────────────────
 \chapter{Breakdown por Categoria do Gate Final}
@@ -2458,58 +2455,53 @@ publica métricas RAGAS exatamente equivalentes às reportadas aqui ---,
 sendo apresentada como tabela exploratória e não como \textit{benchmark}
 formal.
 
-\begin{table}[ht]
+\begin{table}[!htbp]
   \caption{Posicionamento aproximado vs.\ estado da arte de RAG biomédico
-           (comparação exploratória; magnitudes da literatura citada,
-           agregadas qualitativamente)}
+           (comparação exploratória)}
   \label{tab:sota}
   \footnotesize
-  \begin{tabularx}{\textwidth}{@{}lccXc@{}}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{}p{2.6cm}p{2.5cm}cXr@{}}
   \toprule
   \textbf{Sistema} & \textbf{Domínio} & \textbf{Idioma} &
   \textbf{Métrica reportada} & \textbf{Valor} \\
   \midrule
-  \multicolumn{5}{l}{\emph{Referenciais da literatura}} \\
+  \multicolumn{5}{@{}l}{\emph{Referenciais da literatura}} \\
   \midrule
   Almanac \cite{zakka2024almanac}
     & Medicina interna & EN
-    & Avaliação humana de fidelidade (4 médicos; escala Likert)
-    & \aluno{Inserir valor literal do paper Almanac (consultar Tabela~2
-      do artigo NEJM AI)} \\
+    & Aval.\ humana de fidelidade (4 médicos)
+    & n.r.\textsuperscript{a} \\
   Self-BioRAG \cite{jeong2024selfbiorag}
-    & QA biomédico long-form & EN
-    & \textit{Faithfulness} (juiz GPT-4); ganho sobre RAG sem
-      \textit{self-reflection}
-    & \aluno{Inserir baseline e ganho do paper (faixa $+8$ a $+15$\,pp
-      reportada na monografia)} \\
-  Meta-análise \citeauthor{ocaf2024} \cite{ocaf2024}
-    & RAG biomédico (30 estudos) & Hetero. (predomínio EN)
-    & Teto comum de \textit{Faithfulness} sem
-      \textit{self-reflection}
+    & QA biomédico \textit{long-form} & EN
+    & \textit{Faithfulness}; ganho com \textit{self-reflection}
+    & $+8$--$15$\,pp\textsuperscript{b} \\
+  Meta-análise \cite{ocaf2024}
+    & RAG biomédico (30 estudos) & Hetero.
+    & Teto comum de \textit{Faithfulness}
     & $\sim 0{,}75$ \\
   \midrule
-  \multicolumn{5}{l}{\emph{Este trabalho}} \\
+  \multicolumn{5}{@{}l}{\emph{Este trabalho (gate final, 3 seeds)}} \\
   \midrule
-  Chatbot ILTB (gate final)
+  Chatbot ILTB
     & ILTB / TB latente & PT-BR
-    & RAGAS \textit{Context Precision} (3 seeds)
+    & RAGAS \textit{Context Precision}
     & $0{,}956 \pm 0{,}009$ \\
-  Chatbot ILTB (gate final)
+  Chatbot ILTB
     & ILTB / TB latente & PT-BR
-    & RAGAS \textit{Faithfulness} (3 seeds; juiz
-      \texttt{gpt-4o-mini})
+    & RAGAS \textit{Faithfulness}
     & $0{,}752 \pm 0{,}004$ \\
   \bottomrule
   \end{tabularx}
   \caption*{Fonte: Produção do próprio autor a partir da literatura citada.
-            \textbf{Ressalvas de comparabilidade.} Os referenciais usam
-            datasets, juízes e definições operacionais distintos das
-            adotadas aqui; valores devem ser lidos como indicação de
-            ordem de grandeza, não como comparação controlada. A
-            comparação \emph{controlada} com o estado da arte exige
-            replicação dos sistemas referenciais sobre o mesmo
-            \textit{dataset} ILTB PT-BR --- linha de pesquisa registrada
-            em Trabalhos Futuros.}
+            \textsuperscript{a} Valor numérico não-comparável: avaliação
+            humana, não automática. \textsuperscript{b} Ganho relativo
+            sobre RAG sem \textit{self-reflection} no mesmo
+            \textit{benchmark} do paper. \textbf{Ressalvas:} datasets,
+            juízes e definições operacionais distintas dos adotados aqui;
+            ler como ordem de grandeza, não como comparação controlada.
+            Replicação dos referenciais sobre o \textit{dataset} ILTB
+            PT-BR consta em Trabalhos Futuros.}
 \end{table}
 
 \textbf{Leitura.} O patamar de \textit{Faithfulness} $0{,}752 \pm 0{,}004$
@@ -2538,92 +2530,103 @@ texto da monografia. O preenchimento completo segue como recomendação
 metodológica para versões pós-defesa do trabalho ou para publicação
 derivada.
 
-\begin{table}[ht]
-  \caption{Checklist TRIPOD-LLM adaptada (preenchimento parcial)}
-  \label{tab:tripod}
-  \footnotesize
-  \begin{tabularx}{\textwidth}{@{}clXc@{}}
-  \toprule
-  \textbf{\#} & \textbf{Item} & \textbf{Mapeamento na monografia} & \textbf{Status} \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Título, resumo e introdução}} \\
-  \midrule
-  1 & Título identifica uso de LLM em saúde & Capa &  Atendido \\
-  2 & Resumo estruturado: domínio, dataset, métricas, conclusões & Resumo &  Parcial (placeholder pós-expert) \\
-  3 & Justificativa do uso de LLM (vs.\ alternativas) &
-      Cap.~\ref{cap:introducao}, Quadro~\ref{quad:decisoes-tecnicas} (D3) &  Atendido \\
-  4 & Objetivos específicos e mensuráveis &
-      Seção \textit{Objetivos Específicos} (OE1--OE4) &  Atendido \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Métodos --- fonte de dados e população}} \\
-  \midrule
-  5 & Origem do corpus e processo de seleção &
-      Cap.~\ref{cap:desenvolvimento}, Tabela~\ref{tab:corpus} &  Atendido \\
-  6 & População alvo (perfil do usuário do sistema) &
-      Seção~\ref{sec:adocao-ref}, Seção~\ref{sec:sessao-expert} &  Atendido \\
-  7 & Construção do \textit{dataset} de avaliação &
-      Seção \textit{Dataset de Avaliação} &  Atendido \\
-  8 & Viés de construção do \textit{dataset} reconhecido &
-      Limitação L6 &  Atendido \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Métodos --- modelo, prompt, parametrização}} \\
-  \midrule
-  9 & Modelo LLM identificado (versão, provedor) &
-      Quadro~\ref{quad:decisoes-tecnicas} (D3), Cap.~\ref{cap:desenvolvimento} &  Atendido \\
-  10 & Procedência dos dados de treinamento do LLM declarada &
-      Cap.~\ref{cap:referencial} (Sabiá-2, Llama 3) &  Parcial (declarado em alto nível) \\
-  11 & \textit{Prompt engineering} reportado (versões, iterações) &
-       Apêndice~\ref{ape:prompt} &  Atendido \\
-  12 & Parâmetros de geração (temperatura, \textit{max tokens}) &
-       Cap.~\ref{cap:desenvolvimento}, código-fonte público &  Atendido \\
-  13 & Estratégia de recuperação descrita (chunker, embedding, k) &
-       Cap.~\ref{cap:desenvolvimento}, Quadro~\ref{quad:decisoes-tecnicas} &  Atendido \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Métodos --- avaliação e validação}} \\
-  \midrule
-  14 & Métricas quantitativas justificadas &
-       Cap.~\ref{cap:avaliacao} (RAGAS), Seção~\ref{sec:interp-faith} &  Atendido \\
-  15 & Replicação multi-seed para variância do juiz LLM &
-       Tabelas~\ref{tab:ablacao-2x2} e~\ref{tab:hybrid-rerank} &  Atendido \\
-  16 & Viés do juiz LLM (mesma família do candidato avaliado) &
-       Seção~\ref{sec:ablacao-2x2}, parágrafo \textit{Limitação do juiz}; L6 &  Atendido \\
-  17 & Validação humana complementar à automatizada &
-       Seção~\ref{sec:sessao-expert} & Pendente (sessão prevista) \\
-  18 & Tamanho amostral (questões e avaliadores) declarado &
-       Seção~\ref{sec:sessao-expert}, Cap.~\ref{cap:avaliacao} &  Atendido \\
-  19 & Dados ausentes / falhas de avaliação tratadas &
-       \texttt{eval/run\_ragas.py} (NaN handling), Cap.~\ref{cap:avaliacao} &  Atendido \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Resultados e discussão}} \\
-  \midrule
-  20 & Resultados quantitativos com incerteza (DP) &
-       Tabelas~\ref{tab:ablacao-2x2}, \ref{tab:hybrid-rerank},
-       \ref{tab:gate-final}, Apêndice~\ref{ape:per-category} &  Atendido \\
-  21 & Discussão de viés sistemático da métrica &
-       Seção~\ref{sec:interp-faith} (paradoxo abstrativo--vs--conservador) &  Atendido \\
-  22 & Generalizabilidade discutida &
-       Cap.~\ref{cap:discussao}, Limitações L1--L7 &  Atendido \\
-  23 & Limitações nomeadas explicitamente &
-       Seção \textit{Limitações} (L1--L7) &  Atendido \\
-  \midrule
-  \multicolumn{4}{l}{\emph{Outras informações}} \\
-  \midrule
-  24 & Código-fonte e \textit{dataset} disponíveis publicamente &
-       Repositório GitHub (Cap.~\ref{cap:metodologia}) &  Atendido \\
-  25 & Privacidade de dados e adequação regulatória discutidas &
-       Seção \textit{Compatibilidade do Desenho com LGPD} &  Atendido \\
-  26 & Conflitos de interesse declarados &
-       Folha de rosto e ficha catalográfica & Pendente (versão final) \\
-  \bottomrule
-  \end{tabularx}
-  \caption*{Fonte: Produção do próprio autor, adaptação parcial da diretriz
-            TRIPOD-LLM \cite{gallifant2025tripod}. Status \emph{Atendido}
-            indica que o item está coberto no texto da monografia (com
-            granularidade variável); \emph{Parcial} indica cobertura
-            incompleta que pode ser ampliada em revisão pós-defesa;
-            \emph{Pendente} indica item dependente de etapa não executada
-            no escopo deste TCC.}
-\end{table}
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
+{\footnotesize
+\begin{longtable}{@{}p{0.6cm}p{5cm}p{6cm}p{1.8cm}@{}}
+\caption{Checklist TRIPOD-LLM adaptada (preenchimento parcial)}
+\label{tab:tripod} \\
+\toprule
+\textbf{\#} & \textbf{Item} & \textbf{Mapeamento na monografia} & \textbf{Status} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\textit{(continuação da Tabela~\ref{tab:tripod})}} \\
+\toprule
+\textbf{\#} & \textbf{Item} & \textbf{Mapeamento na monografia} & \textbf{Status} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{Continua na próxima página}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\multicolumn{4}{@{}l}{\emph{Título, resumo e introdução}} \\
+\midrule
+1 & Título identifica uso de LLM em saúde & Capa & Atendido \\
+2 & Resumo estruturado: domínio, dataset, métricas & Resumo & Parcial \\
+3 & Justificativa do uso de LLM (vs.\ alternativas) &
+    Cap.~\ref{cap:introducao}; D3 do Quadro~\ref{quad:decisoes-tecnicas} & Atendido \\
+4 & Objetivos específicos e mensuráveis &
+    Seção \textit{Objetivos Específicos} (OE1--OE4) & Atendido \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Métodos --- fonte de dados e população}} \\
+\midrule
+5 & Origem do corpus e processo de seleção &
+    Cap.~\ref{cap:desenvolvimento}; Tabela~\ref{tab:corpus} & Atendido \\
+6 & População alvo (perfil do usuário) &
+    Seções~\ref{sec:adocao-ref}, \ref{sec:sessao-expert} & Atendido \\
+7 & Construção do \textit{dataset} de avaliação &
+    Seção \textit{Dataset de Avaliação} & Atendido \\
+8 & Viés de construção do \textit{dataset} reconhecido &
+    Limitação L6 & Atendido \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Métodos --- modelo, \emph{prompt}, parametrização}} \\
+\midrule
+9 & Modelo LLM identificado (versão, provedor) &
+    D3 (Quadro~\ref{quad:decisoes-tecnicas}); Cap.~\ref{cap:desenvolvimento} & Atendido \\
+10 & Procedência dos dados de treinamento do LLM &
+     Cap.~\ref{cap:referencial} (Sabiá-2, Llama 3) & Parcial \\
+11 & \textit{Prompt engineering} (versões, iterações) &
+     Apêndice~\ref{ape:prompt} & Atendido \\
+12 & Parâmetros de geração (temperatura, tokens) &
+     Cap.~\ref{cap:desenvolvimento}; código público & Atendido \\
+13 & Estratégia de recuperação (chunker, embedding, k) &
+     Cap.~\ref{cap:desenvolvimento}; Apêndice~\ref{ape:topk-sweep} & Atendido \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Métodos --- avaliação e validação}} \\
+\midrule
+14 & Métricas quantitativas justificadas &
+     Cap.~\ref{cap:avaliacao}; Seção~\ref{sec:interp-faith} & Atendido \\
+15 & Replicação multi-seed para variância do juiz &
+     Tabelas~\ref{tab:ablacao-2x2}, \ref{tab:hybrid-rerank} & Atendido \\
+16 & Viés do juiz LLM (mesma família do candidato) &
+     Seção~\ref{sec:ablacao-2x2}; L6 & Atendido \\
+17 & Validação humana complementar &
+     Seção~\ref{sec:sessao-expert} & Pendente \\
+18 & Tamanho amostral declarado &
+     Seções~\ref{sec:sessao-expert}, Cap.~\ref{cap:avaliacao} & Atendido \\
+19 & Dados ausentes / falhas de avaliação tratadas &
+     \texttt{eval/run\_ragas.py}; Cap.~\ref{cap:avaliacao} & Atendido \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Resultados e discussão}} \\
+\midrule
+20 & Resultados com incerteza (DP) &
+     Tabelas~\ref{tab:ablacao-2x2}, \ref{tab:hybrid-rerank},
+     \ref{tab:gate-final}; Apêndice~\ref{ape:per-category} & Atendido \\
+21 & Discussão de viés sistemático da métrica &
+     Seção~\ref{sec:interp-faith} (paradoxo) & Atendido \\
+22 & Generalizabilidade discutida &
+     Cap.~\ref{cap:discussao}; L1--L7 & Atendido \\
+23 & Limitações nomeadas explicitamente &
+     Seção \textit{Limitações} (L1--L7) & Atendido \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Outras informações}} \\
+\midrule
+24 & Código-fonte e \textit{dataset} públicos &
+     Repositório GitHub (Cap.~\ref{cap:metodologia}) & Atendido \\
+25 & Privacidade de dados e LGPD discutidas &
+     Seção \textit{Compatibilidade do Desenho com LGPD} & Atendido \\
+26 & Conflitos de interesse declarados &
+     Folha de rosto & Pendente \\
+\end{longtable}
+}
+
+\noindent\textit{Fonte:} Produção do próprio autor, adaptação parcial da
+diretriz TRIPOD-LLM \cite{gallifant2025tripod}. Status \emph{Atendido}
+indica cobertura no texto da monografia (com granularidade variável);
+\emph{Parcial} indica cobertura ampliável em revisão pós-defesa;
+\emph{Pendente} indica item dependente de etapa não executada no escopo
+deste TCC.
 
 A checklist é apresentada em forma adaptada para compatibilidade com a
 estrutura ABNT da monografia. O texto integral da diretriz TRIPOD-LLM
