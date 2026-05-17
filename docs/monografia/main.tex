@@ -38,7 +38,7 @@
 \usepackage{enumitem}
 \usepackage{xspace}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
 % Definição do ambiente "Quadro" via \DeclareCaptionType do pacote caption
 % (já carregado acima). Esta abordagem integra nativamente com \caption,
 % \label e \listof{}, ao contrário do newfloat que em algumas distribuições
@@ -1057,65 +1057,79 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     every node/.style={font=\scriptsize, align=center},
     actor/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick,
-      fill=orange!10, minimum width=1.9cm, minimum height=0.7cm,
+      fill=orange!10, minimum width=2.0cm, minimum height=0.8cm,
       inner sep=3pt,
     },
     component/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick,
-      fill=blue!8, minimum width=2.1cm, minimum height=0.7cm,
+      fill=blue!8, minimum width=2.4cm, minimum height=0.8cm,
       inner sep=3pt,
     },
     storage/.style={
       cylinder, shape border rotate=90, draw=black!75, thick,
-      fill=green!8, minimum width=1.8cm, minimum height=0.9cm,
+      fill=green!8, minimum width=1.9cm, minimum height=1.0cm,
       aspect=0.25, inner sep=2pt,
     },
     external/.style={
       rectangle, rounded corners=2pt, draw=black!75, thick, dashed,
-      fill=red!6, minimum width=2.1cm, minimum height=0.7cm,
+      fill=red!6, minimum width=2.4cm, minimum height=0.8cm,
       inner sep=3pt,
     },
-    flow/.style={-{Latex[length=1.8mm]}, thick, black!70},
-    flowback/.style={-{Latex[length=1.8mm]}, thick, black!50},
-    group/.style={
-      rectangle, rounded corners=4pt, draw=black!30,
-      dashed, inner sep=6pt,
+    groupbox/.style={
+      rectangle, rounded corners=4pt, draw=black!35, thick,
+      inner sep=8pt,
+    },
+    flow/.style={-{Latex[length=2mm]}, thick, black!75},
+    flowback/.style={-{Latex[length=2mm]}, thick, black!45, dashed},
+    edgelabel/.style={
+      midway, fill=white, inner sep=1pt, font=\tiny,
     },
   ]
-    % Coluna 1: usuário e front
-    \node[actor] (user) {Enfermeiro\\(usuário)};
-    \node[component, right=1.0cm of user] (web) {Interface Web\\(HTML/JS)};
-    \node[component, right=1.0cm of web] (api) {FastAPI\\(\texttt{/chat})};
+    % ─── Linha 1: front-end (horizontal) ─────────────────────────
+    \node[actor] (user) {Enfermeiro\\\scriptsize(usuário)};
+    \node[component, right=0.8cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
+    \node[component, right=0.8cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
 
-    % Coluna 2 (linha 2): pipeline RAG
-    \node[component, below=1.3cm of api] (retr) {Retriever\\(hybrid + rerank)};
-    \node[component, left=0.7cm of retr] (emb) {Embedding\\BGE-M3 1024D\\(local)};
-    \node[storage, left=0.7cm of emb] (chroma) {ChromaDB\\898 chunks};
-    \node[component, below=0.7cm of retr] (bm25) {BM25\\\textit{sidecar}};
+    % ─── Linha 2: pipeline de recuperação (caixa agrupadora) ────
+    \node[component, below=2.0cm of api] (retr) {Retriever\\\scriptsize(hybrid\,+\,rerank)};
+    \node[component, left=0.7cm of retr] (emb) {Embedding\\BGE-M3 1024D};
+    \node[storage, left=0.7cm of emb] (chroma) {ChromaDB\\\scriptsize 898 chunks};
+    \node[component, below=0.6cm of retr] (bm25) {BM25 \emph{sidecar}};
     \node[component, right=0.7cm of retr] (rer) {Reranker\\mGTE (CPU)};
 
-    % LLM externo
-    \node[external, above=0.5cm of rer, xshift=1.4cm] (llm) {Llama 3.3 70B\\via API Groq\\(sem retenção)};
+    % Caixa agrupadora "pipeline RAG"
+    \begin{scope}[on background layer]
+      \node[groupbox, fit={(chroma) (emb) (retr) (bm25) (rer)},
+            label={[font=\scriptsize\bfseries, anchor=north west,
+                    inner sep=2pt]north west:Pipeline RAG (local)}] (rag) {};
+    \end{scope}
 
-    % Setas
-    \draw[flow] (user) -- node[above, font=\tiny] {pergunta} (web);
+    % ─── LLM externo (lado direito) ──────────────────────────────
+    \node[external, right=1.4cm of rer] (llm)
+        {Llama 3.3 70B\\\scriptsize via API Groq\\\scriptsize(sem retenção)};
+
+    % ─── Setas: fluxo da consulta ────────────────────────────────
+    \draw[flow] (user) -- node[edgelabel] {(1) pergunta} (web);
     \draw[flow] (web) -- (api);
-    \draw[flow] (api) -- ++(0,-0.65) -| node[pos=0.25, above, font=\tiny] {\texttt{query}} (retr);
+    \draw[flow] (api) -- node[edgelabel] {(2) query} (retr);
     \draw[flow] (retr) -- (emb);
     \draw[flow] (emb) -- (chroma);
-    \draw[flow] (chroma.south) |- ([yshift=-0.4cm]bm25.west) -- (bm25.west);
-    \draw[flow] (bm25.east) -- ([xshift=0.4cm]bm25.east) |- (rer.south);
-    \draw[flow] (rer.north) -- ++(0,0.25) -| (llm.south);
-    \draw[flowback] (llm.west) -| node[pos=0.75, right, font=\tiny] {resposta} (api.east);
-    \draw[flowback] (api) -- node[above, font=\tiny] {resposta} (web);
-    \draw[flowback] (web) -- (user);
+    \draw[flow] (retr) -- (bm25);
+    \draw[flow] (bm25.east) -| ([yshift=-0.2cm]rer.south) -- (rer.south);
+    \draw[flow] (rer.north) |- node[edgelabel, pos=0.75] {(3) top-5} (llm.west);
+
+    % ─── Setas: retorno da resposta ──────────────────────────────
+    \draw[flowback] (llm.north) |- ([yshift=0.4cm]api.east) -- (api.east)
+        node[edgelabel, pos=0.6] {(4) resposta};
+    \draw[flowback] (api) to[bend right=10] (web);
+    \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
-  \caption*{Fonte: Produção do próprio autor. Componentes em azul: backend
-            local. Cilindro verde: persistência (ChromaDB com índice HNSW).
-            Caixa tracejada vermelha: serviço externo (LLM via Groq, sem
-            armazenamento de \textit{prompts}). Setas sólidas pretas
-            representam o fluxo da consulta; setas mais claras, o retorno
-            da resposta.}
+  \caption*{Fonte: Produção do próprio autor. Componentes em azul:
+            \emph{backend} local. Cilindro verde: persistência (ChromaDB
+            com índice HNSW). Caixa tracejada vermelha: serviço externo
+            (LLM via Groq, sem armazenamento de \textit{prompts}). Setas
+            sólidas: fluxo da consulta (1 $\to$ 4); setas tracejadas:
+            retorno da resposta ao usuário.}
 \end{figure}
 
 \section{Corpus e Pré-processamento}
