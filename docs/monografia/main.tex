@@ -202,8 +202,12 @@ retrieval-augmented generation; RAG; large language models; nursing; data privac
 \cleardoublepage
 
 % ─── Lista de quadros ────────────────────────────────────────────────────────
+% O pacote newfloat (carregado no preâmbulo) cria automaticamente
+% \listofquadros com o título "Lista de Quadros" (definido em listname).
+% Usar \listof{quadro}{Lista de Quadros} é sintaxe do pacote `float` e
+% gera o bug "quadroLista de Quadros" no PDF.
 \pdfbookmark[0]{Lista de Quadros}{loq}
-\listof{quadro}{Lista de Quadros}
+\listofquadros
 \cleardoublepage
 
 % ─── Lista de tabelas ────────────────────────────────────────────────────────
@@ -681,16 +685,21 @@ apoio operacional relevante a profissionais de enfermagem.
 \section{Definição dos Objetivos da Solução}
 
 Os objetivos de design foram definidos com base nos requisitos funcionais e
-não funcionais do sistema, derivados da análise do problema. O
-Quadro~\ref{quad:decisoes} sintetiza as treze decisões arquiteturais e
-metodológicas (D1--D13), com a justificativa bibliográfica de cada uma. Decisões
+não funcionais do sistema, derivados da análise do problema. Os
+Quadros~\ref{quad:decisoes-tecnicas} e~\ref{quad:decisoes-metodologicas}
+sintetizam as treze decisões (D1--D13), com a justificativa bibliográfica de
+cada uma; o primeiro reúne decisões \emph{técnico-arquiteturais} (D1--D7) e
+o segundo reúne decisões \emph{metodológico-avaliativas} (D8--D13). Decisões
 revisadas no decorrer do projeto --- particularmente D10 e D12, em função do
-reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão final.
+reescopo da etapa de avaliação, e D11, antecipada ao escopo deste trabalho ---
+estão refletidas nos quadros em sua versão final.
 
-\begin{quadro}[h]
+\begin{quadro}[!htbp]
   \centering
-  \caption{Decisões de design do chatbot ILTB (D1--D13)}
-  \label{quad:decisoes}
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \caption{Decisões técnico-arquiteturais do chatbot ILTB (D1--D7)}
+  \label{quad:decisoes-tecnicas}
   \begin{tabularx}{\textwidth}{|c|X|X|}
   \hline
   \rowcolor{gray!25}
@@ -700,13 +709,14 @@ reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão 
         a geração em documentos oficiais \cite{lewis2021, gao2024, ocaf2024}.
         \\ \hline
   D2  & Embedding multilíngue \texttt{paraphrase-multilingual-MiniLM-L12-v2}
-        (384D), executado localmente. & Equilíbrio entre latência,
-        \textit{footprint} e requisito LGPD; limitações de dimensionalidade
-        documentadas como trabalho futuro \cite{reimers2019, mmteb2025, SHTI2023}.
-        \\ \hline
+        (384D) na fase inicial; migrado para \texttt{BAAI/bge-m3} (1024D) durante
+        a avaliação (Seção~\ref{sec:gate-pos-migracao}). & Equilíbrio entre
+        latência, \textit{footprint} e requisito LGPD; ganho de 1024D
+        empiricamente observado \cite{reimers2019, mmteb2025, SHTI2023,
+        marone2025mmbert}. \\ \hline
   D3  & \textit{Vector store} ChromaDB com índice HNSW e persistência em disco.
       & Execução embarcada sem servidor dedicado; HNSW provê busca aproximada
-        com complexidade logarítmica \cite{malkov2016}. \\ \hline
+        com complexidade logarítmica \cite{malkov2016, chroma2024}. \\ \hline
   D4  & LLM Llama~3.3~70B via API Groq como gerador. & Modelo \textit{open-weight}
         competitivo sem retenção de \textit{prompts} pelo provedor
         \cite{dubey2024}; modelos generalistas grandes superam especializados em
@@ -716,25 +726,41 @@ reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão 
         protocolos; alinhado a recomendações de chunking estrutural
         \cite{gao2024, advancedChunkingRAG2025}. \\ \hline
   D6  & Avaliação automatizada com RAGAS (\textit{faithfulness},
-        \textit{answer relevancy}, \textit{context precision/recall}). &
-        \textit{Framework reference-free} padrão em RAG biomédico
-        \cite{es2024, ocaf2024}. \\ \hline
+        \textit{answer relevancy}, \textit{context precision/recall})
+        complementada por avaliação humana. &
+        \textit{Framework reference-free} padrão em RAG biomédico, com
+        limitações conhecidas que exigem complemento por especialista
+        \cite{es2024, ocaf2024, gallifant2025tripod}. \\ \hline
   D7  & \textit{Pipeline} de embeddings 100\% local; LLM acessado sem
         armazenamento de \textit{prompts}. & Conformidade com LGPD (dados de
         saúde como sensíveis); literatura recomenda evitar APIs externas para
         dados clínicos \cite{lgpdSaude2023, lgpdEnfermagem2022,
         privacyRAGHealthcare2025, sokPrivacyLLM2026}. \\ \hline
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor.}
+\end{quadro}
+
+\begin{quadro}[!htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \caption{Decisões metodológico-avaliativas do chatbot ILTB (D8--D13)}
+  \label{quad:decisoes-metodologicas}
+  \begin{tabularx}{\textwidth}{|c|X|X|}
+  \hline
+  \rowcolor{gray!25}
+  \textbf{ID} & \textbf{Decisão} & \textbf{Justificativa} \\ \hline
   D8  & Adoção da metodologia DSRM como \textit{framework} de pesquisa. & Padrão
         consolidado para pesquisa em sistemas de informação com construção de
         artefato \cite{peffers2007}. \\ \hline
   D9  & Foco em ILTB como problema clínico, com corpus de documentos oficiais
         do MS e OMS. & Doença com alta prevalência global e brasileira; controle
-        da ILTB é estratégico para eliminação da TB \cite{who2018, who2023,
-        brasil2022}. \\ \hline
+        da ILTB é estratégico para eliminação da TB
+        \cite{who2018, who2020consolidatedTB, who2023, brasil2022}. \\ \hline
   D10 & Avaliação com 1 especialista em ILTB usando TAM-AIN + rubrica clínica
         multidimensional. & Replanejamento decorrente do reescopo do piloto;
         TAM-AIN é instrumento específico para enfermagem \cite{nursingTAM2024,
-        ocaf2024}. \\ \hline
+        davis1989tam, ocaf2024}. \\ \hline
   D11 & Busca híbrida BM25 + denso (RRF) com \textit{reranking}
         \textit{cross-encoder} mGTE --- implementada no escopo deste trabalho
         (Seções~\ref{sec:hybrid} e \ref{sec:rerank}).
@@ -747,10 +773,12 @@ reescopo da etapa de avaliação --- estão refletidas no quadro em sua versão 
         literatura recomenda métricas multidimensionais para validação com $N=1$
         \cite{ocaf2024, es2024}. \\ \hline
   D13 & Documentação explícita da taxa de alucinação como propriedade conhecida
-        do LLM, com ablação contra modelo de referência registrada como
-        trabalho futuro. & Tipologia e taxas de alucinação reportadas em
-        literatura sustentam o teto observado de \textit{faithfulness} no
-        Llama~3.3~70B \cite{bang2023, ocaf2024, llmsMedicalExam2026}. \\ \hline
+        do LLM, com ablação contra modelo de referência executada na fase de
+        avaliação (Seção~\ref{sec:ablacao-2x2}). & Tipologia e taxas de
+        alucinação reportadas em literatura sustentam o teto observado de
+        \textit{faithfulness} no Llama~3.3~70B
+        \cite{bang2023, ocaf2024, llmsMedicalExam2026,
+        huang2023halucination}. \\ \hline
   \end{tabularx}
   \caption*{Fonte: Produção do próprio autor.}
 \end{quadro}
@@ -882,7 +910,7 @@ e o \textit{chunking} (Seção~\ref{cap:desenvolvimento}) é convertido em 898
 \textsc{ms-manual} (que concentra a maior densidade de protocolo clínico) e o
 \textsc{opas-mod4}.
 
-\section{Segmentação (\textit{Chunking}) e Indexação}
+\section{Segmentação (Chunking) e Indexação}
 
 A estratégia de \textit{chunking} adotada é hierárquica e dirigida por estrutura:
 o documento é segmentado nas fronteiras de cabeçalho Markdown
@@ -915,7 +943,8 @@ O modelo de \textit{embeddings} adotado é o
 \cite{reimers2019}, com 384 dimensões e suporte a mais de 50 idiomas. Foi carregado
 via biblioteca \texttt{sentence-transformers} e executado localmente, sem requisição
 a APIs externas, como descrito conceitualmente na
-Seção~\ref{cap:referencial} e no item D2 do Quadro~\ref{quad:decisoes}.
+Seção~\ref{cap:referencial} e no item D2 do
+Quadro~\ref{quad:decisoes-tecnicas}.
 
 A escolha foi orientada por três critérios operacionais já discutidos: (i)
 conformidade com a política LGPD do projeto (Seção~\ref{sec:lgpd-ref}); (ii)
@@ -1248,7 +1277,7 @@ melhoria do comportamento de \textit{fallback} em consultas \textit{out-of-scope
 no \textit{retrieval} denso puro), facilitando rejeição segura por
 limiar simples.
 
-\subsection{Iteração 2: \textit{Reranking} \textit{Cross-encoder} (mGTE)}
+\subsection{Iteração 2: Reranking Cross-encoder (mGTE)}
 \label{sec:rerank}
 
 Sobre o \textit{pipeline} híbrido da Seção anterior, adicionou-se uma etapa
@@ -1296,7 +1325,7 @@ mas introduziriam ruído.
             juiz RAGAS \texttt{gpt-4o-mini}.}
 \end{table}
 
-\subsection{Iteração 3: Teste de \textit{chunk\_size}}
+\subsection{Iteração 3: Teste de chunk\_size}
 \label{sec:chunk-test}
 
 A literatura \cite{wang2024bestpractices} sugere que \textit{chunks} menores
@@ -1361,7 +1390,7 @@ meta original de $0{,}80$ --- gap residual interpretado na
 Seção~\ref{sec:interp-faith} e endereçado, como linha de pesquisa imediata,
 no Capítulo~\ref{cap:conclusao}.
 
-\subsection{Interpretação da Métrica de \textit{Faithfulness}}
+\subsection{Interpretação da Métrica de Faithfulness}
 \label{sec:interp-faith}
 
 O patamar de \textit{Faithfulness} no gate final do artefato, $0{,}761$
@@ -1935,6 +1964,13 @@ arquivos Markdown indexados a partir dos protocolos do MS e da OMS. A tabela
 abaixo lista todas as questões, agrupadas por categoria
 (ET, IND, PE, DI, MO, IT, EA, FE).
 
+% Reduz o espaço após a longtable e evita que o \bottomrule órfão
+% (do \endlastfoot) vá sozinho para uma página nova. Como cada linha do
+% _dataset_rows.tex já termina com `\\ \hline`, a última linha fornece
+% a borda inferior visualmente; \endlastfoot fica vazio para evitar
+% conflito.
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
 {\footnotesize
 \begin{longtable}{@{}p{1.4cm}@{\hspace{1mm}}p{0.7cm}@{\hspace{1mm}}p{4.5cm}p{6.5cm}@{}}
 \toprule
@@ -1949,7 +1985,6 @@ abaixo lista todas as questões, agrupadas por categoria
 \midrule
 \multicolumn{4}{r}{\textit{Continua na próxima página}} \\
 \endfoot
-\bottomrule
 \endlastfoot
 \input{_dataset_rows.tex}
 \end{longtable}
