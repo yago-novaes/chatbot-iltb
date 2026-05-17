@@ -666,6 +666,72 @@ iterativas, conforme a Figura~\ref{fig:dsrm}.
   \end{minipage}
 \end{figure}
 
+O Quadro~\ref{quad:ciclos-dsrm} sintetiza os ciclos iterativos executados no
+projeto, mapeando hipótese testada, intervenção, resultado mensurável e
+lição aprendida que orientou o ciclo subsequente. A organização em ciclos
+explicita o caráter iterativo da DSRM e fornece rastreabilidade entre
+intervenções técnicas (Capítulo~\ref{cap:desenvolvimento}) e resultados
+empíricos (Capítulo~\ref{cap:avaliacao}).
+
+\begin{quadro}[!htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.15}
+  \caption{Ciclos DSRM observados no desenvolvimento do artefato}
+  \label{quad:ciclos-dsrm}
+  \begin{tabularx}{\textwidth}{|c|X|X|X|}
+  \hline
+  \rowcolor{gray!25}
+  \textbf{Ciclo} & \textbf{Hipótese / intervenção} & \textbf{Resultado mensurável} & \textbf{Lição $\to$ próximo ciclo} \\ \hline
+  C1 & Sanitização de \textit{chunks} e estabilização do \textit{system prompt}
+       resolvem o problema de extração ruidosa do PDF. &
+       \textit{Faithfulness} de $0{,}375$ para $0{,}586$ ($+56\%$);
+       \textit{Answer Relevancy} dobra ($0{,}310 \to 0{,}534$). &
+       Pré-processamento era gargalo, mas o teto da iteração ainda não
+       atinge a meta. Indica gargalo seguinte em recuperação ou geração. \\ \hline
+  C2 & \textit{Chunker} hierárquico por cabeçalhos Markdown e
+       $k=5$ estabilizam o \textit{retrieval}. &
+       \textit{Context Precision} $0{,}735$ (próximo da meta $0{,}75$),
+       mas \textit{Faithfulness} estagna em $0{,}515$. &
+       \textit{Retrieval} convergiu; o gargalo é gerador ou
+       \textit{embedding}, hipótese a ser separada via ablação cruzada. \\ \hline
+  C3 & Ablação $2 \times 2$ isola gerador
+       (Llama \emph{vs} GPT-4o) $\times$ \textit{embedding} (MiniLM 384D
+       \emph{vs} BGE-M3 1024D) sobre 3 seeds por célula. &
+       \textit{Embedding} é variável dominante: BGE-M3 eleva
+       \textit{Faithfulness} de $0{,}486$ a $0{,}679$ no gerador Llama
+       ($+39{,}7\%$); GPT-4o piora \textit{Faithfulness} em ambos os
+       \textit{embeddings} (paradoxo abstrativo--vs--conservador). &
+       Migração para BGE-M3 1024D no \textit{pipeline} de produção;
+       adoção do Llama como gerador validada pelos próprios números;
+       interpretação cautelosa do \textit{Faithfulness} como métrica. \\ \hline
+  C4 & Busca híbrida BM25 $+$ denso com RRF endereça termos clínicos
+       exatos (siglas, dosagens) não capturados pelo BGE-M3. &
+       \textit{Faithfulness} $0{,}679 \to 0{,}740$ ($+9{,}0\%$, $\Delta$
+       $\approx 3{,}6\times$ DP); \textit{Context Recall} $+8{,}5\%$. &
+       Híbrido é motor dominante de \textit{Faithfulness}; resta consolidar
+       \textit{Context Precision} e reduzir variância inter-seed. \\ \hline
+  C5 & \textit{Reranker} \textit{cross-encoder} mGTE reordena os
+       candidatos do RRF antes da geração. &
+       \textit{Context Precision} $0{,}915 \to 0{,}956$ ($+0{,}041$); DP
+       inter-seed da \textit{Faithfulness} cai de $\pm 0{,}017$ para
+       $\pm 0{,}004$. &
+       \textit{Reranker} consolida Ctx.Prec e estabiliza
+       \textit{Faithfulness}. Gate operacional final do artefato. \\ \hline
+  C6 & Avaliação com especialista (rubrica clínica multidimensional $+$
+       entrevista pelas dimensões do TAM-AIN). &
+       \aluno{Sumarizar acurácia clínica média, severidade modal dos
+       erros e síntese narrativa por dimensão TAM-AIN após execução.} &
+       \aluno{Lição da sessão $\to$ refinamento do \textit{prompt} ou
+       \textit{Trabalhos Futuros}.} \\ \hline
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor. Os ciclos C1 e C2 referem-se à
+            Fase 2 do projeto (Tabela~\ref{tab:ragas}); C3 a C5 são as
+            iterações pós-replicação multi-seed
+            (Tabelas~\ref{tab:ablacao-2x2} e \ref{tab:hybrid-rerank}); C6 é
+            a etapa de avaliação humana (Seção~\ref{sec:sessao-expert}).}
+\end{quadro}
+
 \section{Identificação do Problema e Motivação}
 
 O problema central identificado é a dificuldade de acesso rápido a informações
@@ -726,51 +792,53 @@ desenvolvido no Capítulo~\ref{cap:avaliacao}.
 Os objetivos de design foram definidos com base nos requisitos funcionais e
 não funcionais do sistema, derivados da análise do problema. Os
 Quadros~\ref{quad:decisoes-tecnicas} e~\ref{quad:decisoes-metodologicas}
-sintetizam as treze decisões (D1--D13), com a justificativa bibliográfica de
-cada uma; o primeiro reúne decisões \emph{técnico-arquiteturais} (D1--D7) e
-o segundo reúne decisões \emph{metodológico-avaliativas} (D8--D13). Decisões
-revisadas no decorrer do projeto --- particularmente D10 e D12, em função do
-reescopo da etapa de avaliação, e D11, antecipada ao escopo deste trabalho ---
-estão refletidas nos quadros em sua versão final.
+sintetizam as dez decisões (D1--D10) que admitiam alternativas reais e
+exigiram justificativa bibliográfica explícita; o primeiro reúne decisões
+\emph{técnico-arquiteturais} (D1--D6) e o segundo reúne decisões
+\emph{metodológico-avaliativas} (D7--D10). \textbf{Três premissas
+constitutivas do trabalho não figuram nos quadros}: a adoção da arquitetura
+RAG, a adoção da metodologia DSRM e o foco em ILTB como problema clínico
+--- todas declaradas no Capítulo~\ref{cap:introducao} e no início deste
+capítulo, por serem o objeto da pesquisa e não escolhas discutíveis no
+mesmo registro das demais. Decisões revisadas no decorrer do projeto ---
+particularmente D7 e D9, em função do reescopo da etapa de avaliação, e D8,
+antecipada ao escopo deste trabalho --- estão refletidas nos quadros em sua
+versão final.
 
 \begin{quadro}[!htbp]
   \centering
   \small
   \renewcommand{\arraystretch}{1.15}
-  \caption{Decisões técnico-arquiteturais do chatbot ILTB (D1--D7)}
+  \caption{Decisões técnico-arquiteturais do chatbot ILTB (D1--D6)}
   \label{quad:decisoes-tecnicas}
   \begin{tabularx}{\textwidth}{|c|X|X|}
   \hline
   \rowcolor{gray!25}
   \textbf{ID} & \textbf{Decisão} & \textbf{Justificativa} \\ \hline
-  D1  & Adoção da arquitetura RAG (recuperação + geração) em vez de LLM puro ou
-        fine-tuning. & Reduz alucinação em domínio específico ao ancorar
-        a geração em documentos oficiais \cite{lewis2021, gao2024, ocaf2024}.
-        \\ \hline
-  D2  & Embedding multilíngue \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+  D1  & Embedding multilíngue \texttt{paraphrase-multilingual-MiniLM-L12-v2}
         (384D) na fase inicial; migrado para \texttt{BAAI/bge-m3} (1024D) durante
         a avaliação (Seção~\ref{sec:gate-pos-migracao}). & Equilíbrio entre
         latência, \textit{footprint} e requisito LGPD; ganho de 1024D
         empiricamente observado \cite{reimers2019, mmteb2025, SHTI2023,
         marone2025mmbert}. \\ \hline
-  D3  & Vector store ChromaDB com índice HNSW e persistência em disco.
+  D2  & Vector store ChromaDB com índice HNSW e persistência em disco.
       & Execução embarcada sem servidor dedicado; HNSW provê busca aproximada
         com complexidade logarítmica \cite{malkov2016, chroma2024}. \\ \hline
-  D4  & LLM Llama~3.3~70B via API Groq como gerador. & Modelo open-weight
+  D3  & LLM Llama~3.3~70B via API Groq como gerador. & Modelo open-weight
         competitivo sem retenção de prompts pelo provedor
         \cite{dubey2024}; modelos generalistas grandes superam especializados em
         busca clínica curta \cite{ocaf2024}. \\ \hline
-  D5  & Chunking semântico por cabeçalhos Markdown, com
+  D4  & Chunking semântico por cabeçalhos Markdown, com
         \textit{buffering} de seções pequenas. & Preserva integridade lógica dos
         protocolos; alinhado a recomendações de chunking estrutural
         \cite{gao2024, advancedChunkingRAG2025}. \\ \hline
-  D6  & Avaliação automatizada com RAGAS (\textit{faithfulness},
+  D5  & Avaliação automatizada com RAGAS (\textit{faithfulness},
         \textit{answer relevancy}, \textit{context precision/recall})
         complementada por avaliação humana. &
         \textit{Framework reference-free} padrão em RAG biomédico, com
         limitações conhecidas que exigem complemento por especialista
         \cite{es2024, ocaf2024, gallifant2025tripod}. \\ \hline
-  D7  & Pipeline de embeddings 100\% local; LLM acessado sem
+  D6  & Pipeline de embeddings 100\% local; LLM acessado sem
         armazenamento de prompts. & Compatibilidade com requisitos
         da LGPD no recorte de POC (dados de saúde como sensíveis), evitando
         APIs externas para etapa de embedding; mitigações ativas
@@ -785,42 +853,42 @@ estão refletidas nos quadros em sua versão final.
   \centering
   \small
   \renewcommand{\arraystretch}{1.15}
-  \caption{Decisões metodológico-avaliativas do chatbot ILTB (D8--D13)}
+  \caption{Decisões metodológico-avaliativas do chatbot ILTB (D7--D10)}
   \label{quad:decisoes-metodologicas}
   \begin{tabularx}{\textwidth}{|c|X|X|}
   \hline
   \rowcolor{gray!25}
   \textbf{ID} & \textbf{Decisão} & \textbf{Justificativa} \\ \hline
-  D8  & Adoção da metodologia DSRM como framework de pesquisa. & Padrão
-        consolidado para pesquisa em sistemas de informação com construção de
-        artefato \cite{peffers2007}. \\ \hline
-  D9  & Foco em ILTB como problema clínico, com corpus de documentos oficiais
-        do MS e OMS. & Doença com alta prevalência global e brasileira; controle
-        da ILTB é estratégico para eliminação da TB
-        \cite{who2018, who2020consolidatedTB, who2023, brasil2022}. \\ \hline
-  D10 & Avaliação com 1 especialista em ILTB usando rubrica clínica
-        multidimensional e entrevista semi-estruturada inspirada nas dimensões
-        do TAM-AIN. & Replanejamento decorrente do reescopo do piloto;
-        as dimensões do TAM-AIN \cite{nursingTAM2024, davis1989tam} são adotadas
-        como \emph{guia de roteiro}, não como instrumento psicométrico --- uso
-        em $N=1$ inviabiliza análise fatorial e validade convergente
-        originalmente previstas pelo instrumento, então a coleta é
-        qualitativa \cite{ocaf2024}. \\ \hline
-  D11 & Busca híbrida BM25 + denso (RRF) com reranking
+  D7  & Avaliação com pequeno painel de especialistas em ILTB
+        (\textbf{$N \geq 1$}, prospecção ativa antes da defesa) usando
+        rubrica clínica multidimensional e entrevista semi-estruturada
+        pelas dimensões do TAM-AIN. & Replanejamento decorrente do
+        reescopo do piloto original; as dimensões do TAM-AIN
+        \cite{nursingTAM2024, davis1989tam} são adotadas como
+        \emph{eixos de roteiro}, e os itens Likert pontuáveis são
+        aplicados de forma descritiva apenas quando $N \geq 2$ ---
+        análise fatorial e validade convergente do instrumento exigem
+        amostra populacional, fora do escopo desta sessão exploratória
+        \cite{ocaf2024}. \\ \hline
+  D8  & Busca híbrida BM25 + denso (RRF) com reranking
         cross-encoder mGTE --- implementada no escopo deste trabalho
         (Seções~\ref{sec:hybrid} e \ref{sec:rerank}).
       & Embedding denso isolado limita \textit{recall} para termos
         técnicos específicos; literatura sustenta ganhos de busca híbrida
         \cite{cormack2009, formal2021, khattab2020, wang2024bestpractices,
         zhang2024mgte}. \\ \hline
-  D12 & Métricas mistas (acurácia vs. MS, severidade Likert, tríade RAG,
-        entrevista qualitativa pelas dimensões do TAM-AIN) em vez de Kappa de
-        Cohen e do TAM-AIN como questionário pontuável.
-      & Ambos exigem $N \geq 2$: Kappa para concordância acima do acaso, TAM-AIN
-        para análise fatorial e $\alpha$ de Cronbach. Literatura recomenda
-        métricas multidimensionais para validação com $N=1$
-        \cite{ocaf2024, es2024}. \\ \hline
-  D13 & Documentação explícita da taxa de alucinação como propriedade conhecida
+  D9  & Métricas mistas (acurácia vs. MS, severidade Likert, tríade RAG,
+        entrevista pelas dimensões do TAM-AIN), com aplicação dos itens
+        Likert do TAM-AIN \emph{condicional ao $N$ de avaliadores
+        disponíveis na sessão} (descritiva se $N \geq 2$; narrativa se
+        $N=1$). Validade psicométrica completa (análise fatorial,
+        $\alpha$ de Cronbach) e estatísticas de concordância (Kappa de
+        Cohen) ficam para piloto multi-avaliador estruturado (TF6).
+      & Tanto Kappa quanto a validade psicométrica do TAM-AIN exigem
+        amostra populacional; literatura recomenda métricas
+        multidimensionais e leitura descritiva para validação com $N$
+        reduzido \cite{ocaf2024, es2024}. \\ \hline
+  D10 & Documentação explícita da taxa de alucinação como propriedade conhecida
         do LLM, com ablação contra modelo de referência executada na fase de
         avaliação (Seção~\ref{sec:ablacao-2x2}). & Tipologia e taxas de
         alucinação reportadas em literatura sustentam o teto observado de
@@ -991,7 +1059,7 @@ O modelo de embeddings adotado é o
 \cite{reimers2019}, com 384 dimensões e suporte a mais de 50 idiomas. Foi carregado
 via biblioteca \texttt{sentence-transformers} e executado localmente, sem requisição
 a APIs externas, como descrito conceitualmente na
-Seção~\ref{cap:referencial} e no item D2 do
+Seção~\ref{cap:referencial} e no item D1 do
 Quadro~\ref{quad:decisoes-tecnicas}.
 
 A escolha foi orientada por três critérios operacionais já discutidos: (i)
@@ -1022,7 +1090,10 @@ Após calibração experimental por meio de execuções RAGAS, o parâmetro $k$ 
 fixado em \textbf{5}. Valores menores ($k=3, 4$) excluíam, com frequência,
 trechos relevantes em consultas envolvendo populações especiais ou interações
 medicamentosas; valores maiores ($k \geq 7$) introduziam ruído sem ganho de
-\textit{recall}.
+\textit{recall}. Varredura quantitativa $k \in \{3, 5, 7, 10\}$ sobre o
+pipeline final consta no Apêndice~\ref{ape:topk-sweep}: $k=5$ produz o melhor
+equilíbrio em 3 das 4 métricas, com diferença em \textit{Faithfulness} para o
+melhor valor ($k=10$) dentro do envelope de variância inter-seed.
 
 Adicionalmente, foi adotado um \textbf{limiar de similaridade cossenoidal de
 $0{,}40$}. Consultas cujo \textit{top-1} apresenta score abaixo desse
@@ -1641,15 +1712,34 @@ especialista em consultor de validação técnica em lugar de sujeito estatísti
 \textbf{Nota sobre o uso do TAM-AIN.} O \textit{Technology Acceptance Model for AI
 in Nursing} \cite{nursingTAM2024} é um instrumento psicométrico cuja validade
 original depende de análise fatorial confirmatória e estatísticas de
-consistência interna (e.g., $\alpha$ de Cronbach), procedimentos inaplicáveis a
-$N=1$. Esta avaliação, portanto, \textbf{não administra o TAM-AIN como
-questionário pontuável}, mas adota suas quatro dimensões --- alinhamento ético,
-prontidão organizacional, preservação da identidade profissional e capacidade
-de infraestrutura --- como \emph{eixos de roteiro} de uma entrevista
-semi-estruturada qualitativa. Os relatos do especialista são analisados como
-evidência narrativa por dimensão, sem agregação em escores. O instrumento
-psicométrico completo permanece como referência para o piloto multi-avaliador
-listado em Trabalhos Futuros (TF6).
+consistência interna (e.g., $\alpha$ de Cronbach), procedimentos cuja
+aplicabilidade depende do tamanho da amostra de avaliadores efetivamente
+obtida na sessão. Duas situações são contempladas neste protocolo:
+
+\begin{itemize}
+  \item \textbf{$N=1$ avaliador} (cenário-base do TCC): a coleta adota as
+        quatro dimensões do TAM-AIN --- alinhamento ético, prontidão
+        organizacional, preservação da identidade profissional e
+        capacidade de infraestrutura --- como \emph{eixos de roteiro} de
+        uma entrevista semi-estruturada qualitativa. Os relatos do
+        especialista são analisados como evidência narrativa por dimensão,
+        sem agregação em escores --- análise fatorial e estatísticas de
+        consistência interna são inviáveis com avaliador único.
+  \item \textbf{$N \geq 2$ avaliadores} (cenário ampliado, em prospecção
+        ativa antes da defesa): mantém-se a entrevista qualitativa pelas
+        quatro dimensões e, adicionalmente, aplicam-se os itens Likert do
+        TAM-AIN com pontuação descritiva por dimensão (média e amplitude
+        sobre os avaliadores). Não se reivindica validade psicométrica
+        plena --- $N$ pequeno não autoriza análise fatorial --- mas a
+        agregação descritiva passa a ser tecnicamente defensável como
+        evidência exploratória.
+\end{itemize}
+
+\textbf{Em qualquer dos cenários}, o instrumento psicométrico completo
+(análise fatorial confirmatória, $\alpha$ de Cronbach, validade convergente
+e discriminante) permanece como referência para o piloto multi-avaliador
+estruturado listado em Trabalhos Futuros (TF6), que exige amostra
+populacional e aprovação de Comitê de Ética em Pesquisa.
 
 \subsection{Perfil do Especialista}
 
@@ -1703,15 +1793,18 @@ multidimensional de chatbots clínicos com avaliador único \cite{ocaf2024}:
         e \textit{relevância do contexto} (o trecho recuperado é o correto do
         protocolo?), seguindo a estrutura proposta por \citeauthor{es2024}
         \cite{es2024}.
-  \item \textbf{Entrevista semi-estruturada inspirada nas dimensões do TAM-AIN:}
-        roteiro qualitativo organizado pelas quatro dimensões do
-        \textit{Technology Acceptance Model for AI in Nursing}
-        \cite{nursingTAM2024} --- alinhamento ético, prontidão organizacional,
-        preservação da identidade profissional e capacidade de infraestrutura ---,
-        com perguntas abertas sobre barreiras e facilitadores percebidos para
-        adoção no SUS. Como discutido na nota introdutória desta seção, o
-        instrumento TAM-AIN como questionário pontuável não é aplicado em
-        $N=1$; a coleta é narrativa por dimensão.
+  \item \textbf{Entrevista semi-estruturada pelas dimensões do TAM-AIN
+        $+$ (condicional ao $N$) itens Likert do instrumento:} roteiro
+        qualitativo organizado pelas quatro dimensões do \textit{Technology
+        Acceptance Model for AI in Nursing} \cite{nursingTAM2024} ---
+        alinhamento ético, prontidão organizacional, preservação da
+        identidade profissional e capacidade de infraestrutura ---, com
+        perguntas abertas sobre barreiras e facilitadores percebidos para
+        adoção no SUS. Conforme discutido na nota introdutória desta seção,
+        no cenário $N=1$ a coleta é narrativa por dimensão (sem agregação);
+        no cenário $N \geq 2$, aplicam-se adicionalmente os itens Likert do
+        instrumento com agregação descritiva (média e amplitude por
+        dimensão), sem reivindicação de validade psicométrica formal.
 \end{enumerate}
 
 A escolha por um instrumental multimétrico em detrimento de estatísticas tradicionais
@@ -2350,6 +2443,260 @@ clínico esteja correto. Esse achado fortalece a recomendação metodológica
 do trabalho: \textit{Context Precision} como indicador-síntese e
 \textit{Faithfulness} como métrica auxiliar lida em conjunto com a
 distribuição categoria-por-categoria.
+
+% ─── Apêndice D — Posicionamento frente ao estado da arte ────────────────────
+\chapter{Posicionamento Frente ao Estado da Arte}
+\label{ape:estado-arte}
+
+Esta seção apresenta uma comparação aproximada entre os resultados deste
+trabalho e três referenciais da literatura recente de RAG biomédico
+mais frequentemente citados nesta monografia, com a finalidade de orientar
+a leitura sobre a posição do artefato. \textbf{A comparação direta tem
+limites severos} --- datasets, idiomas, juízes LLM e estratégias de
+\textit{prompting} variam entre os estudos, e nenhum dos referenciais
+publica métricas RAGAS exatamente equivalentes às reportadas aqui ---,
+sendo apresentada como tabela exploratória e não como \textit{benchmark}
+formal.
+
+\begin{table}[ht]
+  \caption{Posicionamento aproximado vs.\ estado da arte de RAG biomédico
+           (comparação exploratória; magnitudes da literatura citada,
+           agregadas qualitativamente)}
+  \label{tab:sota}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}lccXc@{}}
+  \toprule
+  \textbf{Sistema} & \textbf{Domínio} & \textbf{Idioma} &
+  \textbf{Métrica reportada} & \textbf{Valor} \\
+  \midrule
+  \multicolumn{5}{l}{\emph{Referenciais da literatura}} \\
+  \midrule
+  Almanac \cite{zakka2024almanac}
+    & Medicina interna & EN
+    & Avaliação humana de fidelidade (4 médicos; escala Likert)
+    & \aluno{Inserir valor literal do paper Almanac (consultar Tabela~2
+      do artigo NEJM AI)} \\
+  Self-BioRAG \cite{jeong2024selfbiorag}
+    & QA biomédico long-form & EN
+    & \textit{Faithfulness} (juiz GPT-4); ganho sobre RAG sem
+      \textit{self-reflection}
+    & \aluno{Inserir baseline e ganho do paper (faixa $+8$ a $+15$\,pp
+      reportada na monografia)} \\
+  Meta-análise \citeauthor{ocaf2024} \cite{ocaf2024}
+    & RAG biomédico (30 estudos) & Hetero. (predomínio EN)
+    & Teto comum de \textit{Faithfulness} sem
+      \textit{self-reflection}
+    & $\sim 0{,}75$ \\
+  \midrule
+  \multicolumn{5}{l}{\emph{Este trabalho}} \\
+  \midrule
+  Chatbot ILTB (gate final)
+    & ILTB / TB latente & PT-BR
+    & RAGAS \textit{Context Precision} (3 seeds)
+    & $0{,}956 \pm 0{,}009$ \\
+  Chatbot ILTB (gate final)
+    & ILTB / TB latente & PT-BR
+    & RAGAS \textit{Faithfulness} (3 seeds; juiz
+      \texttt{gpt-4o-mini})
+    & $0{,}752 \pm 0{,}004$ \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor a partir da literatura citada.
+            \textbf{Ressalvas de comparabilidade.} Os referenciais usam
+            datasets, juízes e definições operacionais distintos das
+            adotadas aqui; valores devem ser lidos como indicação de
+            ordem de grandeza, não como comparação controlada. A
+            comparação \emph{controlada} com o estado da arte exige
+            replicação dos sistemas referenciais sobre o mesmo
+            \textit{dataset} ILTB PT-BR --- linha de pesquisa registrada
+            em Trabalhos Futuros.}
+\end{table}
+
+\textbf{Leitura.} O patamar de \textit{Faithfulness} $0{,}752 \pm 0{,}004$
+deste trabalho está \emph{na fronteira} do que a meta-análise de
+\citeauthor{ocaf2024} \cite{ocaf2024} reporta como teto comum
+sem \textit{self-reflection} ($\sim 0{,}75$). \textit{Self-RAG}
+\cite{jeong2024selfbiorag} é a única intervenção que a literatura associa
+a ganhos consistentes acima desse patamar, mas, como discutido nas
+Seções~\ref{sec:interp-faith} e na Conclusão (TF1), o achado paradoxal
+deste trabalho impõe ressalva: \textit{Self-RAG} adiciona cautela ao
+gerador --- e, no \emph{benchmark} interno deste trabalho, cautela
+adicional regrediu o RAGAS. A direção da intervenção precisa ser
+co-desenhada com revisão da métrica de avaliação.
+
+% ─── Apêndice E — Checklist TRIPOD-LLM ──────────────────────────────────────
+\chapter{Checklist TRIPOD-LLM (Adaptada)}
+\label{ape:tripod}
+
+A diretriz \textit{TRIPOD-LLM} \cite{gallifant2025tripod} (extensão do
+TRIPOD para estudos clínicos com modelos de linguagem) é referenciada em
+diversos pontos desta monografia como base para complementar a avaliação
+automatizada com avaliação humana e para reporte de viés do juiz e do
+\textit{dataset}. Este apêndice apresenta uma checklist adaptada
+parcialmente preenchida, mapeando os principais itens da diretriz ao
+texto da monografia. O preenchimento completo segue como recomendação
+metodológica para versões pós-defesa do trabalho ou para publicação
+derivada.
+
+\begin{table}[ht]
+  \caption{Checklist TRIPOD-LLM adaptada (preenchimento parcial)}
+  \label{tab:tripod}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{@{}clXc@{}}
+  \toprule
+  \textbf{\#} & \textbf{Item} & \textbf{Mapeamento na monografia} & \textbf{Status} \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Título, resumo e introdução}} \\
+  \midrule
+  1 & Título identifica uso de LLM em saúde & Capa &  Atendido \\
+  2 & Resumo estruturado: domínio, dataset, métricas, conclusões & Resumo &  Parcial (placeholder pós-expert) \\
+  3 & Justificativa do uso de LLM (vs.\ alternativas) &
+      Cap.~\ref{cap:introducao}, Quadro~\ref{quad:decisoes-tecnicas} (D3) &  Atendido \\
+  4 & Objetivos específicos e mensuráveis &
+      Seção \textit{Objetivos Específicos} (OE1--OE4) &  Atendido \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Métodos --- fonte de dados e população}} \\
+  \midrule
+  5 & Origem do corpus e processo de seleção &
+      Cap.~\ref{cap:desenvolvimento}, Tabela~\ref{tab:corpus} &  Atendido \\
+  6 & População alvo (perfil do usuário do sistema) &
+      Seção~\ref{sec:adocao-ref}, Seção~\ref{sec:sessao-expert} &  Atendido \\
+  7 & Construção do \textit{dataset} de avaliação &
+      Seção \textit{Dataset de Avaliação} &  Atendido \\
+  8 & Viés de construção do \textit{dataset} reconhecido &
+      Limitação L6 &  Atendido \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Métodos --- modelo, prompt, parametrização}} \\
+  \midrule
+  9 & Modelo LLM identificado (versão, provedor) &
+      Quadro~\ref{quad:decisoes-tecnicas} (D3), Cap.~\ref{cap:desenvolvimento} &  Atendido \\
+  10 & Procedência dos dados de treinamento do LLM declarada &
+      Cap.~\ref{cap:referencial} (Sabiá-2, Llama 3) &  Parcial (declarado em alto nível) \\
+  11 & \textit{Prompt engineering} reportado (versões, iterações) &
+       Apêndice~\ref{ape:prompt} &  Atendido \\
+  12 & Parâmetros de geração (temperatura, \textit{max tokens}) &
+       Cap.~\ref{cap:desenvolvimento}, código-fonte público &  Atendido \\
+  13 & Estratégia de recuperação descrita (chunker, embedding, k) &
+       Cap.~\ref{cap:desenvolvimento}, Quadro~\ref{quad:decisoes-tecnicas} &  Atendido \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Métodos --- avaliação e validação}} \\
+  \midrule
+  14 & Métricas quantitativas justificadas &
+       Cap.~\ref{cap:avaliacao} (RAGAS), Seção~\ref{sec:interp-faith} &  Atendido \\
+  15 & Replicação multi-seed para variância do juiz LLM &
+       Tabelas~\ref{tab:ablacao-2x2} e~\ref{tab:hybrid-rerank} &  Atendido \\
+  16 & Viés do juiz LLM (mesma família do candidato avaliado) &
+       Seção~\ref{sec:ablacao-2x2}, parágrafo \textit{Limitação do juiz}; L6 &  Atendido \\
+  17 & Validação humana complementar à automatizada &
+       Seção~\ref{sec:sessao-expert} & Pendente (sessão prevista) \\
+  18 & Tamanho amostral (questões e avaliadores) declarado &
+       Seção~\ref{sec:sessao-expert}, Cap.~\ref{cap:avaliacao} &  Atendido \\
+  19 & Dados ausentes / falhas de avaliação tratadas &
+       \texttt{eval/run\_ragas.py} (NaN handling), Cap.~\ref{cap:avaliacao} &  Atendido \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Resultados e discussão}} \\
+  \midrule
+  20 & Resultados quantitativos com incerteza (DP) &
+       Tabelas~\ref{tab:ablacao-2x2}, \ref{tab:hybrid-rerank},
+       \ref{tab:gate-final}, Apêndice~\ref{ape:per-category} &  Atendido \\
+  21 & Discussão de viés sistemático da métrica &
+       Seção~\ref{sec:interp-faith} (paradoxo abstrativo--vs--conservador) &  Atendido \\
+  22 & Generalizabilidade discutida &
+       Cap.~\ref{cap:discussao}, Limitações L1--L7 &  Atendido \\
+  23 & Limitações nomeadas explicitamente &
+       Seção \textit{Limitações} (L1--L7) &  Atendido \\
+  \midrule
+  \multicolumn{4}{l}{\emph{Outras informações}} \\
+  \midrule
+  24 & Código-fonte e \textit{dataset} disponíveis publicamente &
+       Repositório GitHub (Cap.~\ref{cap:metodologia}) &  Atendido \\
+  25 & Privacidade de dados e adequação regulatória discutidas &
+       Seção \textit{Compatibilidade do Desenho com LGPD} &  Atendido \\
+  26 & Conflitos de interesse declarados &
+       Folha de rosto e ficha catalográfica & Pendente (versão final) \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor, adaptação parcial da diretriz
+            TRIPOD-LLM \cite{gallifant2025tripod}. Status \emph{Atendido}
+            indica que o item está coberto no texto da monografia (com
+            granularidade variável); \emph{Parcial} indica cobertura
+            incompleta que pode ser ampliada em revisão pós-defesa;
+            \emph{Pendente} indica item dependente de etapa não executada
+            no escopo deste TCC.}
+\end{table}
+
+A checklist é apresentada em forma adaptada para compatibilidade com a
+estrutura ABNT da monografia. O texto integral da diretriz TRIPOD-LLM
+\cite{gallifant2025tripod} contém itens adicionais sobre validação externa
+em populações múltiplas e calibração estatística que excedem o escopo de
+um TCC de prova de conceito, sendo mais aplicáveis a versão derivada para
+publicação acadêmica.
+
+% ─── Apêndice F — Varredura de top_k ───────────────────────────────────────
+\chapter{Varredura de \texttt{top\_k} no Gate Final}
+\label{ape:topk-sweep}
+
+A escolha de $k = 5$ para o número de chunks recuperados (descrita na
+Seção~\ref{cap:desenvolvimento}) foi originalmente justificada por
+observação qualitativa durante a Fase~2. Para fornecer evidência
+quantitativa adicional dessa escolha, executou-se uma varredura sobre o
+pipeline final (Llama~3.3~70B + BGE-M3 1024D + híbrido + reranker mGTE)
+variando $k \in \{3, 5, 7, 10\}$, com as mesmas 38 questões \textit{in-scope}
+e o mesmo juiz RAGAS (\texttt{gpt-4o-mini}, temperatura $0$).
+
+\textbf{Limitação metodológica.} A varredura foi executada em \textbf{corrida
+única por valor de $k$} (sem replicação multi-seed) para economizar cota
+de API. Diferenças em \textit{Faithfulness} entre valores adjacentes devem
+ser lidas em comparação com o envelope de variância inter-seed observado
+no gate final ($\pm 0{,}004$ a $\pm 0{,}020$, Tabela~\ref{tab:hybrid-rerank});
+flutuações abaixo desse envelope não podem ser interpretadas como diferenças
+materiais sem replicação. A replicação multi-seed da varredura está
+registrada como aprimoramento metodológico para versões derivadas do
+trabalho.
+
+\begin{table}[ht]
+  \caption{Varredura de \texttt{top\_k} sobre o gate final (corrida única
+           por valor; 38 questões; juiz \texttt{gpt-4o-mini})}
+  \label{tab:topk-sweep}
+  \begin{tabularx}{\textwidth}{@{}Xcccc@{}}
+  \toprule
+  $k$ & \textbf{Faith.} & \textbf{Ans. Rel.} & \textbf{Ctx. Prec.} & \textbf{Ctx. Rec.} \\
+  \midrule
+  3                & $0{,}741$ & $0{,}725$ & $0{,}961$ & $0{,}811$ \\
+  \textbf{5} (gate) & $\mathbf{0{,}774}$ & $\mathbf{0{,}750}$ & $\mathbf{0{,}961}$ & $\mathbf{0{,}842}$ \\
+  7                & $0{,}736$ & $0{,}742$ & $0{,}971$ & $0{,}811$ \\
+  10               & $0{,}783$ & $0{,}709$ & $0{,}971$ & $0{,}838$ \\
+  \bottomrule
+  \end{tabularx}
+  \caption*{Fonte: Produção do próprio autor. Pipeline: Llama 3.3 70B +
+            BGE-M3 1024D + híbrido BM25+denso (RRF $k_{RRF}=60$,
+            \texttt{fetch\_k=20}) + reranker mGTE (\texttt{fetch\_k=20}).}
+\end{table}
+
+\textbf{Leitura.} A varredura sustenta empiricamente $k=5$ como escolha
+defensável: é o melhor valor em três das quatro métricas
+(\textit{Answer Relevancy}, \textit{Context Recall} e empate em
+\textit{Context Precision}), e está dentro do envelope de incerteza
+inter-seed do melhor valor de \textit{Faithfulness} observado ($k=10$,
+$0{,}783$ contra $0{,}774$ em $k=5$ --- diferença de $0{,}009$, abaixo
+do DP máximo de $\pm 0{,}020$ reportado na Tabela~\ref{tab:hybrid-rerank}).
+
+A queda em \textit{Answer Relevancy} entre $k=5$ ($0{,}750$) e $k=10$
+($0{,}709$, $-5{,}5\%$) é o padrão esperado de introdução de ruído com
+mais chunks: candidatos adicionais aumentam cobertura mas diluem foco
+da resposta. A pequena melhora em \textit{Context Precision} de $k=3,5$
+para $k=7,10$ ($0{,}961 \to 0{,}971$, $+1{,}0\%$) reflete o efeito de
+reranker mGTE: com mais candidatos para reordenar, há mais oportunidade
+de subir chunks relevantes para o topo.
+
+\textbf{Conclusão.} \emph{$k=5$ não é o ótimo absoluto em
+\textit{Faithfulness}}, mas é o valor que produz o melhor equilíbrio
+entre fidelidade ao contexto, relevância da resposta e cobertura do
+ground-truth. A escolha está empiricamente validada para o pipeline
+deste trabalho. Replicação multi-seed da varredura, e exploração de
+$k$ fracionário via \textit{post-hoc filtering} sobre $k=10$ pelo
+\textit{reranker}, são linhas registradas como aprimoramento
+metodológico futuro.
 
 \end{apendicesenv}
 

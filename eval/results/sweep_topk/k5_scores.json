@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-05-17T16:15:06Z",
+  "llm": "groq/llama-3.3-70b-versatile",
+  "n_questions": 38,
+  "faithfulness": 0.7741,
+  "answer_relevancy": 0.7498,
+  "context_precision": 0.9613,
+  "context_recall": 0.8421,
+  "_top_k": 5
+}

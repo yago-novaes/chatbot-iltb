@@ -556,5 +556,41 @@
     "answer_relevancy": 0.6727,
     "context_precision": 0.9108,
     "context_recall": 0.7991
+  },
+  {
+    "timestamp": "2026-05-17T15:53:45Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.7411,
+    "answer_relevancy": 0.7253,
+    "context_precision": 0.9613,
+    "context_recall": 0.8114
+  },
+  {
+    "timestamp": "2026-05-17T16:15:06Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.7741,
+    "answer_relevancy": 0.7498,
+    "context_precision": 0.9613,
+    "context_recall": 0.8421
+  },
+  {
+    "timestamp": "2026-05-17T16:36:07Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.7357,
+    "answer_relevancy": 0.7419,
+    "context_precision": 0.9708,
+    "context_recall": 0.8114
+  },
+  {
+    "timestamp": "2026-05-17T16:56:53Z",
+    "llm": "groq/llama-3.3-70b-versatile",
+    "n_questions": 38,
+    "faithfulness": 0.783,
+    "answer_relevancy": 0.7088,
+    "context_precision": 0.9708,
+    "context_recall": 0.8377
   }
 ]
