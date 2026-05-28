@@ -159,50 +159,47 @@
 % ─── Resumo em português ─────────────────────────────────────────────────────
 \begin{resumo}
 
-A Infecção Latente por \textit{Mycobacterium tuberculosis} (ILTB) é um
-desafio persistente para a saúde pública: cerca de um quarto da população
-mundial está infectada, e o controle da progressão para tuberculose ativa
-em grupos vulneráveis é estratégico para a eliminação da TB como problema
-sanitário. Profissionais de enfermagem atuam na linha de frente do
-rastreamento e tratamento da ILTB, mas enfrentam protocolos extensos e
-periodicamente atualizados, nem sempre de fácil consulta durante o
-atendimento. Este trabalho propõe, desenvolve e avalia um \textit{chatbot}
-de apoio clínico baseado na arquitetura de Recuperação com Geração
-Aumentada (RAG), capaz de responder a perguntas sobre o manejo da ILTB a
-partir de documentos oficiais do Ministério da Saúde e da Organização
-Mundial da Saúde, em português brasileiro. Seguindo a metodologia
+A Infecção Latente por \textit{Mycobacterium tuberculosis} (ILTB) é
+desafio persistente de saúde pública: estima-se que cerca de um quarto
+da população mundial esteja infectada, e o controle da progressão para
+tuberculose ativa em grupos vulneráveis é estratégico para a eliminação
+da TB. Profissionais de enfermagem atuam no rastreamento e tratamento da
+ILTB, mas enfrentam protocolos extensos e periodicamente atualizados, de
+consulta difícil durante o atendimento. Este trabalho propõe, desenvolve
+e avalia um \textit{chatbot} de apoio clínico baseado em Recuperação com
+Geração Aumentada (RAG), com corpus em português brasileiro composto por
+documentos oficiais do Ministério da Saúde e da OMS. Seguindo a
 \textit{Design Science Research Methodology} (DSRM), o artefato foi
-construído como aplicação \texttt{FastAPI} com banco de vetores
+implementado como aplicação \texttt{FastAPI} com banco de vetores
 \texttt{ChromaDB}, \textit{embedding} multilíngue \texttt{BAAI/bge-m3}
-(1024 dimensões), busca híbrida BM25+denso com \textit{Reciprocal Rank
-Fusion}, reranking \textit{cross-encoder} mGTE e modelo gerador Llama 3.3
-70B acessado via API Groq sem retenção de \textit{prompts}. A avaliação
-automatizada com o \textit{framework} RAGAS foi conduzida sobre 38
-questões clínicas em sete categorias temáticas, replicada em três
-\textit{seeds} independentes por configuração. O gate final atingiu
-\textit{context precision} de $0{,}956 \pm 0{,}009$ (PASS robusto sobre a
-meta de $0{,}75$, com margem absoluta de $+0{,}206$) e
-\textit{faithfulness} de $0{,}752 \pm 0{,}004$, próximo do teto comum
-reportado pela literatura de RAG clínico ($\sim 0{,}75$). Uma ablação
-$2 \times 2$ cruzando gerador (Llama \textit{vs.} GPT-4o) e
-\textit{embedding} (MiniLM 384D \textit{vs.} BGE-M3 1024D) identificou o
-\textit{embedding} como variável dominante e revelou um achado paradoxal:
-modelos mais aderentes a instruções de \textit{fallback} (GPT-4o) pontuam
-\emph{pior} em \textit{faithfulness}, indicando que a métrica RAGAS
-penaliza abstenção cautelosa --- comportamento desejável em apoio
-clínico. Por essa razão, adota-se \textit{Context Precision} como
-indicador-síntese do gate final, e \textit{Faithfulness} como métrica
-auxiliar lida em conjunto com a discussão do paradoxo. \textbf{A
-avaliação qualitativa com especialista (OE4) está protocolada e prevista
-para execução no período de defesa; seus resultados serão integrados em
-versão pós-defesa.} As principais contribuições do trabalho são: (i) um
-artefato RAG aberto para ILTB em português, com código-fonte disponível;
-(ii) um \textit{dataset} de avaliação clínica de 38 questões com
-\textit{ground truths} extraídos verbatim dos protocolos; (iii) análise
-empírica do \textit{trade-off} entre conformidade com a LGPD e desempenho
-de recuperação; e (iv) um protocolo de avaliação multidimensional para
-RAG clínico com $N$ reduzido de avaliadores, combinando RAGAS, rubrica
-clínica e entrevista pelas dimensões do TAM-AIN.
+(1024D), busca híbrida BM25+denso com \textit{Reciprocal Rank Fusion},
+reranking \textit{cross-encoder} mGTE e Llama~3.3~70B via API Groq sem
+retenção de \textit{prompts}. A avaliação automatizada com o
+\textit{framework} RAGAS sobre 38 questões clínicas em sete categorias
+temáticas, replicada em três \textit{seeds} por configuração, alcançou
+\textit{Context Precision} de $0{,}956 \pm 0{,}009$ e
+\textit{Faithfulness} de $0{,}752 \pm 0{,}004$. Esta última ficou
+$\sim 0{,}05$ abaixo da meta inicial de $0{,}80$, mas próxima ao teto
+comum reportado pela literatura de RAG clínico ($\sim 0{,}75$) sem
+mecanismos de \textit{self-reflection}. Uma ablação $2 \times 2$ cruzando
+gerador (Llama \textit{vs.} GPT-4o) e \textit{embedding} (MiniLM 384D
+\textit{vs.} BGE-M3 1024D) identificou o \textit{embedding} como
+variável dominante e replicou, no contexto deste trabalho, uma limitação
+conhecida do RAGAS: a métrica \textit{Faithfulness} penaliza geradores
+que se abstêm cautelosamente diante de contexto parcial --- comportamento
+clinicamente desejável. A avaliação qualitativa com especialista (OE4)
+encontra-se em execução durante o período de finalização do trabalho,
+com sessões protocoladas para conclusão antes da defesa. As principais
+contribuições são: (i) implementação aberta de \textit{pipeline} RAG para
+ILTB em PT-BR integrando componentes do estado da arte, com código-fonte
+disponível para reprodução; (ii) \textit{dataset} de 38 questões
+clínicas com \textit{ground truths} extraídos verbatim dos protocolos
+oficiais; (iii) caracterização dos requisitos LGPD aplicáveis a RAG
+clínico em PT-BR e das adequações necessárias para implantação
+institucional, distinguindo compatibilidade de POC de conformidade
+plena; e (iv) adaptação do TAM-AIN como roteiro qualitativo em sessão
+exploratória com avaliador único, mantendo o instrumento psicométrico
+completo como referência para piloto multi-avaliador futuro.
 
 \vspace{\onelineskip}
 \noindent\textbf{Palavras-chave:} tuberculose latente; ILTB; chatbot clínico;
@@ -215,47 +212,45 @@ LGPD.
 \begin{otherlanguage*}{english}
 
 Latent tuberculosis infection (LTBI) is a persistent public-health
-challenge: about one quarter of the global population is infected, and
-preventing progression to active TB in vulnerable groups is strategic for
-disease elimination. Nursing professionals lead LTBI screening and
-treatment, yet must navigate long, periodically updated protocols that
-are not always easy to consult bedside. This work proposes, develops, and
-evaluates a clinical support chatbot based on Retrieval-Augmented
-Generation (RAG) for LTBI management, grounded in official documents
-from the Brazilian Ministry of Health and the World Health Organization,
+challenge: about one quarter of the global population is estimated to be
+infected, and preventing progression to active TB in vulnerable groups
+is strategic for disease elimination. Nursing professionals lead LTBI
+screening and treatment, yet must navigate long, periodically updated
+protocols that are difficult to consult bedside. This work proposes,
+develops, and evaluates a clinical support chatbot based on
+Retrieval-Augmented Generation (RAG) for LTBI management, grounded in
+official documents from the Brazilian Ministry of Health and the WHO,
 in Brazilian Portuguese. Following the Design Science Research
 Methodology (DSRM), the artifact was built as a \texttt{FastAPI} web
 application with a \texttt{ChromaDB} vector store, multilingual
-\texttt{BAAI/bge-m3} embeddings (1024 dimensions), hybrid BM25+dense
-retrieval with Reciprocal Rank Fusion, mGTE cross-encoder reranking, and
-the Llama 3.3 70B language model accessed via the Groq API under a
-no-prompt-retention policy. Automated evaluation using the RAGAS
-framework was performed over 38 clinical questions in seven thematic
-categories, replicated across three independent seeds per configuration.
-The final gate achieved \textit{context precision} of $0.956 \pm 0.009$
-(robust PASS over the $0.75$ target, absolute margin of $+0.206$) and
-\textit{faithfulness} of $0.752 \pm 0.004$, near the common ceiling
-reported for clinical RAG without self-reflection ($\sim 0.75$). A
-$2 \times 2$ ablation crossing generator (Llama \textit{vs.} GPT-4o) and
-embedding (MiniLM 384D \textit{vs.} BGE-M3 1024D) identified the
-embedding as the dominant variable and revealed a paradoxical finding:
-models more compliant with instructions to \textit{fallback} (GPT-4o)
-score \emph{worse} on faithfulness, indicating that RAGAS penalizes
-cautious abstention --- a desirable behaviour in clinical support. For
-this reason, \textit{Context Precision} is adopted as the headline
-indicator of the final gate, while \textit{Faithfulness} is read jointly
-with the discussion of the paradox. \textbf{Qualitative evaluation with a
-domain specialist (specific objective OE4) is protocolled and scheduled
-for the defence period; results will be integrated in a post-defence
-version of this monograph.} The main contributions are: (i) an open RAG
-artifact for LTBI in Portuguese, with public source code; (ii) a clinical
-evaluation \textit{dataset} of 38 questions with ground truths extracted
-verbatim from official protocols; (iii) an empirical analysis of the
-trade-off between Brazilian data-protection compliance and retrieval
-performance; and (iv) a multidimensional evaluation protocol for
-clinical RAG with small evaluator samples, combining RAGAS, a clinical
-rubric, and a semi-structured interview organized along the TAM-AIN
-dimensions.
+\texttt{BAAI/bge-m3} embeddings (1024D), hybrid BM25+dense retrieval
+with Reciprocal Rank Fusion, mGTE cross-encoder reranking, and
+Llama~3.3~70B accessed via the Groq API under a no-prompt-retention
+policy. Automated evaluation using the RAGAS framework over 38 clinical
+questions in seven thematic categories, replicated across three
+independent seeds per configuration, achieved \textit{Context Precision}
+of $0.956 \pm 0.009$ and \textit{Faithfulness} of $0.752 \pm 0.004$. The
+latter fell $\sim 0.05$ short of the initial target of $0.80$, but lies
+close to the common ceiling reported for clinical RAG without
+self-reflection mechanisms ($\sim 0.75$). A $2 \times 2$ ablation
+crossing generator (Llama \textit{vs.} GPT-4o) and embedding (MiniLM
+384D \textit{vs.} BGE-M3 1024D) identified the embedding as the dominant
+variable and replicated, in this work's context, a known limitation of
+RAGAS: the \textit{Faithfulness} metric penalises generators that
+cautiously abstain when context is partial --- a clinically desirable
+behaviour. Qualitative evaluation with a domain specialist (specific
+objective OE4) is in progress during final-stage work, with sessions
+scheduled for completion before the defence. The main contributions are:
+(i) an open implementation of a RAG \textit{pipeline} for LTBI in PT-BR
+integrating state-of-the-art components, with public source code for
+reproduction; (ii) a \textit{dataset} of 38 clinical questions with
+ground truths extracted verbatim from official protocols; (iii)
+characterisation of LGPD requirements applicable to clinical RAG in
+PT-BR and the adjustments needed for institutional deployment,
+distinguishing PoC compatibility from full compliance; and (iv)
+adaptation of TAM-AIN as a qualitative interview guide in an exploratory
+session with a single evaluator, with the full psychometric instrument
+preserved as a reference for a future multi-evaluator pilot.
 
 \vspace{\onelineskip}
 \noindent\textbf{Keywords:} latent tuberculosis infection; LTBI; clinical chatbot;
@@ -405,28 +400,36 @@ privacidade de dados e avaliado com métricas objetivas de qualidade de resposta
 As contribuições deste trabalho são:
 
 \begin{enumerate}[label=\textbf{C\arabic*}]
-  \item \textbf{Artefato RAG aberto para ILTB em português:} pipeline RAG
-        funcional, indexando documentos oficiais do MS e da OMS, com código-fonte
-        disponível para reprodução e adaptação.
-  \item \textbf{Dataset de avaliação clínica:} 38 questões clínicas em português
-        sobre ILTB, organizadas em seis categorias (esquemas terapêuticos,
-        monitoramento, populações especiais, diagnóstico, interações medicamentosas
-        e efeitos adversos), com \textit{ground truths} extraídos literalmente dos
-        protocolos indexados, utilizáveis como \textit{benchmark} por trabalhos
-        subsequentes em RAG clínico em PT-BR.
-  \item \textbf{Análise empírica do \textit{trade-off} LGPD vs. desempenho:}
-        documentação das escolhas arquiteturais que tornam o desenho do
-        artefato \emph{compatível} com requisitos da LGPD no recorte de POC
-        acadêmica (corpus público, \emph{embeddings} locais, retenção zero),
-        e discussão das mitigações ativas adicionais necessárias para
-        \emph{conformidade plena} em implantação institucional (RIPD/DPIA,
-        DPA, \emph{scrubbing}, \emph{logging} auditável).
-  \item \textbf{Protocolo de avaliação multidimensional para RAG clínico com
-        $N=1$:} adaptação metodológica que combina avaliação RAGAS automatizada,
-        rubrica clínica multidimensional e entrevista semi-estruturada
-        organizada pelas dimensões do TAM-AIN, oferecendo alternativa a
-        instrumentos inadequados a amostra reduzida (e.g., Kappa de Cohen,
-        ou o próprio TAM-AIN como questionário pontuável).
+  \item \textbf{Implementação aberta de \textit{pipeline} RAG para ILTB em
+        PT-BR:} integração de componentes do estado da arte
+        (\textit{embedding} BGE-M3 1024D, busca híbrida BM25+denso com RRF,
+        reranking \textit{cross-encoder} mGTE e Llama~3.3~70B via Groq)
+        sobre corpus oficial do MS e da OMS, com código-fonte público para
+        reprodução e adaptação. A contribuição é de engenharia
+        (integração e configuração), não de invenção de componente novo.
+  \item \textbf{Dataset de avaliação clínica em PT-BR:} 38 questões sobre
+        ILTB em sete categorias (esquemas terapêuticos, indicações,
+        populações especiais, diagnóstico, monitoramento, interações
+        medicamentosas e efeitos adversos), com \textit{ground truths}
+        extraídos verbatim dos protocolos indexados. Utilizável como
+        \textit{benchmark} inicial por trabalhos subsequentes em RAG
+        clínico em PT-BR, sujeito ao viés de construção descrito na
+        Limitação~L6.
+  \item \textbf{Caracterização do recorte de aplicabilidade da LGPD ao RAG
+        clínico em PT-BR:} distinção operacional entre \emph{compatibilidade}
+        do desenho com requisitos da lei em escopo de POC (corpus público,
+        \textit{embeddings} locais, retenção zero) e \emph{conformidade
+        plena} para implantação institucional (RIPD/DPIA, DPA com operador,
+        \textit{scrubbing} ex-ante de identificadores, \textit{logging}
+        auditável pseudonimizado), com identificação dos instrumentos
+        ainda não produzidos.
+  \item \textbf{Adaptação do TAM-AIN como roteiro qualitativo em sessão
+        exploratória com avaliador único:} combinação metodológica com
+        rubrica clínica multidimensional e métricas RAGAS automatizadas,
+        explicitando o que pode e o que não pode ser inferido com $N=1$.
+        O instrumento psicométrico completo (análise fatorial, $\alpha$ de
+        Cronbach) é mantido como referência para piloto multi-avaliador
+        futuro (TF6).
 \end{enumerate}
 
 \section{Estrutura da Monografia}
@@ -448,12 +451,15 @@ futuros.
 \section{Tuberculose e Infecção Latente (ILTB)}
 
 A ILTB é definida pela OMS como um estado de resposta imune persistente à
-estimulação por antígenos de \textit{Mycobacterium tuberculosis}, sem evidência de
-TB ativa clinicamente manifesta \cite{who2018}. Estima-se que aproximadamente um
-quarto da população mundial tenha sido infectada, com risco de progressão para TB
-ativa de 5--10\% ao longo da vida em imunocompetentes \cite{who2023}. No Brasil, o
-Ministério da Saúde define os critérios de rastreamento, diagnóstico e tratamento
-por meio de seu Manual de Recomendações \cite{brasil2022}.
+estimulação por antígenos de \textit{Mycobacterium tuberculosis}, sem
+evidência de TB ativa clinicamente manifesta \cite{who2018}. Estimativas
+clássicas \cite{who2023} apontam que aproximadamente um quarto da
+população mundial tenha sido infectada --- valor que estudos recentes
+têm revisado para baixo conforme novas técnicas de \textit{modelling}
+epidemiológico ---, com risco de progressão para TB ativa de 5--10\%
+ao longo da vida em imunocompetentes. No Brasil, o Ministério da Saúde
+define os critérios de rastreamento, diagnóstico e tratamento por meio
+de seu Manual de Recomendações \cite{brasil2022}.
 
 Determinados grupos apresentam risco aumentado de progressão para TB ativa e
 constituem público prioritário para rastreamento e tratamento da ILTB. Entre eles
@@ -704,10 +710,16 @@ Seção~\ref{sec:sessao-expert}).
 \label{cap:metodologia}
 % ─────────────────────────────────────────────────────────────────────────────
 
-Este trabalho adota a \textit{Design Science Research Methodology} (DSRM)
-\cite{peffers2007}, metodologia consagrada para pesquisa em sistemas de informação
-orientada à construção de artefatos. O DSRM estrutura a pesquisa em seis atividades
-iterativas, conforme a Figura~\ref{fig:dsrm}.
+Este trabalho adota a \textit{Design Science Research Methodology}
+(DSRM) \cite{peffers2007}, metodologia consagrada para pesquisa em
+sistemas de informação orientada à construção de artefatos. O modelo
+de Peffers~et~al. estrutura a pesquisa em seis atividades iterativas
+(Figura~\ref{fig:dsrm}); este esqueleto processual é complementado, na
+seção seguinte, pelo detalhamento de \citeauthor{hevner2007}
+\cite{hevner2007} em três ciclos analíticos sobrepostos
+(relevância, rigor, design), usados como lente para classificar as
+iterações de C1 a C6 e para identificar o retorno do trabalho à base
+de conhecimento.
 
 \begin{figure}[!htbp]
   \centering
@@ -754,7 +766,7 @@ iterativas, conforme a Figura~\ref{fig:dsrm}.
       -| node[pos=0.25, above, font=\scriptsize\itshape] {iteração (C3--C5)}
       ($(s3.south) + (0.6,0)$);
 
-    % Iteração menor: avaliação refina objetivos (lições do paradoxo)
+    % Iteração menor: avaliação refina objetivos (lições da limitação RAGAS)
     \draw[feedback]
       (s5.north west) ++(-0.05,0.05)
       -- ++(0,0.9)
@@ -766,71 +778,176 @@ iterativas, conforme a Figura~\ref{fig:dsrm}.
             (Quadro~\ref{quad:ciclos-dsrm}).}
 \end{figure}
 
-O Quadro~\ref{quad:ciclos-dsrm} sintetiza os ciclos iterativos executados no
-projeto, mapeando hipótese testada, intervenção, resultado mensurável e
-lição aprendida que orientou o ciclo subsequente. A organização em ciclos
-explicita o caráter iterativo da DSRM e fornece rastreabilidade entre
-intervenções técnicas (Capítulo~\ref{cap:desenvolvimento}) e resultados
-empíricos (Capítulo~\ref{cap:avaliacao}).
+O esqueleto de seis fases da Figura~\ref{fig:dsrm} é processual.
+Para usar a DSRM como ferramenta analítica --- e não apenas como
+sequência de etapas ---, sobrepõe-se a ele o detalhamento de
+\citeauthor{hevner2007} \cite{hevner2007} em \textbf{três ciclos}
+sobrepostos, cada um com função epistemológica distinta:
+
+\begin{itemize}
+  \item \textbf{Ciclo de Relevância} (\emph{relevance cycle}): conecta
+        o artefato ao \emph{ambiente} de aplicação. Importa do ambiente
+        requisitos e critérios de aceitação; devolve ao ambiente
+        evidência de utilidade. Neste trabalho, instancia-se em duas
+        pontas: a análise documental dos protocolos do MS/OMS que
+        motivou o problema (Seção~\ref{cap:introducao}) e a sessão
+        estruturada com especialista em ILTB
+        (Seção~\ref{sec:sessao-expert}), que valida o artefato contra
+        a prática clínica.
+  \item \textbf{Ciclo de Rigor} (\emph{rigor cycle}): conecta o
+        artefato à \emph{base de conhecimento}. Importa da literatura
+        teorias e métodos validados; devolve à literatura achados
+        passíveis de generalização derivados do exercício de
+        construção. Neste trabalho, importa do
+        Capítulo~\ref{cap:referencial} as escolhas de método (RAGAS,
+        TAM-AIN, busca híbrida BM25+RRF, reranking
+        \emph{cross-encoder}, BGE-M3) e devolve quatro achados
+        candidatos a generalização, listados no parágrafo seguinte.
+  \item \textbf{Ciclo de Design} (\emph{design cycle}): iteração
+        interna entre construir e avaliar. É onde se exerce a
+        engenharia propriamente dita; corresponde aos ciclos C1--C5
+        do Quadro~\ref{quad:ciclos-dsrm}.
+\end{itemize}
+
+O Quadro~\ref{quad:ciclos-dsrm} sintetiza os ciclos iterativos
+executados no projeto e os classifica frente às três funções
+analíticas de Hevner, explicitando que C3 e C6 não são apenas
+iterações de construção: eles produzem retorno para a base de
+conhecimento (rigor) e para o ambiente (relevância),
+respectivamente.
 
 \begin{quadro}[!htbp]
   \centering
-  \small
+  \footnotesize
   \renewcommand{\arraystretch}{1.15}
-  \caption{Ciclos DSRM observados no desenvolvimento do artefato}
+  \caption{Ciclos DSRM observados no desenvolvimento do artefato,
+           classificados frente aos três ciclos de
+           \citeauthor{hevner2007} (\citeyear{hevner2007})}
   \label{quad:ciclos-dsrm}
-  \begin{tabularx}{\textwidth}{|c|X|X|X|}
+  \begin{tabularx}{\textwidth}{|c|c|X|X|X|}
   \hline
   \rowcolor{gray!25}
-  \textbf{Ciclo} & \textbf{Hipótese / intervenção} & \textbf{Resultado mensurável} & \textbf{Lição $\to$ próximo ciclo} \\ \hline
-  C1 & Sanitização de \textit{chunks} e estabilização do \textit{system prompt}
-       resolvem o problema de extração ruidosa do PDF. &
+  \textbf{Ciclo} & \textbf{Hevner} & \textbf{Hipótese / intervenção} &
+  \textbf{Resultado mensurável} & \textbf{Lição $\to$ próximo ciclo} \\ \hline
+  C1 & Design & Sanitização de \textit{chunks} e estabilização do
+       \textit{system prompt} resolvem o problema de extração ruidosa
+       do PDF. &
        \textit{Faithfulness} de $0{,}375$ para $0{,}586$ ($+56\%$);
        \textit{Answer Relevancy} dobra ($0{,}310 \to 0{,}534$). &
        Pré-processamento era gargalo, mas o teto da iteração ainda não
-       atinge a meta. Indica gargalo seguinte em recuperação ou geração. \\ \hline
-  C2 & \textit{Chunker} hierárquico por cabeçalhos Markdown e
+       atinge a meta. Indica gargalo seguinte em recuperação ou
+       geração. \\ \hline
+  C2 & Design & \textit{Chunker} hierárquico por cabeçalhos Markdown e
        $k=5$ estabilizam o \textit{retrieval}. &
        \textit{Context Precision} $0{,}735$ (próximo da meta $0{,}75$),
        mas \textit{Faithfulness} estagna em $0{,}515$. &
        \textit{Retrieval} convergiu; o gargalo é gerador ou
        \textit{embedding}, hipótese a ser separada via ablação cruzada. \\ \hline
-  C3 & Ablação $2 \times 2$ isola gerador
-       (Llama \emph{vs} GPT-4o) $\times$ \textit{embedding} (MiniLM 384D
-       \emph{vs} BGE-M3 1024D) sobre 3 seeds por célula. &
+  C3 & Design $+$ Rigor & Ablação $2 \times 2$ isola gerador
+       (Llama \emph{vs} GPT-4o) $\times$ \textit{embedding}
+       (MiniLM 384D \emph{vs} BGE-M3 1024D) sobre 3 seeds por célula. &
        \textit{Embedding} é variável dominante: BGE-M3 eleva
        \textit{Faithfulness} de $0{,}486$ a $0{,}679$ no gerador Llama
        ($+39{,}7\%$); GPT-4o piora \textit{Faithfulness} em ambos os
-       \textit{embeddings} (paradoxo abstrativo--vs--conservador). &
-       Migração para BGE-M3 1024D no \textit{pipeline} de produção;
-       adoção do Llama como gerador validada pelos próprios números;
-       interpretação cautelosa do \textit{Faithfulness} como métrica. \\ \hline
-  C4 & Busca híbrida BM25 $+$ denso com RRF endereça termos clínicos
-       exatos (siglas, dosagens) não capturados pelo BGE-M3. &
+       \textit{embeddings}, replicando limitação conhecida do RAGAS
+       (penalização de abstenção cautelosa). &
+       Migração para BGE-M3 1024D; Llama mantido por custo e licença
+       \emph{open-weight}. \textbf{Retorno ao rigor}: replicação da
+       limitação RAGAS em PT-BR (R1, R2). \\ \hline
+  C4 & Design & Busca híbrida BM25 $+$ denso com RRF endereça termos
+       clínicos exatos (siglas, dosagens) não capturados pelo BGE-M3. &
        \textit{Faithfulness} $0{,}679 \to 0{,}740$ ($+9{,}0\%$, $\Delta$
        $\approx 3{,}6\times$ DP); \textit{Context Recall} $+8{,}5\%$. &
-       Híbrido é motor dominante de \textit{Faithfulness}; resta consolidar
-       \textit{Context Precision} e reduzir variância inter-seed. \\ \hline
-  C5 & \textit{Reranker} \textit{cross-encoder} mGTE reordena os
-       candidatos do RRF antes da geração. &
-       \textit{Context Precision} $0{,}915 \to 0{,}956$ ($+0{,}041$); DP
-       inter-seed da \textit{Faithfulness} cai de $\pm 0{,}017$ para
-       $\pm 0{,}004$. &
-       \textit{Reranker} consolida Ctx.Prec e estabiliza
-       \textit{Faithfulness}. Gate operacional final do artefato. \\ \hline
-  C6 & Avaliação com especialista (rubrica clínica multidimensional $+$
-       entrevista pelas dimensões do TAM-AIN). &
+       Híbrido é motor dominante de \textit{Faithfulness}; resta
+       consolidar Ctx.Prec e reduzir variância inter-\emph{seed}.
+       \textbf{Retorno ao rigor}: magnitude no envelope previsto pela
+       literatura (R3). \\ \hline
+  C5 & Design & \textit{Reranker} \emph{cross-encoder} mGTE reordena
+       os candidatos do RRF antes da geração. &
+       \textit{Context Precision} $0{,}915 \to 0{,}956$ ($+0{,}041$);
+       DP inter-\emph{seed} da \textit{Faithfulness} cai de
+       $\pm 0{,}017$ para $\pm 0{,}004$. &
+       \emph{Reranker} consolida Ctx.Prec e estabiliza
+       \textit{Faithfulness}. Gate operacional final.
+       \textbf{Retorno ao rigor}: divisão de papéis entre BM25 e
+       \emph{reranker} no domínio (R4). \\ \hline
+  C6 & Relevância & Avaliação com especialista em ILTB (rubrica
+       clínica multidimensional $+$ entrevista pelas dimensões do
+       TAM-AIN) --- \emph{em execução durante a finalização do
+       trabalho}. &
        \aluno{Sumarizar acurácia clínica média, severidade modal dos
        erros e síntese narrativa por dimensão TAM-AIN após execução.} &
        \aluno{Lição da sessão $\to$ refinamento do \textit{prompt} ou
-       \textit{Trabalhos Futuros}.} \\ \hline
+       \textit{Trabalhos Futuros}.} \textbf{Retorno ao ambiente}:
+       validação contra prática clínica real. \\ \hline
   \end{tabularx}
-  \caption*{Fonte: Produção do próprio autor. Os ciclos C1 e C2 referem-se à
-            Fase 2 do projeto (Tabela~\ref{tab:ragas}); C3 a C5 são as
-            iterações pós-replicação multi-seed
-            (Tabelas~\ref{tab:ablacao-2x2} e \ref{tab:hybrid-rerank}); C6 é
-            a etapa de avaliação humana (Seção~\ref{sec:sessao-expert}).}
+  \caption*{Fonte: Produção do próprio autor. Coluna \emph{Hevner}
+            classifica cada ciclo frente aos três ciclos de
+            \citeauthor{hevner2007} (\citeyear{hevner2007}): Design
+            (iteração interna construir/avaliar), Rigor (retorno à
+            base de conhecimento), Relevância (retorno ao ambiente).
+            C1--C2 referem-se à Fase 2 (Tabela~\ref{tab:ragas}); C3--C5
+            às iterações pós-replicação multi-\emph{seed}
+            (Tabelas~\ref{tab:ablacao-2x2} e \ref{tab:hybrid-rerank});
+            C6 à avaliação humana (Seção~\ref{sec:sessao-expert}).}
 \end{quadro}
+
+\subsection*{Retornos ao ciclo de rigor}
+\label{sec:retornos-rigor}
+
+Os ciclos C3, C4 e C5 produzem, além do refinamento do artefato,
+quatro achados candidatos a generalização --- retornos ao ciclo de
+rigor que constituem a contribuição da pesquisa à base de
+conhecimento, complementarmente à contribuição de engenharia (C1).
+Os achados são enunciados aqui em forma abreviada e expandidos no
+Capítulo~\ref{cap:avaliacao} e na Conclusão.
+
+\begin{enumerate}[label=\textbf{R\arabic*}, leftmargin=*]
+  \item \emph{Em RAG clínico para ILTB em PT-BR sobre corpus oficial, o
+        \emph{embedding} domina o gerador como variável de qualidade.}
+        Substituir MiniLM 384D por BGE-M3 1024D produz ganho de $+25$
+        a $+45$\,pp em todas as métricas para os dois geradores
+        avaliados; trocar o gerador (Llama \emph{vs} GPT-4o) tem
+        efeito menor e direcionalmente surpreendente (ver R2). Achado
+        consistente com \citeauthor{ocaf2024} \cite{ocaf2024} em outros
+        domínios biomédicos, replicado aqui em PT-BR
+        (Seção~\ref{sec:ablacao-2x2}).
+  \item \emph{A métrica \emph{Faithfulness} do RAGAS penaliza
+        abstenção cautelosa também no domínio ILTB em PT-BR.}
+        Limitação reconhecida pelo \emph{paper} original do RAGAS
+        \cite{es2024} e por estudos de mitigação de alucinação
+        \cite{huang2023halucination, zakka2024almanac, ocaf2024},
+        replicada quantitativamente neste trabalho com 3 \emph{seeds}
+        por configuração (Seção~\ref{sec:interp-faith}).
+  \item \emph{Busca híbrida BM25+denso com RRF produz o salto dominante
+        em \emph{Faithfulness} no domínio com alta densidade
+        terminológica (siglas, dosagens, regimes).} Magnitude observada
+        ($+9{,}0\%$) recai sobre o envelope previsto pela literatura
+        \cite{wang2024bestpractices} para domínios técnicos
+        (Seção~\ref{sec:hybrid}).
+  \item \emph{No domínio, \emph{reranker} \emph{cross-encoder} mGTE
+        consolida \emph{Context Precision} e reduz variância
+        inter-\emph{seed} sem ganho dominante de \emph{Faithfulness}.}
+        Divisão de papéis entre BM25 (motor de \emph{Faithfulness}) e
+        reranker (estabilizador de Ctx.Prec) que não é trivialmente
+        prevista pela literatura de RAG genérico
+        (Seção~\ref{sec:rerank}).
+\end{enumerate}
+
+R1 e R3 são replicações em PT-BR clínico de achados já descritos em
+outros contextos. R2 é replicação quantitativa de limitação
+metodológica conhecida. R4 é o achado mais original do conjunto e o
+único que reivindica novidade frente à literatura de RAG genérico ---
+sujeito, naturalmente, ao viés de construção do \emph{dataset}
+descrito na Limitação~L6.
+
+O Quadro~\ref{quad:ciclos-dsrm} e os retornos R1--R4 sintetizam, de
+modo retrospectivo, o que cada ciclo iterativo produziu. As seções
+seguintes deste capítulo retomam a sequência processual de
+\citeauthor{peffers2007} \cite{peffers2007} para detalhar, fase a
+fase, como o problema foi caracterizado, como os objetivos da solução
+foram definidos e como o artefato foi projetado, demonstrado, avaliado
+e comunicado.
 
 \section{Identificação do Problema e Motivação}
 
@@ -858,34 +975,39 @@ confirmou que ferramentas de apoio à decisão clínica em domínio específico 
 são pouco exploradas para o português brasileiro, configurando lacuna acadêmica
 relevante.
 
-A partir dessas duas fontes formularam-se as duas proposições falsificáveis
-que organizam a investigação empírica deste trabalho.
+A partir dessas duas fontes, e do encadeamento de ciclos DSRM
+documentado no Quadro~\ref{quad:ciclos-dsrm}, emergiram duas
+\emph{perguntas exploratórias} que organizam a fase de ablação
+controlada do trabalho. Não são hipóteses falsificáveis no sentido
+popperiano estrito --- foram formuladas durante a iteração
+experimental, à luz dos resultados intermediários dos ciclos C1--C2 ---
+mas estruturam a investigação posterior sob o registro analítico que a
+DSRM admite para o estágio de avaliação.
 
-\textbf{Tese 1 (técnica).} \emph{No domínio ILTB em português, sobre corpus
-oficial do MS e da OMS, a escolha do modelo de \emph{embedding} é variável
-dominante de qualidade de recuperação: a substituição de um \emph{embedding}
-multilíngue 384D (\texttt{MiniLM}) por um modelo 1024D
-(\texttt{BAAI/bge-m3}) eleva a \emph{Context Precision} acima de
-$0{,}90$ --- patamar inatingível pela MiniLM independentemente do modelo
-gerador adotado.} Essa proposição é diretamente testada pela ablação
-$2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}: a falsificação
-ocorreria se o BGE-M3 não produzisse ganho mensurável em \textit{Context
-Precision} sobre a MiniLM, ou se a MiniLM atingisse $\geq 0{,}90$.
+\textbf{Pergunta 1 (técnica).} \emph{No domínio ILTB em português,
+sobre corpus oficial do MS e da OMS, em que medida a escolha do modelo
+de \emph{embedding} domina a qualidade da recuperação frente à escolha
+do gerador?} A pergunta é endereçada pela ablação $2 \times 2$
+apresentada na Seção~\ref{sec:ablacao-2x2}, que mede o tamanho de
+efeito relativo do \emph{embedding} (MiniLM 384D \textit{vs.} BGE-M3
+1024D) e do gerador (Llama~3.3~70B \textit{vs.} GPT-4o) nas quatro
+métricas RAGAS.
 
-\textbf{Tese 2 (avaliativa).} \emph{A métrica de \emph{Faithfulness} do
-\emph{framework} RAGAS, na sua formulação atual, é assimétrica em relação ao
-\emph{trade-off} segurança--cobertura: penaliza geradores que se abstêm
-quando o contexto é parcial, mesmo quando a abstenção é clinicamente
-preferível.} Essa proposição é testada pela comparação cruzada
-gerador~$\times$~\emph{embedding} da mesma ablação: a falsificação ocorreria
-se a substituição do Llama por um modelo mais aderente a instruções de
-\textit{fallback} (GPT-4o) preservasse ou elevasse a \emph{Faithfulness} ---
-o oposto do que se observou.
+\textbf{Pergunta 2 (avaliativa).} \emph{A métrica de
+\emph{Faithfulness} do RAGAS, na sua formulação atual, é simétrica em
+relação ao \emph{trade-off} segurança--cobertura, ou penaliza
+geradores que se abstêm cautelosamente quando o contexto é parcial?}
+A pergunta é endereçada pela comparação cruzada
+gerador~$\times$~\emph{embedding} da mesma ablação e dialoga com
+limitação já reconhecida pelo \emph{paper} original do RAGAS
+\cite{es2024} e por estudos subsequentes
+\cite{huang2023halucination, zakka2024almanac, ocaf2024}.
 
-A confirmação ou refutação das duas teses orienta, em conjunto, a definição
-do gate operacional do artefato e a escolha do indicador-síntese para o
-trabalho (\emph{Context Precision} sobre \emph{Faithfulness}), conforme
-desenvolvido no Capítulo~\ref{cap:avaliacao}.
+As respostas a essas duas perguntas, desenvolvidas no
+Capítulo~\ref{cap:avaliacao}, orientam a leitura conjunta das quatro
+métricas RAGAS apresentadas no gate final e justificam a complementação
+da avaliação automatizada com a sessão estruturada com especialista
+descrita na Seção~\ref{sec:sessao-expert}.
 
 \section{Definição dos Objetivos da Solução}
 
@@ -933,8 +1055,9 @@ versão final.
         protocolos; alinhado a recomendações de chunking estrutural
         \cite{gao2024, advancedChunkingRAG2025}. \\ \hline
   D5  & Avaliação automatizada com RAGAS (\textit{faithfulness},
-        \textit{answer relevancy}, \textit{context precision/recall})
-        complementada por avaliação humana. &
+        \textit{answer relevancy}, \textit{context precision/recall}),
+        com sessão estruturada com especialista em execução durante a
+        finalização do trabalho. &
         \textit{Framework reference-free} padrão em RAG biomédico, com
         limitações conhecidas que exigem complemento por especialista
         \cite{es2024, ocaf2024, gallifant2025tripod}. \\ \hline
@@ -1023,9 +1146,11 @@ A avaliação foi estruturada em duas etapas complementares:
         \textit{ground-truths} extraídos dos documentos indexados, usando
         \textit{faithfulness}, \textit{answer relevancy}, \textit{context
         precision} e \textit{context recall} \cite{es2024};
-  \item \textbf{Avaliação qualitativa com especialista:} sessão estruturada com
-        profissional especialista em ILTB, avaliando amostras de respostas do
-        chatbot em termos de acurácia clínica e aderência aos protocolos vigentes.
+  \item \textbf{Avaliação qualitativa com especialista (em execução):}
+        sessão estruturada com profissional especialista em ILTB,
+        avaliando amostras de respostas do chatbot em termos de acurácia
+        clínica e aderência aos protocolos vigentes. Sessões protocoladas
+        para conclusão durante a fase de finalização do trabalho.
 \end{enumerate}
 
 A descrição completa do protocolo da sessão com o especialista, incluindo perfil
@@ -1087,13 +1212,15 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
   ]
     % ─── Linha 1: front-end (horizontal) ─────────────────────────
     \node[actor] (user) {Enfermeiro\\\scriptsize(usuário)};
-    \node[component, right=0.8cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
+    \node[component, right=1.9cm of user] (web) {Interface Web\\\scriptsize(HTML/JS)};
     \node[component, right=0.8cm of web] (api) {FastAPI\\\texttt{\scriptsize/chat}};
 
     % ─── Linha 2: pipeline de recuperação (caixa agrupadora) ────
-    \node[component, below=2.0cm of api] (retr) {Retriever\\\scriptsize(hybrid\,+\,rerank)};
-    \node[component, left=0.7cm of retr] (emb) {Embedding\\BGE-M3 1024D};
-    \node[storage, left=0.7cm of emb] (chroma) {ChromaDB\\\scriptsize 898 chunks};
+    % Ancorada no ChromaDB (alinhado sob o Enfermeiro) e crescendo para a
+    % direita, mantendo os componentes próximos entre si.
+    \node[storage, below=2.0cm of user] (chroma) {ChromaDB\\\scriptsize 898 chunks};
+    \node[component, right=0.7cm of chroma] (emb) {Embedding\\BGE-M3 1024D};
+    \node[component, right=0.7cm of emb] (retr) {Retriever\\\scriptsize(hybrid\,+\,rerank)};
     \node[component, below=0.6cm of retr] (bm25) {BM25 \emph{sidecar}};
     \node[component, right=0.7cm of retr] (rer) {Reranker\\mGTE (CPU)};
 
@@ -1104,8 +1231,8 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
                     inner sep=2pt]north west:Pipeline RAG (local)}] (rag) {};
     \end{scope}
 
-    % ─── LLM externo (alinhado com a caixa RAG, à direita) ──────
-    \node[external, right=2.0cm of rag.east, yshift=0pt] (llm)
+    % ─── LLM externo (alinhado verticalmente com o Reranker) ────
+    \node[external, right=2.0cm of rer] (llm)
         {Llama 3.3 70B\\\scriptsize via API Groq\\\scriptsize(sem retenção)};
 
     % ─── Setas: fluxo da consulta ────────────────────────────────
@@ -1121,9 +1248,10 @@ Figura~\ref{fig:arquitetura} apresenta a visão geral da arquitetura.
     \draw[flow] (rer.east) -- node[edgelabel] {(3) top-5} (llm.west);
 
     % ─── Setas: retorno da resposta ──────────────────────────────
-    % (4) resposta: LLM sobe e volta para o FastAPI por fora da caixa RAG
-    \draw[flowback] (llm.north) |- ([yshift=0.3cm]api.east)
-        node[edgelabel, pos=0.85] {(4) resposta} -- (api.east);
+    % (4) resposta: LLM sobe por fora da caixa RAG, contorna pelo alto e
+    % desce direto no centro-topo do FastAPI.
+    \draw[flowback] (llm.north) |- ([yshift=0.6cm]api.north)
+        node[edgelabel, pos=0.7] {(4) resposta} -- (api.north);
     \draw[flowback] (api) to[bend right=10] (web);
     \draw[flowback] (web) to[bend right=10] (user);
   \end{tikzpicture}
@@ -1243,17 +1371,17 @@ conformidade com a política LGPD do projeto (Seção~\ref{sec:lgpd-ref}); (ii)
 adoção em RAG biomédico \cite{ocaf2024}. O modelo gera vetores de 384 dimensões
 que são indexados no ChromaDB com métrica de similaridade cossenoidal.
 
-\textbf{Limitação observada empiricamente.} Um experimento conduzido durante o
-desenvolvimento adicionou contexto hierárquico explícito a cada chunk
-(prefixo com a cadeia de cabeçalhos), prática conhecida como
-\textit{contextual chunking}. Essa modificação \textit{piorou} os resultados
-RAGAS em todas as métricas, comportamento consistente com a literatura
-\cite{SHTI2023}: modelos de baixa dimensionalidade (384D) misturam semântica
-estrutural com semântica clínica no vetor resultante, degradando a precisão.
-Modelos de maior dimensionalidade ($\geq 1024$D) absorvem melhor essa
-informação adicional, o que reforça a indicação de migração para um modelo
-1024D (e.g., \texttt{multilingual-e5-large}, \texttt{BGE-M3}) como trabalho
-futuro prioritário (Capítulo~\ref{cap:conclusao}).
+\textbf{Limitação observada empiricamente.} Um experimento conduzido
+durante o desenvolvimento adicionou contexto hierárquico explícito a
+cada chunk (prefixo com a cadeia de cabeçalhos), prática conhecida como
+\textit{contextual chunking}. Essa modificação \textit{piorou} os
+resultados RAGAS em todas as métricas, comportamento consistente com a
+literatura \cite{SHTI2023}: modelos de baixa dimensionalidade (384D)
+misturam semântica estrutural com semântica clínica no vetor
+resultante, degradando a precisão. Modelos de maior dimensionalidade
+($\geq 1024$D) absorvem melhor essa informação adicional --- evidência
+que sustentou a migração para \texttt{BAAI/bge-m3} (1024D) executada na
+fase de avaliação deste trabalho (Seção~\ref{sec:gate-pos-migracao}).
 
 \section{Módulo de Recuperação}
 
@@ -1326,13 +1454,12 @@ As 38 questões \textit{in-scope} estão organizadas em sete categorias temátic
 esperados em uso real. A categorização serve a dois propósitos:
 \textbf{(i)} garantir cobertura balanceada do escopo clínico durante a
 construção do \textit{dataset} e \textbf{(ii)} permitir leitura descritiva
-da decomposição das métricas RAGAS por subdomínio --- breakdown reportado
-no Apêndice~\ref{ape:per-category}, com a ressalva metodológica de que
+da decomposição das métricas RAGAS por subdomínio --- \emph{breakdown}
+reportado no Apêndice~\ref{ape:per-category}, com a ressalva de que
 $N=4$ a $7$ questões por categoria não autoriza inferências estatísticas
-comparativas entre elas. Os achados qualitativos desse breakdown (notadamente
-a concentração de \textit{Faithfulness} baixa em categorias com alta
-densidade numérica) são integrados à interpretação do paradoxo
-abstrativo--vs--conservador na Seção~\ref{sec:interp-faith}.
+comparativas entre elas. A concentração de \textit{Faithfulness} baixa em
+categorias com alta densidade numérica é integrada à interpretação da
+limitação do RAGAS discutida na Seção~\ref{sec:interp-faith}.
 
 \begin{table}[h]
   \centering
@@ -1377,10 +1504,9 @@ O LLM-juiz adotado para a avaliação foi o \texttt{gpt-4o-mini} (OpenAI),
 escolhido por três motivos: (i) suporte a $n>1$ \textit{completions}, necessário
 para o cálculo correto de \textit{Faithfulness}; (ii) ausência de limite TPM
 restritivo que inviabilize execuções completas; (iii) custo aproximado de
-US\$\,$0{,}05$ por execução de 38 questões. Importante notar que o
-\textit{gpt-4o-mini} foi usado \textbf{exclusivamente como avaliador},
-permanecendo o Llama~3.3~70B via Groq como o gerador no pipeline de
-produção.
+US\$\,$0{,}05$ por execução de 38 questões. O \texttt{gpt-4o-mini} foi
+usado \textbf{exclusivamente como avaliador}, permanecendo o
+Llama~3.3~70B via Groq como o gerador no \textit{pipeline} de produção.
 
 \section{Avaliação Automatizada (RAGAS)}
 
@@ -1445,19 +1571,15 @@ estabilizou em torno de um patamar útil. O \textit{Faithfulness}, em contrapart
 permaneceu em $0{,}515$, abrindo a questão diagnóstica investigada pela ablação
 $2 \times 2$ apresentada na Seção~\ref{sec:ablacao-2x2}.
 
-\textbf{Nota sobre comparabilidade com a Tabela~\ref{tab:ablacao-2x2}.} A linha
-4 desta tabela registra a corrida única histórica do encerramento da Fase 2
-(\textit{Faithfulness} $0{,}515$; \textit{Context Precision} $0{,}735$). A
-Tabela~\ref{tab:ablacao-2x2} reporta, na sua primeira célula, a mesma
-configuração técnica (Llama~+~MiniLM~+~denso) sob replicação multi-seed
-posterior, com média $0{,}486 \pm 0{,}030$ / $0{,}736 \pm 0{,}007$ (3 seeds).
-A diferença em \textit{Faithfulness} ($-0{,}029$) está dentro de 1~DP da
-medição replicada e é compatível com a variância inter-seed do juiz LLM que
-motivou a replicação. \textbf{Para toda análise comparativa e inferência de
-efeitos (Capítulo~\ref{cap:avaliacao} a partir da
-Seção~\ref{sec:ablacao-2x2}), adota-se a Tabela~\ref{tab:ablacao-2x2} como
-\emph{baseline} canônico do trabalho}; a Tabela~\ref{tab:ragas} permanece
-como registro cronológico do desenvolvimento.
+A Tabela~\ref{tab:ragas} é registro cronológico de marcos do
+desenvolvimento, em corridas únicas. Para todas as comparações
+analíticas a partir da Seção~\ref{sec:ablacao-2x2} adota-se como
+\emph{baseline} canônico a primeira célula da Tabela~\ref{tab:ablacao-2x2}
+(mesma configuração técnica, replicada em 3 \emph{seeds}:
+\textit{Faithfulness} $0{,}486 \pm 0{,}030$, \textit{Context Precision}
+$0{,}736 \pm 0{,}007$). A diferença entre a corrida única ($0{,}515$) e
+a média replicada ($0{,}486$) está dentro de 1~DP e é compatível com a
+variância inter-seed do juiz LLM que motivou a replicação.
 
 \subsection{Ablação 2×2: Gerador e Embedding}
 \label{sec:ablacao-2x2}
@@ -1526,14 +1648,15 @@ consistentes com os \textit{benchmarks} multilíngues
 como o principal lever de qualidade em \textit{pipelines} RAG clínicos.
 
 \textbf{Efeito do gerador (colunas pareadas, embedding fixo).}
-Surpreendentemente, substituir o Llama pelo GPT-4o \emph{piora} a
-\textit{Faithfulness} em ambos os embeddings: $0{,}486 \to 0{,}395$ no
-MiniLM ($-18{,}7\%$, com DPs $\pm 0{,}030$ e $\pm 0{,}004$) e
-$0{,}679 \to 0{,}620$ no BGE-M3 ($-8{,}7\%$, com DPs $\pm 0{,}004$ e
-$\pm 0{,}011$). Em ambas as comparações pareadas, a magnitude do efeito
-($\Delta = 0{,}091$ e $0{,}059$, respectivamente) é várias vezes superior
-ao DP inter-seed máximo de cada par, padrão que indica efeito direcional
-robusto ainda que sem teste de hipótese formal. O \textit{Context Precision} permanece
+Substituir o Llama pelo GPT-4o \emph{piora} a \textit{Faithfulness} em
+ambos os embeddings: $0{,}486 \to 0{,}395$ no MiniLM ($-18{,}7\%$, com
+DPs $\pm 0{,}030$ e $\pm 0{,}004$) e $0{,}679 \to 0{,}620$ no BGE-M3
+($-8{,}7\%$, com DPs $\pm 0{,}004$ e $\pm 0{,}011$). Em ambas as
+comparações pareadas, a magnitude do efeito ($\Delta = 0{,}091$ e
+$0{,}059$) é várias vezes superior ao DP inter-seed máximo de cada par,
+indicando tendência direcional consistente; com $N=3$ \emph{seeds}, no
+entanto, nenhum teste de hipótese formal é defensável. O
+\textit{Context Precision} permanece
 estatisticamente equivalente entre os dois geradores (esperado --- essa
 métrica depende do retriever, não do gerador). \textit{Answer Relevancy}
 também cai com GPT-4o em ambos os embeddings. A inspeção direta das respostas geradas revelou a causa:
@@ -1546,34 +1669,36 @@ chunks mesmo quando o protocolo de origem é parcial, comportamento que
 o RAGAS pontua como mais fiel porque há claims verificáveis na resposta.
 
 Esse efeito --- modelo mais alinhado a instruções pontuando \emph{pior} em
-métricas automatizadas --- é convergente com observações independentes em RAG
-clínico: \citeauthor{zakka2024almanac} \cite{zakka2024almanac}, no sistema
-Almanac (NEJM AI), relata que modelos de fronteira frequentemente recusam
-responder em contextos clínicos e exigem engenharia específica para liberar a
-síntese quando segura. A literatura de mitigação de alucinação em LLMs
-\cite{huang2023halucination, ocaf2024} descreve esse padrão como ``abstenção
-excessiva'' --- evitar alucinação ao custo de cobertura. O paper original do
-RAGAS \cite{es2024} reconhece, igualmente, que sua métrica de
-\textit{Faithfulness} pode penalizar respostas seguras-por-recusa em cenários
-de síntese.
+métricas automatizadas --- replica, no contexto deste trabalho, uma
+\textbf{limitação conhecida do RAGAS}: o próprio \emph{paper} original
+\cite{es2024} reconhece que a métrica \textit{Faithfulness} pode
+penalizar respostas seguras-por-recusa em cenários de síntese, e a
+literatura de mitigação de alucinação em LLMs
+\cite{huang2023halucination, ocaf2024} descreve esse padrão como
+``abstenção excessiva'' --- evitar alucinação ao custo de cobertura.
+Observações independentes em RAG clínico convergem: \citeauthor{zakka2024almanac}
+\cite{zakka2024almanac}, no sistema Almanac (NEJM AI), relata que
+modelos de fronteira frequentemente recusam responder em contextos
+clínicos e exigem engenharia específica para liberar a síntese quando
+segura. A contribuição empírica desta seção é, portanto, a replicação
+quantitativa desse efeito sobre o \textit{dataset} ILTB em PT-BR.
 
-\textbf{Limitação do juiz adotado.} O paradoxo descrito acima é robusto sob
-replicação multi-seed (Tabela~\ref{tab:ablacao-2x2}), mas o juiz RAGAS
-utilizado --- \texttt{gpt-4o-mini} --- pertence à mesma família comercial
-(OpenAI) que um dos geradores candidatos da ablação (GPT-4o). Há, portanto,
-risco residual de \textbf{viés de avaliador intra-família}: o juiz pode
-sistematicamente penalizar ou favorecer respostas produzidas por modelos da
-mesma família por afinidade estilística (e.g., tendência a tratar o
-\emph{fallback} literal do GPT-4o como falta de \emph{claims} verificáveis,
-quando um juiz de outra família poderia ler como abstenção apropriada). Esse
-risco não foi controlado neste trabalho: a comparação Llama \emph{vs.}
-GPT-4o no juízo de \texttt{gpt-4o-mini} não foi replicada com avaliador
-independente (e.g., Claude, Gemini, ou \textit{ensemble} de juízes). A
-direção do efeito (Llama $>$ GPT-4o em \textit{Faithfulness}) é convergente
-com a literatura de RAG clínico citada acima, o que reduz --- mas não
-elimina --- a possibilidade de o paradoxo ser parcialmente artefato do
-juiz. Replicação com juiz de família independente está registrada em
-Trabalhos Futuros como TF de avaliação metodológica.
+\textbf{Limitação do juiz adotado.} O efeito descrito acima é direcionalmente
+estável sob replicação multi-seed (Tabela~\ref{tab:ablacao-2x2}), mas o
+juiz RAGAS utilizado --- \texttt{gpt-4o-mini} --- pertence à mesma
+família comercial (OpenAI) que um dos geradores candidatos da ablação
+(GPT-4o). Há, portanto, risco residual de \textbf{viés de avaliador
+intra-família}: o juiz pode sistematicamente penalizar ou favorecer
+respostas produzidas por modelos da mesma família por afinidade
+estilística. Esse risco não foi controlado neste trabalho: a comparação
+Llama \emph{vs.} GPT-4o no juízo de \texttt{gpt-4o-mini} não foi
+replicada com avaliador independente (e.g., Claude, Gemini, ou
+\textit{ensemble} de juízes). A direção do efeito (Llama $>$ GPT-4o em
+\textit{Faithfulness}) é convergente com a literatura de RAG clínico
+citada acima, o que reduz --- mas não elimina --- a possibilidade de o
+efeito ser parcialmente artefato do juiz. Replicação com juiz de família
+independente está registrada em Trabalhos Futuros como TF de avaliação
+metodológica.
 
 \subsection{Configuração Pós-Migração (Intermediária)}
 \label{sec:gate-pos-migracao}
@@ -1585,8 +1710,8 @@ mostra ganhos uniformes em todas as métricas: \textit{Faithfulness}
 $0{,}486 \pm 0{,}030 \to 0{,}679 \pm 0{,}004$ ($+39{,}7\%$);
 \textit{Answer Relevancy} $0{,}328 \pm 0{,}030 \to 0{,}660 \pm 0{,}019$
 ($+101{,}2\%$); \textit{Context Precision}
-$0{,}736 \pm 0{,}007 \to 0{,}923 \pm 0{,}003$ ($+25{,}4\%$, agora PASS robusto
-sobre a meta $\geq 0{,}75$); \textit{Context Recall}
+$0{,}736 \pm 0{,}007 \to 0{,}923 \pm 0{,}003$ ($+25{,}4\%$, ultrapassando
+a meta $\geq 0{,}75$); \textit{Context Recall}
 $0{,}515 \pm 0{,}073 \to 0{,}751 \pm 0{,}020$ ($+45{,}9\%$).
 
 A \textit{Faithfulness} de $0{,}679$ permanece abaixo da meta original de
@@ -1662,8 +1787,8 @@ em CPU), sem necessidade de GPU dedicada.
 A Tabela~\ref{tab:hybrid-rerank} (linha 3) sumariza o resultado, agregado sobre
 3 seeds. A contribuição dominante do reranker foi em
 \textbf{\textit{Context Precision}}, restaurando-a ao patamar de $0{,}956
-\pm 0{,}009$ ($+4{,}5\%$ sobre o híbrido sem rerank, recuperando o regime
-denso e ultrapassando-o em PASS robusto). \textit{Faithfulness} apresentou
+\pm 0{,}009$ ($+4{,}5\%$ sobre o híbrido sem rerank, recuperando e
+ultrapassando o regime denso). \textit{Faithfulness} apresentou
 ganho mais modesto ($0{,}740 \pm 0{,}017 \to 0{,}752 \pm 0{,}004$, $+1{,}6\%$,
 dentro do envelope de incerteza inter-seed): o ganho está direcionalmente
 correto e --- importante --- a configuração com reranker apresenta DP de
@@ -1733,21 +1858,9 @@ portanto, mantido.
 A combinação Llama~3.3~70B + BGE-M3 1024D + busca híbrida (BM25 + denso, RRF
 $k = 60$) + reranker mGTE foi adotada como \textbf{gate operacional
 final do artefato}. A Tabela~\ref{tab:gate-final} consolida os
-scores comparados à célula Llama~+~MiniLM da ablação --- adotada
+scores comparados à célula Llama~+~MiniLM da ablação, adotada
 como \textit{baseline} canônico (Seção~\ref{sec:ablacao-2x2}, primeira
-célula). Esta escolha substitui o \textit{baseline} de corrida única
-historicamente registrado na Tabela~\ref{tab:ragas} (linha 4,
-\textit{Faithfulness} $0{,}515$) por uma medição replicada da mesma
-configuração técnica em 3 seeds independentes ($0{,}486 \pm 0{,}030$):
-ambas medem o mesmo \textit{pipeline} (Llama~+~MiniLM~+~denso), mas a
-forma replicada é a comparação metodologicamente apropriada para
-quantificar o ganho do gate final. \textbf{Os deltas relativos desta
-tabela e os da Tabela~\ref{tab:ragas} \emph{não são intercambiáveis}}:
-deslocar o \textit{baseline} de $0{,}515$ (corrida única) para
-$0{,}486 \pm 0{,}030$ (3 seeds) eleva o ganho relativo de
-\textit{Faithfulness} de $+47{,}8\%$ para $+54{,}7\%$; ambos refletem a
-mesma magnitude absoluta ($\Delta \approx +0{,}24$ a $+0{,}27$) sob
-referenciais diferentes.
+célula; 3 \emph{seeds} independentes).
 
 \begin{table}[ht]
   \caption{Gate operacional final vs. célula Llama+MiniLM da ablação
@@ -1776,12 +1889,12 @@ referenciais diferentes.
   \caption*{Fonte: Produção do próprio autor.}
 \end{table}
 
-\textit{Context Precision} de $0{,}956 \pm 0{,}009$ ultrapassa
-confortavelmente a meta de $0{,}75$ (margem absoluta de $+0{,}206$ sobre o
-alvo). O intervalo observado entre as 3 seeds, $[0{,}949;\, 0{,}966]$,
-permanece integralmente acima da meta, sustentando a leitura de
-\textbf{PASS robusto} como indicador-síntese do gate final. \textit{Faithfulness} de $0{,}752 \pm 0{,}004$ está a $\sim 0{,}048$
-da meta original de $0{,}80$ --- gap residual interpretado na
+\textit{Context Precision} de $0{,}956 \pm 0{,}009$ ultrapassa a meta de
+$0{,}75$ com margem absoluta de $+0{,}206$ (intervalo entre as 3 seeds:
+$[0{,}949;\, 0{,}966]$, integralmente acima da meta), indicando que a
+etapa de recuperação convergiu para um patamar maduro.
+\textit{Faithfulness} de $0{,}752 \pm 0{,}004$ ficou $\sim 0{,}048$
+abaixo da meta original de $0{,}80$ --- gap residual interpretado na
 Seção~\ref{sec:interp-faith} e endereçado, como linha de pesquisa imediata,
 no Capítulo~\ref{cap:conclusao}.
 
@@ -1802,13 +1915,17 @@ da ablação ($0{,}486$) da meta de $0{,}80$.
 
 O gap residual de $\sim 0{,}048$ tem três fatores complementares descritos na
 literatura, ainda presentes no pipeline mesmo após as intervenções. O
-breakdown por categoria do gate final (Apêndice~\ref{ape:per-category})
-fornece evidência empírica direta de que o gap se concentra nas categorias
-com alta densidade numérica do \textit{dataset} (esquemas terapêuticos,
-populações especiais, interações medicamentosas) --- exatamente onde o
-gerador é forçado a sintetizar dose, duração e regimes em vez de reproduzir
-o texto literal do protocolo, perdendo correspondência verbatim que o RAGAS
-exige.
+\emph{breakdown} por categoria do gate final
+(Apêndice~\ref{ape:per-category}) fornece evidência empírica direta de
+que o gap se concentra nas categorias com alta densidade numérica do
+\textit{dataset} (esquemas terapêuticos, populações especiais,
+interações medicamentosas) --- onde o gerador sintetiza dose, duração e
+regimes em vez de reproduzir o texto literal, perdendo correspondência
+verbatim que o RAGAS exige. Esse padrão é convergente com limitação já
+documentada do \emph{framework} (\citeauthor{es2024},
+\citeyear{es2024}; \citeauthor{huang2023halucination},
+\citeyear{huang2023halucination}; \citeauthor{ocaf2024},
+\citeyear{ocaf2024}), discutida em detalhe a seguir.
 
 \textbf{Comportamento abstrativo do gerador.} Modelos generativos como o
 Llama~3.3~70B foram caracterizados desde \citeauthor{lewis2021}
@@ -2006,44 +2123,56 @@ em $N=1$ o instrumento não suporta esse tipo de agregação.}
 
 \section{Interpretação dos Resultados}
 
-Os resultados consolidados da avaliação RAGAS, à luz da ablação $2 \times 2$
-descrita na Seção~\ref{sec:ablacao-2x2} e da configuração final pós-migração
-da Seção~\ref{sec:gate-pos-migracao}, comportam três leituras complementares.
+Os resultados consolidados da avaliação RAGAS, à luz da ablação
+$2 \times 2$ descrita na Seção~\ref{sec:ablacao-2x2} e da configuração
+final pós-migração da Seção~\ref{sec:gate-pos-migracao}, comportam
+três leituras complementares, que correspondem aos retornos
+R1--R4 ao ciclo de rigor enunciados no
+Capítulo~\ref{cap:metodologia}.
 
-\textbf{Primeira: o embedding era o gargalo dominante.} A migração do
-embedding inicial de 384 dimensões (MiniLM, da família SBERT
+\textbf{Primeira (R1): o embedding era o gargalo dominante.} A migração do
+\emph{embedding} inicial de 384 dimensões (MiniLM, da família SBERT
 \cite{reimers2019}) para o BGE-M3 1024D produziu ganhos de $+25$ a
 $+45$\,pp em todas as métricas para os dois geradores avaliados, com
-magnitudes várias vezes superiores ao DP inter-seed
-(Tabela~\ref{tab:ablacao-2x2}). Esse
-achado é convergente com os \textit{benchmarks} multilíngues
-\cite{SHTI2023, mmteb2025} e com a revisão sistemática de
-\citeauthor{ocaf2024} \cite{ocaf2024}, que identifica a escolha do
-embedding como o principal lever de qualidade em RAG clínico. O
-patamar atingido de \textit{Context Precision} ($0{,}956 \pm 0{,}009$ na
-configuração final) ultrapassa confortavelmente a meta de $0{,}75$, validando
-empiricamente a hipótese predita pela literatura para o contexto deste trabalho.
+magnitudes várias vezes superiores ao DP inter-\emph{seed}
+(Tabela~\ref{tab:ablacao-2x2}). A direção e magnitude são convergentes
+com os \textit{benchmarks} multilíngues \cite{SHTI2023, mmteb2025} e
+com a revisão sistemática de \citeauthor{ocaf2024} \cite{ocaf2024},
+que identifica a escolha do \emph{embedding} como o principal
+\emph{lever} de qualidade em RAG clínico. \textit{Context Precision}
+de $0{,}956 \pm 0{,}009$ na configuração final ultrapassa a meta de
+$0{,}75$, evidenciando que a etapa de recuperação alcançou patamar
+maduro para o \emph{dataset} deste trabalho. Vale lembrar a
+\emph{ressalva de construção} (L6): o \emph{dataset} foi construído
+pelo autor a partir do mesmo corpus, com \emph{ground truths} verbatim,
+de modo que esse valor é otimista frente a um cenário de uso clínico
+real com perguntas formuladas por terceiros.
 
-\textbf{Segunda: modelo maior não dissolve o gap.} A substituição do
-Llama~3.3~70B pelo GPT-4o, mantendo o restante do pipeline constante,
-\emph{piorou} a \textit{Faithfulness} em ambas as configurações de
-embedding ($0{,}486 \to 0{,}395$ no MiniLM; $0{,}679 \to 0{,}620$ no
-BGE-M3, valores médios sobre 3 seeds, com SDs reportados na
-Tabela~\ref{tab:ablacao-2x2}). O GPT-4o adere mais estritamente às instruções do \textit{system
-prompt} e produz respostas de fallback (recusa) com maior frequência,
-comportamento que o RAGAS pontua como menos fiel por ausência de claims
-verificáveis. Achados análogos em RAG clínico são descritos por
-\citeauthor{zakka2024almanac} \cite{zakka2024almanac} no sistema Almanac
-(NEJM AI). Este paradoxo tem duas implicações: (i) a escolha do Llama~3.3~70B
-como gerador do artefato é tecnicamente justificada pelos próprios números, não
-apenas por considerações de custo (Groq oferece o modelo a custo zero no
-free tier); (ii) métricas automatizadas como o RAGAS exigem
-complementação por avaliação humana \cite{ocaf2024, gallifant2025tripod}, pois
-podem penalizar comportamento desejável do ponto de vista de segurança
-clínica.
+\textbf{Segunda (R2): modelo maior não dissolve o gap e expõe limitação
+do RAGAS.} A substituição do Llama~3.3~70B pelo GPT-4o, mantendo o restante
+do pipeline constante, \emph{piorou} a \textit{Faithfulness} em ambas
+as configurações de embedding ($0{,}486 \to 0{,}395$ no MiniLM;
+$0{,}679 \to 0{,}620$ no BGE-M3, médias sobre 3 \emph{seeds};
+Tabela~\ref{tab:ablacao-2x2}). O GPT-4o adere mais estritamente às
+instruções do \textit{system prompt} e produz respostas de
+\textit{fallback} (recusa) com maior frequência, comportamento que o
+RAGAS pontua como menos fiel por ausência de \emph{claims} verificáveis.
+Achados análogos em RAG clínico são descritos por
+\citeauthor{zakka2024almanac} \cite{zakka2024almanac} no sistema
+Almanac (NEJM AI), e a limitação é reconhecida pelo próprio
+\emph{paper} original do RAGAS \cite{es2024}. A implicação central é
+metodológica: métricas automatizadas como o RAGAS exigem complementação
+por avaliação humana \cite{ocaf2024, gallifant2025tripod}, pois podem
+penalizar comportamento desejável do ponto de vista de segurança
+clínica. A escolha do Llama~3.3~70B como gerador do artefato apoia-se
+em custo e licença \emph{open-weight} (Groq oferece o modelo no plano
+gratuito; o Llama é \emph{open-weight}, compatível com inferência
+local em implantação institucional futura) --- e não no efeito
+observado na métrica RAGAS, que sofre da limitação descrita acima.
 
-\textbf{Terceira: intervenções pós-recuperação fecharam $\sim 85\%$ do gap
-residual de \textit{Faithfulness}.} A ablação $2 \times 2$ identificou que o
+\textbf{Terceira (R3, R4): intervenções pós-recuperação fecharam
+$\sim 85\%$ do gap residual de \textit{Faithfulness}, com divisão de
+papéis entre BM25 e \emph{reranker}.} A ablação $2 \times 2$ identificou que o
 retriever era o gargalo dominante, mas a migração para BGE-M3 ainda
 deixou \textit{Faithfulness} em $0{,}679 \pm 0{,}004$. Duas iterações
 subsequentes, fundamentadas na literatura específica e descritas nas
@@ -2069,16 +2198,18 @@ descrito por \citeauthor{ocaf2024} \cite{ocaf2024} como teto típico antes de
 intervenções de self-reflection \cite{jeong2024selfbiorag}, registrada
 como linha de pesquisa imediata no Capítulo~\ref{cap:conclusao}.
 
-A leitura conjunta dos quatro scores é coerente com o cenário previsto
-pela revisão sistemática de \citeauthor{ocaf2024} \cite{ocaf2024}: sistemas
-RAG biomédicos obtêm ganho médio de $1{,}35\times$ em eficácia clínica sobre
-LLMs sem recuperação, mas atingem um teto comportamental quando a métrica
-exige fidelidade verbatim a um modelo abstrativo. A resposta metodológica
-adequada não é forçar o LLM a respostas extrativas (que diminuiria a utilidade
-clínica em consultas que exigem síntese), mas combinar duas estratégias
-complementares: (i) avançar tecnicamente via intervenções pós-recuperação
-referenciadas acima; (ii) complementar a avaliação com instrumento humano
-estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
+A leitura conjunta dos quatro \emph{scores} é coerente com o cenário
+previsto pela revisão sistemática de \citeauthor{ocaf2024}
+\cite{ocaf2024}: sistemas RAG biomédicos obtêm ganho médio de
+$1{,}35\times$ em eficácia clínica sobre LLMs sem recuperação, mas
+atingem um teto comportamental quando a métrica exige fidelidade
+verbatim a um modelo abstrativo. A resposta metodológica adequada não
+é forçar o LLM a respostas extrativas (o que diminuiria a utilidade
+clínica em consultas que exigem síntese), mas combinar duas
+estratégias complementares: (i)~avançar tecnicamente via intervenções
+pós-recuperação referenciadas acima e na Conclusão (TF1--TF5);
+(ii)~complementar a avaliação com instrumento humano estruturado,
+conforme detalhado na Seção~\ref{sec:sessao-expert}.
 
 \section{Limitações}
 
@@ -2087,7 +2218,9 @@ estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
         pacientes foi utilizado;
   \item Ausência de \textit{dataset} clínico anotado em PT-BR para validação
         RAGAS independente;
-  \item Avaliação qualitativa com amostra reduzida (1 expert);
+  \item Avaliação qualitativa com amostra reduzida de especialistas
+        ($N \geq 1$, sessões em execução durante a finalização do
+        trabalho; Seção~\ref{sec:sessao-expert});
   \item Dependência de API externa para o LLM (Groq) --- a operação do
         free tier (limite de 100K tokens diários, TPD) restringe
         ciclos experimentais; o presente trabalho recorreu ao plano
@@ -2098,9 +2231,10 @@ estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
         \ref{sec:hybrid} e \ref{sec:rerank}), mas não inclui
         self-reflection sobre a resposta gerada
         \cite{jeong2024selfbiorag}. A literatura reporta ganho típico de
-        $+8$ a $+15$\,pp em \textit{Faithfulness} para essa intervenção, mas
-        o achado paradoxal da Seção~\ref{sec:ablacao-2x2} (modelos mais
-        cautelosos pontuam pior em \textit{Faithfulness} no RAGAS) torna
+        $+8$ a $+15$\,pp em \textit{Faithfulness} para essa intervenção,
+        mas o efeito observado na Seção~\ref{sec:ablacao-2x2} (modelos
+        mais cautelosos pontuam pior em \textit{Faithfulness} no RAGAS,
+        em linha com limitação reconhecida do \emph{framework}) torna
         essa expectativa condicional: \textit{self-reflection} pode
         regredir a métrica apesar de melhorar a segurança clínica real,
         exigindo co-design com revisão da métrica de avaliação (TF1).
@@ -2153,137 +2287,79 @@ estruturado, conforme detalhado na Seção~\ref{sec:sessao-expert}.
 
 \section{Compatibilidade do Desenho com Requisitos LGPD em POC}
 
-Esta seção discute em que medida o desenho técnico adotado neste trabalho é
-\emph{compatível} com os requisitos da Lei Geral de Proteção de Dados Pessoais
-(LGPD, Lei n\textordmasculine\ 13.709/2018) no contexto restrito de uma prova
-de conceito (POC) acadêmica. \textbf{Não se reivindica \emph{conformidade}
-plena} --- termo que, em sentido jurídico-regulatório, exigiria Relatório de
-Impacto à Proteção de Dados Pessoais (RIPD/DPIA), Acordo de Tratamento de
-Dados (DPA) com operadores e fluxo auditável de consentimento, instrumentos
-que não foram produzidos no escopo deste TCC. A reivindicação defensável é a
-de que o desenho atual \emph{evita o escopo da LGPD} pela natureza dos dados
-manipulados, e que adequações ativas serão necessárias antes de qualquer
-implantação institucional.
+A caracterização da LGPD e dos riscos de vazamento em RAG clínico está
+na Seção~\ref{sec:lgpd-ref}. Esta seção discute em que medida o desenho
+deste trabalho é \emph{compatível} com os requisitos da lei no recorte
+de prova de conceito (POC) acadêmica. \textbf{Não se reivindica
+\emph{conformidade} plena} --- termo que, em sentido jurídico-regulatório,
+exigiria Relatório de Impacto à Proteção de Dados Pessoais (RIPD/DPIA),
+Acordo de Tratamento de Dados (DPA) com operadores e fluxo auditável de
+consentimento, instrumentos não produzidos no escopo deste TCC.
 
-\textbf{Por que o desenho é compatível em cenário de POC.} O corpus é composto
-exclusivamente de documentos públicos do Ministério da Saúde e da OMS --- não
-há dado pessoal de paciente indexado. As interações com o chatbot, no protocolo
-da avaliação com especialista (Seção~\ref{sec:sessao-expert}), adotam retenção
-zero do histórico de conversa, \textit{logging} mínimo e ausência de dados
-identificáveis nas consultas. O pipeline de embeddings executa
-100\% localmente, de modo que as consultas formuladas pelo especialista durante
-a sessão não transitam por APIs de terceiros antes da busca vetorial. O LLM
-gerador (Llama~3.3~70B via Groq) é acessado sob política declarada de não
-retenção de prompts, o que reduz --- mas não elimina --- o risco de
-exposição a operador externo \cite{lgpdSaude2023, sokPrivacyLLM2026}.
+\textbf{Compatibilidade no recorte de POC.} O desenho \emph{evita o
+escopo} mais sensível da lei pela natureza dos dados: corpus
+exclusivamente público (MS e OMS, sem dado de paciente), \textit{pipeline}
+de \emph{embeddings} 100\% local (consultas não transitam por API
+externa antes da busca vetorial), LLM gerador (Llama~3.3~70B via Groq)
+acessado sob política declarada de não retenção de \emph{prompts}, e
+sessão com especialista (Seção~\ref{sec:sessao-expert}) com retenção
+zero do histórico de conversa, \textit{logging} mínimo e ausência de
+dados identificáveis nas consultas.
 
-\textbf{Por que não se reivindica conformidade plena.} A LGPD aplica-se a
-qualquer tratamento de dados pessoais, e a interface coleta perguntas
-livremente formuladas pelo usuário. Mesmo com corpus público e API sem
-armazenamento, o conteúdo dessas perguntas pode trazer informações
-clinicamente identificáveis (descrição de caso, datas, comorbidades,
-identificadores indiretos), conforme caracterizam
-\citeauthor{privacyRAGHealthcare2025} \cite{privacyRAGHealthcare2025} ao
-classificar o profissional clínico como \emph{adversário interno acidental}.
-\textbf{O desenho atual não inclui as mitigações ativas exigidas por uma
-conformidade institucional plena}: não há \emph{scrubbing} ex-ante de
-identificadores no \textit{frontend}, não há \textit{logging} consciente de
-privacidade com pseudonimização de sessão, não há DPA assinado com o operador
-do LLM, não há RIPD/DPIA submetido à ANPD ou ao Comitê de Ética em Pesquisa.
-Esses instrumentos são pré-requisitos de implantação real, não da POC.
-
-\textbf{Adequações necessárias para implantação institucional.} Em cenários
-de implantação institucional --- ainda fora do escopo deste trabalho, mas
-previstos como continuidade natural ---, três pontos de atenção emergem da
-literatura.
-
-O primeiro é a \textbf{entrada de dados identificáveis pelo usuário final}. Mesmo com
-corpus público e API sem armazenamento, o conteúdo das consultas formuladas pelo
-profissional pode trazer informações clinicamente identificáveis (descrição de caso,
-data, comorbidades, identificadores indiretos). \citeauthor{privacyRAGHealthcare2025}
-\cite{privacyRAGHealthcare2025} categorizam o pesquisador e o profissional clínico
-como \textit{adversários internos acidentais}: agentes legítimos cujo fluxo de
-trabalho pode causar vazamento inadvertido. Para mitigar esse risco, recomenda-se
-implementar \textit{scrubbing} ex-ante no \textit{frontend} --- redação automática de
-identificadores antes do envio ao retriever --- e exibir aviso explícito ao usuário
-sobre a política de tratamento de dados sensíveis.
-
-O segundo é a \textbf{rastreabilidade auditável}. Sistemas de IA em saúde sob a LGPD
-demandam \textit{logging} compatível com auditoria sem violar a finalidade declarada
-do tratamento \cite{lgpdSaude2023, sokPrivacyLLM2026}. Em produção, isso implica
-registrar metadados de uso (timestamps, tipo de consulta, presença de
-\textit{disclaimer}, identificador de sessão pseudonimizado) sem reter o conteúdo das
-consultas, mecanismo descrito como \textit{logging consciente de privacidade}
-\cite{privacyRAGHealthcare2025}. A retenção zero adotada nesta POC não escala para um
-serviço institucional, que precisa demonstrar rastreabilidade frente a eventuais
-incidentes.
-
-O terceiro é a \textbf{relação jurídica com o provedor do LLM}. O modelo Llama~3.3
-70B foi acessado neste trabalho via API Groq, sem armazenamento declarado de prompts;
-em ambiente institucional, contudo, recomenda-se a celebração de Acordo de
-Tratamento de Dados (DPA, na sigla em inglês) com o operador, em conformidade com os
-artigos 39 e 47 da LGPD, ou o emprego de \textit{inference} local em GPU dedicada
-para eliminar a transferência. A literatura específica sobre RAG biomédico endossa
-essa estratégia, observando que adversários do lado da nuvem podem reconstruir
-trechos sensíveis a partir de ativações intermediárias mesmo quando o provedor não
-armazena prompts explicitamente \cite{privacyRAGHealthcare2025, sokPrivacyLLM2026}.
-
-Em síntese, o desenho atual é \emph{compatível} com requisitos da LGPD no
-recorte de POC porque \textbf{evita} o escopo da lei (corpus público,
-embeddings locais, retenção zero, ausência de dado identificável),
-e não porque implementa mecanismos ativos de proteção exigidos em ambiente
-institucional. A reivindicação de \textbf{conformidade plena} pressuporia
-RIPD/DPIA, DPA com operador, \emph{scrubbing} ex-ante de identificadores e
-\textit{logging} auditável pseudonimizado --- instrumentos não produzidos no
-escopo deste TCC e contemplados como linha de pesquisa subsequente
-(Capítulo~\ref{cap:conclusao}, TF9).
+\textbf{O que falta para conformidade institucional.} A LGPD aplica-se
+a qualquer tratamento de dado pessoal, e perguntas livremente
+formuladas podem conter informações identificáveis (descrição de caso,
+datas, comorbidades, identificadores indiretos) ---
+\citeauthor{privacyRAGHealthcare2025}
+\cite{privacyRAGHealthcare2025} caracterizam o profissional clínico
+como \emph{adversário interno acidental}. O desenho atual não inclui
+as mitigações ativas correspondentes: (i)~\textit{scrubbing} ex-ante
+de identificadores no \textit{frontend}; (ii)~\textit{logging}
+auditável pseudonimizado (registro de \emph{timestamps}, tipo de
+consulta e identificador de sessão sem conteúdo); (iii)~DPA com o
+operador do LLM em conformidade com os artigos 39 e 47 da LGPD, ou
+inferência local em GPU dedicada eliminando a transferência ---
+recomendado pela literatura por causa do risco de reconstrução de
+trechos a partir de ativações intermediárias mesmo sem retenção
+explícita \cite{privacyRAGHealthcare2025, sokPrivacyLLM2026};
+(iv)~RIPD/DPIA submetido à ANPD ou ao Comitê de Ética em Pesquisa.
+Esses instrumentos são pré-requisitos de implantação institucional,
+não de POC, e estão contemplados como linha de pesquisa subsequente
+(Capítulo~\ref{cap:conclusao}, TF9, TF11).
 
 \section{Implicações para Adoção}
 
-A adoção efetiva de chatbots clínicos como o desenvolvido neste trabalho depende de
-fatores que ultrapassam a qualidade técnica do artefato. As quatro dimensões do
-TAM-AIN \cite{nursingTAM2024}, utilizadas como eixos do roteiro de entrevista na
-avaliação com especialista (Seção~\ref{sec:sessao-expert}), apontam fatores
-críticos que devem ser ponderados em qualquer estratégia de implantação no
-SUS --- e que justificam, em piloto multi-avaliador subsequente, a aplicação do
-instrumento psicométrico completo (Trabalhos Futuros, TF6).
+A caracterização das quatro dimensões do TAM-AIN
+\cite{nursingTAM2024} e dos padrões reportados pela literatura sobre
+percepção de IA por enfermeiros está na Seção~\ref{sec:adocao-ref}.
+Aqui sintetizam-se as implicações específicas para o chatbot ILTB,
+que devem ser ponderadas em qualquer estratégia de implantação no SUS.
 
-\textbf{Alinhamento ético e confiança.} A literatura indica padrão de
-\textit{otimismo cauteloso} entre profissionais de enfermagem frente à IA: cerca de
-85\% reconhecem benefícios potenciais para precisão diagnóstica e redução de erro
-humano, mas aproximadamente 70\% mantêm reservas quanto ao componente humano do
-cuidado e à segurança dos dados \cite{nursingTAM2024}. Para o chatbot ILTB, isso
-implica investir em comunicação clara dos limites da ferramenta e da política de
-privacidade --- sob pena de minar a base de confiança necessária para uso continuado.
+\textbf{Alinhamento ético.} A política de retenção zero (POC) e a
+comunicação clara dos limites da ferramenta endereçam parte das
+reservas reportadas pela literatura quanto à segurança de dados; a
+ausência de mitigações ativas (\textit{scrubbing}, DPA) descrita na
+seção anterior é o gap restante para uso continuado em ambiente
+institucional.
 
-\textbf{Preservação da identidade profissional.} O TAM-AIN distingue ``ferramenta de
-apoio'' de ``substituto da decisão clínica'', dimensão particularmente sensível
-entre profissionais com mais tempo de prática, que tendem a manifestar receio de
-desqualificação. A interface da POC já incorpora \textit{disclaimer} explícito de
-não substituição do julgamento profissional, mas a literatura sugere que a aderência
-de longo prazo exige que o sistema demonstre, no fluxo da interação, capacidade de
-reforçar o protagonismo do enfermeiro --- por exemplo, citando fonte e contexto a
-cada resposta para que o profissional valide ativamente as informações.
+\textbf{Preservação da identidade profissional.} A interface da POC
+incorpora \textit{disclaimer} explícito de não substituição do
+julgamento clínico. A aderência de longo prazo, segundo a literatura,
+depende de o sistema reforçar o protagonismo do enfermeiro --- citando
+fonte e contexto a cada resposta para que o profissional valide
+ativamente. Essa funcionalidade existe parcialmente no \textit{prompt}
+v1 (Apêndice~\ref{ape:prompt}); refinamento via TF3 (citação granular
+de \emph{span}) é a evolução natural.
 
-\textbf{Prontidão organizacional e infraestrutura.} A heterogeneidade do parque
-tecnológico das unidades de atenção primária do SUS configura barreira
-infraestrutural concreta: conexões intermitentes, navegadores desatualizados, falta
-de dispositivos dedicados \cite{nursingTAM2024}. A arquitetura web atual, leve e
-sem dependência de instalação local no \textit{client}, é compatível com esse cenário,
-mas estudos futuros precisarão verificar latência percebida em redes de menor
-qualidade e estratégias de \textit{caching} para uso \textit{offline} parcial.
+\textbf{Prontidão organizacional e infraestrutura.} A arquitetura web,
+leve e sem instalação no \textit{client}, é compatível com a
+heterogeneidade do parque tecnológico da APS. Estudos futuros
+precisarão medir latência percebida em redes de menor qualidade.
 
-\textbf{Carga de trabalho e usabilidade percebida.} Entre as barreiras mais
-reportadas pela literatura estão a sobrecarga e o ceticismo sobre o tempo
-adicional exigido para incorporar novas ferramentas ao fluxo. Avaliações
-subsequentes deverão medir, além da acurácia clínica das respostas, o ganho líquido
-de tempo na consulta a protocolos --- métrica operacional que sustenta o argumento
-de utilidade frente ao gestor da unidade.
-
-Esses fatores indicam que a transição da POC para implantação institucional não
-constitui apenas tarefa de engenharia (resolvendo as questões discutidas na
-Seção~\ref{cap:discussao}), mas também tarefa organizacional, dependente de adesão
-da liderança local e de capacitação dos profissionais.
+\textbf{Carga de trabalho.} Avaliações subsequentes deverão medir,
+além da acurácia clínica das respostas, o ganho líquido de tempo na
+consulta a protocolos --- métrica operacional que sustenta o
+argumento de utilidade frente ao gestor da unidade.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \chapter{Conclusão}
@@ -2298,56 +2374,82 @@ local de embeddings multilíngues, um vector store ChromaDB com
 indexação HNSW e o modelo Llama~3.3~70B acessado via API Groq como gerador, e
 foi disponibilizado por meio de uma interface web servida pelo FastAPI.
 
-A avaliação automatizada com o framework RAGAS sobre 38 questões
-clínicas foi conduzida em três etapas. A configuração inicial, com embedding
-384D e o Llama~3.3~70B como gerador, atingiu \textit{Context Precision} de
-$0{,}736 \pm 0{,}007$ e \textit{Faithfulness} de $0{,}486 \pm 0{,}030$
-(célula Llama+MiniLM da ablação, 3 seeds) --- patamar consistente com a
-literatura de RAG biomédico, mas insuficiente para a meta de $0{,}80$. Uma
-ablação $2 \times 2$ cruzando gerador (Llama vs GPT-4o) e embedding
-(MiniLM 384D vs BGE-M3 1024D), com 3 seeds por célula, isolou o embedding
-como gargalo dominante; a migração para \texttt{BAAI/bge-m3} elevou todas as
+A avaliação automatizada com o \emph{framework} RAGAS sobre 38 questões
+clínicas foi conduzida em três etapas. A configuração inicial, com
+\emph{embedding} 384D e Llama~3.3~70B como gerador, atingiu
+\textit{Context Precision} de $0{,}736 \pm 0{,}007$ e
+\textit{Faithfulness} de $0{,}486 \pm 0{,}030$ (3 \emph{seeds}) ---
+patamar consistente com a literatura de RAG biomédico, mas insuficiente
+para a meta inicial de $0{,}80$ em \textit{Faithfulness}. Uma ablação
+$2 \times 2$ cruzando gerador (Llama \textit{vs.} GPT-4o) e
+\emph{embedding} (MiniLM 384D \textit{vs.} BGE-M3 1024D), com 3
+\emph{seeds} por célula, isolou o \emph{embedding} como gargalo
+dominante; a migração para \texttt{BAAI/bge-m3} elevou todas as
 métricas a um patamar intermediário com \textit{Faithfulness} de
 $0{,}679 \pm 0{,}004$. Duas iterações pós-recuperação subsequentes ---
-busca híbrida BM25 + denso com \textit{Reciprocal Rank Fusion} (responsável
-pelo salto dominante em \textit{Faithfulness}, $+0{,}061$) e reranking
-cross-encoder mGTE (responsável por consolidar \textit{Context Precision}
-acima de $0{,}95$ e por reduzir variância inter-seed) --- consolidaram o
-gate operacional final do artefato (também avaliado em 3 seeds). O principal
-indicador de qualidade alcançado é a
-\textbf{\textit{Context Precision} de $0{,}956 \pm 0{,}009$}, que representa
-\emph{PASS robusto} sobre a meta de $0{,}75$ (margem absoluta de $+0{,}206$
-sobre o alvo; intervalo observado entre as 3 seeds, $[0{,}949;\, 0{,}966]$,
-permanece integralmente acima da meta) e ultrapassa em $+30\%$ a célula
-Llama+MiniLM da ablação, evidenciando que a etapa de recuperação convergiu
-para um patamar maduro.
-\textit{Answer Relevancy} $0{,}725 \pm 0{,}020$ e \textit{Context Recall}
-$0{,}814 \pm 0{,}003$ completam o quadro. A métrica de \textit{Faithfulness}
-atingiu $0{,}752 \pm 0{,}004$ --- a $\sim 0{,}048$ da meta original de
-$0{,}80$ ---, mas sua leitura exige cautela: a ablação $2 \times 2$ mostrou
-que substituir o Llama pelo GPT-4o \emph{piora} essa métrica em ambos os
-embeddings, evidenciando que o RAGAS, na sua formulação atual,
-penaliza comportamento conservador clinicamente desejável. Por essa razão,
-adota-se \textit{Context Precision} como indicador-síntese do gate final
-deste trabalho, e \textit{Faithfulness} como métrica auxiliar lida em
-conjunto com o paradoxo abstrativo-vs-conservador discutido no
-Capítulo~\ref{cap:discussao}.
-Esse paradoxo, convergente com observações independentes em RAG clínico
-\cite{zakka2024almanac}, justifica tecnicamente a escolha do Llama como gerador
-do artefato e a adoção de \textit{Context Precision} como indicador-síntese.
-\aluno{Completar com 2--3 frases sobre o resultado da sessão estruturada
-com o especialista (acurácia clínica média, severidade modal dos erros, síntese
-narrativa por dimensão TAM-AIN --- alinhamento ético, prontidão, identidade
-profissional, infraestrutura --- e principais observações qualitativas) após a
-execução da Seção~\ref{sec:sessao-expert}.}
+busca híbrida BM25 + denso com \textit{Reciprocal Rank Fusion}
+(responsável pelo salto dominante em \textit{Faithfulness},
+$+0{,}061$) e reranking \emph{cross-encoder} mGTE (responsável por
+consolidar \textit{Context Precision} acima de $0{,}95$ e por reduzir
+variância inter-\emph{seed}) --- consolidaram o gate operacional final
+do artefato.
 
-As principais contribuições são o artefato aberto, o \textit{dataset} de 38
-questões clínicas em português sobre ILTB com \textit{ground truths} extraídos
-verbatim dos protocolos, a análise empírica do \textit{trade-off} LGPD vs.
-desempenho e a proposta de protocolo de avaliação multidimensional com $N=1$
-combinando RAGAS, rubrica clínica e entrevista qualitativa pelas dimensões do
-TAM-AIN. \aluno{Ao finalizar, ajustar este
-parágrafo se a sessão com expert produzir contribuição empírica adicional.}
+\textbf{Resultados do gate final (3 \emph{seeds}).}
+\textit{Context Precision} $0{,}956 \pm 0{,}009$ (ultrapassa a meta de
+$0{,}75$ com margem absoluta de $+0{,}206$; intervalo entre as 3
+\emph{seeds}, $[0{,}949;\, 0{,}966]$, integralmente acima da meta),
+\textit{Answer Relevancy} $0{,}725 \pm 0{,}020$, \textit{Context
+Recall} $0{,}814 \pm 0{,}003$. A \textbf{meta inicial de
+\textit{Faithfulness} $\geq 0{,}80$ não foi atingida}: o gate final
+estabilizou em $0{,}752 \pm 0{,}004$, $\sim 0{,}05$ abaixo do alvo, e
+o gap residual é interpretado em três fatores empíricos descritos na
+Seção~\ref{sec:interp-faith} --- comportamento abstrativo do gerador,
+granularidade do \emph{chunk} dominada pela estrutura hierárquica do
+\emph{Markdown} e dificuldade da família de \emph{bi-encoders} densos
+com negação. A ablação $2 \times 2$ adicionou um achado metodológico:
+substituir o Llama pelo GPT-4o \emph{piora} \textit{Faithfulness} em
+ambos os \emph{embeddings}, replicando uma limitação conhecida do
+RAGAS (penalização de abstenção cautelosa, reconhecida pelo próprio
+\emph{paper} original \cite{es2024} e por estudos subsequentes
+\cite{huang2023halucination, zakka2024almanac, ocaf2024}). A leitura
+recomendada das métricas, portanto, é conjunta: \textit{Context
+Precision} e \textit{Context Recall} caracterizam a recuperação;
+\textit{Faithfulness} é lida em conjunto com a distribuição
+categoria-a-categoria (Apêndice~\ref{ape:per-category}) e com a
+avaliação humana descrita na Seção~\ref{sec:sessao-expert}. A escolha
+do Llama como gerador apoia-se em custo e licença \emph{open-weight}
+(compatível com inferência local em implantação institucional futura).
+
+\aluno{Completar com 2--3 frases sobre o resultado da sessão
+estruturada com o especialista (acurácia clínica média, severidade
+modal dos erros, síntese narrativa por dimensão TAM-AIN ---
+alinhamento ético, prontidão, identidade profissional, infraestrutura
+--- e principais observações qualitativas) após a execução da
+Seção~\ref{sec:sessao-expert}.}
+
+A leitura DSRM com a lente de \citeauthor{hevner2007}
+\cite{hevner2007} (Capítulo~\ref{cap:metodologia}) organiza as
+contribuições em dois planos. No \textbf{ciclo de design} (engenharia):
+(i)~implementação aberta de \emph{pipeline} RAG para ILTB em PT-BR
+integrando componentes do estado da arte, com código-fonte público;
+(ii)~\emph{dataset} de 38 questões clínicas com \emph{ground truths}
+extraídos verbatim dos protocolos oficiais, utilizável como
+\emph{benchmark} inicial em RAG clínico em PT-BR (sujeito ao viés de
+construção da Limitação~L6); (iii)~caracterização do recorte de
+aplicabilidade da LGPD ao RAG clínico em PT-BR, distinguindo
+compatibilidade de POC de conformidade plena e identificando os
+instrumentos institucionais ainda não produzidos; e (iv)~adaptação do
+TAM-AIN como roteiro qualitativo em sessão exploratória com avaliador
+único, com o instrumento psicométrico completo preservado como
+referência para piloto multi-avaliador futuro (TF6). No \textbf{ciclo
+de rigor} (retorno à base de conhecimento): os quatro achados R1--R4
+enunciados na Seção~\ref{sec:retornos-rigor}, dos quais R1 e R3
+são replicações em PT-BR clínico de achados já descritos em outros
+contextos, R2 é replicação quantitativa de limitação metodológica
+conhecida do RAGAS, e R4 (divisão de papéis entre BM25 e
+\emph{reranker} no domínio) é o achado mais original do conjunto.
+\aluno{Ao finalizar, ajustar este parágrafo se a sessão com expert
+produzir contribuição empírica adicional.}
 
 \section{Trabalhos Futuros}
 \label{sec:trabalhos-futuros}
@@ -2368,21 +2470,23 @@ Llama+BGE-M3 denso); restam linhas de pesquisa para fechar o gap residual final
         \textit{Faithfulness} em QA biomédico \textit{long-form} com
         \textit{self-reflection} \cite{jeong2024selfbiorag}, ao custo de
         aproximadamente dobrar o número de chamadas ao LLM por consulta.
-        Esta seria, em princípio, a intervenção mais promissora para fechar
-        o gap residual de $\sim 0{,}048$ até a meta de $0{,}80$ (calculado
-        sobre o gate final $0{,}752 \pm 0{,}004$). \textbf{Contudo, o
-        achado paradoxal da Seção~\ref{sec:ablacao-2x2} indica uma tensão
-        não trivial}: substituir o Llama por GPT-4o (mais aderente a
-        instruções de \textit{fallback}, comportamento próximo ao que
+        Esta seria, em princípio, a intervenção mais promissora para
+        fechar o gap residual de $\sim 0{,}048$ até a meta de $0{,}80$
+        (calculado sobre o gate final $0{,}752 \pm 0{,}004$).
+        \textbf{Contudo, a limitação do RAGAS observada na
+        Seção~\ref{sec:ablacao-2x2} indica tensão não trivial}: substituir
+        o Llama por GPT-4o (mais aderente a instruções de
+        \textit{fallback}, comportamento próximo ao que
         \textit{self-reflection} induz) \emph{piora} a
-        \textit{Faithfulness} no RAGAS. Se um \textit{critic step} torna o
-        gerador mais cauteloso --- e \textit{Self-RAG} é exatamente isso ---
-        é plausível que a métrica RAGAS \emph{regrida} apesar de a
-        segurança clínica real melhorar. Portanto, esta linha de pesquisa
-        deve ser conduzida em \textbf{co-design com a revisão da métrica de
-        avaliação} (e.g., \textit{Faithfulness} ponderada por relevância
-        clínica, ou substituição por rubrica multidimensional avaliada por
-        especialista), e não como substituição plug-and-play do gate atual;
+        \textit{Faithfulness} no RAGAS. Se um \textit{critic step} torna
+        o gerador mais cauteloso --- e \textit{Self-RAG} é exatamente
+        isso ---, é plausível que a métrica RAGAS \emph{regrida} apesar
+        de a segurança clínica real melhorar. Esta linha de pesquisa
+        deve, portanto, ser conduzida em \textbf{co-design com a revisão
+        da métrica de avaliação} (e.g., \textit{Faithfulness} ponderada
+        por relevância clínica, ou substituição por rubrica
+        multidimensional avaliada por especialista), e não como
+        substituição \emph{plug-and-play} do gate atual;
   \item \textbf{Chunking estrito por tokens do modelo} ---
         substituir o \textit{chunker} hierárquico atual (guiado por
         cabeçalhos do \textit{Markdown}) por estratégia tipo
@@ -2523,7 +2627,6 @@ message}, não pelo \textit{system prompt}, conforme implementação em
 \texttt{app/src/llm/client.py}. Os chunks são apresentados ao modelo na
 ordem decrescente de similaridade cossenoidal, com identificador de fonte
 (documento e cadeia de cabeçalhos) anexado a cada um.
-de demonstração.}
 
 % ─── Apêndice B — Dataset de Avaliação ───────────────────────────────────────
 \chapter{Dataset de Avaliação RAGAS}
@@ -2570,7 +2673,7 @@ cada seed.
 nenhum intervalo de confiança formal é defensável; valores devem ser lidos
 como indicação de tendência intra-categoria, não como métrica comparativa
 entre categorias. A tabela serve para identificar padrões qualitativos
-úteis à interpretação do paradoxo abstrativo--vs--conservador da
+úteis à interpretação da limitação do RAGAS discutida na
 Seção~\ref{sec:interp-faith}, não para sustentar inferências estatísticas.
 
 \begin{table}[ht]
@@ -2596,23 +2699,23 @@ Seção~\ref{sec:interp-faith}, não para sustentar inferências estatísticas.
             \textit{Faithfulness} crescente.}
 \end{table}
 
-\textbf{Leitura qualitativa.} A decomposição revela um padrão consistente
-com o paradoxo discutido na Seção~\ref{sec:interp-faith}: categorias com
-\textbf{alta densidade numérica} --- esquemas terapêuticos (doses, durações,
-regimes), populações especiais (restrições e ajustes por subgrupo) e
-interações medicamentosas (combinações e mecanismos) --- concentram os
-três menores valores de \textit{Faithfulness} ($0{,}644$ a $0{,}677$),
-\textbf{mesmo quando a Context Precision é próxima de $1{,}000$}.
-Categorias com texto mais livre e menos quantitativo --- efeitos adversos
-e indicações de tratamento --- apresentam \textit{Faithfulness} mais alta
-($0{,}820$ a $0{,}836$). Em conjunto, esses dados sustentam empiricamente
-a hipótese de que o RAGAS penaliza síntese/cálculo sobre números: o
-gerador, ao agregar dose e duração de regimes em uma frase, perde
-correspondência verbatim que a métrica exige, ainda que o conteúdo
-clínico esteja correto. Esse achado fortalece a recomendação metodológica
-do trabalho: \textit{Context Precision} como indicador-síntese e
-\textit{Faithfulness} como métrica auxiliar lida em conjunto com a
-distribuição categoria-por-categoria.
+\textbf{Leitura qualitativa.} A decomposição revela padrão consistente
+com a limitação do RAGAS discutida na Seção~\ref{sec:interp-faith}:
+categorias com \textbf{alta densidade numérica} --- esquemas
+terapêuticos (doses, durações, regimes), populações especiais
+(restrições e ajustes por subgrupo) e interações medicamentosas
+(combinações e mecanismos) --- concentram os três menores valores de
+\textit{Faithfulness} ($0{,}644$ a $0{,}677$), \textbf{mesmo quando a
+Context Precision é próxima de $1{,}000$}. Categorias com texto mais
+livre e menos quantitativo --- efeitos adversos e indicações de
+tratamento --- apresentam \textit{Faithfulness} mais alta ($0{,}820$ a
+$0{,}836$). Em conjunto, esses dados sustentam empiricamente que o
+RAGAS penaliza síntese/cálculo sobre números: o gerador, ao agregar
+dose e duração de regimes em uma frase, perde correspondência verbatim
+que a métrica exige, ainda que o conteúdo clínico esteja correto. A
+implicação metodológica é a leitura conjunta das quatro métricas
+RAGAS com a distribuição categoria-por-categoria, em vez de uma
+métrica única como síntese.
 
 % ─── Apêndice D — Posicionamento frente ao estado da arte ────────────────────
 \chapter{Posicionamento Frente ao Estado da Arte}
@@ -2681,13 +2784,13 @@ formal.
 deste trabalho está \emph{na fronteira} do que a meta-análise de
 \citeauthor{ocaf2024} \cite{ocaf2024} reporta como teto comum
 sem \textit{self-reflection} ($\sim 0{,}75$). \textit{Self-RAG}
-\cite{jeong2024selfbiorag} é a única intervenção que a literatura associa
-a ganhos consistentes acima desse patamar, mas, como discutido nas
-Seções~\ref{sec:interp-faith} e na Conclusão (TF1), o achado paradoxal
-deste trabalho impõe ressalva: \textit{Self-RAG} adiciona cautela ao
-gerador --- e, no \emph{benchmark} interno deste trabalho, cautela
-adicional regrediu o RAGAS. A direção da intervenção precisa ser
-co-desenhada com revisão da métrica de avaliação.
+\cite{jeong2024selfbiorag} é a única intervenção que a literatura
+associa a ganhos consistentes acima desse patamar, mas, como discutido
+nas Seções~\ref{sec:interp-faith} e na Conclusão (TF1), a limitação do
+RAGAS replicada neste trabalho impõe ressalva: \textit{Self-RAG}
+adiciona cautela ao gerador --- e, no \emph{benchmark} interno deste
+trabalho, cautela adicional regrediu o RAGAS. A direção da intervenção
+precisa ser co-desenhada com revisão da métrica de avaliação.
 
 % ─── Apêndice E — Checklist TRIPOD-LLM ──────────────────────────────────────
 \chapter{Checklist TRIPOD-LLM (Adaptada)}
@@ -2767,7 +2870,7 @@ derivada.
 16 & Viés do juiz LLM (mesma família do candidato) &
      Seção~\ref{sec:ablacao-2x2}; L6 & Atendido \\
 17 & Validação humana complementar &
-     Seção~\ref{sec:sessao-expert} & Pendente \\
+     Seção~\ref{sec:sessao-expert} & Em execução \\
 18 & Tamanho amostral declarado &
      Seções~\ref{sec:sessao-expert}, Cap.~\ref{cap:avaliacao} & Atendido \\
 19 & Dados ausentes / falhas de avaliação tratadas &
@@ -2779,7 +2882,7 @@ derivada.
      Tabelas~\ref{tab:ablacao-2x2}, \ref{tab:hybrid-rerank},
      \ref{tab:gate-final}; Apêndice~\ref{ape:per-category} & Atendido \\
 21 & Discussão de viés sistemático da métrica &
-     Seção~\ref{sec:interp-faith} (paradoxo) & Atendido \\
+     Seção~\ref{sec:interp-faith} (limitação do RAGAS) & Atendido \\
 22 & Generalizabilidade discutida &
      Cap.~\ref{cap:discussao}; L1--L7 & Atendido \\
 23 & Limitações nomeadas explicitamente &
@@ -2792,7 +2895,9 @@ derivada.
 25 & Privacidade de dados e LGPD discutidas &
      Seção \textit{Compatibilidade do Desenho com LGPD} & Atendido \\
 26 & Conflitos de interesse declarados &
-     Folha de rosto & Pendente \\
+     O autor declara não haver conflitos de interesse. Não houve
+     financiamento externo; o uso de APIs comerciais
+     (Groq, OpenAI) ocorreu via planos gratuito/pago do autor. & Atendido \\
 \end{longtable}
 }
 
