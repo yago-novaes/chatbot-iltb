@@ -7,27 +7,28 @@ __pycache__/
 *.pyo
 chroma_db/
 chroma_db_*/
-.claude/
 ngrok.log
 server.log
 
-# PDFs do MS — não versionar documentos do Ministério da Saúde
+# config local de editor e ferramentas
+.claude/
+.vscode/
+.idea/
+
+# PDFs do Ministério da Saúde, não versionar
 docs/protocolos/*.pdf
 
-# Resultados de avaliação RAGAS — ragas_detailed.json é grande/gerado; scores são versionados
+# gerado e grande; os scores ficam versionados
 eval/results/ragas_detailed.json
-# Backups temporários gerados pelos scripts de replicação multi-seed
 eval/results/*.bak_*
 eval/results/*.json.bak_*
 
-# Outputs gerados pelo notebook de análise da sessão expert (PNGs/tabelas/sumário)
-# Versionar quando dados reais da sessão forem produzidos; por padrão, gerar localmente.
+# saída do notebook da sessão expert; gerar local até haver dados reais
 eval/results/expert_session/
 
-# Documentos da monografia
 Documentos para a Monografia/
 
-# Documentos de arquitetura internos
+# notas de arquitetura internas
 Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v0.md
 Análise de Viabilidade Técnica e Trade-offs Arquiteturais - v1.md
 Relatório Técnico de Arquitetura Cloud e Viabilidade Financeira_ Sustentabilidade e Estimativa de OpEx para o Piloto de Chatbot de Saúde (ILTB).md
