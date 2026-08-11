@@ -1,6 +1,6 @@
 """
-Instância compartilhada do embedding function.
-Centraliza o carregamento do modelo (~120 MB) para evitar duplicação na RAM.
+Instância única do embedding function. O modelo tem ~120 MB, então carregar em
+um lugar só evita segunda cópia na RAM.
 """
 from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 

@@ -1,11 +1,10 @@
 """
-Cliente LLM unificado via interface OpenAI-compatible.
-Suporta: Groq, OpenAI, Ollama, e modo mock (sem chave).
-Histórico de conversa adicionado na Fase 2 (session manager).
+Cliente LLM sobre a interface OpenAI-compatible: Groq, OpenAI, Ollama e um modo
+mock para rodar sem chave.
 
-Rate-limit handling:
-  - 429 TPM (tokens per minute): retry com backoff exponencial (até 3x, espera 60s)
-  - 429 TPD (tokens per day):    levanta TPDExhaustedError — sem retry possível
+Os dois 429 do Groq exigem tratamento diferente. TPM (tokens por minuto) passa
+sozinho, então vale retry. TPD (tokens por dia) só libera no dia seguinte, então
+levanta TPDExhaustedError em vez de insistir.
 """
 import asyncio
 import logging
@@ -25,7 +24,7 @@ _MAX_TPM_RETRIES = 3
 
 
 class TPDExhaustedError(RuntimeError):
-    """Limite diário de tokens do Groq atingido. Não há como recuperar sem esperar ~24h."""
+    """Cota diária de tokens do Groq estourada. Só libera depois de ~24h."""
 
 
 def _get_client() -> AsyncOpenAI:
@@ -60,16 +59,15 @@ def _mock_response(question: str, context: str) -> str:
 
 async def generate(context: str, question: str, history: List[dict] | None = None) -> str:
     """
-    Gera resposta via LLM configurado (async).
-    history: lista de mensagens anteriores [{role, content}] para contexto de sessão.
+    Gera a resposta no LLM configurado. history recebe as mensagens anteriores
+    no formato [{role, content}] quando há contexto de sessão.
 
-    Levanta TPDExhaustedError se o limite diário do Groq for atingido.
-    Faz retry automático (até 3x) para erros de TPM (tokens por minuto).
+    Levanta TPDExhaustedError se a cota diária do Groq acabar.
     """
     if settings.llm_provider == "mock" or settings.llm_api_key in ("mock", "", None):
         return _mock_response(question, context)
 
-    for attempt in range(1, _MAX_TPM_RETRIES + 2):  # +2: tentativa inicial + retries
+    for attempt in range(1, _MAX_TPM_RETRIES + 2):  # tentativa inicial + os retries
         try:
             response = await _get_client().chat.completions.create(
                 model=settings.llm_model,
@@ -85,7 +83,6 @@ async def generate(context: str, question: str, history: List[dict] | None = Non
                 raise TPDExhaustedError(
                     f"Limite diário de tokens Groq atingido. Aguarde ~24h.\nDetalhe: {e}"
                 ) from e
-            # TPM ou outro rate limit — retry com backoff
             if attempt <= _MAX_TPM_RETRIES:
                 logger.warning(
                     "TPM rate limit (tentativa %d/%d). Aguardando %ds...",

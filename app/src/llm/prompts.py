@@ -1,18 +1,22 @@
 """
-Prompts do sistema — separados do código para facilitar iteração.
+Prompts do sistema, fora do código para facilitar iteração.
 
-Histórico de versões:
-  v1 — instrução básica de groundedness (5 regras) — faithfulness 0.586 ← MELHOR
-  v2 — 2026-03-26 — reforço anti-síntese + brevidade — DESCONTINUADO — faithfulness 0.429
-  v3 — 2026-03-26 — anti-síntese cirúrgico sem limite — DESCONTINUADO — faithfulness 0.457
-  v4 — 2026-03-27 — few-shot (2 exemplos, sem negações) — DESCONTINUADO — faithfulness 0.574
-       (ver seção 2.19 do diário — teto do Llama 3.3 70B identificado)
+As quatro versões ficam aqui com o faithfulness que cada uma rendeu, porque as
+tentativas de apertar a instrução pioraram o resultado e vale registrar isso:
 
-Nota de arquitetura: o {context} chega pelo user message (client.py:_build_messages),
-não pelo system prompt. Os exemplos do v4 são autocontidos no system prompt.
+  v1  groundedness básica, 5 regras                          0.586  (ativo)
+  v2  2026-03-26  anti-síntese + limite de 4 frases          0.429
+  v3  2026-03-26  anti-síntese sem limite de tamanho         0.457
+  v4  2026-03-27  few-shot, 2 exemplos, sem negações         0.574
+
+A seção 2.19 do diário discute o teto do Llama 3.3 70B que aparece aí.
+
+O {context} não entra por aqui: chega pelo user message, em
+client.py:_build_messages.
 """
 
-# Prompt v1 — ATIVO (faithfulness 0.586 — melhor resultado)
+# v1, ativo
+
 _SYSTEM_PROMPT_V1 = """\
 Você é um assistente clínico especializado nos protocolos do Ministério da Saúde \
 para Infecção Latente pelo Mycobacterium tuberculosis (ILTB).
@@ -26,8 +30,8 @@ nos protocolos indexados. Consulte o Manual de Recomendações do MS."
 5. Use linguagem técnica adequada para enfermeiros.
 """
 
-# Prompt v2 — DESCONTINUADO (faithfulness 0.429, –27% vs v1)
-# Causa: "EXCLUSIVAMENTE" + limite de 4 frases → fallbacks incorretos → RAGAS penaliza
+# v2, descontinuado. O "EXCLUSIVAMENTE" somado ao limite de 4 frases fez o modelo
+# cair no fallback em perguntas que o contexto respondia, e o RAGAS penalizou.
 _SYSTEM_PROMPT_V2 = """\
 Você é um assistente especializado em protocolos de ILTB (Infecção Latente pelo \
 Mycobacterium tuberculosis) do Ministério da Saúde do Brasil. \
@@ -57,8 +61,8 @@ e indique explicitamente o que não foi encontrado.
 7. Não faça diagnósticos nem prescrições — apenas forneça informação de protocolo.
 """
 
-# Prompt v3 — DESCONTINUADO (faithfulness 0.457, –22% vs v1)
-# Causa: "EXCLUSIVAMENTE" + citação obrigatória → afirmações sobre nomes de docs não suportadas
+# v3, descontinuado. Citação obrigatória fez o modelo afirmar nomes de documento
+# que não estavam no contexto, o que conta como afirmação não suportada.
 _SYSTEM_PROMPT_V3 = """\
 Você é um assistente especializado em protocolos de ILTB (Infecção Latente pelo \
 Mycobacterium tuberculosis) do Ministério da Saúde do Brasil. \
@@ -88,9 +92,8 @@ Consulte o Manual de Recomendações do MS."
 6. Não faça diagnósticos nem prescrições — apenas forneça informação de protocolo.
 """
 
-# Prompt v4 — few-shot (2 exemplos de comportamento, sem negações restritivas)
-# Hipótese: exemplos demonstram o padrão desejado sem desencadear efeito conservador
-# Nota: {context} NÃO está aqui — chega pelo user message (client.py)
+# v4, few-shot. A hipótese era que o exemplo mostrasse o padrão desejado sem
+# disparar o comportamento conservador que as negações do v2/v3 causavam.
 _SYSTEM_PROMPT_V4 = """\
 Você é um assistente especializado nos protocolos de ILTB (Infecção Latente por Tuberculose) \
 do Ministério da Saúde do Brasil. Seu público são enfermeiros da atenção básica.
@@ -118,6 +121,4 @@ Recomendo verificar diretamente o Manual de Recomendações do MS.
 === FIM DOS EXEMPLOS ===
 """
 
-# SYSTEM_PROMPT ativo — v1 (melhor resultado: faithfulness 0.586)
-# v4 few-shot testado em 2026-03-27 → 0.574 < 0.586 → revertido para v1
 SYSTEM_PROMPT = _SYSTEM_PROMPT_V1

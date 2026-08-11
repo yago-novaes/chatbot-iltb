@@ -1,6 +1,4 @@
 """
-Gerenciamento de histórico de conversa por sessão.
-Sliding window de N mensagens com TTL.
-TODO: implementar na Fase 2 — integração com WhatsApp.
+Histórico de conversa por sessão: janela deslizante de N mensagens com TTL.
+Ainda não implementado, entra junto com a integração do WhatsApp.
 """
-# placeholder

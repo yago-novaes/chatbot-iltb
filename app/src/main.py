@@ -1,6 +1,4 @@
-"""
-Entrypoint FastAPI — Chatbot ILTB
-"""
+"""Entrypoint FastAPI do Chatbot ILTB."""
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path

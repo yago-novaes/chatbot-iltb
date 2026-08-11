@@ -1,6 +1,6 @@
 """
-Extração de texto de PDFs via Docling (IBM).
-Exporta para Markdown preservando títulos, tabelas e estrutura hierárquica.
+Extração de PDF via Docling, exportando para Markdown com os títulos e tabelas
+preservados.
 """
 import logging
 from pathlib import Path
@@ -21,9 +21,8 @@ def _get_converter() -> DocumentConverter:
 
 def extract_markdown(pdf_path: Path) -> str:
     """
-    Converte um PDF para Markdown estruturado.
-    Preserva títulos (## / ###), tabelas e parágrafos — compatível com o chunker existente.
-    Retorna string vazia em caso de erro (ex.: std::bad_alloc em PDFs grandes).
+    Converte um PDF para Markdown, mantendo os cabeçalhos de que o chunker precisa.
+    Devolve string vazia em caso de erro, tipo std::bad_alloc em PDF grande.
     """
     logger.info("Extraindo PDF: %s", pdf_path.name)
     try:

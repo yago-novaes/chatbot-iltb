@@ -1,14 +1,9 @@
 """
-Reranker cross-encoder (TF1) — etapa pós-retrieval que reordena os candidatos
-do retriever (denso ou híbrido) usando um modelo cross-encoder multilíngue.
+Etapa pós-retrieval: reordena os candidatos do retriever com um cross-encoder
+multilíngue (Alibaba-NLP/gte-multilingual-reranker-base, Zhang et al. 2024).
 
-Modelo padrão: Alibaba-NLP/gte-multilingual-reranker-base (Zhang et al. 2024,
-EMNLP-Industry). Cross-encoders processam (query, chunk) conjuntamente e
-capturam relevância fine-grained que bi-encoders dense não capturam.
-
-Referência (já citada em main.tex):
-  - zhang2024mgte — modelo cross-encoder multilíngue
-  - wang2024bestpractices — empiricamente +5-10pp Faithfulness sobre retrieval
+O cross-encoder processa (query, chunk) junto, então enxerga relevância que o
+bi-encoder denso perde ao comparar vetores independentes.
 """
 from __future__ import annotations
 
@@ -26,15 +21,13 @@ _reranker_lock = threading.Lock()
 
 
 def _get_reranker() -> CrossEncoder:
-    """Carrega (lazy + thread-safe) o cross-encoder mGTE."""
     global _reranker
     if _reranker is not None:
         return _reranker
     with _reranker_lock:
         if _reranker is not None:
             return _reranker
-        # trust_remote_code=True é necessário pro mGTE; o modelo tem código
-        # custom para tokenização e atenção (LongRoPE)
+        # o mGTE traz tokenização e atenção custom (LongRoPE), daí o trust_remote_code
         _reranker = CrossEncoder(
             settings.reranker_model,
             trust_remote_code=True,
@@ -44,10 +37,7 @@ def _get_reranker() -> CrossEncoder:
 
 
 def rerank(query: str, candidates: List[RetrievedChunk], top_k: int) -> List[RetrievedChunk]:
-    """
-    Reordena candidates pelo score do cross-encoder e devolve os top_k.
-    Score retornado em RetrievedChunk.score passa a ser o score do reranker.
-    """
+    """Reordena candidates e devolve os top_k, com score do cross-encoder."""
     if not candidates:
         return candidates
     pairs = [(query, c.text) for c in candidates]

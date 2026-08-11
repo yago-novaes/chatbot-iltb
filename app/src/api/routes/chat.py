@@ -1,6 +1,6 @@
 """
-Rota POST /chat — pergunta → RAG → resposta LLM.
-Histórico de conversa (session_id) será implementado na integração com WhatsApp (Fase 3).
+POST /chat: pergunta, RAG, resposta do LLM.
+O session_id com histórico de conversa fica para a integração com WhatsApp.
 """
 import asyncio
 

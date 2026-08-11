@@ -1,13 +1,11 @@
 """
-Retriever — fachada que despacha entre busca densa (ChromaDB / BGE-M3) e
-híbrida (denso + BM25 com RRF, ver hybrid_retriever.py) via settings.retriever_mode.
+Fachada de busca. Despacha entre densa (ChromaDB) e híbrida (denso + BM25 com
+RRF, ver hybrid_retriever.py) conforme settings.retriever_mode.
 
-A função retrieve() é a interface estável usada por eval/run_ragas.py e pela API.
+retrieve() é a interface usada por eval/run_ragas.py e pela API.
 """
 from dataclasses import dataclass
 from typing import List
-
-import chromadb
 
 from app.src.config import settings
 from app.src.rag.embeddings import embedding_fn
@@ -34,7 +32,7 @@ def _retrieve_dense(query: str, k: int) -> List[RetrievedChunk]:
         RetrievedChunk(
             text=doc,
             source=meta.get("source", "desconhecido"),
-            score=round(1 - dist, 4),  # distância coseno → similaridade
+            score=round(1 - dist, 4),  # distância coseno para similaridade
         )
         for doc, meta, dist in zip(
             results["documents"][0],
@@ -52,9 +50,7 @@ def retrieve(query: str, top_k: int | None = None) -> List[RetrievedChunk]:
     if mode == "hybrid_rerank":
         from app.src.rag.hybrid_retriever import retrieve_hybrid
         from app.src.rag.reranker import rerank
-        # 1) hybrid pega top reranker_fetch_k candidatos
         candidates = retrieve_hybrid(query, top_k=settings.reranker_fetch_k)
-        # 2) cross-encoder reordena e seleciona top_k
         return rerank(query, candidates, top_k=k)
 
     if mode == "hybrid":

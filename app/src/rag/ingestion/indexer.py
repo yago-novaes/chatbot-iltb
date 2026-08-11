@@ -1,7 +1,4 @@
-"""
-Indexação de documentos no ChromaDB.
-Suporta .pdf, .md e .txt.
-"""
+"""Indexação de .pdf, .md e .txt no ChromaDB."""
 import logging
 from pathlib import Path
 
@@ -35,8 +32,8 @@ def _load_text(file: Path) -> str:
 
 def _resolve_files(folder: Path) -> list[Path]:
     """
-    Lista arquivos a indexar, preferindo .md sobre .pdf de mesmo nome base.
-    Evita duplicação quando ambos existem após pré-extração com Docling.
+    Lista os arquivos a indexar. Quando existe .md e .pdf de mesmo nome base,
+    fica só o .md, senão a pré-extração do Docling duplicaria o documento.
     """
     md_stems = {f.stem for f in folder.glob("*.md")}
     files: list[Path] = []
@@ -51,11 +48,7 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 
 def ingest_documents(docs_path: str | None = None) -> int:
-    """
-    Lê .pdf, .md e .txt da pasta docs_path e indexa no ChromaDB.
-    Se existir .md e .pdf com mesmo nome base, usa apenas o .md.
-    Retorna o número de chunks indexados.
-    """
+    """Reindexa a pasta docs_path do zero e retorna o total de chunks."""
     folder = Path(docs_path or settings.docs_path)
     if not folder.exists():
         raise FileNotFoundError(f"Pasta de documentos não encontrada: {folder}")
@@ -81,7 +74,7 @@ def ingest_documents(docs_path: str | None = None) -> int:
         logger.info("Processando: %s", file.name)
         text = _load_text(file)
         if not text:
-            logger.warning("  Ignorando %s — extração retornou texto vazio", file.name)
+            logger.warning("  Ignorando %s: extração retornou texto vazio", file.name)
             continue
         chunks = split_by_sections(text, settings.chunk_size)
         for i, chunk in enumerate(chunks):

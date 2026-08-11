@@ -1,15 +1,9 @@
 """
-Retriever híbrido: combina busca densa (ChromaDB / BGE-M3) com BM25 (rank_bm25)
-via Reciprocal Rank Fusion (RRF).
+Retriever híbrido: busca densa (ChromaDB) fundida com BM25 (rank_bm25) por
+Reciprocal Rank Fusion (Cormack et al. 2009).
 
-Implementa a recomendação TF2 da Seção 2.33 do diário (busca híbrida BM25+denso)
-para atacar o gap residual de Faithfulness via melhor recall em termos clínicos
-exatos (siglas, dosagens, nomes de fármacos).
-
-Referências bibliográficas (já citadas em main.tex):
-  - Cormack et al. 2009 — RRF formula
-  - Formal et al. 2021 — SPLADE / sparse retrieval
-  - Wang et al. 2024 (best practices RAG, EMNLP) — ganhos típicos de hybrid
+Motivação: o BM25 pega casamento lexical exato de siglas, dosagens e nomes de
+fármacos, onde o denso sozinho erra. Ver seção 2.33 do diário.
 """
 from __future__ import annotations
 
@@ -18,7 +12,6 @@ import threading
 from dataclasses import dataclass
 from typing import List
 
-import chromadb
 from rank_bm25 import BM25Okapi
 
 from app.src.config import settings
@@ -27,13 +20,11 @@ from app.src.rag.ingestion.indexer import _get_client
 from app.src.rag.retriever import RetrievedChunk
 
 
-# ─── BM25 index (sidecar, construído lazy a partir da collection ChromaDB) ───
-
 _TOKEN_RE = re.compile(r"\w+", re.UNICODE)
 
 
 def _tokenize(text: str) -> list[str]:
-    """Tokenização simples para PT clínico — case-fold + palavras alfanuméricas."""
+    """Case-fold + palavras alfanuméricas. Suficiente para PT clínico."""
     return _TOKEN_RE.findall(text.casefold())
 
 
@@ -77,8 +68,6 @@ def _get_bm25() -> _BM25Index:
     return _bm25_cache
 
 
-# ─── Dense + BM25 → RRF ────────────────────────────────────────────────────
-
 def _dense_ranking(query: str, k: int) -> list[tuple[str, str, dict, float]]:
     """Retorna (id, doc, meta, cosine_similarity) ordenado por similaridade desc."""
     collection = _get_client().get_collection(
@@ -111,9 +100,8 @@ def _bm25_ranking(query: str, k: int) -> list[tuple[str, str, dict, float]]:
 
 def _rrf(rankings: list[list[tuple[str, str, dict, float]]], k_const: int) -> dict[str, dict]:
     """
-    Reciprocal Rank Fusion (Cormack et al. 2009).
     score(d) = Σ 1 / (k_const + rank(d, ranker_i))
-    Retorna {id: {doc, meta, rrf_score, ranks_per_ranker}}.
+    Retorna {id: {doc, meta, rrf_score, ranks}}.
     """
     fused: dict[str, dict] = {}
     for ranker_idx, ranking in enumerate(rankings):
@@ -129,14 +117,10 @@ def _rrf(rankings: list[list[tuple[str, str, dict, float]]], k_const: int) -> di
 
 def retrieve_hybrid(query: str, top_k: int | None = None) -> List[RetrievedChunk]:
     """
-    Busca híbrida densa + BM25 com fusão RRF.
-    Retorna até top_k chunks (default settings.retriever_top_k), com score = RRF score.
+    Retorna até top_k chunks (default settings.retriever_top_k) com score RRF.
 
-    Diferenças vs retrieve() denso:
-      - Busca em paralelo os top fetch_k candidatos em cada ranker
-      - Funde por RRF; ordena pela soma reciprocal
-      - Score retornado é o RRF, não cosine — não filtra por retriever_score_threshold
-        (a comparação semântica do threshold não se aplica à escala RRF)
+    Atenção: o score é RRF, não cosseno, então retriever_score_threshold não se
+    aplica aqui e o filtro é omitido de propósito.
     """
     k = top_k or settings.retriever_top_k
     fetch_k = settings.retriever_fetch_k

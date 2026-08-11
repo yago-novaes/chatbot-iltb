@@ -1,6 +1,6 @@
 """
-POST /search — busca trechos relevantes sem gerar resposta.
-Útil para debug do pipeline RAG (ver scores, verificar chunking).
+POST /search: devolve os trechos recuperados sem chamar o LLM.
+Serve para depurar o RAG, olhando scores e conferindo o chunking.
 """
 import asyncio
 
