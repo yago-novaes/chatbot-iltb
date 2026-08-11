@@ -7,10 +7,9 @@ Pré-requisitos:
   - LLM_PROVIDER != "mock" e LLM_API_KEY válida no .env
   - pip install ragas datasets langchain-openai
 
-Checkpointing:
-  Cada resposta do pipeline é salva em _ragas_cache.json imediatamente após coleta.
-  Se o script falhar (TPD, rede), basta re-rodar — perguntas já respondidas são puladas.
-  Use --clear-cache para forçar re-coleta completa.
+Cada resposta vai para _ragas_cache.json assim que chega. Como a coleta costuma
+morrer no meio por cota diária ou rede, re-rodar retoma de onde parou e pula o
+que já foi respondido. Para recomeçar do zero, --clear-cache.
 """
 import asyncio
 import json
@@ -35,33 +34,30 @@ TEST_SET = EVAL_DIR / "test_set.json"
 RESULTS_DIR = EVAL_DIR / "results"
 CACHE_PATH = RESULTS_DIR / "_ragas_cache.json"
 
-SLEEP_BETWEEN_CALLS = 20  # segundos — Groq TPM 6K tok/min, prompts ~1700 tok: 3 req/min = ~5.1K tok/min
+# 20s cabe no TPM do Groq: 6K tok/min contra prompts de ~1700 tok, ou seja
+# 3 req/min dando ~5.1K tok/min.
+SLEEP_BETWEEN_CALLS = 20
 
-
-# === Checkpointing ===
 
 def _load_cache() -> dict:
-    """Carrega respostas já coletadas do cache. Chave: question id."""
+    """Respostas já coletadas, indexadas pelo id da pergunta."""
     if CACHE_PATH.exists():
         return json.loads(CACHE_PATH.read_text(encoding="utf-8"))
     return {}
 
 
 def _save_cache(cache: dict):
-    """Persiste cache após cada resposta."""
     RESULTS_DIR.mkdir(exist_ok=True)
     CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _is_valid_answer(answer: str) -> bool:
-    """Retorna False para strings de erro que não devem ser cacheadas."""
+    """False para mensagens de erro, que não podem entrar no cache."""
     if not answer:
         return False
     invalid_markers = ["Rate limit", "ERRO:", "Error code:"]
     return not any(marker in answer for marker in invalid_markers)
 
-
-# === Pipeline ===
 
 def _check_prerequisites():
     if settings.llm_provider == "mock" or settings.llm_api_key in ("mock", "", None):

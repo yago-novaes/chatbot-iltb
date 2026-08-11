@@ -167,7 +167,7 @@ def formatar_arquivo(decision_id: str, decision_meta: dict, respostas: list[dict
         lines.append("### Resposta NotebookLM")
         lines.append("")
         if resposta.get("error"):
-            lines.append(f"> ⚠️ ERRO ao chamar o NotebookLM:")
+            lines.append("> ERRO ao chamar o NotebookLM:")
             lines.append(f"> stderr: `{resposta.get('stderr', '—')}`")
             lines.append(f"> stdout: `{resposta.get('stdout', '—')[:200]}`")
         else:

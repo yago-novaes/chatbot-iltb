@@ -25,7 +25,7 @@ def sanitize_markdown(text: str) -> str:
     listas fragmentadas) exigem revisão manual (Camada 2).
     Ver seção 2.14 do diário técnico.
     """
-    # === ARTEFATOS DE CARACTERE/OCR ===
+    # artefatos de caractere e OCR
 
     # 1. Artefato de seta → bullet
     text = text.replace("Î ", "- ")
@@ -44,7 +44,7 @@ def sanitize_markdown(text: str) -> str:
     text = text.replace(r"\_", "_")
     text = text.replace(r"\-", "-")
 
-    # === FORMATAÇÃO DE LISTAS ===
+    # formatação de listas
 
     # 6. Bullets duplos (- - texto → * texto)
     text = re.sub(r"^- - ", "* ", text, flags=re.MULTILINE)
@@ -52,7 +52,7 @@ def sanitize_markdown(text: str) -> str:
     # 7. Bullets híbridos (- 1 texto → 1. texto)
     text = re.sub(r"^- (\d+)\s", r"\1. ", text, flags=re.MULTILINE)
 
-    # === ESPAÇAMENTO ===
+    # espaçamento
 
     # 8. Múltiplos espaços (layout multi-coluna)
     text = re.sub(r"  +", " ", text)
@@ -67,7 +67,7 @@ def sanitize_markdown(text: str) -> str:
     # 11. Espaço dentro de barras: "pulmonar/ laríngea" → "pulmonar/laríngea"
     text = re.sub(r" / ", "/", text)
 
-    # === HIFENIZAÇÃO QUEBRADA POR OCR ===
+    # hifenização quebrada pelo OCR
 
     # 12. Palavras quebradas por hifenização de fim de linha
     text = re.sub(r"(\w)-\s*\n\s*(\w)", r"\1\2", text)
@@ -93,22 +93,22 @@ def sanitize_markdown(text: str) -> str:
     for broken, fixed in common_broken.items():
         text = text.replace(broken, fixed)
 
-    # === LIMPEZA DE SUMÁRIO/ÍNDICE ===
+    # limpeza de sumário e índice
 
     # 14. Linhas de pontos de sumário/índice (10+ pontos seguidos)
     text = re.sub(r"\.{10,}", "", text)
 
-    # === CITAÇÕES BIBLIOGRÁFICAS ===
+    # citações bibliográficas
 
     # 15. Números órfãos como referências (ex: "adoecimento 5 ," → "adoecimento [5],")
     text = re.sub(r"(\w) (\d{1,3}) ([;.,])", r"\1 [\2]\3", text)
 
-    # === CAPITALIZAÇÃO ANÔMALA ===
+    # capitalização anômala
 
     # 16. Corrigir "QUADRo" → "Quadro" (capitalização parcial de OCR)
     text = re.sub(r"QUADRo", "Quadro", text)
 
-    # === URLs E EMAILS QUEBRADOS ===
+    # URLs e emails quebrados
 
     # 17. Espaços dentro de URLs
     def fix_url_spaces(match: re.Match) -> str:
@@ -119,7 +119,7 @@ def sanitize_markdown(text: str) -> str:
     # 18. Espaços em emails (ex: "tuberculose@ saude.gov.br")
     text = re.sub(r"(\w)@ (\w)", r"\1@\2", text)
 
-    # === NOVAS REGRAS (v3 — baseadas no GEDIIB) ===
+    # regras v3, vieram da revisão do GEDIIB
 
     # 19. Cabeçalhos/rodapés de página repetidos (URLs de organizações, nomes aglutinados)
     #     Ex: "WWW.GEDIIB.ORG.BR", "ORGANIZACAOBRASILEIRADEDOENCADECROHNECOLITE"

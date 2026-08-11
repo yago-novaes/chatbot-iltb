@@ -16,7 +16,7 @@ import time
 from pathlib import Path
 from openai import OpenAI
 
-# === CONFIGURAÇÃO ===
+# configuração
 
 DEFAULT_FILE = Path("docs/protocolos/Manual de Recomendações para o controle da Tuberculose no Brasil.md")
 MODEL = "gpt-4o-mini"
@@ -26,7 +26,7 @@ SLEEP_BETWEEN_CALLS = 1  # segundos entre chamadas
 MIN_OUTPUT_RATIO = 0.5   # output deve ser >= 50% do input (detecta truncamento)
 MAX_OUTPUT_RATIO = 1.5   # output deve ser <= 150% do input (detecta invenção de texto)
 
-# === SYSTEM PROMPT (ESTRITO — NÃO ALTERAR SEM JUSTIFICATIVA) ===
+# system prompt estrito. Mexer aqui invalida as comparações já rodadas.
 
 SYSTEM_PROMPT = """Você é um parser de Markdown especializado em documentos clínicos do Ministério da Saúde do Brasil.
 

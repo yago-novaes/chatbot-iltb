@@ -1,10 +1,10 @@
 """
-Análise da sessão de avaliação humana com especialista — Chatbot ILTB.
+Análise da sessão de avaliação com especialista.
 
-Lê as planilhas preenchidas durante e após a sessão e gera os artefatos
-para o capítulo de Avaliação da monografia: gráficos em PNG, tabelas em
-LaTeX e CSV, e um sumário executivo em Markdown pronto para colar nos
-campos \\aluno{...} da seção sec:sessao-expert do main.tex.
+Lê as planilhas preenchidas durante e depois da sessão e gera os artefatos do
+capítulo de Avaliação: gráficos em PNG, tabelas em LaTeX e CSV, e um sumário
+em Markdown pronto para colar nos campos \\aluno{...} da seção
+sec:sessao-expert do main.tex.
 
 Uso:
 
@@ -47,7 +47,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-# ─── Configuração ─────────────────────────────────────────────────────────────
+# Configuração
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SESSAO_DIR = PROJECT_ROOT / "docs" / "sessao_expert"
@@ -84,7 +84,7 @@ DIMENSOES_TAM_AIN_ESTENDIDAS = [
 ]
 
 
-# ─── Schemas ─────────────────────────────────────────────────────────────────
+# Schemas
 
 
 @dataclass
@@ -103,7 +103,7 @@ class ResultadoSessao:
     tam_ain_composto: float | None
 
 
-# ─── Carga das planilhas ──────────────────────────────────────────────────────
+# Carga das planilhas
 
 
 def carregar_planilha(path: Path) -> pd.DataFrame:
@@ -135,7 +135,7 @@ def carregar_tam_ain(path: Path) -> dict[str, int]:
     return out
 
 
-# ─── Análises ─────────────────────────────────────────────────────────────────
+# Análises
 
 
 def _normalizar_acuracia(valor: str | float) -> str | None:
@@ -231,7 +231,7 @@ def carregar_ragas_atual() -> dict[str, float] | None:
     }
 
 
-# ─── Gráficos ─────────────────────────────────────────────────────────────────
+# Gráficos
 
 
 def grafico_acuracia(grouped: pd.DataFrame, output: Path) -> None:
@@ -329,7 +329,7 @@ def grafico_tam_ain(scores: dict[str, float], composto: float | None, output: Pa
     plt.close(fig)
 
 
-# ─── Tabelas e sumário ────────────────────────────────────────────────────────
+# Tabelas e sumário
 
 
 def tabela_resultados(
@@ -471,7 +471,7 @@ def gerar_sumario(
     output.write_text(md, encoding="utf-8")
 
 
-# ─── Dry-run com dados sintéticos ─────────────────────────────────────────────
+# Dry-run com dados sintéticos
 
 
 def gerar_dados_sinteticos(tmpdir: Path) -> tuple[Path, Path, Path]:
@@ -537,7 +537,7 @@ def gerar_dados_sinteticos(tmpdir: Path) -> tuple[Path, Path, Path]:
     return p_dd, p_asy, p_tam
 
 
-# ─── Pipeline principal ───────────────────────────────────────────────────────
+# Pipeline principal
 
 
 def main(dry_run: bool = False) -> None:

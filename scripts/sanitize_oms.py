@@ -12,13 +12,13 @@ OUTPUT = INPUT  # sobrescreve o original
 with open(INPUT, encoding="utf-8") as f:
     lines = f.readlines()
 
-# ── TASK 1: remover bloco editorial (linhas 1–125) e Referências (linha 1319+) ──
+# corta o bloco editorial da abertura e as Referências do fim
 # Manter apenas linhas 126..1318 (índices 125..1317)
 lines = lines[125:1318]   # 0-indexed, inclui L126 (Definições), exclui L1319 (Referências)
 
 content = "".join(lines)
 
-# ── TASK 3: artefatos OCR ──
+# artefatos de OCR
 # Remover <!-- image -->
 content = re.sub(r"<!-- image -->\n?", "", content)
 # Substituir "Î " (bullet OCR) por "- "
@@ -33,7 +33,7 @@ content = re.sub(r"(?m)^\d{1,3}\n", "", content)
 content = re.sub(r"(?m)^[89]  ?[A-Z][^\n]{5,100}\n", "", content)
 content = re.sub(r"(?m)^10    Os modelos[^\n]*\n", "", content)
 
-# ── TASK 2: corrigir hierarquia de cabeçalhos ──
+# hierarquia de cabeçalhos
 
 # Função de substituição por mapeamento exato
 heading_map = {
@@ -126,13 +126,13 @@ for pattern, replacement in heading_map.items():
     else:
         content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
 
-# ── TASK 4: Corrigir Tabela 3 (duas partes separadas → unir) ──
+# a Tabela 3 sai partida em duas, junta aqui
 # A tabela 3 foi dividida pelo Docling em dois blocos. O segundo bloco começa
 # com |---|...| que faz parte da tabela anterior. Juntar removendo a linha em branco entre eles.
 # Identificamos pela presença de "|---" depois de uma linha de tabela e linha em branco.
 content = re.sub(r"(\|[^\n]+\n)\n(\|---)", r"\1\2", content)
 
-# ── TASK 5: fix estruturais ──
+# ajustes estruturais soltos
 # Remover linhas em branco duplas excessivas (máx 2 linhas em branco consecutivas)
 content = re.sub(r"\n{4,}", "\n\n\n", content)
 
@@ -142,7 +142,7 @@ content = content.lstrip()
 with open(OUTPUT, "w", encoding="utf-8") as f:
     f.write(content)
 
-# ── Verificação final ──
+# Verificação final
 out_lines = content.split("\n")
 h2 = [l for l in out_lines if re.match(r"^## [^#]", l)]
 h3 = [l for l in out_lines if re.match(r"^### [^#]", l)]
