@@ -16,25 +16,25 @@
 
 | Região (chars) | Conteúdo | Status |
 |---|---|---|
-| 0 – 50k | TOC (sumário convertido em tabela markdown) | ✅ Completo |
-| 50k – 120k | Parte I: Aspectos Básicos e Epidemiológicos | ✅ Completo |
-| 120k – 193k | Parte II: Diagnóstico (seções 1–9) | ✅ Completo |
-| 193k – 210k | Parte III: **somente** seções 4.4.2–4.4.5 (Hepatopatias, Nefropatias, Diabetes, PVHIV) | ⚠️ Parcial |
-| 210k – 289k | Partes IV–V: Estratégias Programáticas + Bases Organizacionais | ✅ Completo |
-| 289k – 295k | Anexos (fichas SINAN, TDO) | ✅ Presente |
+| 0 – 50k | TOC (sumário convertido em tabela markdown) | Completo |
+| 50k – 120k | Parte I: Aspectos Básicos e Epidemiológicos | Completo |
+| 120k – 193k | Parte II: Diagnóstico (seções 1–9) | Completo |
+| 193k – 210k | Parte III: **somente** seções 4.4.2–4.4.5 (Hepatopatias, Nefropatias, Diabetes, PVHIV) | Parcial |
+| 210k – 289k | Partes IV–V: Estratégias Programáticas + Bases Organizacionais | Completo |
+| 289k – 295k | Anexos (fichas SINAN, TDO) | Presente |
 
 ### 1.2 Seções da Parte III ausentes no .md
 
 | Seção | Páginas PDF | Status | Relevância ILTB | Mitigação |
 |---|---|---|---|---|
-| 1–4.3 — Introdução, Bases Farmacológicas, Esquema Básico (RHZE) | 97–111 | ❌ AUSENTE | Baixa (TB ativa, fora do escopo) | — |
-| 4.4.1 — Gestação (TB ativa) | 111–112 | ❌ AUSENTE | Baixa (TB ativa) | `recomendacoes-para-o-controle-da-tuberculose.md` |
-| 5 — Seguimento do Tratamento (TB ativa) | 122–126 | ❌ AUSENTE | Baixa (TB ativa) | — |
-| 6.1 — Reações Adversas ao Esquema Básico | 127–129 | ❌ AUSENTE | Média (EA questions) | piridoxina em `patch_interacoes.md` + `recomendacoes.md` |
-| 6.2 — Reações Adversas com ARV | 135–136 | ❌ AUSENTE | Baixa | Referências parciais presentes |
-| **6.3 — Interações Medicamentosas** | **137–141** | **✅ PATCHEADO** | **Alta** | `patch_interacoes_medicamentosas.md` |
+| 1–4.3 — Introdução, Bases Farmacológicas, Esquema Básico (RHZE) | 97–111 | AUSENTE | Baixa (TB ativa, fora do escopo) | — |
+| 4.4.1 — Gestação (TB ativa) | 111–112 | AUSENTE | Baixa (TB ativa) | `recomendacoes-para-o-controle-da-tuberculose.md` |
+| 5 — Seguimento do Tratamento (TB ativa) | 122–126 | AUSENTE | Baixa (TB ativa) | — |
+| 6.1 — Reações Adversas ao Esquema Básico | 127–129 | AUSENTE | Média (EA questions) | piridoxina em `patch_interacoes.md` + `recomendacoes.md` |
+| 6.2 — Reações Adversas com ARV | 135–136 | AUSENTE | Baixa | Referências parciais presentes |
+| **6.3 — Interações Medicamentosas** | **137–141** | **PATCHEADO** | **Alta** | `patch_interacoes_medicamentosas.md` |
 | 7 — TB Drogarresistente | 142–161 | Parcial | Muito baixa (fora do escopo) | — |
-| **8 — Tratamento da ILTB** | **163–169** | **❌ AUSENTE** | **Alta** | `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
+| **8 — Tratamento da ILTB** | **163–169** | **AUSENTE** | **Alta** | `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
 
 > **Nota sobre a Seção 8:** a ausência é inesperada — as páginas 163–169 estão antes do limiar de `std::bad_alloc` documentado (página 319+). A causa provável é falha do Docling em página intermediária com figura complexa, pulando seções no modo de fallback de texto nativo.
 
@@ -42,11 +42,11 @@
 
 | Seção | Quadro | Tipo de Conteúdo | Qualidade |
 |---|---|---|---|
-| 4.4.2 Hepatopatias | Quadro 24 | Condutas frente a hepatopatias (TGO/TGP × LSN) | ✅ Tabela markdown estruturada |
-| 4.4.3 Nefropatias | Quadro 25 | Fórmula clearance de creatinina | ✅ Presente |
-| 4.4.5 PVHIV | Quadro 26 | Rifabutina com inibidor de protease | ✅ Presente |
-| 8.1.2 Diagnóstico pediátrico | Quadro 11 | Sistema de escore TB pediátrico | ✅ Presente |
-| 10.3 SITE-TB | Quadros 52–54 | Tipos de entrada e encerramento | ✅ Presente |
+| 4.4.2 Hepatopatias | Quadro 24 | Condutas frente a hepatopatias (TGO/TGP × LSN) | Tabela markdown estruturada |
+| 4.4.3 Nefropatias | Quadro 25 | Fórmula clearance de creatinina | Presente |
+| 4.4.5 PVHIV | Quadro 26 | Rifabutina com inibidor de protease | Presente |
+| 8.1.2 Diagnóstico pediátrico | Quadro 11 | Sistema de escore TB pediátrico | Presente |
+| 10.3 SITE-TB | Quadros 52–54 | Tipos de entrada e encerramento | Presente |
 
 ---
 
@@ -65,12 +65,12 @@ Todos os 6 capítulos do TOC têm seções correspondentes no `.md`:
 
 | Capítulo | Status |
 |---|---|
-| 1. Introdução | ✅ |
-| 2. Abordagem centrada nas pessoas | ✅ |
-| 3. Intervenções de atenção e suporte (3.1–3.3) | ✅ |
-| 4. Educação em saúde e aconselhamento (4.1–4.7) | ✅ |
-| 5. Modelos de atenção (5.1–5.5) | ✅ |
-| 6. Cuidados paliativos (6.1–6.3) | ✅ |
+| 1. Introdução | OK |
+| 2. Abordagem centrada nas pessoas | OK |
+| 3. Intervenções de atenção e suporte (3.1–3.3) | OK |
+| 4. Educação em saúde e aconselhamento (4.1–4.7) | OK |
+| 5. Modelos de atenção (5.1–5.5) | OK |
+| 6. Cuidados paliativos (6.1–6.3) | OK |
 
 **Resultado: sem gaps identificados.**
 
@@ -84,18 +84,18 @@ Documento principal ILTB da atenção básica do MS. Cobre os itens críticos au
 
 | Conteúdo clínico | Presente |
 |---|---|
-| Isoniazida dose (5–10 mg/kg, máx 300 mg/dia) | ✅ |
-| Piridoxina 50 mg/dia (prevenção neuropatia periférica) | ✅ |
-| Neuropatia periférica | ✅ |
-| Gestantes + ILTB | ✅ (7 ocorrências) |
-| PVHIV / CD4 / antirretroviral | ✅ (12 ocorrências) |
-| PPD / IGRA | ✅ (9 ocorrências) |
-| Imunossupressores / anti-TNF | ✅ (3 ocorrências) |
-| Critérios de suspensão do tratamento | ✅ (5 ocorrências) |
-| Hepatotoxicidade | ✅ |
-| 3HP (rifapentina + isoniazida semanal) | ✅ |
-| 6H / 9H | ❌ — em `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` e `GEDIIB_TratamentoTuberculose.md` |
-| 26 Quadros clínicos numerados | ✅ |
+| Isoniazida dose (5–10 mg/kg, máx 300 mg/dia) | OK |
+| Piridoxina 50 mg/dia (prevenção neuropatia periférica) | OK |
+| Neuropatia periférica | OK |
+| Gestantes + ILTB | (7 ocorrências) |
+| PVHIV / CD4 / antirretroviral | (12 ocorrências) |
+| PPD / IGRA | (9 ocorrências) |
+| Imunossupressores / anti-TNF | (3 ocorrências) |
+| Critérios de suspensão do tratamento | (5 ocorrências) |
+| Hepatotoxicidade | OK |
+| 3HP (rifapentina + isoniazida semanal) | OK |
+| 6H / 9H | ausente; está em `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` e `GEDIIB_TratamentoTuberculose.md` |
+| 26 Quadros clínicos numerados | OK |
 
 ### Distribuição de conteúdo por documento
 
@@ -123,9 +123,9 @@ Documento principal ILTB da atenção básica do MS. Cobre os itens críticos au
 
 | # | Gap | Criticidade | Status |
 |---|---|---|---|
-| 1 | Seção 6.3 Interações Medicamentosas | Alta | ✅ Patcheado — `docs/protocolos/patch_interacoes_medicamentosas.md` |
-| 2 | Seção 8 Tratamento da ILTB | Alta | ✅ Mitigado — conteúdo em `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
-| 3 | Seção 6.1 Reações Adversas | Média | ✅ Mitigado — piridoxina em `patch_interacoes.md` + `recomendacoes.md` |
+| 1 | Seção 6.3 Interações Medicamentosas | Alta | Patcheado — `docs/protocolos/patch_interacoes_medicamentosas.md` |
+| 2 | Seção 8 Tratamento da ILTB | Alta | Mitigado — conteúdo em `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
+| 3 | Seção 6.1 Reações Adversas | Média | Mitigado — piridoxina em `patch_interacoes.md` + `recomendacoes.md` |
 
 ### Conclusão
 

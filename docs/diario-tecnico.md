@@ -1,18 +1,8 @@
-# Diário Técnico — Chatbot ILTB
+# Diário técnico do Chatbot ILTB
 
-> Registro cronológico das decisões de engenharia, experimentos, erros e aprendizados ao longo do desenvolvimento. Destinado ao TCC.
+Registro cronológico das decisões de engenharia, dos experimentos e dos erros ao longo do desenvolvimento. Serve de matéria-prima para o TCC.
 
----
-
-## Convenções
-
-| Ícone | Significado |
-|---|---|
-| ✅ | Funcionou — decisão mantida |
-| ❌ | Não funcionou — descartado ou substituído |
-| ⚠️ | Funciona parcialmente / tem ressalva |
-| 🔄 | Em andamento |
-| 📌 | Decisão de design (trade-off explícito) |
+As tabelas de status usam quatro rótulos: OK para o que funcionou e ficou, FALHOU para o que foi descartado ou substituído, PARCIAL para o que funciona com ressalva, e EM ANDAMENTO. Onde aparece "Decisão de design" é um trade-off que escolhi de propósito e cujo motivo está escrito logo em seguida.
 
 ---
 
@@ -26,7 +16,7 @@
 
 ### 1.1 Decisões de Tecnologia
 
-#### Embedding model: `paraphrase-multilingual-MiniLM-L12-v2` ✅
+#### Embedding model: `paraphrase-multilingual-MiniLM-L12-v2`
 
 **Motivação:** modelo multilíngue, gratuito, roda 100% local sem chave de API. ~120 MB. Produz vetores de 384 dimensões.
 
@@ -38,7 +28,7 @@
 
 ---
 
-#### Vector store: ChromaDB ✅
+#### Vector store: ChromaDB
 
 **Motivação:** embutido em processo (sem servidor separado), persiste em disco, integração nativa com sentence-transformers, gratuito e open-source.
 
@@ -51,7 +41,7 @@
 
 ---
 
-#### LLM: Groq free tier (`llama-3.3-70b-versatile`) ✅ para POC/piloto
+#### LLM: Groq free tier (`llama-3.3-70b-versatile`) para POC/piloto
 
 **Motivação:** gratuito, latência ~1 s (inferência em hardware dedicado), API compatível com OpenAI SDK.
 
@@ -64,7 +54,7 @@
 
 ---
 
-#### Chunking: por seções markdown (cabeçalhos `##`/`###`) ✅
+#### Chunking: por seções markdown (cabeçalhos `##`/`###`)
 
 **Motivação:** documentos do MS são organizados em seções numeradas (3.1, 3.2…). Chunking por tamanho fixo quebrava seções clínicas no meio, separando dose de indicação.
 
@@ -118,11 +108,11 @@
 - `pydantic-settings` para config centralizado em [config.py](../app/src/config.py)
 - Dockerfile multi-stage em [infra/Dockerfile](../infra/Dockerfile)
 
-**Decisão de design 📌:** manter POC e produção no mesmo repositório (não criar novo repo). Motivo: TCC — manter histórico completo da evolução para defesa.
+**Decisão de design :** manter POC e produção no mesmo repositório (não criar novo repo). Motivo: TCC — manter histórico completo da evolução para defesa.
 
 ---
 
-### 2.2 Extração de PDF com Docling ✅
+### 2.2 Extração de PDF com Docling
 
 **Motivação:** ao trabalhar com os PDFs reais do MS, o PyMuPDF falhou em documentos com layout de múltiplas colunas (ver seção 2.3). Docling (IBM, open-source) converte PDF → Markdown estruturado, preservando hierarquia de títulos e tabelas.
 
@@ -139,7 +129,7 @@ return result.document.export_to_markdown()
 - LlamaParse: pago ($3/1.000 páginas), envia o PDF para servidor externo — risco de LGPD mesmo com documentos públicos
 - Docling: gratuito, 100% local, modelos ONNX otimizados, output Markdown compatível com chunker existente
 
-#### ⚠️ Problema encontrado: `std::bad_alloc` em páginas com imagens grandes
+#### Problema encontrado: `std::bad_alloc` em páginas com imagens grandes
 
 **Sintoma:** durante o ingest dos 6 PDFs do MS, Docling logou centenas de linhas:
 ```
@@ -169,7 +159,7 @@ Query: "quais são as indicações de tratamento da ILTB?"
 
 ### 2.3 O que NÃO funcionou ao trabalhar com os PDFs reais
 
-#### ❌ Extração de PDF com PyMuPDF (`fitz`)
+#### Extração de PDF com PyMuPDF (`fitz`)
 
 **Contexto:** ao receber os 6 PDFs reais do MS e tentar integrá-los ao pipeline, a primeira tentativa foi usar PyMuPDF — biblioteca mais comum para extração de texto de PDF em Python.
 
@@ -188,7 +178,7 @@ Query: "quais são as indicações de tratamento da ILTB?"
 
 ---
 
-#### ❌ Chunking por overlap fixo com LangChain `RecursiveCharacterTextSplitter`
+#### Chunking por overlap fixo com LangChain `RecursiveCharacterTextSplitter`
 
 **Contexto:** ao adaptar o pipeline para os PDFs reais, foi avaliado usar LangChain como alternativa ao chunker customizado, pelo ecossistema mais amplo.
 
@@ -210,11 +200,11 @@ app/src/rag/ingestion/
 └── pdf_extractor.py  # Docling: PDF → Markdown
 ```
 
-**Decisão de design 📌:** separar `pdf_extractor` de `indexer`. Motivo: permite testar extração independentemente, e facilita substituição do extrator (ex.: trocar Docling por outra lib) sem tocar no indexer.
+**Decisão de design :** separar `pdf_extractor` de `indexer`. Motivo: permite testar extração independentemente, e facilita substituição do extrator (ex.: trocar Docling por outra lib) sem tocar no indexer.
 
 ---
 
-### 2.5 Revisão de Código e Correções Técnicas ✅
+### 2.5 Revisão de Código e Correções Técnicas
 
 **Objetivo:** Corrigir anti-padrões e gaps identificados em revisão de engenharia antes de avançar para avaliação RAGAS e deploy.
 
@@ -222,7 +212,7 @@ app/src/rag/ingestion/
 
 ---
 
-#### 2.5.1 Centralização do Embedding Model ✅
+#### 2.5.1 Centralização do Embedding Model
 
 **Problema:** `indexer.py` e `retriever.py` instanciavam `SentenceTransformerEmbeddingFunction` separadamente, carregando o modelo de ~120 MB duas vezes na memória (~240 MB total). Na VPS CX22 com 4 GB de RAM, esse desperdício é crítico.
 
@@ -240,7 +230,7 @@ Ambos `indexer.py` e `retriever.py` agora importam de `app.src.rag.embeddings`. 
 
 ---
 
-#### 2.5.2 Filtro por Score Threshold no Retriever ✅
+#### 2.5.2 Filtro por Score Threshold no Retriever
 
 **Problema:** `config.py` definia `retriever_score_threshold = 0.50`, mas nenhum código filtrava chunks abaixo desse valor. Se o retriever retornasse 4 chunks com scores de 0.30, todos iam para o LLM — que poderia gerar respostas a partir de contexto irrelevante. Em contexto clínico, isso é perigoso.
 
@@ -258,11 +248,11 @@ _FALLBACK_ANSWER = (
 )
 ```
 
-**Decisão de design 📌:** retornar 200 com fallback em vez de 404. Motivo: a API funcionou corretamente, apenas não encontrou contexto relevante — não é um erro de recurso inexistente. O 404 anterior confundia clientes HTTP que tratam 4xx como erro.
+**Decisão de design :** retornar 200 com fallback em vez de 404. Motivo: a API funcionou corretamente, apenas não encontrou contexto relevante — não é um erro de recurso inexistente. O 404 anterior confundia clientes HTTP que tratam 4xx como erro.
 
 ---
 
-#### 2.5.3 Remoção de `chunk_overlap` do Config de Produção ✅
+#### 2.5.3 Remoção de `chunk_overlap` do Config de Produção
 
 **Problema:** `config.py` de produção continha `chunk_overlap = 100`, herdado da POC, mas o chunker semântico (`split_by_sections`) não usa overlap. Parâmetro morto que poderia confundir quem lesse o código.
 
@@ -270,7 +260,7 @@ _FALLBACK_ANSWER = (
 
 ---
 
-#### 2.5.4 Client LLM Singleton ✅
+#### 2.5.4 Client LLM Singleton
 
 **Problema:** `client.py` instanciava `AsyncOpenAI` a cada chamada a `generate()`. Embora o impacto em performance fosse pequeno (o objeto é leve), era um anti-padrão que poderia causar vazamento de conexões HTTP sob carga.
 
@@ -290,7 +280,7 @@ def _get_client() -> AsyncOpenAI:
 
 ---
 
-#### 2.5.5 Try/Except no Docling `pdf_extractor.py` ✅
+#### 2.5.5 Try/Except no Docling `pdf_extractor.py`
 
 **Problema:** `extract_markdown()` não tratava exceções. Se um PDF falhasse (ex.: `std::bad_alloc`), o pipeline inteiro parava.
 
@@ -307,7 +297,7 @@ def extract_markdown(pdf_path: Path) -> str:
 
 ---
 
-#### 2.5.6 Remoção de `session_id` do `ChatRequest` ✅
+#### 2.5.6 Remoção de `session_id` do `ChatRequest`
 
 **Problema:** `ChatRequest` tinha campo `session_id` que não era usado em nenhum lugar — código morto que dava impressão falsa de que sessões estavam implementadas.
 
@@ -315,7 +305,7 @@ def extract_markdown(pdf_path: Path) -> str:
 
 ---
 
-### 2.6 Pré-extração de PDFs para Markdown ✅
+### 2.6 Pré-extração de PDFs para Markdown
 
 **Objetivo:** eliminar dependência do Docling no container de produção e resolver o problema de RAM na VPS CX22 (4 GB).
 
@@ -323,7 +313,7 @@ def extract_markdown(pdf_path: Path) -> str:
 
 ---
 
-#### 2.6.1 Script `extract_pdfs.py` ✅
+#### 2.6.1 Script `extract_pdfs.py`
 
 **Implementação:** criado `app/scripts/extract_pdfs.py` que:
 - Itera sobre todos os `.pdf` em `docs/protocolos/`
@@ -352,7 +342,7 @@ python -m app.scripts.extract_pdfs [--force]
 
 ---
 
-#### 2.6.3 Atualização do `indexer.py` — `_resolve_files()` ✅
+#### 2.6.3 Atualização do `indexer.py` — `_resolve_files()`
 
 **Problema:** se tanto o `.pdf` quanto o `.md` de mesmo nome estivessem na pasta, o indexer processaria ambos — duplicando chunks.
 
@@ -375,7 +365,7 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 ---
 
-### 2.7 Pipeline de Avaliação RAGAS 🔄
+### 2.7 Pipeline de Avaliação RAGAS
 
 **Objetivo:** Implementar avaliação automatizada do pipeline RAG usando o framework RAGAS, conforme exigido pelos objetivos 1 e 2 do TCC (metodologia DSRM). Métricas-alvo: Faithfulness ≥ 0.80, Context Precision ≥ 0.75.
 
@@ -383,7 +373,7 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 ---
 
-#### 2.7.1 Test Set — 40 Perguntas ✅
+#### 2.7.1 Test Set — 40 Perguntas
 
 **Implementação:** `eval/test_set.json` com 40 perguntas divididas em 8 categorias:
 
@@ -400,11 +390,11 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 **Ground truths:** extraídos literalmente dos `.md` gerados pelos PDFs reais do MS. As 4 perguntas `fora_do_escopo` têm `ground_truth: null` e são excluídas do RAGAS — servem apenas para verificar se o fallback funciona.
 
-**Decisão de design 📌:** ground truths são extração do texto dos documentos, não validação clínica independente. O test set deve ser revisado por enfermeira especialista em TB antes de ser usado como gate definitivo na monografia.
+**Decisão de design :** ground truths são extração do texto dos documentos, não validação clínica independente. O test set deve ser revisado por enfermeira especialista em TB antes de ser usado como gate definitivo na monografia.
 
 ---
 
-#### 2.7.2 Script `run_ragas.py` ✅
+#### 2.7.2 Script `run_ragas.py`
 
 **Implementação:** `eval/run_ragas.py` — pipeline completo:
 1. Carrega test set, separa in-scope (36) e fora do escopo (4)
@@ -429,7 +419,7 @@ def _resolve_files(folder: Path) -> list[Path]:
 
 ---
 
-#### 2.7.3 Execuções — Sequência de Bugs e Status ⚠️
+#### 2.7.3 Execuções — Sequência de Bugs e Status
 
 **Execução 1 — pipeline RAG:** rodou com sucesso para as 36 perguntas in-scope. `ragas_detailed.json` salvo com respostas, contextos e ground truths. RAGAS completou **152/152 steps**, mas travou em `_print_summary()` com `AttributeError: 'EvaluationResult' object has no attribute 'get'` — `ragas_scores.json` não salvo.
 
@@ -469,7 +459,7 @@ context_recall         nan
 
 **Fix 5–6:** `request_timeout=120` no ChatOpenAI (não resolveu — o timeout do RAGAS executor é independente). Depois: `RunConfig(max_workers=4, timeout=180)` (melhorou timeouts mas TPM continuou problemático).
 
-**Execução 7 — `--scores-only --max-questions 12` (commit `503468a`) ✅:**
+**Execução 7, `--scores-only --max-questions 12` (commit `503468a`), OK:**
 - Adicionada flag `--max-questions N` para limitar o subconjunto avaliado
 - `RunConfig(max_workers=1, timeout=180)`: processamento sequencial, ~20s/job, bem abaixo do TPM
 - 48/48 jobs completaram sem rate limit nem timeout
@@ -493,7 +483,7 @@ answer_relevancy       N/A    (n > 1 bloqueia metric — 0/12 amostras)
 
 ---
 
-#### 2.7.4 Bugs Encontrados na Instalação e Execução do RAGAS ❌
+#### 2.7.4 Bugs Encontrados na Instalação e Execução do RAGAS
 
 ##### `scikit-network` exige Visual C++ Build Tools no Windows
 
@@ -507,7 +497,7 @@ answer_relevancy       N/A    (n > 1 bloqueia metric — 0/12 amostras)
 
 ---
 
-##### RAGAS tenta usar embeddings OpenAI por padrão ❌
+##### RAGAS tenta usar embeddings OpenAI por padrão
 
 **Sintoma:**
 ```
@@ -531,7 +521,7 @@ result = evaluate(dataset=dataset, metrics=[...], llm=evaluator_llm, embeddings=
 
 ---
 
-##### Groq não suporta `n > 1` nas completions ⚠️ (não-fatal)
+##### Groq não suporta `n > 1` nas completions (não-fatal)
 
 **Sintoma:**
 ```
@@ -546,7 +536,7 @@ UserWarning: LLM returned 1 generations instead of requested 3. Proceeding with 
 
 ---
 
-##### `EvaluationResult` não tem método `.get()` ❌
+##### `EvaluationResult` não tem método `.get()`
 
 **Sintoma:**
 ```
@@ -561,9 +551,9 @@ AttributeError: 'EvaluationResult' object has no attribute 'get'
 
 ---
 
-#### 2.7.5 Bugs Adicionais Descobertos nas Execuções 2–4 ❌
+#### 2.7.5 Bugs Adicionais Descobertos nas Execuções 2–4
 
-##### `result["metric"]` retorna lista, não float ❌
+##### `result["metric"]` retorna lista, não float
 
 **Sintoma:**
 ```
@@ -581,7 +571,7 @@ if isinstance(val, list):
 
 ---
 
-##### `float('nan')` em jobs falhados não é filtrado por `v is not None` ❌
+##### `float('nan')` em jobs falhados não é filtrado por `v is not None`
 
 **Sintoma:** todos os scores exibidos como `nan` mesmo após fix da lista.
 
@@ -593,7 +583,7 @@ if isinstance(val, list):
 
 ---
 
-##### `≥` causa `UnicodeEncodeError` no terminal Windows ❌
+##### `≥` causa `UnicodeEncodeError` no terminal Windows
 
 **Sintoma:**
 ```
@@ -608,7 +598,7 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u2265'
 
 ---
 
-### 2.8 Decisão — Trocar LLM Provider para Avaliação RAGAS 📌
+### 2.8 Decisão — Trocar LLM Provider para Avaliação RAGAS
 
 **Motivação:** após 7 execuções consecutivas do RAGAS, ficou claro que o Groq free tier é inadequado como LLM juiz de avaliação:
 
@@ -648,7 +638,7 @@ Enquanto não há um LLM juiz melhor disponível, a única forma de obter scores
 
 ---
 
-### 2.9 Tentativa — Google Gemini Flash como LLM Juiz ❌
+### 2.9 Tentativa — Google Gemini Flash como LLM Juiz
 
 **Motivação:** o Groq free tier tem três bloqueadores para o RAGAS (n>1 não suportado, TPM 6K, 8b subestima faithfulness). O Google Gemini Flash tem free tier com 1.500 req/dia e 1M tokens/min, e é compatível com a interface OpenAI via endpoint `/v1beta/openai`.
 
@@ -666,9 +656,9 @@ RAGAS_LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai
 
 | Modelo | Resultado | Erro |
 |---|---|---|
-| `gemini-2.0-flash` | ❌ | `RESOURCE_EXHAUSTED: limit: 0` — free tier quota = 0 |
-| `gemini-1.5-flash` | ❌ | `404 Not Found` — modelo não disponível nesta versão do endpoint |
-| `gemini-2.0-flash-lite` | ❌ | `RESOURCE_EXHAUSTED: limit: 0` — mesmo erro |
+| `gemini-2.0-flash` | FALHOU | `RESOURCE_EXHAUSTED: limit: 0` — free tier quota = 0 |
+| `gemini-1.5-flash` | FALHOU | `404 Not Found` — modelo não disponível nesta versão do endpoint |
+| `gemini-2.0-flash-lite` | FALHOU | `RESOURCE_EXHAUSTED: limit: 0` — mesmo erro |
 
 **Erro completo:**
 ```
@@ -692,7 +682,7 @@ A chave do AI Studio funcionou na API nativa (`gemini-flash-latest` → `gemini-
 |---|---|---|---|---|
 | `gemini-2.0-flash` | — | **0** | — | quota zero na conta |
 | `gemini-2.0-flash-lite` | — | **0** | — | quota zero na conta |
-| `gemini-flash-latest` (`gemini-3-flash-preview`) | 5/min | **20/dia** | ❌ | 20 req/dia → apenas ~1,5 perguntas avaliadas |
+| `gemini-flash-latest` (`gemini-3-flash-preview`) | 5/min | **20/dia** | FALHOU | 20 req/dia → apenas ~1,5 perguntas avaliadas |
 
 **Diagnóstico final:** `gemini-3-flash` é um modelo preview com limites extremamente restritivos (20 req/dia). Para 38 perguntas × 4 métricas = 152 jobs, seriam necessários **8 dias** de quota acumulada. Inviável.
 
@@ -712,7 +702,7 @@ RAGAS_LLM_BASE_URL=   # vazio = usa endpoint padrão OpenAI
 
 ---
 
-### 2.10 Avaliação Definitiva — gpt-4o-mini como LLM Juiz ✅
+### 2.10 Avaliação Definitiva — gpt-4o-mini como LLM Juiz
 
 **Data:** 2026-03-21
 
@@ -752,10 +742,10 @@ context_recall         0.382                            (38/38 amostras)
 
 | Métrica | Score | Interpretação |
 |---|---|---|
-| `context_recall` 0.382 | ⚠️ baixo | Retriever cobre apenas 38% das informações do ground truth. Com top_k=4 e chunks grandes, documentos com informação distribuída em múltiplas seções têm recall baixo. |
-| `faithfulness` 0.375 | ⚠️ baixo | Só 37.5% das afirmações da resposta sustentadas pelos chunks. Correlacionado com o recall baixo — se o contexto não tem a informação, o LLM pode complementar com conhecimento interno. |
-| `context_precision` 0.548 | ⚠️ moderado | 54.8% dos chunks recuperados são relevantes. Sem filtro por relevância além do threshold, noise é inevitável para algumas categorias. |
-| `answer_relevancy` 0.310 | ❓ suspeito | Métrica projetada para inglês — gpt-4o-mini pode gerar questões sintéticas em inglês ao avaliar respostas em português, causando similaridade cossenoidal baixa no modelo multilíngue. Valor provavelmente subestimado por limitação metodológica. |
+| `context_recall` 0.382 | baixo | Retriever cobre apenas 38% das informações do ground truth. Com top_k=4 e chunks grandes, documentos com informação distribuída em múltiplas seções têm recall baixo. |
+| `faithfulness` 0.375 | baixo | Só 37.5% das afirmações da resposta sustentadas pelos chunks. Correlacionado com o recall baixo — se o contexto não tem a informação, o LLM pode complementar com conhecimento interno. |
+| `context_precision` 0.548 | moderado | 54.8% dos chunks recuperados são relevantes. Sem filtro por relevância além do threshold, noise é inevitável para algumas categorias. |
+| `answer_relevancy` 0.310 | suspeito | Métrica projetada para inglês — gpt-4o-mini pode gerar questões sintéticas em inglês ao avaliar respostas em português, causando similaridade cossenoidal baixa no modelo multilíngue. Valor provavelmente subestimado por limitação metodológica. |
 
 **Hipóteses para scores baixos:**
 
@@ -775,7 +765,7 @@ context_recall         0.382                            (38/38 amostras)
 
 ---
 
-### 2.11 Experimento — Contextual Chunking ❌ Descartado
+### 2.11 Experimento — Contextual Chunking Descartado
 
 **Data:** 2026-03-21
 
@@ -816,7 +806,7 @@ Modelos como `text-embedding-3-large` (OpenAI) têm 3072 dimensões e são trein
 
 ---
 
-### 2.12 Investigação dos Ground Truths + Bloqueador Groq TPM ⚠️
+### 2.12 Investigação dos Ground Truths + Bloqueador Groq TPM
 
 **Data:** 2026-03-21
 
@@ -856,7 +846,7 @@ Após confirmar que Groq estava ativo (teste manual bem-sucedido), o pipeline co
 
 ---
 
-### 2.13 Patch Manual — Interações Medicamentosas + Limite TPD do Groq ⚠️
+### 2.13 Patch Manual — Interações Medicamentosas + Limite TPD do Groq
 
 **Data:** 2026-03-21
 
@@ -892,8 +882,8 @@ Confirmado rodando Docling novamente: mesmo erro, mesmas páginas afetadas.
 
 | Chamada | Status | Causa |
 |---|---|---|
-| ET-01, ET-02, ET-03, ET-05 | ✅ Sucesso | TPD ainda disponível |
-| ET-04 e demais (34/38) | ❌ 429 TPD | Limite diário de 100K tokens esgotado por execuções anteriores |
+| ET-01, ET-02, ET-03, ET-05 | Sucesso | TPD ainda disponível |
+| ET-04 e demais (34/38) | 429 TPD | Limite diário de 100K tokens esgotado por execuções anteriores |
 
 Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 1159"`. O orçamento diário havia sido consumido pelas execuções anteriores (2s sleep run + re-runs do dia). Os scores calculados sobre 4/38 respostas válidas (faithfulness 0.086, etc.) **não são representativos** — `ragas_scores.json` restaurado para os valores válidos da avaliação com gpt-4o-mini.
 
@@ -901,10 +891,10 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 | Componente | Status |
 |---|---|
-| `patch_interacoes_medicamentosas.md` | ✅ Criado e indexado |
-| ChromaDB re-indexado (928 chunks) | ✅ |
-| IM-03 ground truth corrigido | ✅ |
-| `SLEEP_BETWEEN_CALLS = 15s` | ✅ |
+| `patch_interacoes_medicamentosas.md` | Criado e indexado |
+| ChromaDB re-indexado (928 chunks) | OK |
+| IM-03 ground truth corrigido | OK |
+| `SLEEP_BETWEEN_CALLS = 15s` | OK |
 | `ragas_scores.json` | ⏳ Mantido nos valores válidos anteriores até re-execução |
 | Re-execução completa | ⏳ Aguardando reset do TPD do Groq (~24h) |
 
@@ -915,7 +905,7 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 ---
 
-### 2.14 Auditoria Proativa de Ingestão e Governança de Dados ✅
+### 2.14 Auditoria Proativa de Ingestão e Governança de Dados
 
 **Data:** 2026-03-21
 
@@ -935,33 +925,33 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 | Região do .md | Conteúdo | Status |
 |---|---|---|
-| Posições 0–50k | TOC (sumário em tabela markdown) | ✅ Completo |
-| Posições 50k–120k | Parte I: Epidemiologia | ✅ Completo |
-| Posições 120k–193k | Parte II: Diagnóstico | ✅ Completo |
-| Posições 193k–210k | Parte III: somente seções 4.4.2–4.4.5 (Hepatopatias, Nefropatias, Diabetes, PVHIV) | ⚠️ Parcial |
-| Posições 210k–289k | Parte IV–V: Estratégias Programáticas + Bases Organizacionais | ✅ Completo |
-| Posições 289k–295k | Anexos (fichas SINAN, TDO) | ✅ Completo |
+| Posições 0–50k | TOC (sumário em tabela markdown) | Completo |
+| Posições 50k–120k | Parte I: Epidemiologia | Completo |
+| Posições 120k–193k | Parte II: Diagnóstico | Completo |
+| Posições 193k–210k | Parte III: somente seções 4.4.2–4.4.5 (Hepatopatias, Nefropatias, Diabetes, PVHIV) | Parcial |
+| Posições 210k–289k | Parte IV–V: Estratégias Programáticas + Bases Organizacionais | Completo |
+| Posições 289k–295k | Anexos (fichas SINAN, TDO) | Completo |
 
 **Seções ausentes do corpo do .md (confirmado por busca de termos-chave):**
 
 | Seção do PDF | Páginas PDF | Status no .md | Relevância para ILTB | Mitigação |
 |---|---|---|---|---|
-| Parte III, Seção 1–4.3: Introdução, Bases Farmacológicas, Escolha do Esquema, Esquema Básico (RHZE) | 97–111 | ❌ AUSENTE | Baixa (TB ativa, fora do escopo) | — |
-| Parte III, 4.4.1 Gestação (TB ativa) | 111–112 | ❌ AUSENTE | Baixa (TB ativa) | PE questions covered by `recomendacoes-para-o-controle-da-tuberculose.md` |
-| Parte III, Seção 5: Seguimento do Tratamento (TB ativa) | 122–126 | ❌ AUSENTE | Baixa (TB ativa) | — |
-| Parte III, 6.1 Reações Adversas ao Esquema Básico | 127–129 | ❌ AUSENTE | **Média** (EA questions) | piridoxina/neuropatia presente em `recomendacoes.md` + `patch_interacoes.md` |
-| Parte III, 6.2 Reações Adversas com ARV | 135–136 | ❌ AUSENTE | Baixa | Referências parciais presentes |
-| **Parte III, 6.3 Interações Medicamentosas** | **137–141** | **✅ PATCHEADO** | **Alta** | `patch_interacoes_medicamentosas.md` |
+| Parte III, Seção 1–4.3: Introdução, Bases Farmacológicas, Escolha do Esquema, Esquema Básico (RHZE) | 97–111 | AUSENTE | Baixa (TB ativa, fora do escopo) | — |
+| Parte III, 4.4.1 Gestação (TB ativa) | 111–112 | AUSENTE | Baixa (TB ativa) | PE questions covered by `recomendacoes-para-o-controle-da-tuberculose.md` |
+| Parte III, Seção 5: Seguimento do Tratamento (TB ativa) | 122–126 | AUSENTE | Baixa (TB ativa) | — |
+| Parte III, 6.1 Reações Adversas ao Esquema Básico | 127–129 | AUSENTE | **Média** (EA questions) | piridoxina/neuropatia presente em `recomendacoes.md` + `patch_interacoes.md` |
+| Parte III, 6.2 Reações Adversas com ARV | 135–136 | AUSENTE | Baixa | Referências parciais presentes |
+| **Parte III, 6.3 Interações Medicamentosas** | **137–141** | **PATCHEADO** | **Alta** | `patch_interacoes_medicamentosas.md` |
 | Parte III, Seção 7: TB Drogarresistente | 142–161 | Parcial | Muito baixa (fora do escopo) | — |
-| **Parte III, Seção 8: Tratamento da ILTB** | **163–169** | **❌ AUSENTE** | **Alta** | `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados (ver abaixo) |
+| **Parte III, Seção 8: Tratamento da ILTB** | **163–169** | **AUSENTE** | **Alta** | `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados (ver abaixo) |
 
 **Nota sobre a Seção 8 (ILTB):** a ausência é inesperada — as páginas 163–169 estão antes do limiar de `std::bad_alloc` identificado (página 319+). A causa provável é que o Docling falhou em partes intermediárias do documento (possível página com figura complexa) e pulou essas seções no modo de fallback.
 
 **Verificação de qualidade — tabelas nas seções presentes:**
-- **Seção 4.4.2 Hepatopatias (pos 193k):** Quadro 24 (condutas frente a hepatopatias) — tabela markdown ✅, TGO/TGP ≥ 5× LSN presente ✅
-- **Seção 4.4.3 Nefropatias:** Quadro 25 (cálculo clearance) — presente ✅
-- **Seção 4.4.5 PVHIV:** Quadro 26 (rifabutina com IP) — presente ✅
-- **Seção 8.1.2 Escore pediátrico:** Quadro 11 — presente ✅
+- **Seção 4.4.2 Hepatopatias (pos 193k):** Quadro 24 (condutas frente a hepatopatias) — tabela markdown presente, TGO/TGP ≥ 5× LSN presente
+- **Seção 4.4.3 Nefropatias:** Quadro 25 (cálculo clearance) — presente
+- **Seção 4.4.5 PVHIV:** Quadro 26 (rifabutina com IP) — presente
+- **Seção 8.1.2 Escore pediátrico:** Quadro 11 — presente
 
 ---
 
@@ -971,18 +961,18 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 | Conteúdo | Presente |
 |---|---|
-| Isoniazida dose (5–10 mg/kg, máx 300mg/dia) | ✅ |
-| piridoxina 50 mg/dia para neuropatia | ✅ |
-| neuropatia periférica | ✅ |
-| gestantes + ILTB | ✅ (7 ocorrências) |
-| PVHIV / CD4 / antirretroviral | ✅ (12 ocorrências) |
-| PPD / IGRA | ✅ (9 ocorrências) |
-| imunossupressores / anti-TNF | ✅ (3 ocorrências) |
-| suspensão do tratamento | ✅ (5 ocorrências) |
-| hepatotoxicidade | ✅ |
-| 3HP (rifapentina) | ✅ |
-| 6H / 9H | ❌ (presentes em `af_protocolo_vigilancia_iltb` e `GEDIIB`) |
-| 26 Quadros clínicos | ✅ |
+| Isoniazida dose (5–10 mg/kg, máx 300mg/dia) | OK |
+| piridoxina 50 mg/dia para neuropatia | OK |
+| neuropatia periférica | OK |
+| gestantes + ILTB | (7 ocorrências) |
+| PVHIV / CD4 / antirretroviral | (12 ocorrências) |
+| PPD / IGRA | (9 ocorrências) |
+| imunossupressores / anti-TNF | (3 ocorrências) |
+| suspensão do tratamento | (5 ocorrências) |
+| hepatotoxicidade | OK |
+| 3HP (rifapentina) | OK |
+| 6H / 9H | (presentes em `af_protocolo_vigilancia_iltb` e `GEDIIB`) |
+| 26 Quadros clínicos | OK |
 
 **Conclusão:** `recomendacoes-para-o-controle-da-tuberculose.md` cobre a grande maioria do conteúdo clínico necessário para o escopo ILTB, incluindo os itens críticos ausentes do Manual .md. A ausência de "6H/9H" é compensada por `af_protocolo_vigilancia_iltb_2ed_9jun22_ok_web.md` e `GEDIIB_TratamentoTuberculose.md`.
 
@@ -1009,13 +999,13 @@ Mensagem de erro: `"tokens per day (TPD): Limit 100000, Used 99184, Requested 11
 
 | # | Gap | Criticidade | Ação |
 |---|---|---|---|
-| 1 | Seção 6.3 Interações Medicamentosas (Manual) | Alta | ✅ **Já patcheado** em `patch_interacoes_medicamentosas.md` |
-| 2 | Seção 8 Tratamento ILTB (Manual) | Alta | ✅ **Mitigado** por `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
-| 3 | Seção 6.1 Reações Adversas (Manual) | Média | ✅ **Mitigado** por piridoxina no `patch_interacoes.md` + `recomendacoes.md` |
+| 1 | Seção 6.3 Interações Medicamentosas (Manual) | Alta | **Já patcheado** em `patch_interacoes_medicamentosas.md` |
+| 2 | Seção 8 Tratamento ILTB (Manual) | Alta | **Mitigado** por `recomendacoes-para-o-controle-da-tuberculose.md` + docs especializados |
+| 3 | Seção 6.1 Reações Adversas (Manual) | Média | **Mitigado** por piridoxina no `patch_interacoes.md` + `recomendacoes.md` |
 
 **Conclusão:** nenhum patch adicional necessário. A base de dados está suficientemente completa para o escopo ILTB. As questões do test set (EA, MO, PE, IT, ET, IM, DI) têm conteúdo de suporte nas fontes indexadas.
 
-**Decisão de design 📌:** A validação de integridade da base de dados é uma etapa obrigatória do pipeline de ingestão. Em contexto clínico, dado ausente é dado perigoso — o sistema responde com confiança usando informação incompleta. A extração automatizada (Docling) deve ser sempre seguida de auditoria contra o sumário do documento fonte.
+**Decisão de design :** A validação de integridade da base de dados é uma etapa obrigatória do pipeline de ingestão. Em contexto clínico, dado ausente é dado perigoso — o sistema responde com confiança usando informação incompleta. A extração automatizada (Docling) deve ser sempre seguida de auditoria contra o sumário do documento fonte.
 
 ---
 
@@ -1038,7 +1028,7 @@ A auditoria automatizada (cruzamento TOC × cabeçalhos) verificou completude ma
 | 9 | Artefatos de OCR (`Î`, `T abela`, `HIV ,`, `ajudálos`) | Poluição visual na resposta ao usuário | ~50 ocorrências |
 | 10 | Notas de rodapé explicativas órfãs | Informação normativa separada do contexto | ~5 ocorrências |
 
-**Decisão 📌 — Pipeline de sanitização em duas camadas:**
+**Decisão — Pipeline de sanitização em duas camadas:**
 
 Camada 1 (automática): função `sanitize_markdown()` em `app/scripts/extract_pdfs.py` aplica regex para artefatos de OCR (`Î`, `T abela`, bullets duplos, espaços de layout). Executada automaticamente a cada extração.
 
@@ -1251,7 +1241,7 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 2. Avaliar `top_k=5` ou `top_k=6` para PE-06/DI-01/IT-05 (contexto insuficiente)
 3. Re-avaliação RAGAS pós-prompt-engineering para fechar o gap de `faithfulness`
 
-### 2.19 Prompt Engineering para Faithfulness ❌ (teto do Llama 3.3 70B — v1 permanece melhor)
+### 2.19 Prompt Engineering para Faithfulness (teto do Llama 3.3 70B — v1 permanece melhor)
 
 **Data:** 2026-03-26
 
@@ -1265,7 +1255,7 @@ O alto número de linhas alteradas no Manual reflete principalmente a regra #23 
 
 ---
 
-#### Prompt v2 — anti-síntese estrito + limite de 4 frases ❌
+#### Prompt v2 — anti-síntese estrito + limite de 4 frases
 
 **Hipótese:** forçar concisão eliminaria os parágrafos de síntese.
 
@@ -1340,7 +1330,7 @@ Quatro variantes de prompt testadas; nenhuma superou v1. O teto de faithfulness 
 
 ---
 
-#### Prompt v4 — few-shot (2 exemplos, sem negações) ❌ DESCONTINUADO
+#### Prompt v4 — few-shot (2 exemplos, sem negações) DESCONTINUADO
 
 **Data:** 2026-03-26/27
 
@@ -1356,9 +1346,9 @@ Quatro variantes de prompt testadas; nenhuma superou v1. O teto de faithfulness 
 - ~300 tokens extras no prompt (~15% de aumento)
 
 **Teste manual (3 perguntas):**
-- ET-01: resposta direta, citação correta ("Recomendações para o Controle da Tuberculose") ✅
-- IM-01: citação específica de fonte (patch_interacoes_medicamentosas.md), sem síntese ✅
-- DI-01: fallback parcial correto — admite lacuna sem fallback total ✅
+- ET-01: resposta direta, citação correta ("Recomendações para o Controle da Tuberculose")
+- IM-01: citação específica de fonte (patch_interacoes_medicamentosas.md), sem síntese
+- DI-01: fallback parcial correto — admite lacuna sem fallback total
 
 **RAGAS final (2026-03-27, LLM juiz: gpt-4o-mini):**
 
@@ -1386,7 +1376,7 @@ Duas tentativas inválidas por TPD: corrida de 2026-03-27T00:06Z começou com TP
 
 **Resultado:** `SYSTEM_PROMPT` revertido para `_SYSTEM_PROMPT_V1`. Prompt engineering esgotado como vetor. Próximo foco: modelo ou retrieval.
 
-### 2.20 Checkpointing no Pipeline de Avaliação RAGAS ✅
+### 2.20 Checkpointing no Pipeline de Avaliação RAGAS
 
 **Data:** 2026-03-27
 
@@ -1415,7 +1405,7 @@ Run 2 (dia seguinte): pula ET-01..ET-32 (cache hit)
 
 ---
 
-### 2.21 Sanitização Estrutural via LLM (gpt-4o-mini) ❌ Descartado
+### 2.21 Sanitização Estrutural via LLM (gpt-4o-mini) Descartado
 
 **Data:** 2026-03-26
 
@@ -1468,7 +1458,7 @@ A queda de `context_recall` em 15 pontos é o sinal mais informativo: o retrieve
 
 ---
 
-### 2.22 Teste A/B e Teto Arquitetural (LGPD vs. Performance) 🔄
+### 2.22 Teste A/B e Teto Arquitetural (LGPD vs. Performance)
 
 **Data:** 2026-03-27
 
@@ -1479,7 +1469,7 @@ A queda de `context_recall` em 15 pontos é o sinal mais informativo: o retrieve
 
 ---
 
-#### 📌 Decisão Arquitetural: Groq/Llama como LLM de Produção (LGPD)
+#### Decisão Arquitetural: Groq/Llama como LLM de Produção (LGPD)
 
 O `llama-3.3-70b-versatile` via Groq será mantido como LLM de produção no piloto.
 
@@ -1495,7 +1485,7 @@ O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos 
 
 ---
 
-#### Teste 1 — top_k=5, Groq/Llama ⚠️ PARCIAL (TPD esgotado)
+#### Teste 1 — top_k=5, Groq/Llama PARCIAL (TPD esgotado)
 
 **Hipótese:** recuperar 5 chunks em vez de 4 aumenta context_recall (especialmente PE-06, DI-01, IT-05 com contexto fragmentado) e indiretamente reduz fallbacks incorretos.
 
@@ -1521,7 +1511,7 @@ O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos 
 
 ---
 
-#### Teste 2 — A/B: gpt-4o-mini como LLM de Pipeline, top_k=5 ✅ (38/38)
+#### Teste 2 — A/B: gpt-4o-mini como LLM de Pipeline, top_k=5 (38/38)
 
 **Objetivo:** documentar o teto do pipeline RAG sem a restrição de LGPD. Referência para a monografia e para justificar eventual migração para Azure OpenAI em produção institucional.
 
@@ -1563,10 +1553,10 @@ O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos 
 |---|---|---|---|---|---|
 | baseline (pré-sanitização) | 38 | 0.375 | 0.310 | 0.548 | 0.382 |
 | v1, top_k=4, Groq (melhor completo) | 38 | **0.586** | **0.534** | 0.656 | **0.608** |
-| v1, top_k=5, Groq (PARCIAL — biased) | 10 | 0.816⚠️ | 0.756⚠️ | 0.800⚠️ | 0.767⚠️ |
+| v1, top_k=5, Groq (PARCIAL — biased) | 10 | 0.816 | 0.756 | 0.800 | 0.767 |
 | v1, top_k=5, gpt-4o-mini (A/B teto) | 38 | 0.525 | 0.524 | **0.657** | 0.583 |
 
-⚠️ = sample biased (apenas ET+MO, categorias mais fáceis)
+Os valores marcados como parciais vêm de sample enviesado: só ET e MO, que são as categorias mais fáceis.
 
 **Resultado definitivo disponível:** top_k=4, Groq/Llama, v1 permanece o melhor resultado completo (38/38).
 
@@ -1616,11 +1606,11 @@ O RAGAS penaliza: (a) citações de fontes cujos nomes exatos não aparecem nos 
 | context_recall | 0.608 | **0.646** | +0.038 |
 | answer_relevancy | 0.534 | **0.659** | +0.125 |
 
-⚠️ Run com 28/38 amostras (TPD Groq esgotou). Scores superiores parcialmente por top_k=5 e amostra sem questões EA. Melhoria confirmada mas comparação não é totalmente justa.
+Run com 28/38 amostras (TPD Groq esgotou). Scores superiores parcialmente por top_k=5 e amostra sem questões EA. Melhoria confirmada mas comparação não é totalmente justa.
 
 ---
 
-### 2.24 Reconstrução Manual do Manual do MS + Over-chunking ❌
+### 2.24 Reconstrução Manual do Manual do MS + Over-chunking
 
 **Data:** 2026-04-05
 
@@ -1665,7 +1655,7 @@ O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentado
 
 ---
 
-### 3.1 FastAPI — Rotas Assíncronas ✅
+### 3.1 FastAPI — Rotas Assíncronas
 
 **Problema identificado:** rotas originais eram `def` síncronas. Em FastAPI, `def` roda em thread pool do uvicorn — correto para funções simples. Mas ao escalar para múltiplos usuários simultâneos (5 enfermeiras + possível carga), uma requisição de RAG (ChromaDB + Groq ~2s) bloquearia threads.
 
@@ -1690,11 +1680,11 @@ O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentado
 | `/chat` | POST | Pergunta → RAG → resposta LLM + fontes com scores |
 | `/search` | POST | Busca vetorial sem geração — debug do pipeline RAG |
 
-**Decisão de design 📌 — `/search` como ferramenta de debug:** endpoint mantido mesmo em produção. Permite inspecionar quais chunks o retriever está retornando para uma query, sem custo de chamada LLM. Útil para diagnosticar respostas ruins sem precisar de logs de servidor.
+**Decisão de design — `/search` como ferramenta de debug:** endpoint mantido mesmo em produção. Permite inspecionar quais chunks o retriever está retornando para uma query, sem custo de chamada LLM. Útil para diagnosticar respostas ruins sem precisar de logs de servidor.
 
 ---
 
-### 3.3 Modo Mock ✅
+### 3.3 Modo Mock
 
 **Motivação:** permitir desenvolvimento e testes sem chave de API configurada.
 
@@ -1706,7 +1696,7 @@ O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentado
 
 ### 3.4 O que ainda falta na Fase 3
 
-#### 🔄 Session Manager (histórico de conversa)
+#### Session Manager (histórico de conversa)
 
 **Status:** placeholder em `app/src/session/manager.py`. Estrutura prevista mas não implementada.
 
@@ -1714,13 +1704,13 @@ O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentado
 
 **Plano:** implementar com `dict` em memória (piloto) → Redis (produção).
 
-#### 🔄 Webhook WhatsApp
+#### Webhook WhatsApp
 
 **Status:** não iniciado. Aguardando:
 1. Aprovação da Meta Business (conta WhatsApp Business verificada)
 2. Deploy na VPS com HTTPS (Meta exige HTTPS para webhook)
 
-**Decisão 📌 (2026-03-21):** movido para Fase 4. O webhook exige HTTPS público com certificado válido — não faz sentido desenvolver antes de ter VPS + Nginx + Certbot rodando. Testar localmente com ngrok é possível mas adiciona complexidade desnecessária para o TCC.
+**Decisão (2026-03-21):** movido para Fase 4. O webhook exige HTTPS público com certificado válido — não faz sentido desenvolver antes de ter VPS + Nginx + Certbot rodando. Testar localmente com ngrok é possível mas adiciona complexidade desnecessária para o TCC.
 
 ---
 
@@ -1730,7 +1720,7 @@ O context_recall caindo 0.200 pontos confirma: com chunks pequenos e fragmentado
 
 ---
 
-### Docker: Multi-stage Build ✅
+### Docker: Multi-stage Build
 
 **Motivação:** separar build (compilação de dependências C/C++ como chromadb, onnxruntime) do runtime. Reduz imagem final e elimina ferramentas de build do container em produção.
 
@@ -1748,7 +1738,7 @@ COPY --from=builder /venv /venv
 COPY --from=builder /model_cache /root/.cache/huggingface
 ```
 
-#### ❌ Bug crítico — modelo não copiado para runtime
+#### Bug crítico — modelo não copiado para runtime
 
 **Erro:** build original usava `pip install --prefix=/install` e copiava `/install` para runtime. O modelo de embedding era baixado para `/model_cache` no builder, mas **não havia `COPY --from=builder /model_cache`** no runtime.
 
@@ -1760,7 +1750,7 @@ COPY --from=builder /model_cache /root/.cache/huggingface
 
 ---
 
-#### ⚠️ Docker Desktop no Windows — Problema de Update
+#### Docker Desktop no Windows — Problema de Update
 
 **Situação:** Docker Desktop travou no update via GUI (instalador ficou pendurado por >30 min).
 
@@ -1781,7 +1771,7 @@ winget upgrade Docker.DockerDesktop
 
 ---
 
-### docker-compose.yml ✅
+### docker-compose.yml
 
 **Volume persistente para ChromaDB:**
 ```yaml
@@ -1803,7 +1793,7 @@ volumes:
 | Piloto | Hetzner CX22 | ~R$25/mês | 4 GB | 5 enfermeiras, baixa carga |
 | Produção | Hetzner CPX31 | ~R$130/mês | 8 GB | carga institucional |
 
-**Decisão chave 📌:** a análise financeira (v1) indicou CX22 para piloto, não CPX31. A diferença de R$105/mês é significativa para um projeto de TCC sem financiamento externo.
+**Decisão chave :** a análise financeira (v1) indicou CX22 para piloto, não CPX31. A diferença de R$105/mês é significativa para um projeto de TCC sem financiamento externo.
 
 **Limitação da CX22:** 4 GB RAM pode ser insuficiente para Docling processar PDFs grandes (ver seção 2.2). Mitigação: pré-processar PDFs localmente (implementado na seção 2.6).
 
@@ -1827,7 +1817,7 @@ volumes:
 
 ### Fase 4 (Piloto Hetzner) — próxima
 
-- [ ] **Segurança Docker + UFW**: bind de portas em `127.0.0.1` no docker-compose.yml — Docker ignora UFW via iptables direto ✅ corrigido em `infra/docker-compose.yml`
+- [ ] **Segurança Docker + UFW**: bind de portas em `127.0.0.1` no docker-compose.yml — Docker ignora UFW via iptables direto corrigido em `infra/docker-compose.yml`
 - [ ] **Provisionar CX22**: criar conta Hetzner, provisionar servidor Ubuntu 22.04
 - [ ] **UFW firewall**: liberar apenas 22 (SSH), 80 (HTTP→HTTPS redirect), 443 (HTTPS)
 - [ ] **Nginx + Certbot**: HTTPS obrigatório para webhook Meta
@@ -1914,7 +1904,7 @@ volumes:
 
 ---
 
-### 2.25 RAGAS Gate Pós-Reconstrução Manual — MIN_CHUNK_SIZE Fix ⚠️
+### 2.25 RAGAS Gate Pós-Reconstrução Manual — MIN_CHUNK_SIZE Fix
 
 **Data:** 2026-04-06
 **Contexto:** Após reconstrução manual do Manual do MS (seção 2.24), o índice havia regredido para 1.444 chunks com context_precision 0.597 e faithfulness 0.461. Iniciou-se missão MLOps para diagnosticar e corrigir o over-chunking.
@@ -1944,9 +1934,9 @@ ChromaDB deletado fisicamente (`chroma_db/`), re-ingestão executada com `python
 
 | Métrica | Score | Alvo | Status |
 |---|---|---|---|
-| faithfulness | **0.496** | ≥ 0.80 | ❌ FAIL |
+| faithfulness | **0.496** | ≥ 0.80 | FAIL |
 | answer_relevancy | **0.421** | — | — |
-| context_precision | **0.640** | ≥ 0.75 | ❌ FAIL |
+| context_precision | **0.640** | ≥ 0.75 | FAIL |
 | context_recall | **0.460** | — | — |
 
 **Comparação histórica (runs válidos, 38 questões):**
@@ -1981,7 +1971,7 @@ Decisão pendente após análise de cobertura do test set pelos documentos sem o
 
 ---
 
-### 2.26 RAGAS Gate Final — Chunker Hierárquico (898 chunks) ❌
+### 2.26 RAGAS Gate Final — Chunker Hierárquico (898 chunks)
 
 **Data:** 2026-04-06
 **Contexto:** Implementado o chunker de fronteiras hierárquicas (seção 2.25 — "Próximos Passos", opção 3). Regex expandido para `#{1,4}`, regra de flush por nível de heading, MIN_CHUNK_SIZE = 400. Re-ingestão: **898 chunks** (vs 1.442 anterior). Manual reduziu de 1.013 → 580 chunks (40% menos).
@@ -1998,9 +1988,9 @@ Decisão pendente após análise de cobertura do test set pelos documentos sem o
 
 | Métrica | Score | Alvo | Status |
 |---|---|---|---|
-| faithfulness | **0.515** | ≥ 0.80 | ❌ FAIL |
+| faithfulness | **0.515** | ≥ 0.80 | FAIL |
 | answer_relevancy | **0.381** | — | — |
-| context_precision | **0.735** | ≥ 0.75 | ❌ FAIL |
+| context_precision | **0.735** | ≥ 0.75 | FAIL |
 | context_recall | **0.520** | — | — |
 
 #### Histórico de Runs Válidos (38 questões)
@@ -2036,7 +2026,7 @@ Decisão pendente com o orientador.
 
 ---
 
-### 2.27 Encerramento da Fase 2 — O Limite do Instrumento RAGAS e a Transição Metodológica 📌
+### 2.27 Encerramento da Fase 2 — O Limite do Instrumento RAGAS e a Transição Metodológica
 
 **Data:** 2026-04-07
 
@@ -2063,7 +2053,7 @@ Em domínios de alta responsabilidade, como o suporte à decisão clínica em Tu
 
 ---
 
-### 2.27 Estratégias de Chunking — Revisão Bibliográfica e Trabalho Futuro 🔄
+### 2.27 Estratégias de Chunking — Revisão Bibliográfica e Trabalho Futuro
 
 **Data:** 2026-04-17
 
@@ -2094,7 +2084,7 @@ Em domínios de alta responsabilidade, como o suporte à decisão clínica em Tu
 
 ## FASE 4 — Piloto
 
-### 4.1 Interface Web de Demo + Túnel ngrok ✅
+### 4.1 Interface Web de Demo + Túnel ngrok
 
 **Data:** 2026-04-15
 
@@ -2143,7 +2133,7 @@ ngrok http 8000
 
 ---
 
-## MARCO — Reorientação do Projeto (2026-05-15) 📌
+## MARCO — Reorientação do Projeto (2026-05-15)
 
 **Data:** 2026-05-15
 
@@ -2175,7 +2165,7 @@ Com o escopo reduzido e mais claro, o momento é oportuno para revisitar cada de
 
 ---
 
-## PENDÊNCIA — Revisão das Decisões D1–D13 via NotebookLM 🔄
+## PENDÊNCIA — Revisão das Decisões D1–D13 via NotebookLM
 
 **Data:** 2026-05-15
 **Status:** perguntas redigidas — pronto para execução no NotebookLM
@@ -2314,7 +2304,7 @@ Com o escopo reduzido e mais claro, o momento é oportuno para revisitar cada de
 ## 2.29 — Diagnóstico: Estado da Aplicação e da Bibliografia (pós-lote 1)
 
 **Data:** 2026-05-15
-**Contexto:** após escrever 4 seções do Cap. 2 da monografia (Embeddings, Avaliação RAGAS, LGPD, Adoção IA) com base no lote 1 do NotebookLM, fiz autocrítica do projeto. O usuário decidiu: (a) há tempo de melhorar a aplicação; (b) para bibliografia, usar papersflow MCP (já adicionado em `~/.claude/mcp.json`, ativo após restart) + consultas dirigidas ao NotebookLM para recuperar metadados dos placeholders.
+**Contexto:** depois de escrever 4 seções do Cap. 2 (Embeddings, Avaliação RAGAS, LGPD, Adoção IA) em cima do lote 1 do NotebookLM, parei para fazer autocrítica. Duas conclusões: ainda há prazo para melhorar a aplicação em vez de só documentar limitação, e a bibliografia sai do papersflow somado a consultas dirigidas ao NotebookLM para recuperar os metadados dos placeholders.
 
 ### Aplicação — o que está sólido
 
@@ -2339,20 +2329,20 @@ Com o escopo reduzido e mais claro, o momento é oportuno para revisitar cada de
 | **Sem TCLE + política de retenção zero** | POC com expert precisa de instrumento ético formalizado | MÉDIA — redigir TCLE + protocolo antes da sessão |
 | **Logging do pipeline** | Não está claro se há retenção zero conforme `privacyRAGHealthcare2025` | BAIXA — auditar antes da sessão expert |
 
-**Decisão do usuário:** há tempo de implementar as melhorias técnicas — não tratar como apenas "limitações documentadas".
+**Decisão:** dá tempo de implementar as melhorias técnicas, então não vou empurrar isso para a seção de "limitações documentadas".
 
 ### Bibliografia — cobertura por área (36 entradas)
 
 | Área | Status |
 |---|---|
-| RAG | ✅ Bom |
-| LLMs gerais + alucinação | ✅ Bom |
-| **LLMs em PT-BR** | ✅ Muito bom (`sabia2_2024`, `adaptingLLMsPortuguese2024`, `teachingLLMsBrazil2026`, `llmsMedicalExam2026`) |
-| Embeddings | ✅ Bom (mix seminal + moderno + clínico PT) |
-| **Privacidade / LGPD** | ✅ Muito bom (era gap, foi fechado: `privacyRAGHealthcare2025`, `sokPrivacyLLM2026`, `privacyEHRLLMs2025`, `lgpdSaude2023`, `lgpdEnfermagem2022`) |
-| TB / ILTB | ✅ Bom |
-| Adoção / TAM | ⚠️ **Apenas 1 ref** (`nursingTAM2024` sozinho carrega D10 inteiro) |
-| RAG biomédico (revisão) | ⚠️ Frágil: `ocaf2024` é a ref mais citada do lote 1, mas BibTeX em branco |
+| RAG | Bom |
+| LLMs gerais + alucinação | Bom |
+| **LLMs em PT-BR** | Muito bom (`sabia2_2024`, `adaptingLLMsPortuguese2024`, `teachingLLMsBrazil2026`, `llmsMedicalExam2026`) |
+| Embeddings | Bom (mix seminal + moderno + clínico PT) |
+| **Privacidade / LGPD** | Muito bom (era gap, foi fechado: `privacyRAGHealthcare2025`, `sokPrivacyLLM2026`, `privacyEHRLLMs2025`, `lgpdSaude2023`, `lgpdEnfermagem2022`) |
+| TB / ILTB | Bom |
+| Adoção / TAM | **Apenas 1 ref** (`nursingTAM2024` sozinho carrega D10 inteiro) |
+| RAG biomédico (revisão) | Frágil: `ocaf2024` é a ref mais citada do lote 1, mas BibTeX em branco |
 
 ### Placeholders críticos do `referencias.bib`
 
@@ -2367,9 +2357,9 @@ Pendência registrada — **pedir ao NotebookLM** para extrair metadados dos PDF
 | `artigo_perfil` | `ARTIGO_PerfilIncidênciaTuberculose.pdf` | Tudo (autor/título/ano/journal) |
 | `llmsMedicalExam2026` | `2026-aclanthology-llms-brazilian-medical-exam.pdf` | Chave de citação ACL Anthology, autores |
 
-### Gaps secundários (papersflow MCP)
+### Gaps secundários
 
-A serem buscados via **papersflow MCP** (`https://doxa.papersflow.ai/mcp`, ativo após restart do Claude Code):
+A buscar no papersflow (`https://doxa.papersflow.ai/mcp`):
 
 1. **GUIDE-RAG** — framework citado em D10/D12/D13; pode ser parte de `ocaf2024` ou ref separada
 2. **TruthfulQA** (Lin et al. 2022) — canônica de alucinação
@@ -2382,7 +2372,7 @@ A serem buscados via **papersflow MCP** (`https://doxa.papersflow.ai/mcp`, ativo
 
 1. **[Imediato]** Submeter ao NotebookLM consulta direcionada para metadados dos 6 placeholders críticos
 2. **[Imediato]** Atualizar `referencias.bib` com retornos
-3. **[Após restart do Claude Code]** Usar papersflow MCP para buscar refs dos gaps secundários
+3. Buscar no papersflow as refs dos gaps secundários
 4. **[Sessão futura]** Decidir entre migrar embedding (ataque à maior vulnerabilidade) ou rodar ablação Llama vs GPT-4o (ataque à segunda maior)
 
 ---
@@ -2390,7 +2380,7 @@ A serem buscados via **papersflow MCP** (`https://doxa.papersflow.ai/mcp`, ativo
 ## 2.30 — Fechamento dos Gaps Secundários da Bibliografia via papersflow MCP
 
 **Data:** 2026-05-15
-**Sessão:** continuação imediata da 2.29 após restart do Claude Code (papersflow disponível).
+**Sessão:** continuação imediata da 2.29, já com o papersflow disponível.
 
 ### Objetivo
 
@@ -2400,10 +2390,10 @@ Resolver os 4 gaps secundários listados em 2.29 (GUIDE-RAG, TruthfulQA, ChromaD
 
 | Gap | Status | Resolução | Chave BibTeX |
 |---|---|---|---|
-| **TruthfulQA** | ✅ resolvido | Lin, Hilton, Evans (2022). *TruthfulQA: Measuring How Models Mimic Human Falsehoods.* ACL 2022, pp. 3214–3252. arXiv:2109.07958. OpenAlex `W4307123345`. | `lin2022truthfulqa` |
-| **mmBERT** | ✅ resolvido | Marone, Weller, Fleshman, Yang, Lawrie (2025). *mmBERT: A Modern Multilingual Encoder with Annealed Language Learning.* arXiv:2509.06888. OpenAlex `W4415057273`. | `marone2025mmbert` |
-| **ChromaDB** | ✅ resolvido como software | Projeto open-source (`chroma-core/chroma`); não possui paper acadêmico. Citado como `@misc` apontando ao repositório oficial; versão usada no projeto: `chromadb>=1.0` ([app/requirements.txt:9](../app/requirements.txt#L9)). | `chroma2024` |
-| **GUIDE-RAG** | 🚨 não existe como publicação | Busca em OpenAlex/Semantic Scholar não retornou paper com esse nome. Hits espúrios (Risk Appraisal Guide, ORAN-GUIDE, Rationale-Guided RAG, ECoRAG). Análise das respostas do NotebookLM em D10/D12/D13 mostra que "GUIDE-RAG" aparece sempre via índices internos da ferramenta (`[7][8][9]`, `[33:985]`), sem autoria/título amarrado — provável **rótulo sintetizado pelo próprio NotebookLM** a partir de diretrizes dispersas. | — |
+| **TruthfulQA** | resolvido | Lin, Hilton, Evans (2022). *TruthfulQA: Measuring How Models Mimic Human Falsehoods.* ACL 2022, pp. 3214–3252. arXiv:2109.07958. OpenAlex `W4307123345`. | `lin2022truthfulqa` |
+| **mmBERT** | resolvido | Marone, Weller, Fleshman, Yang, Lawrie (2025). *mmBERT: A Modern Multilingual Encoder with Annealed Language Learning.* arXiv:2509.06888. OpenAlex `W4415057273`. | `marone2025mmbert` |
+| **ChromaDB** | resolvido como software | Projeto open-source (`chroma-core/chroma`); não possui paper acadêmico. Citado como `@misc` apontando ao repositório oficial; versão usada no projeto: `chromadb>=1.0` ([app/requirements.txt:9](../app/requirements.txt#L9)). | `chroma2024` |
+| **GUIDE-RAG** | não existe como publicação | Busca em OpenAlex/Semantic Scholar não retornou paper com esse nome. Hits espúrios (Risk Appraisal Guide, ORAN-GUIDE, Rationale-Guided RAG, ECoRAG). Análise das respostas do NotebookLM em D10/D12/D13 mostra que "GUIDE-RAG" aparece sempre via índices internos da ferramenta (`[7][8][9]`, `[33:985]`), sem autoria/título amarrado — provável **rótulo sintetizado pelo próprio NotebookLM** a partir de diretrizes dispersas. | — |
 
 ### Decisão sobre GUIDE-RAG
 
@@ -2439,7 +2429,7 @@ Com a bibliografia fechada e os marcadores `\aluno{}` da monografia limitados ao
 
 ## 2.31 — Ablação Llama 3.3 70B vs GPT-4o sobre o mesmo pipeline RAG
 
-> ⚠️ **RETRATAÇÃO (2026-05-16, ver 2.32):** o experimento descrito originalmente nesta seção **não comparou Llama vs GPT-4o** — foi Llama vs Llama com variância. Causa: as env vars de sistema do PowerShell (`LLM_PROVIDER=groq`, `LLM_API_KEY=gsk_...`, `LLM_MODEL=llama-3.3-70b-versatile`, `LLM_BASE_URL=https://api.groq.com/openai/v1`) têm precedência sobre o `.env` no `pydantic-settings`; portanto, editar o `.env` para `openai`/`gpt-4o` não teve efeito. O script enviou as chamadas para Groq usando Llama, mas eu li o resultado como se fosse GPT-4o. A inspeção do estilo das respostas em `_ragas_cache_gpt4o.json` (mesmo template "De acordo com o Trecho 1 — ..." do Llama, em vez do fallback do GPT-4o) confirmou o engano. A ablação **real** foi executada em 2.32 com env vars inline na linha de comando, contornando o bug. O conteúdo abaixo permanece como registro histórico do raciocínio original — **as conclusões empíricas estão erradas** (a diferença 0.515 vs 0.544 era ruído entre runs do mesmo modelo, não efeito de troca de gerador).
+> **RETRATAÇÃO (2026-05-16, ver 2.32):** o experimento descrito originalmente nesta seção **não comparou Llama vs GPT-4o** — foi Llama vs Llama com variância. Causa: as env vars de sistema do PowerShell (`LLM_PROVIDER=groq`, `LLM_API_KEY=gsk_...`, `LLM_MODEL=llama-3.3-70b-versatile`, `LLM_BASE_URL=https://api.groq.com/openai/v1`) têm precedência sobre o `.env` no `pydantic-settings`; portanto, editar o `.env` para `openai`/`gpt-4o` não teve efeito. O script enviou as chamadas para Groq usando Llama, mas eu li o resultado como se fosse GPT-4o. A inspeção do estilo das respostas em `_ragas_cache_gpt4o.json` (mesmo template "De acordo com o Trecho 1 — ..." do Llama, em vez do fallback do GPT-4o) confirmou o engano. A ablação **real** foi executada em 2.32 com env vars inline na linha de comando, contornando o bug. O conteúdo abaixo permanece como registro histórico do raciocínio original — **as conclusões empíricas estão erradas** (a diferença 0.515 vs 0.544 era ruído entre runs do mesmo modelo, não efeito de troca de gerador).
 
 **Data:** 2026-05-15
 **Motivação:** isolar se a faithfulness 0.515 do gate final (2.26) é gargalo do gerador (Llama) ou do pipeline RAG (retriever/embedding). A literatura RAG clínica (`ocaf2024`, D13 do lote 1 NotebookLM) lista a ablação contra modelo de referência como prática padrão para validar a origem do erro.
@@ -2512,7 +2502,7 @@ Frente experimental seguinte: **migração de embedding para 1024D**. A ablaçã
 
 ### O bug que invalidou 2.31
 
-`pydantic-settings` resolve variáveis na seguinte ordem de precedência: env vars do processo → `.env` → defaults. O PowerShell do usuário já tem todas as 4 vars `LLM_*` exportadas no perfil (`LLM_PROVIDER=groq`, `LLM_API_KEY=gsk_...`, `LLM_MODEL=llama-3.3-70b-versatile`, `LLM_BASE_URL=https://api.groq.com/openai/v1`). Quando rodei `python -m eval.run_ragas` depois de editar `.env`, a configuração efetiva continuou sendo a do sistema (Groq+Llama), independente do que o `.env` dissesse.
+`pydantic-settings` resolve variáveis nesta ordem: env vars do processo, depois `.env`, depois os defaults. Meu perfil do PowerShell já exporta as 4 vars `LLM_*` (`LLM_PROVIDER=groq`, `LLM_API_KEY=gsk_...`, `LLM_MODEL=llama-3.3-70b-versatile`, `LLM_BASE_URL=https://api.groq.com/openai/v1`). Quando rodei `python -m eval.run_ragas` depois de editar `.env`, a configuração efetiva continuou sendo a do sistema (Groq+Llama), independente do que o `.env` dissesse.
 
 Como diagnostiquei: ao tentar rodar BGE-M3 + GPT-4o, recebi erro 429 explícito mencionando o modelo `llama-3.3-70b-versatile` — impossível de mascarar. Comparação de estilo no `_ragas_cache_gpt4o.json` confirmou: respostas longas e sintetizadas, com o mesmo template "De acordo com o Trecho 1 — ..." que o Llama usa, não o estilo defensivo do GPT-4o.
 
@@ -2530,8 +2520,8 @@ Variáveis assim definidas têm precedência sobre as exportadas no PowerShell p
 
 | | MiniLM 384D | BGE-M3 1024D |
 |---|---|---|
-| **Llama 3.3 70B** | Gate final (2026-04-06), 38q ✅ | **Gate pós-migração (2026-05-16), 38q ✅** |
-| **GPT-4o** | Re-ablação correta (2.32, 38q) ✅ | Migração embedding (2.32, 38q) ✅ |
+| **Llama 3.3 70B** | Gate final (2026-04-06), 38q | **Gate pós-migração (2026-05-16), 38q** |
+| **GPT-4o** | Re-ablação correta (2.32, 38q) | Migração embedding (2.32, 38q) |
 
 **Grade 2×2 fechada por completo.** A 4ª célula (Llama+BGE-M3 38q) foi completada em 2026-05-16 após upgrade do plano Groq para Dev Tier, que destravou o TPD que vinha esgotando após ~15 perguntas no free tier. Coleta total: 7 iterações com cache preservado entre tentativas.
 

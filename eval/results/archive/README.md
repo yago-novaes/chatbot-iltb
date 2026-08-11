@@ -30,7 +30,7 @@ Quatro células (Llama vs GPT-4o) × (MiniLM 384D vs BGE-M3 1024D), todas com 38
 |---|---|
 | `2026-05-15_ablation_gpt4o_minilm.cache.json` | GPT-4o + MiniLM 384D (re-ablação correta após bug 2.31) |
 | `2026-05-15_ablation_gpt4o_bgem3.cache.json` | GPT-4o + BGE-M3 1024D (controle estável para isolar embedding) |
-| `2026-05-15_RETRACTED_gpt4o_was_llama.cache.json` | ⚠️ Run com cache erroneamente rotulado — env vars de sistema sobrescreveram .env, então rodou Llama mas foi salvo como gpt4o. Preservado como evidência do bug; **não usar para análise**. |
+| `2026-05-15_RETRACTED_gpt4o_was_llama.cache.json` | Run com cache erroneamente rotulado — env vars de sistema sobrescreveram .env, então rodou Llama mas foi salvo como gpt4o. Preservado como evidência do bug; **não usar para análise**. |
 | `2026-05-15_partial_bgem3_llama_tpd.cache.json` | Llama+BGE-M3 parcial 13/38 (categorias fáceis ET/MO/IM-01); TPD Groq esgotou. Não usar isoladamente — subset enviesado. |
 | `2026-05-16_gate_post_migration_llama_bgem3.cache.json` | Llama+BGE-M3 1024D 38/38 completo (após upgrade Groq Dev Tier) — gate intermediário pós-migração |
 
