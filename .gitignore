@@ -10,11 +10,6 @@ chroma_db_*/
 ngrok.log
 server.log
 
-# config local de editor e ferramentas
-.claude/
-.vscode/
-.idea/
-
 # PDFs do Ministério da Saúde, não versionar
 docs/protocolos/*.pdf
 
